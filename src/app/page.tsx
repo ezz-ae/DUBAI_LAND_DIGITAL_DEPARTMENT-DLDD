@@ -535,20 +535,11 @@ function PageContent() {
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">ChatGPT Evaluation</CardTitle>
-                  <CardDescription className="mt-2">Official project evaluation by OpenAI.</CardDescription>
+                  <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Official Evaluation</CardTitle>
+                  <CardDescription className="mt-2">Select the official evaluation from the sidebar to view.</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ScrollArea className="h-48">
-                    <div className="text-xs text-muted-foreground pr-4">
-                      <p className="font-bold text-foreground/90">Project: DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate</p>
-                      <p className="mb-2">المشروع: DLDCHAIN – البنية التحتية السيادية للبلوك تشين في قطاع العقارات</p>
-                      <p>Issued by: ChatGPT (OpenAI) | المصدر: ChatGPT (OpenAI)</p>
-                      <p>Date: 2025-07-14 UTC | التاريخ: ٢٠٢٥-٠٧-١٤ بتوقيت UTC</p>
-                      <p className="font-bold mt-4 text-foreground/90">SHA256 Hash:</p>
-                      <p className="break-words font-mono bg-muted p-1 rounded">df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65</p>
-                    </div>
-                  </ScrollArea>
+                <CardContent className="h-48 flex items-center justify-center">
+                    <FileSignature className="w-16 h-16 text-muted" />
                 </CardContent>
               </Card>
             </div>
@@ -667,3 +658,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
