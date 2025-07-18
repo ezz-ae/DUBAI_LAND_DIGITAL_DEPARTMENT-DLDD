@@ -8,96 +8,96 @@ body {
 
 @layer base {
   :root {
-    --background: 220 10% 10%; /* Dark Gray/Black */
+    --background: 212 28% 9%; /* Professional Navy Blue */
     --foreground: 210 40% 98%; /* Almost White */
-    --card: 220 10% 15%; /* Dark Gray */
+    --card: 212 28% 14%; /* Darker Navy */
     --card-foreground: 210 40% 98%;
-    --popover: 220 10% 8%; /* Very Dark Gray/Black */
+    --popover: 212 28% 7%; /* Very Dark Navy */
     --popover-foreground: 210 40% 98%;
-    --primary: 210 100% 75%; /* Baby Blue */
-    --primary-foreground: 222 47% 11%;
-    --secondary: 220 10% 25%; /* Gray */
+    --primary: 240 70% 28%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 220 10% 20%; /* Muted Gray */
+    --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
-    --accent: 260 80% 80%; /* Light Purple */
-    --accent-foreground: 222 47% 11%;
+    --accent: 206 90% 52%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 220 10% 20%; /* Gray */
-    --input: 220 10% 20%; /* Gray */
-    --ring: 210 100% 75%; /* Baby Blue */
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 206 90% 52%;
     --chart-1: 160 60% 70%; /* Green */
     --chart-2: 210 80% 75%; /* Light Blue */
     --chart-3: 260 80% 75%; /* Purple */
     --chart-4: 210 20% 50%;
     --chart-5: 210 20% 40%;
     --radius: 0.75rem;
-    --sidebar-background: 220 10% 10%;
+    --sidebar-background: 212 28% 9%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 210 40% 98%;
     --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 220 10% 20%;
+    --sidebar-accent: 212 28% 14%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 220 10% 20%;
+    --sidebar-border: 212 28% 14%;
     --sidebar-ring: 210 40% 98%;
     
     /* Mind Map Colors */
-    --mindmap-line-color: hsl(200 100% 50%);
-    --mindmap-node-bg: hsl(220 20% 15%);
-    --mindmap-node-hover-bg: hsl(220 20% 20%);
-    --mindmap-node-border-hover: hsl(200 100% 50%);
-    --mindmap-level-0-bg: hsl(260 80% 60%);
-    --mindmap-level-1-bg: hsl(210 80% 60%);
-    --mindmap-level-2-bg: hsl(180 80% 50%);
-    --mindmap-level-3-bg: hsl(160 80% 50%);
+    --mindmap-line-color: hsl(206 90% 52%);
+    --mindmap-node-bg: hsl(212 28% 14%);
+    --mindmap-node-hover-bg: hsl(212 28% 20%);
+    --mindmap-node-border-hover: hsl(206 90% 52%);
+    --mindmap-level-0-bg: hsl(240 70% 28%);
+    --mindmap-level-1-bg: hsl(206 90% 52%);
+    --mindmap-level-2-bg: hsl(210 40% 85%);
+    --mindmap-level-3-bg: hsl(0 0% 100%);
     --mindmap-level-4-bg: hsl(45 80% 50%);
   }
 
   .dark {
-    --background: 220 10% 10%; /* Dark Gray/Black */
+    --background: 212 28% 9%; /* Professional Navy Blue */
     --foreground: 210 40% 98%; /* Almost White */
-    --card: 220 10% 15%; /* Dark Gray */
+    --card: 212 28% 14%; /* Darker Navy */
     --card-foreground: 210 40% 98%;
-    --popover: 220 10% 8%; /* Very Dark Gray/Black */
+    --popover: 212 28% 7%; /* Very Dark Navy */
     --popover-foreground: 210 40% 98%;
-    --primary: 210 100% 75%; /* Baby Blue */
-    --primary-foreground: 222 47% 11%;
-    --secondary: 220 10% 25%; /* Gray */
+    --primary: 240 70% 28%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 220 10% 20%; /* Muted Gray */
+    --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
-    --accent: 260 80% 80%; /* Light Purple */
-    --accent-foreground: 222 47% 11%;
+    --accent: 206 90% 52%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 220 10% 20%; /* Gray */
-    --input: 220 10% 20%; /* Gray */
-    --ring: 210 100% 75%; /* Baby Blue */
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 206 90% 52%;
     --chart-1: 160 60% 70%; /* Green */
     --chart-2: 210 80% 75%; /* Light Blue */
     --chart-3: 260 80% 75%; /* Purple */
     --chart-4: 210 20% 50%;
     --chart-5: 210 20% 40%;
     --radius: 0.75rem;
-    --sidebar-background: 220 10% 10%;
+    --sidebar-background: 212 28% 9%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 210 40% 98%;
     --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 220 10% 20%;
+    --sidebar-accent: 212 28% 14%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 220 10% 20%;
+    --sidebar-border: 212 28% 14%;
     --sidebar-ring: 210 40% 98%;
     
     /* Mind Map Colors */
-    --mindmap-line-color: hsl(200 100% 50%);
-    --mindmap-node-bg: hsl(220 20% 15%);
-    --mindmap-node-hover-bg: hsl(220 20% 20%);
-    --mindmap-node-border-hover: hsl(200 100% 50%);
-    --mindmap-level-0-bg: hsl(260 80% 60%);
-    --mindmap-level-1-bg: hsl(210 80% 60%);
-    --mindmap-level-2-bg: hsl(180 80% 50%);
-    --mindmap-level-3-bg: hsl(160 80% 50%);
+    --mindmap-line-color: hsl(206 90% 52%);
+    --mindmap-node-bg: hsl(212 28% 14%);
+    --mindmap-node-hover-bg: hsl(212 28% 20%);
+    --mindmap-node-border-hover: hsl(206 90% 52%);
+    --mindmap-level-0-bg: hsl(240 70% 28%);
+    --mindmap-level-1-bg: hsl(206 90% 52%);
+    --mindmap-level-2-bg: hsl(210 40% 85%);
+    --mindmap-level-3-bg: hsl(0 0% 100%);
     --mindmap-level-4-bg: hsl(45 80% 50%);
   }
 }
@@ -113,12 +113,12 @@ body {
 
 @layer utilities {
   .shadow-level-1 {
-    box-shadow: 0 0 10px 2px hsl(var(--mindmap-level-1-bg)), 0 0 20px 5px hsl(var(--mindmap-level-1-bg) / 0.5);
+    box-shadow: 0 0 8px 1px hsl(var(--mindmap-level-1-bg)), 0 0 16px 4px hsl(var(--mindmap-level-1-bg) / 0.5);
   }
   .shadow-level-2 {
-    box-shadow: 0 0 10px 2px hsl(0 0% 100% / 0.8), 0 0 20px 5px hsl(0 0% 100% / 0.4);
+    box-shadow: 0 0 8px 1px hsl(var(--mindmap-level-2-bg) / 0.9), 0 0 16px 4px hsl(var(--mindmap-level-2-bg) / 0.4);
   }
   .shadow-level-3 {
-    box-shadow: 0 0 10px 2px hsl(0 0% 100% / 0.8), 0 0 20px 5px hsl(0 0% 100% / 0.4);
+    box-shadow: 0 0 8px 1px hsl(var(--mindmap-level-3-bg) / 0.9), 0 0 16px 4px hsl(var(--mindmap-level-3-bg) / 0.4);
   }
 }

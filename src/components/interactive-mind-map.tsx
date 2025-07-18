@@ -35,13 +35,15 @@ const NODE_HEIGHT = 48;
 const HORIZONTAL_SPACING = 150;
 const VERTICAL_SPACING = 20;
 
-const Line = ({ from, to }: { from: {x:number, y:number}, to: {x:number, y:number} }) => {
+const Line = ({ from, to, level }: { from: {x:number, y:number}, to: {x:number, y:number}, level: number }) => {
   const path = `M ${from.x} ${from.y} C ${from.x + HORIZONTAL_SPACING / 2} ${from.y}, ${to.x - HORIZONTAL_SPACING / 2} ${to.y}, ${to.x} ${to.y}`;
+  const strokeColorVar = `var(--mindmap-level-${level}-bg)`;
+  
   return (
     <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
-      <defs>
-        <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+       <defs>
+        <filter id={`neon-glow-${level}`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
           <feMerge>
             <feMergeNode in="coloredBlur" />
             <feMergeNode in="SourceGraphic" />
@@ -50,10 +52,10 @@ const Line = ({ from, to }: { from: {x:number, y:number}, to: {x:number, y:numbe
       </defs>
       <path 
         d={path} 
-        stroke="var(--mindmap-line-color)" 
+        stroke={strokeColorVar}
         fill="transparent" 
         strokeWidth="2"
-        filter="url(#neon-glow)"
+        filter={`url(#neon-glow-${level})`}
       />
     </svg>
   );
@@ -75,7 +77,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
 
   return (
     <>
-      {parentPosition && <Line from={{x: parentPosition.x + NODE_WIDTH, y: parentPosition.y + NODE_HEIGHT / 2}} to={{x: position.x, y: position.y + NODE_HEIGHT / 2}} />}
+      {parentPosition && <Line from={{x: parentPosition.x + NODE_WIDTH, y: parentPosition.y + NODE_HEIGHT / 2}} to={{x: position.x, y: position.y + NODE_HEIGHT / 2}} level={level} />}
       <div
         style={{
           left: `${position.x}px`,
@@ -98,8 +100,8 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
         >
           {node.name}
           {hasChildren && (
-            <div className="absolute -right-2.5 -top-2.5 bg-background rounded-full p-0.5 flex items-center justify-center w-6 h-6">
-              {isExpanded ? <MinusCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary" /> : <PlusCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary"/>}
+            <div className="absolute -right-3 -top-3 bg-background rounded-full flex items-center justify-center w-6 h-6">
+              {isExpanded ? <MinusCircle className="w-6 h-6 text-muted-foreground group-hover:text-primary" /> : <PlusCircle className="w-6 h-6 text-muted-foreground group-hover:text-primary"/>}
             </div>
           )}
         </button>
@@ -109,10 +111,10 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
 };
 
 
-const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>, level = 0, yOffset = 0) => {
+const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>) => {
   let positions: { [id: string]: { x: number; y: number, level: number } } = {};
   
-  const traverse = (currentNode: MindMapNodeData, currentLevel: number, currentY: number) => {
+  const traverse = (currentNode: MindMapNodeData, currentLevel: number, currentY: number): { positions: typeof positions; height: number } => {
     const x = currentLevel * (NODE_WIDTH + HORIZONTAL_SPACING);
     
     let childrenHeight = 0;
@@ -128,7 +130,7 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>, leve
         const childSubtreeHeight = childrenSubtreeHeights[index];
         const childCenterY = childY + childSubtreeHeight / 2;
         
-        const { positions: childPositions, height: processedChildHeight } = traverse(child, currentLevel + 1, childCenterY);
+        const { positions: childPositions } = traverse(child, currentLevel + 1, childCenterY);
         positions = { ...positions, ...childPositions };
         childY += childSubtreeHeight;
         childrenHeight += childSubtreeHeight;
@@ -143,7 +145,7 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>, leve
   
   const calculateSubtreeHeight = (currentNode: MindMapNodeData, expandedNodes: Set<string>): number => {
     const isExpanded = expandedNodes.has(currentNode.id);
-    if (!isExpanded || !currentNode.children || currentNode.children.length === 0) {
+    if (!isExpanded || !currentNode.children || !currentNode.children.length === 0) {
       return NODE_HEIGHT + VERTICAL_SPACING;
     }
     return currentNode.children.reduce((acc, child) => acc + calculateSubtreeHeight(child, expandedNodes), 0);
@@ -151,17 +153,16 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>, leve
   
   const totalTreeHeight = calculateSubtreeHeight(node, expandedNodes);
   const initialY = (totalTreeHeight / 2);
-  const { positions: finalPositions } = traverse(node, level, initialY);
+  const { positions: finalPositions } = traverse(node, 0, initialY);
 
   return { layout: finalPositions, height: totalTreeHeight };
 };
 
 
 export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) => void }> = ({ onNodeDoubleClick }) => {
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set([mindMapData.id]));
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
 
   const toggleExpand = useCallback((nodeId: string) => {
-    if (nodeId === mindMapData.id) return; // Prevent collapsing the root
     setExpandedNodes(prev => {
       const newSet = new Set(prev);
       if (newSet.has(nodeId)) {
@@ -173,11 +174,6 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
     });
   }, []);
   
-  // Collapse all nodes except the root by default
-  React.useEffect(() => {
-    setExpandedNodes(new Set([mindMapData.id]));
-  }, []);
-
   const { layout, height } = calculateLayout(mindMapData, expandedNodes);
   
   const renderedNodes: React.ReactNode[] = [];
@@ -210,10 +206,10 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
   buildRenderTree(mindMapData);
 
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-full overflow-hidden bg-background rounded-lg border">
       <TransformWrapper
         minScale={0.2}
-        initialScale={0.7}
+        initialScale={1}
         centerOnInit
         limitToBounds={false}
       >
