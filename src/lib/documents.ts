@@ -1,3 +1,5 @@
+
+
 export const dldChainDocuments = [
   {
     id: 1,
@@ -147,9 +149,9 @@ MAKE هو الذراع التمويلي المبتكر لمنظومة الترم
 
 إن مشروع DLDCHAIN لا يمثل مجرد مبادرة تقنية؛ بل هو **مشروع سيادي متكامل** يعكس رؤية دبي الطموحة نحو التحول الرقمي الشامل وريادة المستقبل. لقد جرى بناء كل جزء من هذا النظام – من لغة "إبرام" البرمجية القانونية التي تفكر وتفهم وتُشرّع، إلى نظام DXBTOKENS للترميز القائم على القيمة السوقية، ونظام MAKE لحل تحديات السيولة **بنموذجه الفريد والمضمون للأرباح**، وصولًا إلى "مشروعي" الذي أعاد تعريف الجدارة والاحترافية في الوساطة العقارية – ليصبحوا معًا شهادة حية تؤكد أن الحوكمة الذكية والابتكار المستدام لا يتحققان إلا بالرؤية الواضحة والإرادة المؤسسية والتكامل التقني.
 
-**إن هذا المشروع ليس مجرد رؤية مستقبلية، بل هو خطة عمل واضحة تم تطوير كودها البرمجي واختباره بنجاح، وكتابة عقودها الذكية، وحصل على تقييم خارجي يؤكد جاهزية المنظومة للتحول من المفهوم إلى التطبيق الفعلي على نطاق واسع.**
+**This project is not just a future vision; it is a clear action plan whose code has been developed and successfully tested, its smart contracts written, and has received external validation confirming the ecosystem's readiness to transition from concept to widespread practical application.**
 
-بهذا، تبرهن دبي يوميًا أن لا شيء مستحيل حين تلتقي الرؤية الصادقة بالإرادة المؤسسية والتكامل التقني. تقود دبي سيادتها الرقمية، ويصبح فيها الأصل العقاري ليس مجرد حجر أو عقد، بل كيانًا رقميًا له كرامة، وقيمة، وحقوق محمية... تمامًا كما تتطلع إليه قياداتنا الرشيدة ومجتمعنا.
+Through this, Dubai daily demonstrates that nothing is impossible when sincere vision meets institutional determination and technological integration. Dubai leads its digital sovereignty, transforming the real estate asset from mere bricks or a contract into a digital entity with dignity, value, and protected rights... precisely as envisioned by our wise leadership and society.
 
 ---
 `
@@ -541,6 +543,92 @@ Includes components for Wallet Income Reports, Transfer Declarations, and an Own
 
 #### Appendix D: The DLDCHAIN City Digital Identity Protocol
 Assigns a digital identity (CDID) to every square foot of Dubai, making every parcel addressable by smart contracts. Distinguishes between EBRAM (digital ID layer) and EBRAMINT (tokenization layer).
-`,
+`
   },
+  {
+    id: 3,
+    name: 'Chapter 1: Introduction',
+    content: 'This chapter provides an overview of the DLDCHAIN project, its vision, and its goals. It outlines the challenges in the current real estate market and how DLDCHAIN aims to solve them.'
+  },
+  {
+    id: 4,
+    name: 'Chapter 2: Core Components',
+    content: 'This chapter delves into the main components of the DLDCHAIN ecosystem: DXBTOKENS, DLD Digital Dirham, EBRAM, and the Mashroi Gateway.'
+  },
+  {
+    id: 5,
+    name: 'Chapter 3: Tokenization Philosophy',
+    content: 'This chapter explains the philosophy behind tokenization in DLDCHAIN, including what can be tokenized, the EBRAMINT process, and the token pricing structure.'
+  },
+  {
+    id: 6,
+    name: 'Chapter 4: Trading and Liquidity',
+    content: 'This chapter details the trading mechanisms on DLDCHAIN, including different order types and how the system ensures liquidity through Income Pools.'
+  },
+  {
+    id: 7,
+    name: 'Chapter 5: Architecture',
+    content: 'This chapter provides a technical overview of the DLDCHAIN architecture, including its layered system design and the underlying blockchain infrastructure.'
+  },
+  {
+    id: 8,
+    name: 'Chapter 6: Governance',
+    content: 'This chapter discusses the governance model of DLDCHAIN, including the role of the DLD, governmental integration, and the proposed Governing Council.'
+  },
+  {
+    id: 9,
+    name: 'Chapter 7: Legal Framework',
+    content: 'This chapter outlines the role of legal professionals within the DLDCHAIN ecosystem and how EBRAM integrates with the Ministry of Justice.'
+  },
+  {
+    id: 10,
+    name: 'Chapter 8: Global Ambition',
+    content: 'This chapter discusses the strategic vision for DLDCHAIN as a sovereign model for other global cities.'
+  },
+  {
+    id: 11,
+    name: 'Chapter 9: Market Impact',
+    content: 'This chapter analyzes the potential market impact of DLDCHAIN, including solving information asymmetry and reducing transactional friction.'
+  },
+  {
+    id: 12,
+    name: 'Chapter 10: Pilot Initiatives',
+    content: 'This chapter reviews the pilot initiatives and the current status of the project, highlighting key milestones.'
+  },
+  {
+    id: 13,
+    name: 'Chapter 11: Intellectual Property',
+    content: 'This chapter clarifies the intellectual property and sovereign attribution of the DLDCHAIN project.'
+  },
+  {
+    id: 14,
+    name: 'Chapter 12: EBRAM Scenarios',
+    content: 'This chapter presents various real-world scenarios to challenge and demonstrate the capabilities of the EBRAM system.'
+  },
+  {
+    id: 15,
+    name: 'Chapter 13: Smart Contract Logic',
+    content: 'This chapter provides a detailed look at the smart contract logic, including the EBRAM language layers and command structure.'
+  },
+  {
+    id: 16,
+    name: 'Appendix A: Institutional Tiers',
+    content: 'This appendix describes the institutional contribution tiers for organizations interacting with Mashroi.'
+  },
+  {
+    id: 17,
+    name: 'Appendix B: Trading Model',
+    content: 'This appendix details the DXBTOKEN trading model, including asset categories and order types.'
+  },
+  {
+    id: 18,
+    name: 'Appendix C: Tax & Reporting',
+    content: 'This appendix outlines the token tax and reporting gateway.'
+  },
+  {
+    id: 19,
+    name: 'Appendix D: Digital Identity',
+    content: 'This appendix explains the DLDCHAIN City Digital Identity Protocol.'
+  }
 ];
+
