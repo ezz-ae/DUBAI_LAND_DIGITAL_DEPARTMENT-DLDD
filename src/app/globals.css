@@ -15,7 +15,7 @@ body {
     --card-foreground: 210 40% 98%;
     --popover: 212 28% 7%; /* Very Dark Navy */
     --popover-foreground: 210 40% 98%;
-    --primary: 240 70% 28%;
+    --primary: 210 70% 45%; /* Modern, vibrant blue */
     --primary-foreground: 210 40% 98%;
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
@@ -65,7 +65,7 @@ body {
     --card-foreground: 210 40% 98%;
     --popover: 212 28% 7%; /* Very Dark Navy */
     --popover-foreground: 210 40% 98%;
-    --primary: 240 70% 28%;
+    --primary: 210 70% 45%; /* Modern, vibrant blue */
     --primary-foreground: 210 40% 98%;
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
