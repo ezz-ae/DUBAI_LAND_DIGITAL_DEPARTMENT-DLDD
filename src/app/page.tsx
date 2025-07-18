@@ -38,7 +38,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown, Maximize, Share2, Plus, Image as ImageIcon, DownloadIcon, Info, MessageSquareQuote, ArrowRight, X } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown, Maximize, Share2, Plus, Image as ImageIcon, DownloadIcon, Info, MessageSquareQuote, ArrowRight, X, Map, File } from 'lucide-react';
 import Image from 'next/image';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
@@ -56,7 +56,7 @@ import { CardTitleWithBackground } from '@/components/card-title-with-background
 import { SourceGuide } from '@/components/source-guide';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
@@ -92,7 +92,7 @@ const defaultNote: Note = {
 };
 
 const liquidityMapSteps = [
-    { title: "EBRAMINT", description: "Legal review" },
+    { title: "EBRAMINT", description: "Legal Review" },
     { title: "MAKE LISTING", description: "Liquidity officer" },
     { title: "Make Request", description: "Escrow permission" },
     { title: "MAKE-IN", description: "Escrow Pool creation" },
@@ -174,6 +174,7 @@ function PageContent() {
   const [textSize, setTextSize] = useState<TextSize>('sm');
   const [activeNoteDialog, setActiveNoteDialog] = useState<Note | null>(null);
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
+  const [showMap, setShowMap] = useState(true);
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
@@ -472,55 +473,34 @@ function PageContent() {
         </header>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {!isMapDialogOpen && (
-            <Card>
-              <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
-                  <div>
-                    <CardTitle className="text-2xl">{selectedDoc?.name || 'Document Viewer'}</CardTitle>
-                    <CardDescription className="mt-1">Select any content to take a note and dive deeper.</CardDescription>
-                  </div>
-                  <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content} size="sm">
+          <Card>
+            <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
+                <div className='flex items-center gap-4'>
+                  <CardTitle className="text-2xl">{showMap ? "Structure Mindmap" : selectedDoc?.name}</CardTitle>
+                   <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content || showMap} size="sm">
                     {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
                     Summarize Document
                   </Button>
-              </CardHeader>
-              <CardContent className="p-0">
+                </div>
+                <Button onClick={() => setShowMap(!showMap)} variant="outline">
+                    {showMap ? <File className="mr-2" /> : <Map className="mr-2" />}
+                    {showMap ? 'View Document' : 'View Map'}
+                </Button>
+            </CardHeader>
+            <CardContent className="p-0">
+               {showMap ? (
+                 <div className="h-[60vh] w-full bg-background">
+                    <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+                 </div>
+               ) : (
                 <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[60vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
                   <SourceGuide summary={selectedDoc?.summary || ''} topics={selectedDoc?.topics || []} isArabic={isArabic} />
                   <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
                 </ScrollArea>
-              </CardContent>
-            </Card>
-          )}
+               )}
+            </CardContent>
+          </Card>
           
-          <div className="space-y-4">
-            <div className="flex items-center justify-between w-full px-4">
-                <div>
-                  <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
-                  <p className="text-sm text-muted-foreground mt-1">An interactive overview of the project's architecture.</p>
-                </div>
-                  <Dialog open={isMapDialogOpen} onOpenChange={setIsMapDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button variant="outline">
-                        <Maximize className="mr-2" />
-                        Explore Map
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
-                        <DialogHeader>
-                          <DialogTitle>Interactive Project Mind Map</DialogTitle>
-                        </DialogHeader>
-                        <div className="flex-1 overflow-hidden border rounded-lg bg-background">
-                          <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
-                        </div>
-                    </DialogContent>
-                  </Dialog>
-              </div>
-            <div className="h-96 w-full">
-              <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
             <Card ref={discussionCardRef} className="lg:sticky lg:top-6">
               <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
@@ -614,10 +594,11 @@ function PageContent() {
             </Card>
 
             <Card>
-              <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes, mark them for reporting, and generate insights." />
+              <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes and generate insights." />
               <CardContent className="p-6">
+                <ScrollArea className="h-80">
                   <div className={cn(
-                      "grid gap-4",
+                      "grid gap-4 pr-4",
                       notes.length === 1 && "grid-cols-1",
                       notes.length >= 2 && "grid-cols-1 md:grid-cols-2"
                     )}>
@@ -701,7 +682,7 @@ function PageContent() {
                       </Dialog>
                     ))}
                   </div>
-
+                </ScrollArea>
                   {(isGeneratingReport || report) && (
                     <div className="space-y-2 pt-6 mt-6 border-t">
                       <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
@@ -714,22 +695,14 @@ function PageContent() {
                   )}
               </CardContent>
               <CardFooter className="border-t p-4 flex justify-between items-center">
+                 <Button onClick={handleDiscussNote} disabled={markedNoteIds.size !== 1}>
+                    <MessageSquareQuote />
+                    Discuss Note
+                  </Button>
                 <Button onClick={handleGenerateReport} disabled={isGeneratingReport || markedNoteIds.size === 0}>
                   <FileSignature />
                   {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size})`}
                 </Button>
-                <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon" className="cursor-help">
-                          <Info className="w-4 h-4 text-muted-foreground" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Mark one or more notes to generate a report.</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
               </CardFooter>
             </Card>
           </div>
@@ -847,3 +820,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
