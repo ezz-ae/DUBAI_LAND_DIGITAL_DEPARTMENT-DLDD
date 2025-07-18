@@ -110,6 +110,30 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .highlight {
+    @apply bg-muted/50 p-1 rounded-md;
+  }
+  p {
+    @apply mb-4;
+  }
+  h3 {
+    @apply text-2xl font-headline font-semibold mb-3 mt-6;
+  }
+  h4 {
+    @apply text-xl font-headline font-semibold mb-2 mt-4;
+  }
+  ul {
+    @apply list-disc list-inside mb-4 pl-4;
+  }
+  li {
+    @apply mb-2;
+  }
+  code {
+    @apply bg-muted text-sm font-code p-1 rounded-md;
+  }
+  hr {
+    @apply my-6 border-border;
+  }
 }
 
 @layer utilities {
@@ -123,5 +147,3 @@ body {
     box-shadow: 0 0 8px 1px hsl(var(--mindmap-level-3-bg) / 0.9), 0 0 16px 4px hsl(var(--mindmap-level-3-bg) / 0.4);
   }
 }
-
-    

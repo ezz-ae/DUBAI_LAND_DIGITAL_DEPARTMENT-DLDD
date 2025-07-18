@@ -6,27 +6,13 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 interface SourceGuideProps {
-  summary: string;
-  isSummarizing: boolean;
+  summary?: string;
   isArabic?: boolean;
   onTopicClick: (topic: string) => void;
+  keyTopics?: string[];
 }
 
-export function SourceGuide({ summary, isSummarizing, isArabic, onTopicClick }: SourceGuideProps) {
-  const [topics, setTopics] = React.useState<string[]>([]);
-  
-  React.useEffect(() => {
-    if (summary) {
-        const potentialTopics = summary.match(/\b([A-Z][a-zA-Z\s,]+)\b/g) || [];
-        const uniqueTopics = [...new Set(potentialTopics
-            .map(t => t.trim().replace(/,$/, ''))
-            .filter(t => t.split(' ').length > 1 && t.split(' ').length < 5)
-        )];
-        setTopics(uniqueTopics.slice(0, 5));
-    } else {
-        setTopics([]);
-    }
-  }, [summary]);
+export function SourceGuide({ summary, isArabic, onTopicClick, keyTopics = [] }: SourceGuideProps) {
   
   return (
     <div
@@ -39,30 +25,21 @@ export function SourceGuide({ summary, isSummarizing, isArabic, onTopicClick }: 
              <Sparkle className="text-accent h-4 w-4" />
              AI Summary
           </h4>
-          {isSummarizing ? (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="animate-spin h-4 w-4" />
-              <span>Generating summary...</span>
-            </div>
-          ) : (
-            <p className={cn("text-sm text-muted-foreground", isArabic && "font-arabic")}>
-              {summary || "No summary available."}
-            </p>
-          )}
+          <p className={cn("text-sm text-muted-foreground", isArabic && "font-arabic")}>
+            {summary || "No summary available."}
+          </p>
         </div>
         <div>
           <h4 className="font-semibold mb-2">Key Topics</h4>
           <div className="flex flex-wrap gap-2">
-            {isSummarizing ? (
-                 <div className="text-xs text-muted-foreground">Extracting topics...</div>
-            ) : topics.length > 0 ? (
-                topics.map((topic) => (
+            {keyTopics.length > 0 ? (
+                keyTopics.map((topic) => (
                     <Button key={topic} variant="outline" size="sm" className="bg-card" onClick={() => onTopicClick(topic)}>
                         {topic}
                     </Button>
                 ))
             ) : (
-                <p className="text-xs text-muted-foreground">No topics found in summary.</p>
+                <p className="text-xs text-muted-foreground">No topics found.</p>
             )}
           </div>
         </div>
