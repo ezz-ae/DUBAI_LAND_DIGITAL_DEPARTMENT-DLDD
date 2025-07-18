@@ -77,7 +77,7 @@ function PageContent() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
-  const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(dldChainDocuments.find(d => d.id === 19) || dldChainDocuments[0] || null);
+  const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(dldChainDocuments.find(d => d.id === 1) || dldChainDocuments[0] || null);
   const [isMindMapOpen, setIsMindMapOpen] = useState(false);
   
   const [summary, setSummary] = useState('');
@@ -126,7 +126,7 @@ function PageContent() {
     if (selectedDoc) {
       fetchSummary(selectedDoc);
     }
-  }, []); // Run only once on initial mount
+  }, [selectedDoc]); 
 
 
   useEffect(() => {
@@ -140,7 +140,6 @@ function PageContent() {
   
   const handleSelectDocument = async (doc: DLDDoc) => {
     setSelectedDoc(doc);
-    await fetchSummary(doc);
   };
 
   const handleSendMessage = async (e?: React.FormEvent, message?: string) => {
@@ -289,6 +288,16 @@ function PageContent() {
     handleSendMessage(undefined, `Tell me more about ${topic}.`);
   };
 
+  const handleLanguageToggle = () => {
+    if (isArabic) {
+      const englishDoc = dldChainDocuments.find(d => d.id === 1);
+      if (englishDoc) setSelectedDoc(englishDoc);
+    } else {
+      const arabicDoc = dldChainDocuments.find(d => d.id === 19);
+      if (arabicDoc) setSelectedDoc(arabicDoc);
+    }
+  };
+
   const [textSize, setTextSize] = useState('text-base');
 
   return (
@@ -365,6 +374,7 @@ function PageContent() {
                     <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
                   </div>
                   <div className="flex items-center gap-2">
+                    <Button variant='outline' size="sm" onClick={handleLanguageToggle}>{isArabic ? 'EN' : 'AR'}</Button>
                     <Button variant={textSize === 'text-sm' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>Sm</Button>
                     <Button variant={textSize === 'text-base' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>Md</Button>
                     <Button variant={textSize === 'text-lg' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>Lg</Button>
@@ -609,5 +619,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
