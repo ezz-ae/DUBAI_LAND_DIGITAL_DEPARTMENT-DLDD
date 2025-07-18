@@ -13,7 +13,9 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
+  DialogDescription,
 } from "@/components/ui/dialog"
+import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Sidebar,
@@ -28,17 +30,28 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, Mic, PauseCircle } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, Mic, PauseCircle, BrainCircuit, MessageSquare, StickyNote, File as FileIcon, X } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
 import { generateAudio } from '@/ai/flows/audio-overview';
+import { generateReport } from '@/ai/flows/notes';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useTheme } from "next-themes"
 import { dldChainDocuments } from '@/lib/documents';
 import { SourceGuide } from '@/components/source-guide';
 import { explainTopic } from '@/ai/flows/explain-topic';
+import { InteractiveMindMap } from '@/components/interactive-mind-map';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
@@ -57,6 +70,7 @@ const quickPromptsArabic = [
 ];
 
 type TextSize = "sm" | "base" | "lg";
+type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 
 function PageContent() {
   const { toast } = useToast();
@@ -78,7 +92,16 @@ function PageContent() {
   const chatScrollAreaRef = useRef<HTMLDivElement>(null);
   
   const [textSize, setTextSize] = useState<TextSize>('base');
-  
+
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [newNoteTitle, setNewNoteTitle] = useState('');
+  const [newNoteContent, setNewNoteContent] = useState('');
+  const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+  const [generatedReport, setGeneratedReport] = useState('');
+  const [reportType, setReportType] = useState('technical');
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
   useEffect(() => {
@@ -154,6 +177,54 @@ function PageContent() {
       setIsAnswering(false);
     }
   };
+
+  const handleAddNote = () => {
+    if (!newNoteTitle.trim() || !newNoteContent.trim()) {
+      toast({ variant: 'destructive', title: 'Error', description: 'Both title and content are required.' });
+      return;
+    }
+    const newNote: Note = {
+      id: Date.now(),
+      title: newNoteTitle,
+      content: newNoteContent,
+      source: selectedDoc.name,
+      marked: false,
+    };
+    setNotes(prev => [newNote, ...prev]);
+    setNewNoteTitle('');
+    setNewNoteContent('');
+    setShowAddNoteDialog(false);
+    toast({ title: 'Note Added', description: 'Your new note has been saved.' });
+  };
+  
+  const handleToggleNoteMark = (id: number) => {
+    setNotes(notes.map(note => note.id === id ? { ...note, marked: !note.marked } : note));
+  };
+  
+  const handleGenerateReport = async () => {
+    const markedNotes = notes.filter(note => note.marked).map(note => `- ${note.title}: ${note.content}`);
+    if (markedNotes.length === 0) {
+      toast({ variant: "destructive", title: "No notes selected", description: "Please mark the notes you want to include in the report." });
+      return;
+    }
+    setIsGeneratingReport(true);
+    setGeneratedReport('');
+    try {
+      const result = await generateReport({ notes: markedNotes, reportType: reportType as any });
+      setGeneratedReport(result.report);
+    } catch (error) {
+      console.error('Error generating report:', error);
+      toast({ variant: "destructive", title: "Report Generation Failed", description: "Could not generate report. Please try again." });
+    } finally {
+      setIsGeneratingReport(false);
+    }
+  };
+
+  const handleDiscussNote = (noteContent: string) => {
+    setSelectedNote(null);
+    handleSendMessage(undefined, `Based on my note "${noteContent}", can you elaborate further?`);
+  };
+
   
   const handleGenerateAudio = async () => {
     if (!selectedDoc?.content || isGeneratingAudio) return;
@@ -218,6 +289,12 @@ function PageContent() {
     }
   };
 
+  const handleMindMapNodeDoubleClick = (topic: string) => {
+    handleTopicClick(topic);
+    // Potentially switch to the chat tab if not already there
+  };
+
+
   return (
     <div className="flex h-screen w-full bg-background text-foreground">
       <Sidebar>
@@ -280,15 +357,23 @@ function PageContent() {
           </div>
         </header>
         
-        <div className="flex-1 grid md:grid-cols-2 lg:grid-cols-3 overflow-hidden gap-4 p-4">
-          <div className="lg:col-span-1 flex flex-col gap-4">
-              <Card className="flex-1 flex flex-col">
+        <Tabs defaultValue="assistant" className="flex-1 flex flex-col overflow-hidden">
+          <div className="px-4 pt-4 border-b">
+            <TabsList>
+              <TabsTrigger value="assistant"><MessageSquare className="mr-2" /> AI Assistant</TabsTrigger>
+              <TabsTrigger value="document"><FileIcon className="mr-2"/> Document Viewer</TabsTrigger>
+              <TabsTrigger value="mindmap"><BrainCircuit className="mr-2"/> Structure Mind Map</TabsTrigger>
+            </TabsList>
+          </div>
+          <TabsContent value="assistant" className="flex-1 overflow-y-auto p-4">
+            <div className="grid md:grid-cols-2 gap-4 h-full">
+              <Card className="flex flex-col h-full">
                 <CardHeader>
                   <CardTitle>AI Open Discussion</CardTitle>
                   <CardDescription>Ask questions about <span className='font-bold text-primary'>{selectedDoc.name}</span></CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1 p-0 flex flex-col">
-                  <ScrollArea className="flex-1" ref={chatScrollAreaRef}>
+                   <ScrollArea className="flex-1 h-96" ref={chatScrollAreaRef}>
                     <div className="p-4 space-y-4">
                     {messages.map((msg: any, index) => (
                       <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
@@ -355,16 +440,77 @@ function PageContent() {
                   </form>
                 </CardFooter>
               </Card>
-          </div>
+              
+              <Card className="flex flex-col h-full">
+                <CardHeader>
+                  <CardTitle>Notes & Reports</CardTitle>
+                  <CardDescription>Create notes and generate AI-powered reports.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1 flex flex-col gap-4 p-4 overflow-hidden">
+                  <ScrollArea className="flex-1 h-96 pr-4">
+                    {notes.length > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {notes.map(note => (
+                          <Card key={note.id} className="cursor-pointer hover:border-primary" onClick={() => setSelectedNote(note)}>
+                            <CardHeader className="p-4">
+                              <CardTitle className="text-base flex items-start justify-between">
+                                <span className="truncate flex-1">{note.title}</span>
+                                <Checkbox
+                                  checked={note.marked}
+                                  onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
+                                  className="ml-2"
+                                />
+                              </CardTitle>
+                              <CardDescription className="text-xs truncate">Source: {note.source}</CardDescription>
+                            </CardHeader>
+                            <CardContent className="p-4 pt-0">
+                              <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center text-muted-foreground py-8">No notes yet. Add one to get started!</div>
+                    )}
 
-          <div className="lg:col-span-2 flex flex-col gap-4">
+                    {generatedReport && (
+                        <div className="mt-4 p-4 border rounded-lg bg-muted/50">
+                            <h3 className="font-semibold mb-2">Generated Report</h3>
+                            <p className="text-sm whitespace-pre-wrap">{generatedReport}</p>
+                        </div>
+                    )}
+                  </ScrollArea>
+                </CardContent>
+                 <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+                    <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none"><StickyNote className="mr-2"/> Add Note</Button>
+                    <div className="flex-1" />
+                    <Select onValueChange={setReportType} defaultValue={reportType}>
+                        <SelectTrigger className="w-full sm:w-[150px]">
+                            <SelectValue placeholder="Report Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="technical">Technical</SelectItem>
+                            <SelectItem value="managerial">Managerial</SelectItem>
+                            <SelectItem value="legal">Legal</SelectItem>
+                            <SelectItem value="financial">Financial</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <Button onClick={handleGenerateReport} disabled={isGeneratingReport}>
+                        {isGeneratingReport ? <Loader2 className="animate-spin" /> : <Sparkles />}
+                        Generate Report
+                    </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </TabsContent>
+          <TabsContent value="document" className="flex-1 overflow-y-auto p-4">
               <SourceGuide 
                 summary={selectedDoc.summary} 
                 topics={selectedDoc.topics || []}
                 isArabic={isArabic}
                 onTopicClick={handleTopicClick}
               />
-              <Card className="flex-1 flex flex-col">
+              <Card className="flex-1 flex flex-col mt-4">
                 <CardHeader className='flex-row items-center justify-between'>
                   <div>
                     <CardTitle>{selectedDoc.name}</CardTitle>
@@ -377,7 +523,7 @@ function PageContent() {
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1 p-0">
-                  <ScrollArea className="h-full">
+                  <ScrollArea className="h-full max-h-[calc(100vh-20rem)]">
                     <div 
                       dir={isArabic ? 'rtl' : 'ltr'} 
                       className={cn(
@@ -391,8 +537,11 @@ function PageContent() {
                   </ScrollArea>
                 </CardContent>
               </Card>
-          </div>
-        </div>
+          </TabsContent>
+          <TabsContent value="mindmap" className="flex-1 bg-muted/20 relative">
+             <InteractiveMindMap onNodeDoubleClick={handleMindMapNodeDoubleClick} />
+          </TabsContent>
+        </Tabs>
       </main>
 
       <Dialog open={showSummaryDialog} onOpenChange={setShowSummaryDialog}>
@@ -416,6 +565,44 @@ function PageContent() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={showAddNoteDialog} onOpenChange={setShowAddNoteDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add New Note</DialogTitle>
+            <DialogDescription>Create a new note based on document: <span className="font-bold text-primary">{selectedDoc.name}</span></DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Input placeholder="Note Title" value={newNoteTitle} onChange={e => setNewNoteTitle(e.target.value)} />
+            <textarea placeholder="Note Content..." value={newNoteContent} onChange={e => setNewNoteContent(e.target.value)} className="min-h-[100px] p-2 border rounded-md bg-transparent" />
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setShowAddNoteDialog(false)}>Cancel</Button>
+            <Button onClick={handleAddNote}>Save Note</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {selectedNote && (
+        <Dialog open={!!selectedNote} onOpenChange={(open) => !open && setSelectedNote(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{selectedNote.title}</DialogTitle>
+              <DialogDescription>Note from: {selectedNote.source}</DialogDescription>
+            </DialogHeader>
+            <ScrollArea className="max-h-[50vh] my-4">
+              <p className="whitespace-pre-wrap">{selectedNote.content}</p>
+            </ScrollArea>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setSelectedNote(null)}>Close</Button>
+              <Button onClick={() => handleDiscussNote(selectedNote.content)}>
+                <MessageSquare className="mr-2" /> Discuss with AI
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
     </div>
   );
 }
@@ -427,3 +614,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
