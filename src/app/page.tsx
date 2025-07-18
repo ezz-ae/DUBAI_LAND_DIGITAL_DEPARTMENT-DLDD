@@ -528,20 +528,23 @@ function PageContent() {
                   <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
                   <p className="text-sm text-muted-foreground mt-1">Main document content</p>
                 </div>
+                 <div className="flex items-center gap-2">
+                  <Button variant={textSize === 'text-sm' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>Sm</Button>
+                  <Button variant={textSize === 'text-base' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>Md</Button>
+                  <Button variant={textSize === 'text-lg' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>Lg</Button>
+                </div>
               </CardTitleWithBackground>
               <CardContent className="flex-1 p-0">
-                <ScrollArea className="h-full">
-                  <div 
-                    dir={isArabic ? 'rtl' : 'ltr'} 
-                    className={cn(
-                      "p-6 whitespace-pre-wrap leading-relaxed",
-                      textSize,
-                      isArabic && "font-arabic"
-                    )}
-                  >
-                    {selectedDoc.content}
-                  </div>
-                </ScrollArea>
+                <div 
+                  dir={isArabic ? 'rtl' : 'ltr'} 
+                  className={cn(
+                    "p-6 whitespace-pre-wrap leading-relaxed",
+                    textSize,
+                    isArabic && "font-arabic"
+                  )}
+                >
+                  {selectedDoc.content}
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -621,3 +624,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
