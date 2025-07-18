@@ -1,24 +1,27 @@
 
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/github-dark.css';
-import { Button } from '@/components/ui/button';
-import { Check, Copy } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
+// Import and register only the languages we need, to keep the bundle size down.
 import solidity from 'highlight.js/lib/languages/solidity';
 import python from 'highlight.js/lib/languages/python';
 import bash from 'highlight.js/lib/languages/bash';
 import plaintext from 'highlight.js/lib/languages/plaintext';
 
+import { Button } from '@/components/ui/button';
+import { Check, Copy } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+// Register the languages with highlight.js
 hljs.registerLanguage('solidity', solidity);
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('bash', bash);
-hljs.registerLanguage('shell', bash);
+hljs.registerLanguage('shell', bash); // 'shell' is often an alias for 'bash'
 hljs.registerLanguage('plaintext', plaintext);
-hljs.registerLanguage('ebram', plaintext);
+hljs.registerLanguage('ebram', plaintext); // Treat 'ebram' as plaintext
 
 interface CodeBlockProps {
   code: string;
@@ -26,19 +29,15 @@ interface CodeBlockProps {
 }
 
 export function CodeBlock({ code, language }: CodeBlockProps) {
-  const [isCopied, setIsCopied] = useState(false);
+  const [isCopied, setIsCopied] = React.useState(false);
 
   const highlightedCode = useMemo(() => {
-    const lang = language.toLowerCase();
-    try {
-      if (hljs.getLanguage(lang)) {
-        return hljs.highlight(code, { language: lang, ignoreIllegals: true }).value;
-      }
-      return hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true }).value;
-    } catch (error) {
-      console.error(`Highlighting failed for language ${lang}:`, error);
-      return hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true }).value;
+    // Ensure the language is registered before trying to highlight
+    if (hljs.getLanguage(language.toLowerCase())) {
+      return hljs.highlight(code, { language, ignoreIllegals: true }).value;
     }
+    // Fallback to plaintext if the language is not registered
+    return hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true }).value;
   }, [code, language]);
 
   const copyToClipboard = () => {
