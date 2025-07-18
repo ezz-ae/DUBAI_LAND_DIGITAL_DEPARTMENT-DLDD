@@ -28,7 +28,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, Mic } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, Mic, PauseCircle } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
@@ -77,7 +77,7 @@ function PageContent() {
 
   const chatScrollAreaRef = useRef<HTMLDivElement>(null);
   
-  const [textSize, setTextSize] = useState<TextSize>('sm');
+  const [textSize, setTextSize] = useState<TextSize>('base');
   
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
@@ -127,7 +127,7 @@ function PageContent() {
     }
   };
 
-  const handleSendMessage = async (e: React.FormEvent | undefined, message?: string) => {
+  const handleSendMessage = async (e?: React.FormEvent, message?: string) => {
     if(e) e.preventDefault();
     const currentMessage = message || input;
     if (!currentMessage.trim() || isAnswering || !selectedDoc?.content) return;
@@ -244,17 +244,27 @@ function PageContent() {
             )}
           </SidebarMenu>
         </SidebarContent>
-        <SidebarFooter className="p-2 border-t">
-          <Button variant="outline" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
+        <SidebarFooter className="p-2 border-t flex items-center justify-between">
+            <div className="flex items-center gap-1">
+                <Button variant="ghost" size="icon">
+                    <Avatar className="w-8 h-8">
+                        <AvatarFallback>N</AvatarFallback>
+                    </Avatar>
+                </Button>
+                <Button variant="ghost" size="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M15.2 3a2 2 0 0 1 2.8.7l2.8 4.4a2 2 0 0 1 .2 1.6v7a2 2 0 0 1-2 2h-4.4a2 2 0 0 1-1.6-.2l-4.4-2.8a2 2 0 0 1-.7-2.8z"/><path d="M15.2 3a2 2 0 0 0-2.8.7l-2.8 4.4a2 2 0 0 0-.2 1.6v7a2 2 0 0 0 2 2h4.4a2 2 0 0 0 1.6-.2l4.4-2.8a2 2 0 0 0 .7-2.8z"/></svg>
+                </Button>
+            </div>
+            <Button variant="outline" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} size="icon">
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+            </Button>
         </SidebarFooter>
       </Sidebar>
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        <header className="p-4 border-b flex items-center justify-between">
+        <header className="p-4 border-b flex items-center justify-between h-16">
           <div className="flex items-center gap-4">
             <SidebarTrigger className="md:hidden"/>
             <h1 className="text-xl font-headline font-semibold">Project Pilot</h1>
@@ -307,18 +317,11 @@ function PageContent() {
                         <div className="pt-4">
                           <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
                           <div className="grid grid-cols-1 gap-2">
-                              {quickPromptsEnglish.map((prompt) => (
-                                <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-left h-auto">
+                              {(isArabic ? quickPromptsArabic : quickPromptsEnglish).map((prompt) => (
+                                <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-start text-left h-auto", isArabic && "justify-end text-right font-arabic")}>
                                   {prompt}
                                 </Button>
                               ))}
-                              <div className="space-y-2" dir="rtl">
-                              {quickPromptsArabic.map((prompt) => (
-                                <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-right font-arabic h-auto">
-                                  {prompt}
-                                </Button>
-                              ))}
-                              </div>
                           </div>
                         </div>
                       )}
@@ -424,5 +427,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
