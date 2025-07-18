@@ -433,82 +433,6 @@ function PageContent() {
           </Card>
 
           <Card>
-            <CardHeader>
-                <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Notes & Reports</CardTitle>
-                <CardDescription className="mt-2">Review notes, get clarifications, and generate reports.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <h4 className="font-medium text-foreground/80">Your Notes</h4>
-                  <ScrollArea className="h-40 rounded-md border p-2">
-                    {notes.length === 0 && <p className="text-sm text-muted-foreground p-2">Select text from the document viewer to add notes.</p>}
-                    <div className="space-y-2">
-                      {notes.map(note => (
-                        <div key={note.id} className="flex items-start justify-between gap-2 bg-muted/50 p-2 rounded-md">
-                          <p className="text-sm flex-1 whitespace-pre-wrap">{note.text}</p>
-                          <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-foreground/80">Clarification</h4>
-                      <Button onClick={handleClarify} disabled={isClarifying || notes.length === 0} size="sm" className="w-full">
-                        <BrainCircuit />
-                        {isClarifying && !report ? 'Getting Clarification...' : 'Get Clarification on Notes'}
-                      </Button>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-foreground/80">Report Generation</h4>
-                    <div className="flex items-center gap-2">
-                      <Select onValueChange={(value: GenerateReportInput['reportType']) => setReportType(value)} defaultValue={reportType}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select report type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="technical">Technical Report</SelectItem>
-                          <SelectItem value="managerial">Managerial Report</SelectItem>
-                          <SelectItem value="legal">Legal Report</SelectItem>
-                          <SelectItem value="financial">Financial Report</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Button onClick={handleGenerateReport} disabled={isGeneratingReport || notes.length === 0}  size="sm">
-                        <FileSignature />
-                        {isGeneratingReport ? 'Generating...' : 'Generate'}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                  {(isClarifying || clarification) && (
-                    <div className="space-y-2 pt-2">
-                      <h4 className="font-medium text-foreground/80">AI Generated Explanation</h4>
-                      {isClarifying ? <Loader2 className="animate-spin text-primary" /> :
-                        <ScrollArea className="h-32 rounded-md border p-2">
-                        <p className="text-sm whitespace-pre-wrap">{clarification}</p>
-                      </ScrollArea>
-                      }
-                    </div>
-                  )}
-                  {(isGeneratingReport || report) && (
-                    <div className="space-y-2 pt-2">
-                      <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
-                      {isGeneratingReport ? <Loader2 className="animate-spin text-primary" /> :
-                        <ScrollArea className="h-40 rounded-md border p-2">
-                          <p className="text-sm whitespace-pre-wrap">{report}</p>
-                        </ScrollArea>
-                      }
-                    </div>
-                  )}
-            </CardContent>
-          </Card>
-          
-          <Card>
             <CardHeader className="border-b">
               <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">AI Open Discussion</CardTitle>
               <CardDescription className="mt-2">Ask questions about the project.</CardDescription>
@@ -624,6 +548,82 @@ function PageContent() {
                 </CardContent>
               </Card>
             </div>
+            
+          <Card>
+            <CardHeader>
+                <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Notes & Reports</CardTitle>
+                <CardDescription className="mt-2">Review notes, get clarifications, and generate reports.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <h4 className="font-medium text-foreground/80">Your Notes</h4>
+                  <ScrollArea className="h-40 rounded-md border p-2">
+                    {notes.length === 0 && <p className="text-sm text-muted-foreground p-2">Select text from the document viewer to add notes.</p>}
+                    <div className="space-y-2">
+                      {notes.map(note => (
+                        <div key={note.id} className="flex items-start justify-between gap-2 bg-muted/50 p-2 rounded-md">
+                          <p className="text-sm flex-1 whitespace-pre-wrap">{note.text}</p>
+                          <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <h4 className="font-medium text-foreground/80">Clarification</h4>
+                      <Button onClick={handleClarify} disabled={isClarifying || notes.length === 0} size="sm" className="w-full">
+                        <BrainCircuit />
+                        {isClarifying && !report ? 'Getting Clarification...' : 'Get Clarification on Notes'}
+                      </Button>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h4 className="font-medium text-foreground/80">Report Generation</h4>
+                    <div className="flex items-center gap-2">
+                      <Select onValueChange={(value: GenerateReportInput['reportType']) => setReportType(value)} defaultValue={reportType}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select report type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="technical">Technical Report</SelectItem>
+                          <SelectItem value="managerial">Managerial Report</SelectItem>
+                          <SelectItem value="legal">Legal Report</SelectItem>
+                          <SelectItem value="financial">Financial Report</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Button onClick={handleGenerateReport} disabled={isGeneratingReport || notes.length === 0}  size="sm">
+                        <FileSignature />
+                        {isGeneratingReport ? 'Generating...' : 'Generate'}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                  {(isClarifying || clarification) && (
+                    <div className="space-y-2 pt-2">
+                      <h4 className="font-medium text-foreground/80">AI Generated Explanation</h4>
+                      {isClarifying ? <Loader2 className="animate-spin text-primary" /> :
+                        <ScrollArea className="h-32 rounded-md border p-2">
+                        <p className="text-sm whitespace-pre-wrap">{clarification}</p>
+                      </ScrollArea>
+                      }
+                    </div>
+                  )}
+                  {(isGeneratingReport || report) && (
+                    <div className="space-y-2 pt-2">
+                      <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
+                      {isGeneratingReport ? <Loader2 className="animate-spin text-primary" /> :
+                        <ScrollArea className="h-40 rounded-md border p-2">
+                          <p className="text-sm whitespace-pre-wrap">{report}</p>
+                        </ScrollArea>
+                      }
+                    </div>
+                  )}
+            </CardContent>
+          </Card>
         </div>
       </main>
       <Dialog open={showSummaryDialog} onOpenChange={setShowSummaryDialog}>
@@ -663,5 +663,7 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
 
     
