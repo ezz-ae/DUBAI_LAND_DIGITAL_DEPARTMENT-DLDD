@@ -612,103 +612,105 @@ function PageContent() {
             <Card>
               <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes and generate insights." />
               <CardContent className="p-6">
-                <ScrollArea className="h-80">
-                  <div className={cn(
-                      "grid gap-4 pr-4",
-                      notes.length === 1 && "grid-cols-1",
-                      notes.length >= 2 && "grid-cols-1 md:grid-cols-2"
-                    )}>
-                    {notes.map(note => (
-                      <Dialog key={note.id} onOpenChange={(isOpen) => !isOpen && setActiveNoteDialog(null)}>
-                        <DialogTrigger asChild>
-                          <Card className="flex flex-col cursor-pointer hover:border-primary transition-colors">
-                            <CardHeader className="flex-row items-start justify-between p-4">
-                              <div className="flex items-start gap-3">
-                                {!note.isDefault && (
-                                  <Checkbox
-                                    id={`note-cb-${note.id}`}
-                                    checked={markedNoteIds.has(note.id)}
-                                    onCheckedChange={(e) => {
-                                      e.stopPropagation();
-                                      toggleMarkedNote(note.id)
-                                    }}
-                                    onClick={(e) => e.stopPropagation()}
-                                    className='mt-1'
-                                    />
-                                )}
-                                <div className="grid gap-0.5">
-                                    <CardTitle className="text-base">{note.text}</CardTitle>
-                                    {note.source && <CardDescription className="text-xs">{note.source}</CardDescription>}
+                <ScrollArea className="h-96">
+                  <div className="space-y-4">
+                    <div className={cn(
+                        "grid gap-4 pr-4",
+                        notes.length === 1 && "grid-cols-1",
+                        notes.length >= 2 && "grid-cols-1 md:grid-cols-2"
+                      )}>
+                      {notes.map(note => (
+                        <Dialog key={note.id} onOpenChange={(isOpen) => !isOpen && setActiveNoteDialog(null)}>
+                          <DialogTrigger asChild>
+                            <Card className="flex flex-col cursor-pointer hover:border-primary transition-colors">
+                              <CardHeader className="flex-row items-start justify-between p-4">
+                                <div className="flex items-start gap-3">
+                                  {!note.isDefault && (
+                                    <Checkbox
+                                      id={`note-cb-${note.id}`}
+                                      checked={markedNoteIds.has(note.id)}
+                                      onCheckedChange={(e) => {
+                                        e.stopPropagation();
+                                        toggleMarkedNote(note.id)
+                                      }}
+                                      onClick={(e) => e.stopPropagation()}
+                                      className='mt-1'
+                                      />
+                                  )}
+                                  <div className="grid gap-0.5">
+                                      <CardTitle className="text-base">{note.text}</CardTitle>
+                                      {note.source && <CardDescription className="text-xs">{note.source}</CardDescription>}
+                                  </div>
                                 </div>
-                              </div>
-                                {!note.isDefault && (
-                                  <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={(e) => { e.stopPropagation(); setNotes(notes.filter(n => n.id !== note.id))}}>
-                                    <X className="h-4 w-4" />
-                                  </Button>
-                                )}
-                            </CardHeader>
-                              {note.isDefault ? (
-                                  <CardContent className="px-4 pb-4 pt-0">
-                                      <div className="flex items-center space-x-2 overflow-x-auto pb-2">
-                                      {liquidityMapSteps.map((step, index) => (
-                                          <React.Fragment key={step.title}>
-                                          <div className="flex flex-col items-center text-center">
-                                              <div className="bg-primary/20 text-primary-foreground font-bold rounded-md px-3 py-1 text-xs">
-                                              {step.title}
-                                              </div>
-                                              <div className="text-muted-foreground text-xs mt-1 w-20">
-                                              {step.description}
-                                              </div>
-                                          </div>
-                                          {index < liquidityMapSteps.length - 1 && (
-                                              <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0" />
-                                          )}
-                                          </React.Fragment>
-                                      ))}
-                                      </div>
-                                  </CardContent>
-                              ) : <CardContent className='px-4 pb-4 pt-0 text-sm text-muted-foreground truncate'>{note.text}</CardContent> }
-                          </Card>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Note Details</DialogTitle>
-                          </DialogHeader>
-                          <ScrollArea className="max-h-64">
-                            <p className="text-sm whitespace-pre-wrap">{note.text}</p>
-                            {note.source && <p className="text-xs text-muted-foreground mt-2">Source: {note.source}</p>}
+                                  {!note.isDefault && (
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={(e) => { e.stopPropagation(); setNotes(notes.filter(n => n.id !== note.id))}}>
+                                      <X className="h-4 w-4" />
+                                    </Button>
+                                  )}
+                              </CardHeader>
+                                {note.isDefault ? (
+                                    <CardContent className="px-4 pb-4 pt-0">
+                                        <div className="flex items-center space-x-2 overflow-x-auto pb-2">
+                                        {liquidityMapSteps.map((step, index) => (
+                                            <React.Fragment key={step.title}>
+                                            <div className="flex flex-col items-center text-center">
+                                                <div className="bg-primary/20 text-primary-foreground font-bold rounded-md px-3 py-1 text-xs">
+                                                {step.title}
+                                                </div>
+                                                <div className="text-muted-foreground text-xs mt-1 w-20">
+                                                {step.description}
+                                                </div>
+                                            </div>
+                                            {index < liquidityMapSteps.length - 1 && (
+                                                <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0" />
+                                            )}
+                                            </React.Fragment>
+                                        ))}
+                                        </div>
+                                    </CardContent>
+                                ) : <CardContent className='px-4 pb-4 pt-0 text-sm text-muted-foreground truncate'>{note.text}</CardContent> }
+                            </Card>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Note Details</DialogTitle>
+                            </DialogHeader>
+                            <ScrollArea className="max-h-64">
+                              <p className="text-sm whitespace-pre-wrap">{note.text}</p>
+                              {note.source && <p className="text-xs text-muted-foreground mt-2">Source: {note.source}</p>}
+                            </ScrollArea>
+                            <DialogFooter>
+                              <DialogClose asChild>
+                                <Button variant="outline">Close</Button>
+                              </DialogClose>
+                              <Button onClick={() => {
+                                  if (note.isDefault) {
+                                    handleSendMessage(undefined, `Tell me more about the: ${note.text}`);
+                                  } else {
+                                    handleSendMessage(undefined, `Let's discuss this note: "${note.text}"`);
+                                  }
+                                  discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
+                                }}>
+                                  <MessageSquareQuote className="mr-2 h-4 w-4"/>
+                                  Discuss with AI
+                                </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
+                      ))}
+                    </div>
+                    {(isGeneratingReport || report) && (
+                      <div className="space-y-2 pt-6 mt-6 border-t">
+                        <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
+                        {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
+                          <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
+                            <p className="text-sm whitespace-pre-wrap">{report}</p>
                           </ScrollArea>
-                          <DialogFooter>
-                            <DialogClose asChild>
-                              <Button variant="outline">Close</Button>
-                            </DialogClose>
-                            <Button onClick={() => {
-                                if (note.isDefault) {
-                                  handleSendMessage(undefined, `Tell me more about the: ${note.text}`);
-                                } else {
-                                  handleSendMessage(undefined, `Let's discuss this note: "${note.text}"`);
-                                }
-                                discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
-                              }}>
-                                <MessageSquareQuote className="mr-2 h-4 w-4"/>
-                                Discuss with AI
-                              </Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                    ))}
+                        }
+                      </div>
+                    )}
                   </div>
                 </ScrollArea>
-                  {(isGeneratingReport || report) && (
-                    <div className="space-y-2 pt-6 mt-6 border-t">
-                      <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
-                      {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
-                        <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
-                          <p className="text-sm whitespace-pre-wrap">{report}</p>
-                        </ScrollArea>
-                      }
-                    </div>
-                  )}
               </CardContent>
               <CardFooter className="border-t p-4 flex justify-between items-center">
                  <Button onClick={handleDiscussNote} disabled={markedNoteIds.size !== 1}>
@@ -836,5 +838,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
