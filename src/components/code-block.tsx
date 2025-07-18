@@ -2,23 +2,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import hljs from 'highlight.js/lib/core';
-import solidity from 'highlight.js/lib/languages/solidity';
-import python from 'highlight.js/lib/languages/python';
-import bash from 'highlight.js/lib/languages/bash';
-import plaintext from 'highlight.js/lib/languages/plaintext';
+import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
 import { Button } from '@/components/ui/button';
 import { Check, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-// Register languages
-hljs.registerLanguage('solidity', solidity);
-hljs.registerLanguage('python', python);
-hljs.registerLanguage('shell', bash);
-hljs.registerLanguage('bash', bash);
-hljs.registerLanguage('plaintext', plaintext);
-hljs.registerLanguage('ebram', plaintext); // Custom language for EBRAM syntax
 
 interface CodeBlockProps {
   code: string;
@@ -31,11 +19,17 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
 
   useEffect(() => {
     try {
-      const result = hljs.highlight(code, { language, ignoreIllegals: true });
+      let result;
+      if (hljs.getLanguage(language)) {
+        result = hljs.highlight(code, { language, ignoreIllegals: true });
+      } else {
+        // Fallback to plaintext if the language is not registered
+        result = hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true });
+      }
       setHighlightedCode(result.value);
     } catch (error) {
       console.error(`Highlighting failed for language ${language}:`, error);
-      // Fallback to plaintext if the language is not found
+      // Fallback to plaintext on any error
       const result = hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true });
       setHighlightedCode(result.value);
     }
