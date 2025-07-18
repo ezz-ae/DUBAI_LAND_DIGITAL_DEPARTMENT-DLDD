@@ -43,7 +43,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
@@ -58,15 +58,19 @@ import { dldChainDocuments } from '@/lib/documents';
 import { InteractiveMindMap } from '@/components/interactive-mind-map';
 
 const initialMessages = [
-  { from: 'bot', text: "a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Mashroi acts as a central hub for real estate professionals, managing broker licensing, education, visa facilitation, and performance-based rewards through AI-powered systems. The entire framework emphasizes deep integration with existing governmental bodies like Ejari, Milka, and Trakheesi, aiming to enhance transparency, efficiency, and trust in Dubai's real estate market while attracting global investment." },
+  { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
 ];
 
 const quickPrompts = [
-  "Explain the EBRAM system",
-  "What makes the MAKE system different?",
-  "ابدا حوار عن المشروع باللغه العربية",
-  "اذكر اهم ما يميز المشروع وكيف يتوافق ذلك مع البنية الحالية",
-  "اشرح نظام الترميز وماالذي يجعلة مختلفاً",
+  "What is the DLDCHAIN project scope?",
+  "How does DLDCHAIN integrate with existing systems?",
+  "Explain EBRAM and the legal system.",
+  "How does Tokenization work in DLDCHAIN?",
+  "تحدث باختصار عن الترميز داخل المنطومة المطروحة",
+  "اذكر بالتفصيل كيف تتعامل هذه المنطومة مع المنظومة الحالية",
+  "ماذا يضيف هذا النظام لدبي غير السبق، تحدث بشكل عملى",
+  "لخص خمس اسباب تجعل هذا النظام مميزاً",
+  "التنظيم، الرقابة. الربحية، السرعة، الاتمتة، آمن المعلومات كيف يتناول هذا النظام تلك المفاهيم",
 ];
 
 type Note = {
@@ -75,6 +79,9 @@ type Note = {
 };
 
 type TextSize = "sm" | "base" | "lg";
+
+const chatGPTReportContent = dldChainDocuments.find(doc => doc.id === 3)?.content || '';
+
 
 function PageContent() {
   const { toast } = useToast();
@@ -90,10 +97,7 @@ function PageContent() {
   const [input, setInput] = useState('');
   const [isAnswering, setIsAnswering] = useState(false);
   
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const [audioSrc, setAudioSrc] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const fileContentRef = useRef<HTMLDivElement>(null);
@@ -118,11 +122,7 @@ function PageContent() {
     setMessages(initialMessages);
     setSummary('');
     setShowSummaryDialog(false);
-    if(audioRef.current) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    }
-    setAudioSrc(null);
+    setIsGeneratingAudio(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDoc]);
 
@@ -265,38 +265,17 @@ function PageContent() {
     setShowSummaryDialog(false);
   };
   
-  const handlePlayAudio = async () => {
-    if (isPlaying) {
-      audioRef.current?.pause();
-      setIsPlaying(false);
-      return;
-    }
-
-    if (audioSrc) {
-      audioRef.current?.play();
-      setIsPlaying(true);
-      return;
-    }
-
+  const handleGenerateAudio = async () => {
     if (!selectedDoc.content || isGeneratingAudio) return;
 
     setIsGeneratingAudio(true);
-    let textToSummarizeAndPlay = summary;
-    if (!textToSummarizeAndPlay) {
-      try {
-        const result = await summarizeDocument({ documentText: selectedDoc.content });
-        textToSummarizeAndPlay = result.summary;
-        setSummary(textToSummarizeAndPlay);
-      } catch (error) {
-         toast({ variant: 'destructive', title: 'Summarization Failed', description: 'Could not generate summary for audio.' });
-         setIsGeneratingAudio(false);
-         return;
-      }
-    }
+    toast({ title: 'Generating Audio...', description: 'Please wait while we generate the audio overview.' });
 
     try {
-      const result = await generateAudio({ text: textToSummarizeAndPlay });
-      setAudioSrc(result.audio);
+      const result = await generateAudio({ text: selectedDoc.content.substring(0, 4000) });
+      const audioSrc = result.audio;
+      const audioElement = new Audio(audioSrc);
+      audioElement.play();
     } catch (error) {
       console.error('Error generating audio:', error);
       toast({
@@ -308,24 +287,6 @@ function PageContent() {
       setIsGeneratingAudio(false);
     }
   };
-  
-  useEffect(() => {
-    if (audioSrc && audioRef.current) {
-      audioRef.current.src = audioSrc;
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  }, [audioSrc]);
-
-  useEffect(() => {
-    const audioElement = audioRef.current;
-    const handleEnded = () => setIsPlaying(false);
-
-    audioElement?.addEventListener('ended', handleEnded);
-    return () => {
-      audioElement?.removeEventListener('ended', handleEnded);
-    };
-  }, []);
 
   const textSizeClass = {
     'sm': 'text-sm',
@@ -357,12 +318,6 @@ function PageContent() {
             ))}
           </SidebarMenu>
         </SidebarContent>
-        <SidebarHeader className="p-4 border-t">
-           <Button variant="outline" className="w-full">
-            <Download />
-             {sidebarState === 'expanded' && <span>Downloads</span>}
-          </Button>
-        </SidebarHeader>
       </Sidebar>
 
       <main className="flex-1 flex flex-col">
@@ -372,7 +327,6 @@ function PageContent() {
             <div className="hidden lg:block">
               <ProjectPilotLogo />
             </div>
-            <h2 className="hidden lg:block font-headline text-2xl font-bold text-foreground">{selectedDoc.name}</h2>
           </div>
           <div className="flex items-center gap-2">
             <DropdownMenu>
@@ -405,43 +359,43 @@ function PageContent() {
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <Card>
-            <CardHeader className='flex-row items-center justify-between'>
+            <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
                 <div>
-                  <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">{selectedDoc.name}</CardTitle>
-                  <CardDescription className="mt-2">Select any content to take a note and dive deeper.</CardDescription>
+                  <CardTitle className="text-2xl">{selectedDoc.name}</CardTitle>
+                  <CardDescription className="mt-1">Select any content to take a note and dive deeper.</CardDescription>
                 </div>
                 <Button onClick={handleSummarize} disabled={isSummarizing} size="sm">
                   {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
                   Summarize
                 </Button>
             </CardHeader>
-            <CardContent>
-              <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[40vh] rounded-md border p-4" ref={fileContentRef} onMouseUp={handleSelection}>
+            <CardContent className="p-0">
+              <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[50vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
                 <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc.content}</p>
               </ScrollArea>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Project Mind Map</CardTitle>
-              <CardDescription className="mt-2">Click on a node to get a detailed explanation.</CardDescription>
+            <CardHeader className="bg-card-foreground/5 dark:bg-card-foreground/10 p-4">
+              <CardTitle className="text-2xl">DLDCHAIN STRUCTURE MINDMAP</CardTitle>
+              <CardDescription className="mt-1">Click any part for a deep dive.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4">
               <InteractiveMindMap onNodeClick={handleExplainTopic} />
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className="border-b">
-              <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">AI Open Discussion</CardTitle>
-              <CardDescription className="mt-2">Ask questions about the project.</CardDescription>
+            <CardHeader className="border-b bg-card-foreground/5 dark:bg-card-foreground/10 p-4">
+              <CardTitle className="text-2xl">AI Open Discussion</CardTitle>
+              <CardDescription className="mt-1">Ask questions about the project.</CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               <ScrollArea className="h-96" ref={scrollAreaRef}>
                 <div className="p-4 space-y-4">
                 {messages.map((msg: any, index) => (
-                  <div key={index} className={cn("flex items-start gap-3", msg.from === 'user' ? "justify-end" : "justify-start")}>
+                  <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
                     {msg.from === 'bot' && (
                       <Avatar className="w-8 h-8 shrink-0">
                         <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
@@ -450,7 +404,8 @@ function PageContent() {
                     <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
                       "max-w-prose rounded-lg px-4 py-2 text-sm",
                       msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                      msg.isArabic && "font-arabic" 
+                      msg.isArabic && "font-arabic" ,
+                       msg.from === 'bot' && 'w-full'
                     )}>
                       {msg.text}
                     </div>
@@ -503,53 +458,44 @@ function PageContent() {
               </form>
             </CardFooter>
           </Card>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Audio Overview</CardTitle>
-                  <CardDescription className="mt-2">Listen to an AI-generated summary.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col items-center justify-center p-6">
-                  <Button size="lg" variant="ghost" onClick={handlePlayAudio} disabled={isGeneratingAudio}>
-                    {isGeneratingAudio ? (
-                      <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                    ) : isPlaying ? (
-                      <PauseCircle className="h-16 w-16 text-accent" />
-                    ) : (
-                      <PlayCircle className="h-16 w-16 text-accent" />
-                    )}
+
+          <Card>
+            <CardHeader className="bg-card-foreground/5 dark:bg-card-foreground/10 p-4">
+              <CardTitle className="text-2xl">Media & Verification Center</CardTitle>
+              <CardDescription className="mt-1">Listen to audio overviews and verify official documentation.</CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex flex-col items-center justify-center space-y-4">
+                  <p className="text-sm font-medium text-center">Listen to a prefatory audio interview about the project.</p>
+                  <Button asChild variant="outline">
+                    <a href="https://vocaroo.com/1nZ2pXv2wDx3" target="_blank" rel="noopener noreferrer">
+                      <Headphones className="mr-2" />
+                      Play Interview
+                    </a>
                   </Button>
-                  <audio ref={audioRef} className="hidden" />
-                  {summary && isPlaying && (
-                      <ScrollArea className="h-24 mt-4 w-full">
-                      <p className="text-sm text-center text-muted-foreground">{summary}</p>
+                  <p className="text-sm font-medium text-center">Or, generate a new AI audio overview of the selected document.</p>
+                  <Button onClick={handleGenerateAudio} disabled={isGeneratingAudio}>
+                    {isGeneratingAudio ? <Loader2 className="animate-spin" /> : <Mic />}
+                    Generate AI Audio Overview
+                  </Button>
+              </div>
+              <div className="space-y-2">
+                 <h3 className="font-medium text-center">Official Evaluation Certificate</h3>
+                 <div className="bg-muted dark:bg-black/50 rounded-lg p-3 font-mono text-xs">
+                    <ScrollArea className="h-48">
+                      <pre className="whitespace-pre-wrap leading-relaxed">{chatGPTReportContent}</pre>
                     </ScrollArea>
-                  )}
-                </CardContent>
-                <CardFooter>
-                  <p className="text-xs text-muted-foreground text-center w-full">
-                    {isGeneratingAudio ? 'Generating audio, please wait...' : 'Click play to hear the summary.'}
-                  </p>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Official Evaluation</CardTitle>
-                  <CardDescription className="mt-2">Select the official evaluation from the sidebar to view.</CardDescription>
-                </CardHeader>
-                <CardContent className="h-48 flex items-center justify-center">
-                    <FileSignature className="w-16 h-16 text-muted" />
-                </CardContent>
-              </Card>
-            </div>
+                 </div>
+              </div>
+            </CardContent>
+          </Card>
             
           <Card>
-            <CardHeader>
-                <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Notes & Reports</CardTitle>
-                <CardDescription className="mt-2">Review notes, get clarifications, and generate reports.</CardDescription>
+            <CardHeader className="bg-card-foreground/5 dark:bg-card-foreground/10 p-4">
+                <CardTitle className="text-2xl">Notes & Reports</CardTitle>
+                <CardDescription className="mt-1">Review notes, get clarifications, and generate reports.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="p-6 space-y-4">
                 <div className="space-y-2">
                   <h4 className="font-medium text-foreground/80">Your Notes</h4>
                   <ScrollArea className="h-40 rounded-md border p-2">
@@ -658,5 +604,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    

@@ -16,11 +16,12 @@ interface MindMapNodeProps {
 }
 
 const levelColorClasses = [
-  'bg-card', // Level 0
-  'bg-muted/50', // Level 1
-  'bg-muted/30', // Level 2
-  'bg-muted/20', // Level 3
-  'bg-muted/10', // Level 4+
+  'bg-card',
+  'bg-muted/50',
+  'bg-muted/40',
+  'bg-muted/30',
+  'bg-muted/20',
+  'bg-muted/10',
 ];
 
 const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) => {
@@ -59,7 +60,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
         )}
         <span
           className={cn(
-            'p-2 rounded-md transition-all hover:bg-accent/10 hover:text-accent-foreground',
+            'p-2 rounded-md transition-all hover:bg-accent/20',
             'shadow-[0_2px_8px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.5)]',
             level === 0 ? 'font-bold text-lg text-foreground/90' : 'text-sm text-foreground/80',
             bgColorClass
@@ -70,7 +71,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
         </span>
       </div>
       {hasChildren && isOpen && (
-        <div className="border-l-2 border-[var(--mindmap-line-color)] ml-[14px] pl-5 transition-all duration-300 ease-in-out">
+        <div className="border-l-2 border-green-500/50 ml-[14px] pl-5 transition-all duration-300 ease-in-out">
           {node.children.map((child, index) => (
             <MindMapNode key={index} node={child} level={level + 1} onNodeClick={onNodeClick} />
           ))}
@@ -87,5 +88,3 @@ export const InteractiveMindMap: React.FC<{ onNodeClick: (topic: string) => void
     </div>
   );
 };
-
-    

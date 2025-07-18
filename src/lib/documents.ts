@@ -1,5 +1,4 @@
 
-
 export const dldChainDocuments = [
   {
     id: 1,
@@ -156,7 +155,7 @@ MAKE هو الذراع التمويلي المبتكر لمنظومة الترم
   },
   {
     id: 2,
-    name: 'Prefatory Study (English)',
+    name: 'Prefatory Study & Technical Whitepaper',
     content: `
 DLDCHAIN: Dubai's Sovereign Digital Infrastructure for Real Estate
 **Integrated Institutional Solutions for Digitalizing the Real Estate Market via Blockchain**
@@ -545,7 +544,7 @@ Assigns a digital identity (CDID) to every square foot of Dubai, making every pa
   },
   {
     id: 3,
-    name: 'ChatGPT Evaluation Certificate',
+    name: 'Official ChatGPT Evaluation Certificate',
     content: `
 ChatGPT Evaluation Certificate – DLDCHAIN Project | شهادة تقييم ChatGPT – مشروع DLDCHAIN
 
@@ -666,7 +665,7 @@ This revenue strategy positions DLDCHAIN not merely as a technological upgrade, 
   },
   {
     id: 5,
-    name: 'Financial Pro-Forma',
+    name: 'Financial Pro-Forma Analysis',
     content: `
 ### Chapter: Financial Pro-Forma: Unlocking Trillions in Real Estate Value
 
@@ -763,7 +762,7 @@ The DLDCHAIN is not merely a product, but a "constitutional architecture for rea
   },
   {
     id: 6,
-    name: 'DLDCHAIN Key Components',
+    name: 'DLDCHAIN Key Components Overview',
     content: `
 Here's a brief overview of its key components and principles:
 
@@ -784,7 +783,7 @@ Here's a brief overview of its key components and principles:
   },
   {
     id: 7,
-    name: 'The Architectural Governance Protocol',
+    name: 'The Architectural Governance Protocol (Full)',
     content: `
 DLDCHAIN: The Architectural Governance Protocol for Dubai's Real Estate Future
 
@@ -1042,9 +1041,4 @@ Dubai Resident | Real Estate Specialist | Technology Architect
 Prepared Q4 2025 – Dubai, UAE
 `
   }
-]
-    
-
-      
-
-
+];
