@@ -800,7 +800,7 @@ function PageContent() {
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Mark one or more notes to generate a report. Mark one note to discuss.</p>
+                      <p>Mark one note to discuss. Mark one or more notes to generate a report.</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
