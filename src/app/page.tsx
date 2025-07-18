@@ -29,7 +29,8 @@ import { ProjectPilotLogo } from '@/components/logo';
 import Image from 'next/image';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
-import { getClarification, generateReport, GenerateReportInput } from '@/ai/flows/notes';
+import { getClarification, generateReport } from '@/ai/flows/notes';
+import type { GenerateReportInput } from '@/ai/schemas/notes';
 import { generateAudio } from '@/ai/flows/audio-overview';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -177,8 +178,7 @@ export default function Home() {
     setIsAnswering(true);
 
     try {
-      const fullContext = dldChainDocuments.map(d => `Document: ${d.name}\n\n${d.content}`).join('\n\n---\n\n');
-      const result = await askQuestion({ question: userMessage, context: fullContext });
+      const result = await askQuestion({ question: userMessage, context: selectedDoc.content });
       setMessages([...newMessages, { from: 'bot', text: result.answer }]);
     } catch (error) {
       console.error('Error asking question:', error);

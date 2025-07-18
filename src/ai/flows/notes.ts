@@ -4,19 +4,18 @@
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import {
+  GetClarificationInput,
+  GetClarificationInputSchema,
+  GetClarificationOutput,
+  GetClarificationOutputSchema,
+  GenerateReportInput,
+  GenerateReportInputSchema,
+  GenerateReportOutput,
+  GenerateReportOutputSchema,
+} from '@/ai/schemas/notes';
 
 // Clarification Flow
-const GetClarificationInputSchema = z.object({
-  notes: z.array(z.string()).describe('A list of notes or text snippets from the document.'),
-});
-export type GetClarificationInput = z.infer<typeof GetClarificationInputSchema>;
-
-const GetClarificationOutputSchema = z.object({
-  clarification: z.string().describe('A detailed clarification and expansion of the provided notes.'),
-});
-export type GetClarificationOutput = z.infer<typeof GetClarificationOutputSchema>;
-
 export async function getClarification(input: GetClarificationInput): Promise<GetClarificationOutput> {
   return getClarificationFlow(input);
 }
@@ -47,17 +46,6 @@ const getClarificationFlow = ai.defineFlow(
 );
 
 // Report Generation Flow
-const GenerateReportInputSchema = z.object({
-  notes: z.array(z.string()).describe('A list of notes to base the report on.'),
-  reportType: z.enum(['technical', 'managerial', 'legal', 'financial']).describe('The type of report to generate.'),
-});
-export type GenerateReportInput = z.infer<typeof GenerateReportInputSchema>;
-
-const GenerateReportOutputSchema = z.object({
-  report: z.string().describe('The generated report.'),
-});
-export type GenerateReportOutput = z.infer<typeof GenerateReportOutputSchema>;
-
 export async function generateReport(input: GenerateReportInput): Promise<GenerateReportOutput> {
   return generateReportFlow(input);
 }

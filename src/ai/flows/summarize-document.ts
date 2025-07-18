@@ -4,22 +4,15 @@
  * @fileOverview Summarizes a project document.
  *
  * - summarizeDocument - A function that summarizes a document.
- * - SummarizeDocumentInput - The input type for the summarizeDocument function.
- * - SummarizeDocumentOutput - The return type for the summarizeDocument function.
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
-
-const SummarizeDocumentInputSchema = z.object({
-  documentText: z.string().describe('The text content of the document to summarize.'),
-});
-export type SummarizeDocumentInput = z.infer<typeof SummarizeDocumentInputSchema>;
-
-const SummarizeDocumentOutputSchema = z.object({
-  summary: z.string().describe('A concise summary of the document.'),
-});
-export type SummarizeDocumentOutput = z.infer<typeof SummarizeDocumentOutputSchema>;
+import {
+  SummarizeDocumentInput,
+  SummarizeDocumentInputSchema,
+  SummarizeDocumentOutput,
+  SummarizeDocumentOutputSchema,
+} from '@/ai/schemas/summarize-document';
 
 export async function summarizeDocument(input: SummarizeDocumentInput): Promise<SummarizeDocumentOutput> {
   return summarizeDocumentFlow(input);

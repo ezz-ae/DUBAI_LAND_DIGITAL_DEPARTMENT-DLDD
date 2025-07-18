@@ -5,18 +5,12 @@
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
-
-const AskQuestionInputSchema = z.object({
-  question: z.string().describe('The user\'s question.'),
-  context: z.string().describe('The context documents to answer the question from.'),
-});
-export type AskQuestionInput = z.infer<typeof AskQuestionInputSchema>;
-
-const AskQuestionOutputSchema = z.object({
-  answer: z.string().describe('The answer to the question.'),
-});
-export type AskQuestionOutput = z.infer<typeof AskQuestionOutputSchema>;
+import {
+  AskQuestionInput,
+  AskQuestionInputSchema,
+  AskQuestionOutput,
+  AskQuestionOutputSchema
+} from '@/ai/schemas/ask-question';
 
 export async function askQuestion(input: AskQuestionInput): Promise<AskQuestionOutput> {
   return askQuestionFlow(input);
