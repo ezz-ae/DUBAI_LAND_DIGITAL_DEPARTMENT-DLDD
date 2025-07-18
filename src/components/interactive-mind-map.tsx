@@ -65,7 +65,8 @@ const Line = ({ from, to, level }: { from: {x:number, y:number}, to: {x:number, 
 const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClick, isExpanded, toggleExpand, position, parentPosition }) => {
   const hasChildren = node.children && node.children.length > 0;
 
-  const handleSingleClick = () => {
+  const handleSingleClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // prevent double click from firing
     toggleExpand(node.id);
   };
   
@@ -85,13 +86,13 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
           width: `${NODE_WIDTH}px`,
           height: `${NODE_HEIGHT}px`,
         }}
-        className="absolute"
+        className="absolute group"
+        onClick={handleSingleClick}
         onDoubleClick={handleDoubleClick}
       >
-        <button
-          onClick={handleSingleClick}
+        <div
           className={cn(
-            'group w-full h-full flex items-center justify-center p-2 rounded-lg cursor-pointer transition-all',
+            'w-full h-full flex items-center justify-center p-2 rounded-lg cursor-pointer transition-all relative',
             'bg-gradient-to-br to-mindmap-node-bg shadow-lg border border-white/10',
             'hover:shadow-2xl hover:border-mindmap-node-border-hover hover:scale-105',
              'text-xs font-medium text-center text-white/90',
@@ -100,11 +101,11 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
         >
           {node.name}
           {hasChildren && (
-            <div className="absolute -right-3 -top-3 bg-background rounded-full flex items-center justify-center w-6 h-6">
-              {isExpanded ? <MinusCircle className="w-6 h-6 text-muted-foreground group-hover:text-primary" /> : <PlusCircle className="w-6 h-6 text-muted-foreground group-hover:text-primary"/>}
+            <div className="absolute -right-3 -top-3 bg-background rounded-full flex items-center justify-center w-6 h-6 z-10">
+              {isExpanded ? <MinusCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary" /> : <PlusCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary"/>}
             </div>
           )}
-        </button>
+        </div>
       </div>
     </>
   );
@@ -145,7 +146,7 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>) => {
   
   const calculateSubtreeHeight = (currentNode: MindMapNodeData, expandedNodes: Set<string>): number => {
     const isExpanded = expandedNodes.has(currentNode.id);
-    if (!isExpanded || !currentNode.children || !currentNode.children.length === 0) {
+    if (!isExpanded || !currentNode.children || currentNode.children.length === 0) {
       return NODE_HEIGHT + VERTICAL_SPACING;
     }
     return currentNode.children.reduce((acc, child) => acc + calculateSubtreeHeight(child, expandedNodes), 0);
@@ -160,13 +161,16 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>) => {
 
 
 export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) => void }> = ({ onNodeDoubleClick }) => {
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set([mindMapData.id]));
 
   const toggleExpand = useCallback((nodeId: string) => {
     setExpandedNodes(prev => {
       const newSet = new Set(prev);
       if (newSet.has(nodeId)) {
-        newSet.delete(nodeId);
+        // Do not allow collapsing the root node
+        if (nodeId !== mindMapData.id) {
+            newSet.delete(nodeId);
+        }
       } else {
         newSet.add(nodeId);
       }
@@ -174,6 +178,11 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
     });
   }, []);
   
+  // Set initial state to fully collapsed except the root
+  useState(() => {
+    setExpandedNodes(new Set([mindMapData.id]));
+  });
+
   const { layout, height } = calculateLayout(mindMapData, expandedNodes);
   
   const renderedNodes: React.ReactNode[] = [];
