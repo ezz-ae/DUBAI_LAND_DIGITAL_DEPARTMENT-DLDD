@@ -298,7 +298,6 @@ function PageContent() {
                         isActive={selectedDoc?.id === doc.id}
                         className="justify-start w-full"
                       >
-                        <FileText />
                         <span>{doc.name}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
