@@ -32,11 +32,19 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
   const [isCopied, setIsCopied] = React.useState(false);
 
   const highlightedCode = useMemo(() => {
+    const lang = language.toLowerCase();
     // Ensure the language is registered before trying to highlight
-    if (hljs.getLanguage(language.toLowerCase())) {
-      return hljs.highlight(code, { language, ignoreIllegals: true }).value;
+    if (hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(code, { language: lang, ignoreIllegals: true }).value;
+      } catch (error) {
+        console.error(`Error highlighting code for language ${lang}:`, error);
+        // Fallback to plaintext on error
+        return hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true }).value;
+      }
     }
     // Fallback to plaintext if the language is not registered
+    console.warn(`Highlight.js: Language '${lang}' is not registered. Falling back to plaintext.`);
     return hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true }).value;
   }, [code, language]);
 
@@ -69,7 +77,7 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
       </div>
       <pre className="p-4 overflow-x-auto text-sm">
         <code
-          className={cn('hljs', `language-${language}`)}
+          className={cn('hljs', `language-${language.toLowerCase()}`)}
           dangerouslySetInnerHTML={{ __html: highlightedCode }}
         />
       </pre>
