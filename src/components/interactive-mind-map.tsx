@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { mindMapData } from '@/lib/mindmap-data';
 import { cn } from '@/lib/utils';
-import { PlusCircle, MinusCircle } from 'lucide-react';
+import { Plus, Minus } from 'lucide-react';
 
 interface MindMapNodeData {
   id: string;
@@ -93,8 +93,8 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
         >
           {node.name}
           {hasChildren && (
-            <div className="absolute -right-3 -top-3 bg-background rounded-full flex items-center justify-center w-6 h-6 z-10">
-              {isExpanded ? <MinusCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary" /> : <PlusCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary"/>}
+            <div className="absolute -right-3 -top-3 bg-background rounded-full flex items-center justify-center w-6 h-6 z-10 border border-muted-foreground/50">
+              {isExpanded ? <Minus className="w-4 h-4 text-muted-foreground group-hover:text-primary" /> : <Plus className="w-4 h-4 text-muted-foreground group-hover:text-primary"/>}
             </div>
           )}
         </div>
@@ -116,39 +116,38 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>) => {
   };
   
   const traverse = (currentNode: MindMapNodeData, currentLevel: number, currentY: number): { height: number } => {
-    const x = currentLevel * (NODE_WIDTH + HORIZONTAL_SPACING);
     const isExpanded = expandedNodes.has(currentNode.id);
     
-    // Only calculate children height if expanded
     let childrenHeight = 0;
     if (isExpanded && currentNode.children && currentNode.children.length > 0) {
-        childrenHeight = currentNode.children.reduce((acc, child) => acc + calculateSubtreeHeight(child), 0);
+      childrenHeight = currentNode.children.reduce((acc, child) => acc + calculateSubtreeHeight(child), 0) - VERTICAL_SPACING;
     }
-    const totalSubtreeHeight = Math.max(NODE_HEIGHT + VERTICAL_SPACING, childrenHeight);
+    const nodeY = currentY + (childrenHeight / 2);
 
-    positions[currentNode.id] = { x, y: currentY, level: currentLevel };
+    const x = currentLevel * (NODE_WIDTH + HORIZONTAL_SPACING);
+    positions[currentNode.id] = { x, y: nodeY, level: currentLevel };
     
     if (isExpanded && currentNode.children && currentNode.children.length > 0) {
-      let childYOffset = currentY - (childrenHeight / 2);
+      let childYOffset = currentY;
       currentNode.children.forEach(child => {
         const childSubtreeHeight = calculateSubtreeHeight(child);
-        const childCenterY = childYOffset + (childSubtreeHeight / 2);
-        traverse(child, currentLevel + 1, childCenterY);
+        traverse(child, currentLevel + 1, childYOffset);
         childYOffset += childSubtreeHeight;
       });
     }
 
-    return { height: totalSubtreeHeight };
+    return { height: Math.max(NODE_HEIGHT + VERTICAL_SPACING, childrenHeight + VERTICAL_SPACING) };
   };
   
   traverse(node, 0, 0);
-  
+
+  // Recenter the tree vertically
   const allY = Object.values(positions).map(p => p.y);
   const minY = Math.min(...allY);
   const maxY = Math.max(...allY);
-  const totalTreeHeight = maxY - minY + NODE_HEIGHT;
-  
-  const yOffset = -minY + 50; // Add padding
+  const treeHeight = maxY - minY;
+  const yOffset = -minY - treeHeight / 2;
+
   Object.keys(positions).forEach(id => {
     positions[id].y += yOffset;
   });
@@ -157,27 +156,44 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>) => {
   const maxX = Math.max(...allX);
   const totalTreeWidth = maxX + NODE_WIDTH + 50;
 
-  return { layout: positions, height: totalTreeHeight + 100, width: totalTreeWidth + 100 };
+  return { layout: positions, height: treeHeight + 100, width: totalTreeWidth + 100 };
 };
 
 
 export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) => void }> = ({ onNodeDoubleClick }) => {
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set([mindMapData.id]));
 
   const toggleExpand = useCallback((nodeId: string) => {
     setExpandedNodes(prev => {
       const newSet = new Set(prev);
       if (newSet.has(nodeId)) {
-        // Collapse the node and all its children
         const nodesToCollapse = new Set([nodeId]);
-        const queue = node.children?.filter(c => c.id === nodeId) || [];
-        while(queue.length > 0) {
-            const current = queue.shift();
-            if(current) {
-                nodesToCollapse.add(current.id);
-                current.children?.forEach(child => queue.push(child));
+        const queue: MindMapNodeData[] = [];
+        
+        const findNode = (root: MindMapNodeData, id: string): MindMapNodeData | null => {
+          if (root.id === id) return root;
+          if (root.children) {
+            for (const child of root.children) {
+              const found = findNode(child, id);
+              if (found) return found;
             }
+          }
+          return null;
         }
+
+        const startNode = findNode(mindMapData, nodeId);
+        if (startNode) queue.push(startNode);
+        
+        while (queue.length > 0) {
+          const current = queue.shift();
+          if (current && current.children) {
+            current.children.forEach(child => {
+              nodesToCollapse.add(child.id);
+              queue.push(child);
+            });
+          }
+        }
+        
         nodesToCollapse.forEach(id => newSet.delete(id));
       } else {
         newSet.add(nodeId);
@@ -186,10 +202,6 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
     });
   }, []);
   
-  useState(() => {
-    setExpandedNodes(new Set([mindMapData.id]));
-  });
-
   const { layout, height, width } = calculateLayout(mindMapData, expandedNodes);
   
   const renderedNodes: React.ReactNode[] = [];
@@ -227,17 +239,19 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
         centerOnInit
         limitToBounds={false}
       >
-        <TransformComponent
-          wrapperStyle={{ width: '100%', height: '100%' }}
-          contentStyle={{ width: `${width}px`, height: `${height}px` }}
-        >
-          <div className="relative" style={{ height: `100%`, width: `100%`}}>
-             {renderedNodes}
-          </div>
-        </TransformComponent>
+        {({ zoomIn, zoomOut, resetTransform }) => (
+          <React.Fragment>
+            <TransformComponent
+              wrapperStyle={{ width: '100%', height: '100%' }}
+              contentStyle={{ width: `${width}px`, height: `${height}px` }}
+            >
+              <div className="relative" style={{ height: `${height}px`, width: `${width}px`}}>
+                 {renderedNodes}
+              </div>
+            </TransformComponent>
+          </React.Fragment>
+        )}
       </TransformWrapper>
     </div>
   );
 };
-
-    
