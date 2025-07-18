@@ -49,8 +49,8 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
         <span
           className={cn(
             'p-2 rounded-md transition-all hover:bg-accent/10 hover:text-accent-foreground',
-            'shadow-sm',
-            level === 0 ? 'font-bold text-lg text-foreground/90' : 'text-sm text-foreground/80'
+            'shadow-[0_2px_8px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.5)]',
+            level === 0 ? 'font-bold text-lg text-foreground/90 bg-card' : 'text-sm text-foreground/80 bg-card'
           )}
           onClick={handleNodeTextClick}
         >
