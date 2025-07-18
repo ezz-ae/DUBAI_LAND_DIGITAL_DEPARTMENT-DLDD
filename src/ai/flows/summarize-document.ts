@@ -22,7 +22,8 @@ const prompt = ai.definePrompt({
   name: 'summarizeDocumentPrompt',
   input: {schema: SummarizeDocumentInputSchema},
   output: {schema: SummarizeDocumentOutputSchema},
-  prompt: `Summarize the following document, extracting the key points and providing a concise overview:\n\n{{{documentText}}}`,config: {
+  prompt: `Summarize the following document, extracting the key points and providing a concise overview:\n\n{{{documentText}}}`,
+  config: {
     safetySettings: [
       {
         category: 'HARM_CATEGORY_HATE_SPEECH',
