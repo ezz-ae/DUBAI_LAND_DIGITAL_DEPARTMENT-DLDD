@@ -51,6 +51,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { CardTitleWithBackground } from '@/components/card-title-with-background';
 
 
 const initialMessages = [
@@ -446,8 +447,8 @@ function PageContent() {
                   <CardTitle>Notes & Reports</CardTitle>
                   <CardDescription>Create notes and generate AI-powered reports.</CardDescription>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col gap-4 p-4 overflow-hidden">
-                  <ScrollArea className="flex-1 h-96 pr-4">
+                <CardContent className="flex-1 flex flex-col gap-4 p-4 overflow-hidden h-96">
+                  <ScrollArea className="flex-1 pr-4">
                     {notes.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {notes.map(note => (
@@ -511,17 +512,17 @@ function PageContent() {
                 onTopicClick={handleTopicClick}
               />
               <Card className="flex-1 flex flex-col mt-4">
-                <CardHeader className='flex-row items-center justify-between'>
-                  <div>
-                    <CardTitle>{selectedDoc.name}</CardTitle>
-                    <CardDescription>Main document content</CardDescription>
-                  </div>
+                <CardTitleWithBackground
+                  title={selectedDoc.name}
+                  subtitle="Main document content"
+                  className="flex-row items-center justify-between"
+                >
                   <div className="flex items-center gap-2">
                     <Button variant="ghost" size="sm" onClick={() => setTextSize("sm")} className={cn(textSize === 'sm' && 'bg-muted')}>Sm</Button>
                     <Button variant="ghost" size="sm" onClick={() => setTextSize("base")} className={cn(textSize === 'base' && 'bg-muted')}>Md</Button>
                     <Button variant="ghost" size="sm" onClick={() => setTextSize("lg")} className={cn(textSize === 'lg' && 'bg-muted')}>Lg</Button>
                   </div>
-                </CardHeader>
+                </CardTitleWithBackground>
                 <CardContent className="flex-1 p-0">
                   <ScrollArea className="h-full max-h-[calc(100vh-20rem)]">
                     <div 
@@ -614,5 +615,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
