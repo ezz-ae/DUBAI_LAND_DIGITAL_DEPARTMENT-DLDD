@@ -487,7 +487,7 @@ function PageContent() {
                 </div>
                 <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content} size="sm">
                   {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
-                  Summarize
+                  Summarize Document
                 </Button>
             </CardHeader>
             <CardContent className="p-0">

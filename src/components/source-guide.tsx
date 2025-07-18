@@ -15,15 +15,15 @@ export function SourceGuide({ summary, topics, isArabic }: SourceGuideProps) {
   return (
     <div
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="mb-6 p-4 rounded-lg bg-card-foreground/5 dark:bg-card-foreground/10 border border-border/50"
+      className="mb-6 p-4 rounded-lg bg-muted/30 dark:bg-black/30 border border-border/50"
     >
       <h3 className="flex items-center gap-2 text-lg font-headline font-semibold mb-3">
         <Sparkle className="text-accent" />
-        Source guide
+        Summary
       </h3>
       <div className={cn("grid gap-4 md:grid-cols-3")}>
         <div className="md:col-span-2">
-          <h4 className="font-semibold mb-1">Summary</h4>
+          <h4 className="font-semibold mb-1">Overview</h4>
           <p className={cn("text-sm text-muted-foreground", isArabic && "font-arabic")}>{summary}</p>
         </div>
         <div>
