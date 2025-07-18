@@ -242,7 +242,62 @@ export const mindMapData = {
     {
       id: 'mashroi-professional-hub',
       name: 'Mashroi: AI-Powered Real Estate Professional Hub',
-      children: [],
+      children: [
+        {
+            id: 'mashroi-identity',
+            name: 'Core Identity & Purpose',
+            children: [
+                { id: 'contribution-intelligence', name: 'Contribution Intelligence System', children: [] },
+                { id: 'real-estate-grid', name: "Nation's Real Estate Intelligence Grid", children: [] },
+                { id: 'sovereign-framework', name: 'Sovereign, Governless Intelligence Framework', children: [] },
+                { id: 'national-innovation', name: 'Original National Innovation', children: [] },
+                { id: 'mandatory-gateway', name: 'Mandatory Gateway (like Ejari)', children: [] },
+            ]
+        },
+        {
+            id: 'mashroi-integration',
+            name: 'Structural Integration within DLDCHAIN',
+            children: [
+                { id: 'identity-layer', name: 'Identity Layer', children: [] },
+                { id: 'visa-layer', name: 'Visa Layer', children: [] },
+                { id: 'education-layer', name: 'Education Layer', children: [] },
+                { id: 'job-layer', name: 'Job Layer', children: [] },
+                { id: 'compliance-layer', name: 'Compliance Layer', children: [] },
+            ]
+        },
+        {
+            id: 'mashroi-functionalities',
+            name: 'Key Functionalities',
+            children: [
+                { id: 'broker-hiring', name: 'Broker Hiring & Visa Flow (3-month smart visa)', children: [] },
+                { id: 'developer-integration', name: 'Developer Integration & Mandatory Data Sync', children: [] },
+                { id: 'advanced-tools', name: 'Advanced Agent Tools (AI-powered)', children: [] },
+                { id: 'reputation-learning', name: 'Reputation Through Learning (No Buying Rank)', children: [] },
+                { id: 'ethical-hub', name: 'Compliance & Ethical Tracking Hub', children: [] },
+                { id: 'commission-flow', name: 'Smart Contract Commission Flow', children: [] },
+                { id: 'group-negotiations', name: 'AI-Coordinated Group Negotiations', children: [] },
+            ]
+        },
+        {
+            id: 'mashroi-benefits',
+            name: 'Revenue & Compliance Benefits',
+            children: [
+                { id: 'compliance-revenue', name: 'Compliance Gate Revenues (Fines, Licensing Fees)', children: [] },
+                { id: 'broker-visa-revenue', name: 'Broker Visa Revenue', children: [] },
+                { id: 'developer-tools-revenue', name: 'Developer Tools Revenue', children: [] },
+                { id: 'self-funding-governance', name: 'Self-Funding Governance System', children: [] },
+            ]
+        },
+        {
+            id: 'mashroi-positioning',
+            name: 'Global Positioning',
+            children: [
+                { id: 'hr-protocol', name: 'First AI-governed HR Protocol for Real Estate', children: [] },
+                { id: 'live-compliance-engine', name: 'Live Compliance Engine with Direct Visa Access', children: [] },
+                { id: 'contributor-ecosystem', name: 'Behavior-First Contributor Ecosystem', children: [] },
+            ]
+        }
+      ],
     },
     {
       id: 'compliance-risk-dispute',
