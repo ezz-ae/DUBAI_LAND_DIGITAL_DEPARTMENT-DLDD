@@ -547,67 +547,67 @@ Assigns a digital identity (CDID) to every square foot of Dubai, making every pa
   },
   {
     id: 3,
-    name: 'Chapter 1: Introduction',
+    name: 'Introduction to DLDCHAIN',
     content: 'This chapter provides an overview of the DLDCHAIN project, its vision, and its goals. It outlines the challenges in the current real estate market and how DLDCHAIN aims to solve them.'
   },
   {
     id: 4,
-    name: 'Chapter 2: Core Components',
+    name: 'The Core Components',
     content: 'This chapter delves into the main components of the DLDCHAIN ecosystem: DXBTOKENS, DLD Digital Dirham, EBRAM, and the Mashroi Gateway.'
   },
   {
     id: 5,
-    name: 'Chapter 3: Tokenization Philosophy',
+    name: 'The Tokenization Philosophy',
     content: 'This chapter explains the philosophy behind tokenization in DLDCHAIN, including what can be tokenized, the EBRAMINT process, and the token pricing structure.'
   },
   {
     id: 6,
-    name: 'Chapter 4: Trading and Liquidity',
+    name: 'Trading Mechanisms and Liquidity',
     content: 'This chapter details the trading mechanisms on DLDCHAIN, including different order types and how the system ensures liquidity through Income Pools.'
   },
   {
     id: 7,
-    name: 'Chapter 5: Architecture',
+    name: 'System Architecture Deep Dive',
     content: 'This chapter provides a technical overview of the DLDCHAIN architecture, including its layered system design and the underlying blockchain infrastructure.'
   },
   {
     id: 8,
-    name: 'Chapter 6: Governance',
+    name: 'The Governance Model',
     content: 'This chapter discusses the governance model of DLDCHAIN, including the role of the DLD, governmental integration, and the proposed Governing Council.'
   },
   {
     id: 9,
-    name: 'Chapter 7: Legal Framework',
+    name: 'The Legal Framework',
     content: 'This chapter outlines the role of legal professionals within the DLDCHAIN ecosystem and how EBRAM integrates with the Ministry of Justice.'
   },
   {
     id: 10,
-    name: 'Chapter 8: Global Ambition',
+    name: 'Global Ambition and Sovereign Model',
     content: 'This chapter discusses the strategic vision for DLDCHAIN as a sovereign model for other global cities.'
   },
   {
     id: 11,
-    name: 'Chapter 9: Market Impact',
+    name: 'Analysis of Market Impact',
     content: 'This chapter analyzes the potential market impact of DLDCHAIN, including solving information asymmetry and reducing transactional friction.'
   },
   {
     id: 12,
-    name: 'Chapter 10: Pilot Initiatives',
+    name: 'Pilot Initiatives and Project Status',
     content: 'This chapter reviews the pilot initiatives and the current status of the project, highlighting key milestones.'
   },
   {
     id: 13,
-    name: 'Chapter 11: Intellectual Property',
+    name: 'Intellectual Property & Attribution',
     content: 'This chapter clarifies the intellectual property and sovereign attribution of the DLDCHAIN project.'
   },
   {
     id: 14,
-    name: 'Chapter 12: EBRAM Scenarios',
+    name: 'EBRAM System: Real-World Scenarios',
     content: 'This chapter presents various real-world scenarios to challenge and demonstrate the capabilities of the EBRAM system.'
   },
   {
     id: 15,
-    name: 'Chapter 13: Smart Contract Logic',
+    name: 'Smart Contract Logic Explained',
     content: 'This chapter provides a detailed look at the smart contract logic, including the EBRAM language layers and command structure.'
   },
   {
@@ -617,20 +617,17 @@ Assigns a digital identity (CDID) to every square foot of Dubai, making every pa
   },
   {
     id: 17,
-    name: 'Appendix B: Trading Model',
+    name: 'Appendix B: The Trading Model',
     content: 'This appendix details the DXBTOKEN trading model, including asset categories and order types.'
   },
   {
     id: 18,
-    name: 'Appendix C: Tax & Reporting',
+    name: 'Appendix C: Tax and Reporting Gateway',
     content: 'This appendix outlines the token tax and reporting gateway.'
   },
   {
     id: 19,
-    name: 'Appendix D: Digital Identity',
+    name: 'Appendix D: City Digital Identity Protocol',
     content: 'This appendix explains the DLDCHAIN City Digital Identity Protocol.'
   }
 ];
-
-
-

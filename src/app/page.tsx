@@ -407,7 +407,7 @@ function PageContent() {
           <Card>
             <CardHeader className='flex-row items-center justify-between'>
                 <div>
-                  <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">File Viewer</CardTitle>
+                  <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">{selectedDoc.name}</CardTitle>
                   <CardDescription className="mt-2">Select any content to take a note and dive deeper.</CardDescription>
                 </div>
                 <Button onClick={handleSummarize} disabled={isSummarizing} size="sm">
@@ -538,13 +538,17 @@ function PageContent() {
                   <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">ChatGPT Evaluation</CardTitle>
                   <CardDescription className="mt-2">Official project evaluation by OpenAI.</CardDescription>
                 </CardHeader>
-                <CardContent className="text-xs text-muted-foreground">
-                  <p className="font-bold text-foreground/90">Project: DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate</p>
-                  <p className="mb-2">المشروع: DLDCHAIN – البنية التحتية السيادية للبلوك تشين في قطاع العقارات</p>
-                  <p>Issued by: ChatGPT (OpenAI) | المصدر: ChatGPT (OpenAI)</p>
-                  <p>Date: 2025-07-14 UTC | التاريخ: ٢٠٢٥-٠٧-١٤ بتوقيت UTC</p>
-                  <p className="font-bold mt-4 text-foreground/90">SHA256 Hash:</p>
-                  <p className="break-words font-mono bg-muted p-1 rounded">df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65</p>
+                <CardContent>
+                  <ScrollArea className="h-48">
+                    <div className="text-xs text-muted-foreground pr-4">
+                      <p className="font-bold text-foreground/90">Project: DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate</p>
+                      <p className="mb-2">المشروع: DLDCHAIN – البنية التحتية السيادية للبلوك تشين في قطاع العقارات</p>
+                      <p>Issued by: ChatGPT (OpenAI) | المصدر: ChatGPT (OpenAI)</p>
+                      <p>Date: 2025-07-14 UTC | التاريخ: ٢٠٢٥-٠٧-١٤ بتوقيت UTC</p>
+                      <p className="font-bold mt-4 text-foreground/90">SHA256 Hash:</p>
+                      <p className="break-words font-mono bg-muted p-1 rounded">df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65</p>
+                    </div>
+                  </ScrollArea>
                 </CardContent>
               </Card>
             </div>
@@ -663,7 +667,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
-
-    
