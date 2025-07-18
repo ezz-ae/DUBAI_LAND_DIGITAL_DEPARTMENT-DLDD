@@ -159,7 +159,7 @@ function PageContent() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
-  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`'});
+  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`', summary: '', topics: []});
   
   const [summary, setSummary] = useState('');
   const [isSummarizing, setIsSummarizing] = useState(false);
@@ -183,9 +183,6 @@ function PageContent() {
   const [activeNoteDialog, setActiveNoteDialog] = useState<Note | null>(null);
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
-
-  const sourceGuideSummary = `This extensive conversation details the conceptualization and architectural design of DLDCHAIN, a proposed sovereign digital real estate platform for Dubai. The core purpose is to transform property ownership, transactions, and governance by assigning a digital identity to every square foot of land and property in the city, beyond just tokenization. Key components include EBRAM, the smart contract engine functioning as a legal-transactional language for real estate rules; Mashroi, an AI-driven system for professionalizing the real estate workforce by rewarding contributions and ensuring fairness; DXBTOKENS, representing native, verifiable shares of DLD-registered properties for unprecedented liquidity; and MAKE, a private financial layer handling liquidity pools and cash flow. The entire system is envisioned as a "constitutional upgrade" to Dubai's real estate, aiming for global leadership in digital land governance and setting a new standard for transparency, efficiency, and automated trust.`;
-  const sourceGuideTopics = ["DLDCHAIN Ecosystem", "Real Estate Tokenization", "AI-Driven Governance", "Digital Identity", "Financial Liquidity"];
 
   const mockupImages = [
     { src: "https://placehold.co/1200x800.png", alt: "Project mockup 1", hint: "futuristic city" },
@@ -495,7 +492,7 @@ function PageContent() {
             </CardHeader>
             <CardContent className="p-0">
               <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[60vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
-                <SourceGuide summary={sourceGuideSummary} topics={sourceGuideTopics} isArabic={isArabic} />
+                <SourceGuide summary={selectedDoc?.summary || ''} topics={selectedDoc?.topics || []} isArabic={isArabic} />
                 <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
               </ScrollArea>
             </CardContent>
