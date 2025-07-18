@@ -67,6 +67,8 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        "mindmap-node-bg": "hsl(var(--mindmap-node-bg))",
+        "mindmap-node-hover-bg": "hsl(var(--mindmap-node-hover-bg))",
       },
       borderRadius: {
         lg: 'var(--radius)',
