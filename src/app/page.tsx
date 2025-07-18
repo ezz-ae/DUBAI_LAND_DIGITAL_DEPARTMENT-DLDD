@@ -56,6 +56,7 @@ import { cn } from '@/lib/utils';
 import { useTheme } from "next-themes"
 import { dldChainDocuments } from '@/lib/documents';
 import { InteractiveMindMap } from '@/components/interactive-mind-map';
+import { CardTitleWithBackground } from '@/components/card-title-with-background';
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
@@ -377,20 +378,14 @@ function PageContent() {
           </Card>
 
           <Card>
-            <CardHeader className="bg-card-foreground/5 dark:bg-card-foreground/10 p-4">
-              <CardTitle className="text-2xl">DLDCHAIN STRUCTURE MINDMAP</CardTitle>
-              <CardDescription className="mt-1">Click any part for a deep dive.</CardDescription>
-            </CardHeader>
+            <CardTitleWithBackground title="DLDCHAIN STRUCTURE MINDMAP" subtitle="Click any part for a deep dive." />
             <CardContent className="p-4">
               <InteractiveMindMap onNodeClick={handleExplainTopic} />
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className="border-b bg-card-foreground/5 dark:bg-card-foreground/10 p-4">
-              <CardTitle className="text-2xl">AI Open Discussion</CardTitle>
-              <CardDescription className="mt-1">Ask questions about the project.</CardDescription>
-            </CardHeader>
+            <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
             <CardContent className="p-0">
               <ScrollArea className="h-96" ref={scrollAreaRef}>
                 <div className="p-4 space-y-4">
@@ -460,10 +455,7 @@ function PageContent() {
           </Card>
 
           <Card>
-            <CardHeader className="bg-card-foreground/5 dark:bg-card-foreground/10 p-4">
-              <CardTitle className="text-2xl">Media & Verification Center</CardTitle>
-              <CardDescription className="mt-1">Listen to audio overviews and verify official documentation.</CardDescription>
-            </CardHeader>
+            <CardTitleWithBackground title="Media & Verification Center" subtitle="Listen to audio overviews and verify official documentation." />
             <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col items-center justify-center space-y-4">
                   <p className="text-sm font-medium text-center">Listen to a prefatory audio interview about the project.</p>
@@ -491,10 +483,7 @@ function PageContent() {
           </Card>
             
           <Card>
-            <CardHeader className="bg-card-foreground/5 dark:bg-card-foreground/10 p-4">
-                <CardTitle className="text-2xl">Notes & Reports</CardTitle>
-                <CardDescription className="mt-1">Review notes, get clarifications, and generate reports.</CardDescription>
-            </CardHeader>
+            <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes, get clarifications, and generate reports." />
             <CardContent className="p-6 space-y-4">
                 <div className="space-y-2">
                   <h4 className="font-medium text-foreground/80">Your Notes</h4>
