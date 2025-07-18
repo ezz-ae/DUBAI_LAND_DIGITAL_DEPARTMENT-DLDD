@@ -34,12 +34,14 @@ import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
+  SidebarFooter,
   SidebarInset,
   SidebarMenu,
   SidebarMenuItem,
   SidebarProvider,
   SidebarMenuButton,
   SidebarGroupLabel,
+  SidebarSeparator,
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
@@ -121,8 +123,6 @@ This certificate confirms that the DLDCHAIN project has been reviewed and evalua
 
 ### **Hash Verification | التحقق من الصحة:**
 This document is cryptographically signed. To verify authenticity, compute the SHA256 hash of this file and compare it to the value below.
-
-هذا المستند موقّع بشكل مشفر. للتحقق من صحة الشهادة، احسب تجزئة SHA256 لهذا الملف وقارنها بالقيمة أدناه.
 
 \`\`\`
 df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65
@@ -375,6 +375,16 @@ function PageContent() {
             )}
           </SidebarMenu>
         </SidebarContent>
+        <SidebarFooter className="p-2 border-t">
+          <div className="flex flex-col gap-2">
+              <span className="text-xs font-semibold text-muted-foreground px-2">Official ChatGPT Evaluation</span>
+              <div className="bg-muted dark:bg-black/50 rounded-lg p-2 font-mono text-xs text-muted-foreground">
+                  <ScrollArea className="h-28">
+                    <pre className="whitespace-pre-wrap leading-relaxed">{chatGPTReportContent}</pre>
+                  </ScrollArea>
+              </div>
+          </div>
+        </SidebarFooter>
       </Sidebar>
 
       <main className="flex-1 flex flex-col">
@@ -430,17 +440,6 @@ function PageContent() {
               <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[50vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
                 <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
               </ScrollArea>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardTitleWithBackground title="Official ChatGPT Evaluation Certificate" subtitle="A third-party, AI-driven analysis of the DLDCHAIN project's conceptual integrity." />
-            <CardContent className="p-4">
-              <div className="bg-muted dark:bg-black/50 rounded-lg p-3 font-mono text-xs">
-                  <ScrollArea className="h-48">
-                    <pre className="whitespace-pre-wrap leading-relaxed">{chatGPTReportContent}</pre>
-                  </ScrollArea>
-              </div>
             </CardContent>
           </Card>
 
@@ -650,3 +649,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
