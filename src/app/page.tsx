@@ -77,7 +77,7 @@ function PageContent() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
-  const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(dldChainDocuments.find(d => d.id === 1) || dldChainDocuments[0] || null);
+  const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(dldChainDocuments.find(d => d.id === 18) || dldChainDocuments[0] || null);
   const [isMindMapOpen, setIsMindMapOpen] = useState(false);
   
   const [summary, setSummary] = useState('');
@@ -104,6 +104,7 @@ function PageContent() {
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
   const fetchSummary = async (doc: DLDDoc) => {
+    if (!doc) return;
     setIsSummarizing(true);
     setSummary('');
     try {
@@ -138,7 +139,7 @@ function PageContent() {
     }
   }, [messages]);
   
-  const handleSelectDocument = async (doc: DLDDoc) => {
+  const handleSelectDocument = (doc: DLDDoc) => {
     setSelectedDoc(doc);
   };
 
@@ -290,10 +291,10 @@ function PageContent() {
 
   const handleLanguageToggle = () => {
     if (isArabic) {
-      const englishDoc = dldChainDocuments.find(d => d.id === 1);
+      const englishDoc = dldChainDocuments.find(d => d.id === 20); // DLDCHAIN English Vision
       if (englishDoc) setSelectedDoc(englishDoc);
     } else {
-      const arabicDoc = dldChainDocuments.find(d => d.id === 19);
+      const arabicDoc = dldChainDocuments.find(d => d.id === 19); // DLDCHAIN Arabic Vision
       if (arabicDoc) setSelectedDoc(arabicDoc);
     }
   };
@@ -381,16 +382,18 @@ function PageContent() {
                   </div>
                 </CardTitleWithBackground>
                 <CardContent className="p-0">
-                    <div 
-                      dir={isArabic ? 'rtl' : 'ltr'} 
-                      className={cn(
-                        "p-6 whitespace-pre-wrap leading-relaxed",
-                        textSize,
-                        isArabic && "font-arabic"
-                      )}
-                    >
-                      {selectedDoc.content}
-                    </div>
+                    <ScrollArea className="h-[60vh]">
+                        <div 
+                          dir={isArabic ? 'rtl' : 'ltr'} 
+                          className={cn(
+                            "p-6 whitespace-pre-wrap leading-relaxed",
+                            textSize,
+                            isArabic && "font-arabic"
+                          )}
+                        >
+                          {selectedDoc.content}
+                        </div>
+                    </ScrollArea>
                 </CardContent>
               </Card>
             </div>
