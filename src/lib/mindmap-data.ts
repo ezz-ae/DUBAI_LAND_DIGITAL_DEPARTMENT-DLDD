@@ -302,17 +302,85 @@ export const mindMapData = {
     {
       id: 'compliance-risk-dispute',
       name: 'Compliance, Risk & Dispute Resolution',
-      children: [],
+      children: [
+          { id: 'automated-legal-compliance', name: 'Automated Legal Compliance for Advertising (Trakheesi)', children: [] },
+          { id: 'fraud-flagging', name: 'Fraud Flagging and Prevention (AI System)', children: [] },
+          { id: 'automated-contract-breach', name: 'Automated Contract Breach Handling (EBRAM)', children: [] },
+          { id: 'consumer-contract-dispute', name: 'Consumer-Contract Dispute Resolution (Smart Contract Triggers)', children: [] },
+          { id: 'reputation-based-lending', name: 'Reputation-Based Lending (EBRAM-Verified Contracts)', children: [] },
+          { id: 'ai-flagged-discrepancies', name: 'AI-Flagged Discrepancies in Legal View Mode', children: [] }
+      ],
     },
     {
       id: 'roadmap-future',
       name: 'Roadmap & Future Potential',
-      children: [],
+      children: [
+        {
+          id: 'phase-1',
+          name: 'Phase 1: Development & Governance Finalization (12-18 months)',
+          children: [
+            { id: 'team-assembly', name: 'Team Assembly', children: [] },
+            { id: 'core-network-dev', name: 'Core Network Development (Hyperledger Fabric)', children: [] },
+            { id: 'governance-establishment', name: 'Governance Establishment', children: [] },
+            { id: 'ejari-integration-phase1', name: 'Ejari Integration (Read-Only Oracle)', children: [] },
+            { id: 'initial-node-onboarding', name: 'Initial Node Onboarding', children: [] },
+            { id: 'mvp-dev', name: 'MVP Development (DLD-AED, DXBTOKENS, EBRAM, Mashroi)', children: [] },
+            { id: 'regulatory-framework', name: 'Regulatory Framework Drafting', children: [] },
+          ]
+        },
+        {
+          id: 'phase-2',
+          name: 'Phase 2: EBRAM Pilot for Residential Leases (18-24 months)',
+          children: [
+            { id: 'ebram-audit', name: 'EBRAM Smart Contract Audit', children: [] },
+            { id: 'pilot-program-launch', name: 'Pilot Program Launch', children: [] },
+            { id: 'dewa-integration-phase2', name: 'DEWA Integration', children: [] },
+            { id: 'feedback-refinement', name: 'Feedback & Refinement', children: [] },
+            { id: 'efficiency-gains', name: 'Efficiency Gains Measurement', children: [] },
+          ]
+        },
+        {
+          id: 'phase-3',
+          name: 'Phase 3: Full EBRAM Rollout & Secondary Market Integration (24-36 months)',
+          children: [
+            { id: 'universal-ebram-rollout', name: 'Universal EBRAM Rollout (Residential, Commercial, Retail)', children: [] },
+            { id: 'short-term-rental-modules', name: 'Short-Term Rental Modules (DET Integration)', children: [] },
+            { id: 'secondary-trading-pilot', name: 'Secondary Trading Pilot (VARA-Licensed Exchange)', children: [] },
+            { id: 'institutional-partner-onboarding', name: 'Institutional Partner Onboarding', children: [] },
+          ]
+        },
+        {
+          id: 'phase-4',
+          name: 'Phase 4: Advanced Features & Ecosystem Expansion (36+ months)',
+          children: [
+            { id: 'on-chain-dispute-resolution', name: 'On-Chain Dispute Resolution Module', children: [] },
+            { id: 'digital-asset-inheritance', name: 'Digital Asset Inheritance Protocol (DIFC Courts)', children: [] },
+            { id: 'cross-chain-interop', name: 'Cross-Chain Interoperability (Hyperledger Cactus/Weaver)', children: [] },
+          ]
+        },
+        { id: 'multi-city-strategy', name: 'Multi-City White-Label Strategy', children: [] },
+        { id: 'global-exchange-hub', name: 'Global Tokenized Property Exchange Hub in Dubai', children: [] },
+      ],
     },
     {
       id: 'ux-accessibility',
       name: 'User Experience & Accessibility',
-      children: [],
+      children: [
+        { 
+          id: 'dldchain-wallet', 
+          name: 'DLDCHAIN Universal Wallet', 
+          children: [
+            { id: 'smart-wallet', name: 'Smart Wallet (Customizable Tiers, Non-Realizable)', children: [] },
+            { id: 'fiat-only-wallet', name: 'Fiat-Only (DLD-AED)', children: [] },
+            { id: 'deep-security', name: 'Deep Security (Ethereum-grade & beyond)', children: [] },
+            { id: 'auth-options', name: 'OTP Login, Smart Cookies, Biometric Options', children: [] },
+          ] 
+        },
+        { id: 'mashroi-gateway-ux', name: 'Mashroi Gateway (Real Estate Professional Hub)', children: [] },
+        { id: 'multilingual-support', name: 'Multilingual Support & Voiceovers', children: [] },
+        { id: 'ai-integration-ux', name: 'AI Integration (Copilot & Agreement Verifier)', children: [] },
+        { id: 'interactive-presentation-ux', name: 'Interactive Presentation', children: [] },
+      ],
     },
   ],
 };
