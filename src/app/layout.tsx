@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: 'DLDCHAIN PROTOCOL',
+  title: 'ProjectPilot',
   description: 'The Architectural Governance Protocol for Dubai\'s Real Estate Future.',
 };
 
