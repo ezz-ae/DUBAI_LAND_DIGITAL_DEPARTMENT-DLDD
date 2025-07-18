@@ -101,7 +101,7 @@ const defaultNote: Note = {
 };
 
 const liquidityMapSteps = [
-    { title: "EBRAMINT", description: "CDID + Legal" },
+    { title: "EBRAMINT", description: "Legal review" },
     { title: "MAKE Request", description: "Pool Signed" },
     { title: "MAKE-IN", description: "Token = Escrow" },
     { title: "DXBTOKEN Trading", description: "Layered Orders" },
