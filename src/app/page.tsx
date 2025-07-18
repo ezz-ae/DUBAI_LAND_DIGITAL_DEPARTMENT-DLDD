@@ -51,6 +51,7 @@ import {
 } from "@/components/ui/select"
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Textarea } from '@/components/ui/textarea';
 
 
 const initialMessages = [
@@ -76,7 +77,7 @@ function PageContent() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
-  const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(null);
+  const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(dldChainDocuments.find(d => d.id === 19) || dldChainDocuments[0] || null);
   const [isMindMapOpen, setIsMindMapOpen] = useState(false);
   
   const [summary, setSummary] = useState('');
@@ -102,19 +103,9 @@ function PageContent() {
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
-  useEffect(() => {
-    if (chatScrollAreaRef.current) {
-        const lastMessage = chatScrollAreaRef.current.lastElementChild;
-        if(lastMessage) {
-            lastMessage.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-  }, [messages]);
-  
-  const handleSelectDocument = async (doc: DLDDoc) => {
-    setSelectedDoc(doc);
-    setSummary('');
+  const fetchSummary = async (doc: DLDDoc) => {
     setIsSummarizing(true);
+    setSummary('');
     try {
       const result = await summarizeDocument({ documentText: doc.content });
       setSummary(result.summary);
@@ -129,6 +120,27 @@ function PageContent() {
     } finally {
       setIsSummarizing(false);
     }
+  };
+
+  useEffect(() => {
+    if (selectedDoc) {
+      fetchSummary(selectedDoc);
+    }
+  }, []); // Run only once on initial mount
+
+
+  useEffect(() => {
+    if (chatScrollAreaRef.current) {
+        const lastMessage = chatScrollAreaRef.current.lastElementChild;
+        if(lastMessage) {
+            lastMessage.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+  }, [messages]);
+  
+  const handleSelectDocument = async (doc: DLDDoc) => {
+    setSelectedDoc(doc);
+    await fetchSummary(doc);
   };
 
   const handleSendMessage = async (e?: React.FormEvent, message?: string) => {
@@ -347,7 +359,7 @@ function PageContent() {
                 isArabic={isArabic}
                 onTopicClick={handleTopicClick}
               />
-              <Card className="flex-1 flex flex-col overflow-y-hidden">
+              <Card className="flex-1 flex flex-col">
                 <CardTitleWithBackground>
                   <div>
                     <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
@@ -358,7 +370,7 @@ function PageContent() {
                     <Button variant={textSize === 'text-lg' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>Lg</Button>
                   </div>
                 </CardTitleWithBackground>
-                <CardContent className="flex-1 p-0">
+                <CardContent className="p-0">
                     <div 
                       dir={isArabic ? 'rtl' : 'ltr'} 
                       className={cn(
@@ -557,7 +569,7 @@ function PageContent() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <Input placeholder="Note Title" value={newNoteTitle} onChange={e => setNewNoteTitle(e.target.value)} />
-            <textarea placeholder="Note Content..." value={newNoteContent} onChange={e => setNewNoteContent(e.target.value)} className="min-h-[100px] p-2 border rounded-md bg-transparent" />
+            <Textarea placeholder="Note Content..." value={newNoteContent} onChange={e => setNewNoteContent(e.target.value)} className="min-h-[100px]" />
           </div>
           <DialogFooter>
             <Button variant="ghost" onClick={() => setShowAddNoteDialog(false)}>Cancel</Button>
