@@ -6,13 +6,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -180,6 +173,7 @@ function PageContent() {
   const [report, setReport] = useState('');
   const [textSize, setTextSize] = useState<TextSize>('sm');
   const [activeNoteDialog, setActiveNoteDialog] = useState<Note | null>(null);
+  const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
@@ -478,24 +472,26 @@ function PageContent() {
         </header>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          <Card>
-            <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
-                <div>
-                  <CardTitle className="text-2xl">{selectedDoc?.name || 'Document Viewer'}</CardTitle>
-                  <CardDescription className="mt-1">Select any content to take a note and dive deeper.</CardDescription>
-                </div>
-                <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content} size="sm">
-                  {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
-                  Summarize Document
-                </Button>
-            </CardHeader>
-            <CardContent className="p-0">
-              <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[60vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
-                <SourceGuide summary={selectedDoc?.summary || ''} topics={selectedDoc?.topics || []} isArabic={isArabic} />
-                <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
-              </ScrollArea>
-            </CardContent>
-          </Card>
+          {!isMapDialogOpen && (
+            <Card>
+              <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
+                  <div>
+                    <CardTitle className="text-2xl">{selectedDoc?.name || 'Document Viewer'}</CardTitle>
+                    <CardDescription className="mt-1">Select any content to take a note and dive deeper.</CardDescription>
+                  </div>
+                  <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content} size="sm">
+                    {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
+                    Summarize Document
+                  </Button>
+              </CardHeader>
+              <CardContent className="p-0">
+                <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[60vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
+                  <SourceGuide summary={selectedDoc?.summary || ''} topics={selectedDoc?.topics || []} isArabic={isArabic} />
+                  <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+          )}
           
           <div className="space-y-4">
             <div className="flex items-center justify-between w-full px-4">
@@ -503,7 +499,7 @@ function PageContent() {
                   <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
                   <p className="text-sm text-muted-foreground mt-1">An interactive overview of the project's architecture.</p>
                 </div>
-                  <Dialog>
+                  <Dialog open={isMapDialogOpen} onOpenChange={setIsMapDialogOpen}>
                     <DialogTrigger asChild>
                       <Button variant="outline">
                         <Maximize className="mr-2" />
@@ -520,7 +516,7 @@ function PageContent() {
                     </DialogContent>
                   </Dialog>
               </div>
-            <div className="h-96 w-full border-t border-b">
+            <div className="h-96 w-full">
               <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
             </div>
           </div>

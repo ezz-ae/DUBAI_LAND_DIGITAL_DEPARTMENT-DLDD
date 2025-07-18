@@ -206,7 +206,7 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
   buildRenderTree(mindMapData);
 
   return (
-    <div className="w-full h-full bg-muted/20 overflow-hidden">
+    <div className="w-full h-full overflow-hidden">
       <TransformWrapper
         minScale={0.2}
         initialScale={0.7}
