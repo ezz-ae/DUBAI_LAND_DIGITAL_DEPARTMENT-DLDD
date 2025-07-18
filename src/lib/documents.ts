@@ -1040,5 +1040,5 @@ Mahmoud Ezz
 Dubai Resident | Real Estate Specialist | Technology Architect
 Prepared Q4 2025 – Dubai, UAE
 `
-  },
+  }
 ];
