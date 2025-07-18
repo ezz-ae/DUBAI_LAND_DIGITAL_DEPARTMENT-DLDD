@@ -46,7 +46,8 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown, Maximize, Share2, Plus } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown, Maximize, Share2, Plus, Image as ImageIcon, DownloadIcon } from 'lucide-react';
+import Image from 'next/image';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
@@ -62,7 +63,7 @@ import { InteractiveMindMap } from '@/components/interactive-mind-map';
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
 import { SourceGuide } from '@/components/source-guide';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronsRight } from 'lucide-react';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
@@ -165,6 +166,14 @@ function PageContent() {
   const sourceGuideSummary = `This extensive conversation details the conceptualization and architectural design of DLDCHAIN, a proposed sovereign digital real estate platform for Dubai. The core purpose is to transform property ownership, transactions, and governance by assigning a digital identity to every square foot of land and property in the city, beyond just tokenization. Key components include EBRAM, the smart contract engine functioning as a legal-transactional language for real estate rules; Mashroi, an AI-driven system for professionalizing the real estate workforce by rewarding contributions and ensuring fairness; DXBTOKENS, representing native, verifiable shares of DLD-registered properties for unprecedented liquidity; and MAKE, a private financial layer handling liquidity pools and cash flow. The entire system is envisioned as a "constitutional upgrade" to Dubai's real estate, aiming for global leadership in digital land governance and setting a new standard for transparency, efficiency, and automated trust.`;
   const sourceGuideTopics = ["DLDCHAIN Ecosystem", "Real Estate Tokenization", "AI-Driven Governance", "Digital Identity", "Financial Liquidity"];
 
+  const mockupImages = [
+    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 1", hint: "futuristic city" },
+    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 2", hint: "blockchain interface" },
+    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 3", hint: "digital wallet" },
+    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 4", hint: "data visualization" },
+    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 5", hint: "real estate" },
+    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 6", hint: "smart contract" },
+  ];
 
   useEffect(() => {
     if (dldChainDocuments.length > 0) {
@@ -259,17 +268,20 @@ function PageContent() {
     }
   };
   
-  const handleGenerateReport = async () => {
+  const handleGenerateReport = async (selectedReportType?: GenerateReportInput['reportType']) => {
+    const finalReportType = selectedReportType || reportType;
     if (notes.length === 0) {
       toast({ variant: 'destructive', title: "No notes to generate report from", description: "Please add some notes first." });
       return;
     }
+    toast({ title: `Generating ${finalReportType} report...`, description: "Please wait a moment." });
     setIsGeneratingReport(true);
     setReport('');
     setClarification('');
     try {
-      const result = await generateReport({ notes: notes.map(n => n.text), reportType });
+      const result = await generateReport({ notes: notes.map(n => n.text), reportType: finalReportType });
       setReport(result.report);
+      toast({ title: "Report Generated Successfully", description: "Your report is now available in the Notes & Reports section." });
     } catch (error) {
       console.error('Error generating report:', error);
       toast({
@@ -519,6 +531,7 @@ function PageContent() {
                       <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
                         "max-w-prose rounded-lg px-4 py-2 text-sm",
                         msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
+                        msg.from === 'bot' && 'w-full md:w-10/12',
                         msg.isArabic && "font-arabic"
                       )}>
                         {msg.text}
@@ -582,22 +595,90 @@ function PageContent() {
               </form>
             </CardFooter>
           </Card>
-
+          
           <Card>
-            <CardTitleWithBackground title="Media Center" subtitle="Listen to audio overviews and access official project media." />
-            <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
-                  <p className="text-sm font-medium text-center">Listen to a prefatory audio interview about the project.</p>
-                  <Button asChild variant="outline">
+            <CardTitleWithBackground title="Media Center" subtitle="Explore project audio, visuals, and downloadable assets." />
+            <CardContent className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Audio Section */}
+              <div className="flex flex-col items-center justify-center p-4 border rounded-lg bg-card-foreground/5">
+                <Headphones className="w-10 h-10 mb-2 text-primary" />
+                <h4 className="font-semibold mb-2">Audio</h4>
+                <div className="w-full space-y-2">
+                  <Button asChild variant="outline" className="w-full">
                     <a href="https://vocaroo.com/1nZ2pXv2wDx3" target="_blank" rel="noopener noreferrer">
-                      <Headphones className="mr-2" />
-                      Play Interview
+                      <PlayCircle className="mr-2" /> Play Interview
                     </a>
                   </Button>
-                  <p className="text-sm font-medium text-center">Or, generate a new AI audio overview of the selected document.</p>
-                  <Button onClick={handleGenerateAudio} disabled={isGeneratingAudio || !selectedDoc?.content}>
+                  <Button onClick={handleGenerateAudio} disabled={isGeneratingAudio || !selectedDoc?.content} className="w-full">
                     {isGeneratingAudio ? <Loader2 className="animate-spin" /> : <Mic />}
-                    Generate AI Audio Overview
+                    Generate AI Audio
                   </Button>
+                </div>
+              </div>
+
+              {/* Mockups Section */}
+              <div className="flex flex-col items-center justify-center p-4 border rounded-lg bg-card-foreground/5">
+                <ImageIcon className="w-10 h-10 mb-2 text-primary" />
+                <h4 className="font-semibold mb-2">Mockups & Concepts</h4>
+                 <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" className="w-full">
+                        <Maximize className="mr-2" /> View Project Mockups
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-5xl h-[80vh] flex flex-col">
+                      <DialogHeader>
+                        <DialogTitle>Project Mockups</DialogTitle>
+                      </DialogHeader>
+                      <div className="flex-1 relative">
+                        <Carousel className="w-full h-full">
+                          <CarouselContent className="h-full">
+                            {mockupImages.map((img, index) => (
+                              <CarouselItem key={index} className="flex items-center justify-center p-4">
+                                <Image 
+                                  src={img.src} 
+                                  alt={img.alt} 
+                                  width={1200}
+                                  height={800}
+                                  className="object-contain max-h-full max-w-full rounded-lg"
+                                  data-ai-hint={img.hint}
+                                />
+                              </CarouselItem>
+                            ))}
+                          </CarouselContent>
+                          <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10" />
+                          <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10" />
+                        </Carousel>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+              </div>
+
+              {/* Downloads Section */}
+              <div className="flex flex-col items-center justify-center p-4 border rounded-lg bg-card-foreground/5">
+                <DownloadIcon className="w-10 h-10 mb-2 text-primary" />
+                <h4 className="font-semibold mb-2">Downloads</h4>
+                <div className="w-full space-y-2">
+                   <Button variant="outline" className="w-full" disabled>
+                      <Download className="mr-2" /> Download Full Project Study
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" className="w-full">
+                        <FileSignature className="mr-2" /> Download Report
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Select Report Type</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => handleGenerateReport('technical')}>Technical Report</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleGenerateReport('managerial')}>Managerial Report</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleGenerateReport('legal')}>Legal Report</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleGenerateReport('financial')}>Financial Report</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
             </CardContent>
           </Card>
             
@@ -647,7 +728,7 @@ function PageContent() {
                           <SelectItem value="financial">Financial Report</SelectItem>
                         </SelectContent>
                       </Select>
-                      <Button onClick={handleGenerateReport} disabled={isGeneratingReport || notes.length === 0}  size="sm">
+                      <Button onClick={() => handleGenerateReport()} disabled={isGeneratingReport || notes.length === 0}  size="sm">
                         <FileSignature />
                         {isGeneratingReport ? 'Generating...' : 'Generate'}
                       </Button>
@@ -715,5 +796,7 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
 
     
