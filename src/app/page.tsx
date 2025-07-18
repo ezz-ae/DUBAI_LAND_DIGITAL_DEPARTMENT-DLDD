@@ -61,6 +61,8 @@ import { dldChainDocuments } from '@/lib/documents';
 import { InteractiveMindMap } from '@/components/interactive-mind-map';
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
 import { SourceGuide } from '@/components/source-guide';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronsRight } from 'lucide-react';
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
@@ -72,10 +74,9 @@ const quickPrompts = [
   "Explain EBRAM and the legal system.",
   "How does Tokenization work in DLDCHAIN?",
   "تحدث باختصار عن الترميز داخل المنطومة المطروحة",
-  "اذكر بالتفصيل كيف تتعامل هذه المنطومة مع المنظومة الحالية",
+  "اذكر بالتفصيل كيف تتعامل هذه المنظومة مع المنظومة الحالية",
   "ماذا يضيف هذا النظام لدبي غير السبق، تحدث بشكل عملى",
   "لخص خمس اسباب تجعل هذا النظام مميزاً",
-  "التنظيم، الرقابة. الربحية، السرعة، الاتمتة، آمن المعلومات كيف يتناول هذا النظام تلك المفاهيم",
 ];
 
 type Note = {
@@ -461,36 +462,46 @@ function PageContent() {
               </ScrollArea>
             </CardContent>
           </Card>
-
-          <Card>
-            <CardTitleWithBackground
-              title="DLDCHAIN STRUCTURE MINDMAP"
-              subtitle="An interactive overview of the project's architecture."
-            >
-              <div className="flex items-center justify-between w-full">
-                <div>
-                  <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
-                  <p className="text-sm text-muted-foreground mt-1">An interactive overview of the project&apos;s architecture.</p>
-                </div>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline">
-                      <Maximize className="mr-2" />
-                      Explore Map
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
-                      <DialogHeader>
-                        <DialogTitle>Interactive Project Mind Map</DialogTitle>
-                      </DialogHeader>
-                      <div className="flex-1 overflow-hidden border rounded-lg bg-background">
-                        <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+          
+          <Collapsible>
+            <Card>
+              <CollapsibleTrigger asChild>
+                  <CardTitleWithBackground
+                    title="DLDCHAIN STRUCTURE MINDMAP"
+                    subtitle="An interactive overview of the project's architecture."
+                  >
+                    <div className="flex items-center justify-between w-full cursor-pointer">
+                      <div>
+                        <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
+                        <p className="text-sm text-muted-foreground mt-1">An interactive overview of the project&apos;s architecture. Click to expand.</p>
                       </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            </CardTitleWithBackground>
-          </Card>
+                       <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" onClick={(e) => e.stopPropagation()}>
+                              <Maximize className="mr-2" />
+                              Explore Map
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
+                              <DialogHeader>
+                                <DialogTitle>Interactive Project Mind Map</DialogTitle>
+                              </DialogHeader>
+                              <div className="flex-1 overflow-hidden border rounded-lg bg-background">
+                                <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+                              </div>
+                          </DialogContent>
+                        </Dialog>
+                    </div>
+                  </CardTitleWithBackground>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                  <div className="h-96 w-full border-t">
+                    <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+                  </div>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
+
 
           <Card ref={discussionCardRef}>
             <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
@@ -504,12 +515,11 @@ function PageContent() {
                         <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
                       </Avatar>
                     )}
-                    <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start')}>
+                    <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
                       <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
                         "max-w-prose rounded-lg px-4 py-2 text-sm",
                         msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                        msg.isArabic && "font-arabic" ,
-                        msg.from === 'bot' && 'w-full'
+                        msg.isArabic && "font-arabic"
                       )}>
                         {msg.text}
                       </div>
@@ -531,11 +541,11 @@ function PageContent() {
                   </div>
                 ))}
                   {messages.length <= 1 && (
-                    <div className="flex flex-col items-center gap-2 pt-4">
-                      <p className="text-sm text-muted-foreground">Or try one of these prompts:</p>
-                      <div className="flex flex-wrap justify-center gap-2">
+                    <div className="pt-4 text-center">
+                      <p className="text-sm text-muted-foreground mb-4">Or try one of these prompts:</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
                           {quickPrompts.map((prompt) => (
-                          <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)}>
+                          <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-center", /[\u0600-\u06FF]/.test(prompt) && "font-arabic rtl")}>
                             {prompt}
                           </Button>
                         ))}
@@ -705,3 +715,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
