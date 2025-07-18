@@ -8,19 +8,17 @@ import { Button } from '@/components/ui/button';
 import { Check, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Import language definitions
 import solidity from 'highlight.js/lib/languages/solidity';
 import python from 'highlight.js/lib/languages/python';
 import bash from 'highlight.js/lib/languages/bash';
 import plaintext from 'highlight.js/lib/languages/plaintext';
 
-// Register languages with highlight.js
 hljs.registerLanguage('solidity', solidity);
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('bash', bash);
-hljs.registerLanguage('shell', bash); // Alias shell to bash
+hljs.registerLanguage('shell', bash);
 hljs.registerLanguage('plaintext', plaintext);
-hljs.registerLanguage('ebram', plaintext); // Treat ebram as plaintext for now
+hljs.registerLanguage('ebram', plaintext);
 
 interface CodeBlockProps {
   code: string;
@@ -31,13 +29,14 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
   const [isCopied, setIsCopied] = useState(false);
 
   const highlightedCode = useMemo(() => {
+    const lang = language.toLowerCase();
     try {
-      if (hljs.getLanguage(language)) {
-        return hljs.highlight(code, { language, ignoreIllegals: true }).value;
+      if (hljs.getLanguage(lang)) {
+        return hljs.highlight(code, { language: lang, ignoreIllegals: true }).value;
       }
       return hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true }).value;
     } catch (error) {
-      console.error(`Highlighting failed for language ${language}:`, error);
+      console.error(`Highlighting failed for language ${lang}:`, error);
       return hljs.highlight(code, { language: 'plaintext', ignoreIllegals: true }).value;
     }
   }, [code, language]);
