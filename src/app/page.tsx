@@ -76,9 +76,9 @@ function PageContent() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
-  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`', summary: '', topics: []});
+  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`'});
   
-  const [summary, setSummary] = useState(selectedDoc?.summary || '');
+  const [summary, setSummary] = useState('');
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [showSummaryDialog, setShowSummaryDialog] = useState(false);
 
@@ -106,7 +106,6 @@ function PageContent() {
     if (dldChainDocuments.length > 0) {
       const doc = dldChainDocuments[0]
       setSelectedDoc(doc);
-      setSummary(doc.summary);
     }
   }, []);
   
@@ -118,7 +117,6 @@ function PageContent() {
   
   useEffect(() => {
     setMessages(initialMessages);
-    setSummary(selectedDoc.summary);
     setShowSummaryDialog(false);
     
     if (audioState.element) {
@@ -292,6 +290,8 @@ function PageContent() {
     // Potentially switch to the chat tab if not already there
   };
 
+  const [textSize, setTextSize] = useState('text-base');
+
 
   return (
     <div className="flex h-screen w-full bg-background text-foreground">
@@ -363,174 +363,170 @@ function PageContent() {
               <TabsTrigger value="mindmap"><BrainCircuit className="mr-2"/> Structure Mind Map</TabsTrigger>
             </TabsList>
           </div>
-          <TabsContent value="assistant" className="flex-1 overflow-y-auto p-4">
-            <div className="grid md:grid-cols-2 gap-4 h-full">
-              <Card className="flex flex-col h-full">
-                <CardHeader>
-                  <CardTitle>AI Open Discussion</CardTitle>
-                  <CardDescription>Ask questions about <span className='font-bold text-primary'>{selectedDoc.name}</span></CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 p-0 flex flex-col">
-                   <ScrollArea className="flex-1 h-96" ref={chatScrollAreaRef}>
-                    <div className="p-4 space-y-4">
-                    {messages.map((msg: any, index) => (
-                      <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
-                        {msg.from === 'bot' && (
-                          <Avatar className="w-8 h-8 shrink-0">
-                            <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
-                          </Avatar>
-                        )}
-                        <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
-                          <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
-                            "max-w-prose rounded-lg px-4 py-2 text-sm",
-                            msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                            msg.isArabic && "font-arabic"
-                          )}>
-                            {msg.text}
-                          </div>
-                        </div>
-                          {msg.from === 'user' && (
-                          <Avatar className="w-8 h-8 shrink-0">
-                              <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
-                          </Avatar>
-                        )}
-                      </div>
-                    ))}
-                      {messages.length <= 1 && (
-                        <div className="pt-4">
-                          <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
-                          <div className="grid grid-cols-1 gap-2">
-                              {(isArabic ? quickPromptsArabic : quickPromptsEnglish).map((prompt) => (
-                                <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-start text-left h-auto", isArabic && "justify-end text-right font-arabic")}>
-                                  {prompt}
-                                </Button>
-                              ))}
-                          </div>
-                        </div>
+          <TabsContent value="assistant" className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+            <Card className="flex flex-col">
+              <CardHeader>
+                <CardTitle>AI Console</CardTitle>
+                <CardDescription>Ask questions about <span className='font-bold text-primary'>{selectedDoc.name}</span></CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1 p-0 flex flex-col">
+                  <ScrollArea className="flex-1 h-96" ref={chatScrollAreaRef}>
+                  <div className="p-4 space-y-4">
+                  {messages.map((msg: any, index) => (
+                    <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
+                      {msg.from === 'bot' && (
+                        <Avatar className="w-8 h-8 shrink-0">
+                          <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                        </Avatar>
                       )}
-                    {isAnswering && (
-                        <div className="flex items-start gap-3 justify-start">
-                          <Avatar className="w-8 h-8">
-                            <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
-                          </Avatar>
-                          <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
-                            <Loader2 className="animate-spin h-4 w-4" />
-                          </div>
+                      <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
+                        <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
+                          "max-w-prose rounded-lg px-4 py-2 text-sm",
+                          msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
+                          msg.isArabic && "font-arabic"
+                        )}>
+                          {msg.text}
                         </div>
-                    )}
-                    </div>
-                  </ScrollArea>
-                </CardContent>
-                <CardFooter className="border-t pt-4">
-                  <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
-                    <Input
-                      dir={isArabic ? 'rtl' : 'ltr'}
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      placeholder="Type your question..."
-                      autoComplete="off"
-                      disabled={isAnswering}
-                      className={cn(isArabic && "font-arabic")}
-                    />
-                    <Button type="submit" size="icon" disabled={isAnswering}>
-                      <Send className="h-4 w-4" />
-                    </Button>
-                  </form>
-                </CardFooter>
-              </Card>
-              
-              <Card className="flex flex-col h-full">
-                <CardHeader>
-                  <CardTitle>Notes & Reports</CardTitle>
-                  <CardDescription>Create notes and generate AI-powered reports.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col gap-4 p-4 overflow-hidden h-96">
-                  <ScrollArea className="flex-1 pr-4">
-                    {notes.length > 0 ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {notes.map(note => (
-                          <Card key={note.id} className="cursor-pointer hover:border-primary" onClick={() => setSelectedNote(note)}>
-                            <CardHeader className="p-4">
-                              <CardTitle className="text-base flex items-start justify-between">
-                                <span className="truncate flex-1">{note.title}</span>
-                                <Checkbox
-                                  checked={note.marked}
-                                  onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
-                                  className="ml-2"
-                                />
-                              </CardTitle>
-                              <CardDescription className="text-xs truncate">Source: {note.source}</CardDescription>
-                            </CardHeader>
-                            <CardContent className="p-4 pt-0">
-                              <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
-                            </CardContent>
-                          </Card>
-                        ))}
                       </div>
-                    ) : (
-                      <div className="text-center text-muted-foreground py-8">No notes yet. Add one to get started!</div>
-                    )}
-
-                    {generatedReport && (
-                        <div className="mt-4 p-4 border rounded-lg bg-muted/50">
-                            <h3 className="font-semibold mb-2">Generated Report</h3>
-                            <p className="text-sm whitespace-pre-wrap">{generatedReport}</p>
+                        {msg.from === 'user' && (
+                        <Avatar className="w-8 h-8 shrink-0">
+                            <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
+                        </Avatar>
+                      )}
+                    </div>
+                  ))}
+                    {messages.length <= 1 && (
+                      <div className="pt-4">
+                        <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
+                        <div className="grid grid-cols-1 gap-2">
+                            {(isArabic ? quickPromptsArabic : quickPromptsEnglish).map((prompt) => (
+                              <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-start text-left h-auto", isArabic && "justify-end text-right font-arabic")}>
+                                {prompt}
+                              </Button>
+                            ))}
                         </div>
+                      </div>
                     )}
-                  </ScrollArea>
-                </CardContent>
-                 <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-                    <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none"><StickyNote className="mr-2"/> Add Note</Button>
-                    <div className="flex-1" />
-                    <Select onValueChange={setReportType} defaultValue={reportType}>
-                        <SelectTrigger className="w-full sm:w-[150px]">
-                            <SelectValue placeholder="Report Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="technical">Technical</SelectItem>
-                            <SelectItem value="managerial">Managerial</SelectItem>
-                            <SelectItem value="legal">Legal</SelectItem>
-                            <SelectItem value="financial">Financial</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <Button onClick={handleGenerateReport} disabled={isGeneratingReport}>
-                        {isGeneratingReport ? <Loader2 className="animate-spin" /> : <Sparkles />}
-                        Generate Report
-                    </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </TabsContent>
-          <TabsContent value="document" className="flex-1 flex flex-col overflow-y-auto p-4">
-            <div className="flex-1 flex flex-col">
-              <SourceGuide 
-                summary={selectedDoc.summary} 
-                topics={selectedDoc.topics || []}
-                isArabic={isArabic}
-                onTopicClick={handleTopicClick}
-              />
-              <Card className="flex-1 flex flex-col mt-4">
-                <CardTitleWithBackground>
-                  <div>
-                    <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">Main document content</p>
+                  {isAnswering && (
+                      <div className="flex items-start gap-3 justify-start">
+                        <Avatar className="w-8 h-8">
+                          <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                        </Avatar>
+                        <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
+                          <Loader2 className="animate-spin h-4 w-4" />
+                        </div>
+                      </div>
+                  )}
                   </div>
-                </CardTitleWithBackground>
-                <CardContent className="flex-1 p-0">
-                  <ScrollArea className="h-full">
-                    <div 
-                      dir={isArabic ? 'rtl' : 'ltr'} 
-                      className={cn(
-                        "p-6 whitespace-pre-wrap leading-relaxed text-base",
-                        isArabic && "font-arabic"
-                      )}
-                    >
-                      {selectedDoc.content}
+                </ScrollArea>
+              </CardContent>
+              <CardFooter className="border-t pt-4">
+                <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
+                  <Input
+                    dir={isArabic ? 'rtl' : 'ltr'}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type your question..."
+                    autoComplete="off"
+                    disabled={isAnswering}
+                    className={cn(isArabic && "font-arabic")}
+                  />
+                  <Button type="submit" size="icon" disabled={isAnswering}>
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </form>
+              </CardFooter>
+            </Card>
+            
+            <Card className="flex flex-col">
+              <CardHeader>
+                <CardTitle>Notes & Reports</CardTitle>
+                <CardDescription>Create notes and generate AI-powered reports.</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1 flex flex-col gap-4 p-4 overflow-hidden">
+                <ScrollArea className="flex-1 pr-4 h-72">
+                  {notes.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {notes.map(note => (
+                        <Card key={note.id} className="cursor-pointer hover:border-primary" onClick={() => setSelectedNote(note)}>
+                          <CardHeader className="p-4">
+                            <CardTitle className="text-base flex items-start justify-between">
+                              <span className="truncate flex-1">{note.title}</span>
+                              <Checkbox
+                                checked={note.marked}
+                                onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
+                                className="ml-2"
+                              />
+                            </CardTitle>
+                            <CardDescription className="text-xs truncate">Source: {note.source}</CardDescription>
+                          </CardHeader>
+                          <CardContent className="p-4 pt-0">
+                            <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
+                          </CardContent>
+                        </Card>
+                      ))}
                     </div>
-                  </ScrollArea>
-                </CardContent>
-              </Card>
-            </div>
+                  ) : (
+                    <div className="text-center text-muted-foreground py-8">No notes yet. Add one to get started!</div>
+                  )}
+
+                  {generatedReport && (
+                      <div className="mt-4 p-4 border rounded-lg bg-muted/50">
+                          <h3 className="font-semibold mb-2">Generated Report</h3>
+                          <p className="text-sm whitespace-pre-wrap">{generatedReport}</p>
+                      </div>
+                  )}
+                </ScrollArea>
+              </CardContent>
+                <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+                  <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none"><StickyNote className="mr-2"/> Add Note</Button>
+                  <div className="flex-1" />
+                  <Select onValueChange={setReportType} defaultValue={reportType}>
+                      <SelectTrigger className="w-full sm:w-[150px]">
+                          <SelectValue placeholder="Report Type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          <SelectItem value="technical">Technical</SelectItem>
+                          <SelectItem value="managerial">Managerial</SelectItem>
+                          <SelectItem value="legal">Legal</SelectItem>
+                          <SelectItem value="financial">Financial</SelectItem>
+                      </SelectContent>
+                  </Select>
+                  <Button onClick={handleGenerateReport} disabled={isGeneratingReport}>
+                      {isGeneratingReport ? <Loader2 className="animate-spin" /> : <Sparkles />}
+                      Generate Report
+                  </Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+          <TabsContent value="document" className="flex-1 flex flex-col overflow-y-auto p-4 gap-4">
+            <SourceGuide 
+              summary={summary}
+              isArabic={isArabic}
+              onTopicClick={handleTopicClick}
+            />
+            <Card className="flex-1 flex flex-col">
+              <CardTitleWithBackground>
+                <div>
+                  <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">Main document content</p>
+                </div>
+              </CardTitleWithBackground>
+              <CardContent className="flex-1 p-0">
+                <ScrollArea className="h-full">
+                  <div 
+                    dir={isArabic ? 'rtl' : 'ltr'} 
+                    className={cn(
+                      "p-6 whitespace-pre-wrap leading-relaxed",
+                      textSize,
+                      isArabic && "font-arabic"
+                    )}
+                  >
+                    {selectedDoc.content}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+            </Card>
           </TabsContent>
           <TabsContent value="mindmap" className="flex-1 bg-muted/20 relative">
              <InteractiveMindMap onNodeDoubleClick={handleMindMapNodeDoubleClick} />
