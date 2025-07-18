@@ -29,7 +29,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, PauseCircle, MessageSquare, StickyNote, Music4, BrainCircuit, LayoutDashboard, BookOpen, Share2 } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, PauseCircle, MessageSquare, StickyNote, Music4, BrainCircuit, LayoutDashboard, BookOpen, Share2, Code } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { askQuestion } from '@/ai/flows/ask-question';
 import { generateAudio } from '@/ai/flows/audio-overview';
@@ -38,6 +38,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useTheme } from "next-themes"
 import { dldChainDocuments } from '@/lib/documents';
+import { technicalDocuments } from '@/lib/technical-documents';
 import { SourceGuide } from '@/components/source-guide';
 import { explainTopic } from '@/ai/flows/explain-topic';
 import { InteractiveMindMap } from '@/components/interactive-mind-map';
@@ -51,6 +52,7 @@ import {
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
+import { CodeBlock } from '@/components/code-block';
 
 
 const initialMessages = [
@@ -71,7 +73,8 @@ const quickPromptsArabic = [
 
 type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 type DLDDoc = typeof dldChainDocuments[0];
-type ActiveView = 'documentation' | 'mindmap' | 'ai-console';
+type TechDoc = typeof technicalDocuments[0];
+type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs';
 
 function PageContent() {
   const { toast } = useToast();
@@ -379,6 +382,41 @@ function PageContent() {
             <InteractiveMindMap onNodeDoubleClick={handleMindMapNodeDoubleClick} />
           </div>
         );
+       case 'tech-docs':
+        return (
+          <ScrollArea className="flex-1">
+            <div className="p-6">
+              {technicalDocuments.map(doc => (
+                 <Card key={doc.id} className="mb-6">
+                    <CardHeader>
+                      <CardTitle>{doc.name}</CardTitle>
+                      <CardDescription>{doc.summary}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      {doc.content.map((item, index) => {
+                        if (item.type === 'paragraph') {
+                          return <p key={index} dangerouslySetInnerHTML={{ __html: item.text }} />;
+                        }
+                        if (item.type === 'heading') {
+                          return <h3 key={index} className="mt-4 mb-2 font-semibold text-lg" dangerouslySetInnerHTML={{ __html: item.text }} />;
+                        }
+                        if (item.type === 'subheading') {
+                            return <h4 key={index} className="mt-3 mb-1 font-semibold text-md" dangerouslySetInnerHTML={{ __html: item.text }} />;
+                        }
+                        if (item.type === 'code') {
+                          return <CodeBlock key={index} code={item.text} language={item.language} />;
+                        }
+                         if (item.type === 'list') {
+                          return <ul key={index} className="list-disc pl-5 my-2 space-y-1">{item.items.map((li, i) => <li key={i} dangerouslySetInnerHTML={{ __html: li }}/>)}</ul>;
+                        }
+                        return null;
+                      })}
+                    </CardContent>
+                 </Card>
+              ))}
+            </div>
+          </ScrollArea>
+        );
       case 'ai-console':
         return (
           <ScrollArea className="flex-1 bg-ai-console">
@@ -554,6 +592,10 @@ function PageContent() {
             <Button variant={activeView === 'documentation' ? 'default' : 'ghost'} onClick={() => setActiveView('documentation')}>
               <BookOpen className="mr-2" />
               Documentation
+            </Button>
+            <Button variant={activeView === 'tech-docs' ? 'default' : 'ghost'} onClick={() => setActiveView('tech-docs')}>
+              <Code className="mr-2" />
+              Technical Docs
             </Button>
             <Button variant={activeView === 'mindmap' ? 'default' : 'ghost'} onClick={() => setActiveView('mindmap')}>
               <Share2 className="mr-2" />
