@@ -69,16 +69,18 @@ const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
 ];
 
-const quickPrompts = [
+const quickPromptsEnglish = [
   "What is the DLDCHAIN project scope?",
-  "How does DLDCHAIN integrate with existing systems?",
-  "Explain EBRAM and the legal system.",
-  "How does Tokenization work in DLDCHAIN?",
-  "تحدث باختصار عن الترميز داخل المنطومة المطروحة",
-  "اذكر بالتفصيل كيف تتعامل هذه المنظومة مع المنظومة الحالية",
-  "ماذا يضيف هذا النظام لدبي غير السبق، تحدث بشكل عملى",
-  "لخص خمس اسباب تجعل هذا النظام مميزاً",
+  "Explain the EBRAM legal system.",
+  "How does Tokenization work?",
 ];
+
+const quickPromptsArabic = [
+  "ما هو نطاق مشروع DLDCHAIN؟",
+  "اشرح نظام أبرام القانوني.",
+  "كيف تعمل عملية الترميز؟",
+];
+
 
 type Note = {
   id: number;
@@ -531,7 +533,8 @@ function PageContent() {
                       <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
                         "max-w-prose rounded-lg px-4 py-2 text-sm",
                         msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                        msg.from === 'bot' && 'w-full md:w-10/12',
+                        msg.from === 'bot' && index === 0 && 'w-full md:w-10/12',
+                        msg.from === 'bot' && index > 0 && 'w-full',
                         msg.isArabic && "font-arabic"
                       )}>
                         {msg.text}
@@ -554,14 +557,23 @@ function PageContent() {
                   </div>
                 ))}
                   {messages.length <= 1 && (
-                    <div className="pt-4 text-center">
-                      <p className="text-sm text-muted-foreground mb-4">Or try one of these prompts:</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-                          {quickPrompts.map((prompt) => (
-                          <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-center", /[\u0600-\u06FF]/.test(prompt) && "font-arabic rtl")}>
-                            {prompt}
-                          </Button>
-                        ))}
+                    <div className="pt-4">
+                      <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
+                      <div className="grid grid-cols-2 gap-4">
+                         <div className="space-y-2">
+                          {quickPromptsEnglish.map((prompt) => (
+                            <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-left h-auto">
+                              {prompt}
+                            </Button>
+                          ))}
+                        </div>
+                        <div className="space-y-2" dir="rtl">
+                           {quickPromptsArabic.map((prompt) => (
+                            <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-right font-arabic h-auto">
+                              {prompt}
+                            </Button>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   )}
@@ -605,7 +617,7 @@ function PageContent() {
                 <h4 className="font-semibold mb-2">Audio</h4>
                 <div className="w-full space-y-2">
                   <Button asChild variant="outline" className="w-full">
-                    <a href="https://vocaroo.com/1nZ2pXv2wDx3" target="_blank" rel="noopener noreferrer">
+                    <a href="https://drive.google.com/file/d/1qGmGpJAr65P9OaApzfI03cZdU7kOxEQ9/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                       <PlayCircle className="mr-2" /> Play Interview
                     </a>
                   </Button>
