@@ -188,7 +188,56 @@ export const mindMapData = {
     {
       id: 'dxbtokens-dynamics',
       name: 'DXBTOKENS: Tokenization & Market Dynamics',
-      children: [],
+      children: [
+        {
+          id: 'concept-innovation',
+          name: 'Concept & Innovation',
+          children: [
+            { id: 'native-digital-ownership', name: 'Native Digital Ownership', children: [] },
+            { id: 'value-ownership', name: 'Value Ownership, Not Income Promises', children: [] },
+            { id: 'legally-recognized', name: 'Full, Direct, Legally Recognized Tokenization', children: [] },
+          ],
+        },
+        {
+          id: 'types-of-dxbtokens',
+          name: 'Types of DXBTOKENS',
+          children: [
+            { id: 'equity-token', name: 'Equity Token (Legal Ownership Share)', children: [] },
+            { id: 'utility-token', name: 'Utility Token (Access Rights)', children: [] },
+            { id: 'developer-token', name: 'Developer Token (Future Projects)', children: [] },
+          ],
+        },
+        {
+          id: 'process-governance',
+          name: 'Process & Governance',
+          children: [
+            { id: 'project-vetting', name: 'Project Vetting (Mega-Projects, DLD-Approval)', children: [] },
+            { id: 'token-minting', name: 'Token Minting (DLDCHAIN Authority)', children: [] },
+            { id: 'developer-allocation', name: 'Developer Allocation (DLD-monitored escrow)', children: [] },
+            { id: 'launch-price', name: 'Launch Price (DLD-verified valuation / total supply)', children: [] },
+            { id: 'fiat-only', name: 'Fiat-Only Transactions (DLD-AED)', children: [] },
+          ],
+        },
+        {
+          id: 'secondary-trading',
+          name: 'Secondary Trading & Liquidity',
+          children: [
+            { id: 'unprecedented-liquidity', name: 'Unprecedented Liquidity (Buy/Sell/Trade in Minutes)', children: [] },
+            { id: 'fiat-only-secondary', name: 'Fiat-Only Transactions (DLD-AED)', children: [] },
+            {
+              id: 'order-types',
+              name: 'Order Types',
+              children: [
+                { id: 'market-order', name: 'Market Order', children: [] },
+                { id: 'limit-order', name: 'Limit Order', children: [] },
+                { id: 'on-chain-instant', name: 'On-Chain Instant Execution', children: [] },
+                { id: 'auto-split-sell', name: 'Auto-Split Sell', children: [] },
+                { id: 'pre-pledge', name: 'Pre-Pledge', children: [] },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       id: 'mashroi-professional-hub',
