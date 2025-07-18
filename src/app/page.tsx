@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -242,10 +243,11 @@ export default function Home() {
     };
   }, []);
 
+  const isArabic = selectedDoc.id === 1;
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full bg-background font-body text-foreground">
+      <div className={cn("flex h-screen w-full bg-background text-foreground", isArabic ? "font-arabic" : "font-body")} dir={isArabic ? "rtl" : "ltr"}>
         <Sidebar className="hidden lg:flex flex-col w-[280px] border-r bg-card/50">
           <SidebarHeader className="p-4 border-b">
             <ProjectPilotLogo />
@@ -330,6 +332,11 @@ export default function Home() {
                         )}
                       </Button>
                       <audio ref={audioRef} className="hidden" />
+                      {summary && isPlaying && (
+                         <ScrollArea className="h-24 mt-4 w-full">
+                          <p className="text-sm text-center">{summary}</p>
+                        </ScrollArea>
+                      )}
                     </CardContent>
                     <CardFooter>
                       <p className="text-xs text-muted-foreground text-center w-full">
@@ -464,7 +471,7 @@ export default function Home() {
                         <div className={cn(
                           "max-w-xs rounded-lg px-4 py-2 text-sm",
                           msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                          {'text-right': msg.from === 'user' && selectedDoc.id === 1} // Right-align user messages in Arabic doc
+                          isArabic && "text-right" 
                         )}>
                           {msg.text}
                         </div>
