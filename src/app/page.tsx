@@ -322,7 +322,7 @@ function PageContent() {
               Share
             </Button>
             <Avatar>
-              <AvatarImage src="https://placehold.co/40x40" />
+              <AvatarImage data-ai-hint="male portrait" src="https://placehold.co/40x40" />
               <AvatarFallback>U</AvatarFallback>
             </Avatar>
           </div>
