@@ -6,6 +6,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
@@ -17,72 +24,116 @@ import {
   SidebarGroupLabel,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { FileText, Loader2, PlayCircle, Send, Share2, Sparkles, Upload, Bot, User } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Share2, Sparkles, Upload, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import Image from 'next/image';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
+import { askQuestion } from '@/ai/flows/ask-question';
+import { getClarification, generateReport, GenerateReportInput } from '@/ai/flows/notes';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-
-const mockDocuments = [
-  {
-    id: 1,
-    name: 'Project Proposal.docx',
-    content: `
-Project: "NextGen CRM Platform"
-
-Introduction:
-This document outlines the proposal for the development of a Next-Generation Customer Relationship Management (CRM) platform. The platform aims to revolutionize how businesses interact with their customers by leveraging AI-driven insights, a highly intuitive user interface, and seamless integration capabilities.
-
-Problem Statement:
-Current CRM solutions are often cumbersome, expensive, and lack the intelligence needed to provide proactive customer engagement strategies. Businesses struggle with fragmented data, inefficient workflows, and a lack of actionable insights, leading to missed opportunities and decreased customer satisfaction.
-
-Proposed Solution:
-Our NextGen CRM platform will offer a unified, cloud-native solution with the following key features:
-1.  **AI-Powered Insights:** Predictive analytics to forecast sales trends, identify at-risk customers, and recommend next-best actions.
-2.  **360-Degree Customer View:** A single, comprehensive profile for each customer, aggregating data from all touchpoints.
-3.  **Intuitive User Experience:** A clean, minimalist interface designed for rapid user adoption and efficiency.
-4.  **Seamless Integrations:** An open API and pre-built connectors for popular business tools (e.g., email, marketing automation, e-commerce).
-5.  **Mobile-First Design:** Full functionality on both desktop and mobile devices, ensuring productivity on the go.
-
-Target Audience:
-Small to medium-sized enterprises (SMEs) across various industries, including technology, retail, and professional services, that require a powerful yet affordable CRM solution.
-
-Conclusion:
-The NextGen CRM platform is poised to disrupt the market by offering a smarter, more user-friendly, and cost-effective alternative to existing solutions. We are confident that this project will deliver significant value to our customers and drive business growth.
-`,
-  },
-  {
-    id: 2,
-    name: 'Market Research.pdf',
-    content: 'This is the content for Market Research.pdf. It contains detailed analysis of the competitive landscape, target market demographics, and industry trends. The research indicates a strong demand for AI-driven features and mobile accessibility in CRM platforms. Key competitors are Salesforce, HubSpot, and Zoho, but there is a significant gap for a more intuitive and affordable solution for SMEs.',
-  },
-  {
-    id: 3,
-    name: 'Technical Spec.docx',
-    content: 'This is the content for Technical Spec.docx. The platform will be built on a microservices architecture using Node.js for the backend and React for the frontend. It will be hosted on AWS, leveraging services like Lambda, S3, and DynamoDB for scalability and reliability. The AI module will use Python with TensorFlow and scikit-learn. Security will be a top priority, with end-to-end encryption and compliance with GDPR and CCPA standards.',
-  },
-];
+import { useTheme } from "next-themes"
+import { dldChainDocuments } from '@/lib/documents';
+import { Textarea } from '@/components/ui/textarea';
 
 const initialMessages = [
-  { from: 'bot', text: 'Hello! How can I help you with this project?' },
+  { from: 'bot', text: 'Hello! How can I help you with the DLDCHAIN Protocol?' },
 ];
+
+type Note = {
+  id: number;
+  text: string;
+};
 
 export default function Home() {
   const { toast } = useToast();
-  const [selectedDoc, setSelectedDoc] = useState(mockDocuments[0]);
+  const { theme, setTheme } = useTheme()
+  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0]);
   const [summary, setSummary] = useState('');
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState('');
+  const [isAnswering, setIsAnswering] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const fileContentRef = useRef<HTMLDivElement>(null);
+
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [isClarifying, setIsClarifying] = useState(false);
+  const [clarification, setClarification] = useState('');
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+  const [report, setReport] = useState('');
+  const [reportType, setReportType] = useState<GenerateReportInput['reportType']>('technical');
+
 
   useEffect(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
     }
   }, [messages]);
+  
+  useEffect(() => {
+    handleSummarize();
+    setMessages(initialMessages);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDoc]);
+
+  const handleSelection = () => {
+    const selection = window.getSelection()?.toString().trim();
+    if (selection) {
+      const newNote: Note = { id: Date.now(), text: selection };
+      setNotes(prev => [...prev, newNote]);
+      toast({
+        title: "Note Added",
+        description: "Selected text has been added to your notes.",
+      })
+      window.getSelection()?.removeAllRanges();
+    }
+  };
+
+  const handleClarify = async () => {
+    if (notes.length === 0) {
+      toast({ variant: 'destructive', title: "No notes to clarify", description: "Please add some notes first." });
+      return;
+    }
+    setIsClarifying(true);
+    setClarification('');
+    try {
+      const result = await getClarification({ notes: notes.map(n => n.text) });
+      setClarification(result.clarification);
+    } catch (error) {
+      console.error('Error getting clarification:', error);
+      toast({
+        variant: "destructive",
+        title: "Clarification Failed",
+        description: "Could not get clarification. Please try again.",
+      });
+    } finally {
+      setIsClarifying(false);
+    }
+  };
+  
+  const handleGenerateReport = async () => {
+    if (notes.length === 0) {
+      toast({ variant: 'destructive', title: "No notes to generate report from", description: "Please add some notes first." });
+      return;
+    }
+    setIsGeneratingReport(true);
+    setReport('');
+    try {
+      const result = await generateReport({ notes: notes.map(n => n.text), reportType });
+      setReport(result.report);
+    } catch (error) {
+      console.error('Error generating report:', error);
+      toast({
+        variant: "destructive",
+        title: "Report Generation Failed",
+        description: "Could not generate report. Please try again.",
+      });
+    } finally {
+      setIsGeneratingReport(false);
+    }
+  };
 
   const handleSummarize = async () => {
     setIsSummarizing(true);
@@ -90,10 +141,6 @@ export default function Home() {
     try {
       const result = await summarizeDocument({ documentText: selectedDoc.content });
       setSummary(result.summary);
-      toast({
-        title: "Summary Generated",
-        description: "The document has been successfully summarized.",
-      });
     } catch (error) {
       console.error('Error summarizing document:', error);
       toast({
@@ -107,17 +154,31 @@ export default function Home() {
     }
   };
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isAnswering) return;
 
     const newMessages = [...messages, { from: 'user', text: input }];
     setMessages(newMessages);
+    const userMessage = input;
     setInput('');
+    setIsAnswering(true);
 
-    setTimeout(() => {
-      setMessages([...newMessages, { from: 'bot', text: 'Thank you for your question. As an AI assistant, I can provide information based on the loaded documents. How can I elaborate on the project details for you?' }]);
-    }, 1000);
+    try {
+      const fullContext = dldChainDocuments.map(d => `Document: ${d.name}\n\n${d.content}`).join('\n\n---\n\n');
+      const result = await askQuestion({ question: userMessage, context: fullContext });
+      setMessages([...newMessages, { from: 'bot', text: result.answer }]);
+    } catch (error) {
+      console.error('Error asking question:', error);
+      setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error. Please try again.' }]);
+       toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Could not get an answer. Please try again.",
+      });
+    } finally {
+      setIsAnswering(false);
+    }
   };
 
   return (
@@ -130,7 +191,7 @@ export default function Home() {
           <SidebarContent className="flex-1 p-2">
             <SidebarMenu>
               <SidebarGroupLabel className="px-2">Project Documents</SidebarGroupLabel>
-              {mockDocuments.map((doc) => (
+              {dldChainDocuments.map((doc) => (
                 <SidebarMenuItem key={doc.id}>
                   <SidebarMenuButton
                     onClick={() => setSelectedDoc(doc)}
@@ -159,6 +220,11 @@ export default function Home() {
             </div>
             <h2 className="hidden lg:block font-headline text-2xl font-bold">{selectedDoc.name}</h2>
             <div className="flex items-center gap-2">
+               <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
               <Button variant="outline">
                 <Share2 />
                 Share
@@ -173,6 +239,18 @@ export default function Home() {
           <main className="flex-1 overflow-y-auto">
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 p-6 items-start">
               <div className="xl:col-span-2 flex flex-col gap-6">
+                 <Card>
+                  <CardHeader>
+                    <CardTitle>File Viewer</CardTitle>
+                    <CardDescription>Select text to add it to your notes.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ScrollArea className="h-96 rounded-md border p-4" ref={fileContentRef} onMouseUp={handleSelection}>
+                      <p className="whitespace-pre-wrap text-sm">{selectedDoc.content}</p>
+                    </ScrollArea>
+                  </CardContent>
+                </Card>
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Card>
                     <CardHeader>
@@ -209,17 +287,73 @@ export default function Home() {
                     </CardFooter>
                   </Card>
                 </div>
-
-                <Card>
+                
+                 <Card>
                   <CardHeader>
-                    <CardTitle>File Viewer</CardTitle>
+                      <CardTitle>Notes & Reports</CardTitle>
+                      <CardDescription>Review notes, get clarifications, and generate reports.</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-96 rounded-md border p-4">
-                      <p className="whitespace-pre-wrap text-sm">{selectedDoc.content}</p>
-                    </ScrollArea>
+                  <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <h4 className="font-medium">Your Notes</h4>
+                        <ScrollArea className="h-40 rounded-md border p-2">
+                          {notes.length === 0 && <p className="text-sm text-muted-foreground p-2">Select text from the document viewer to add notes.</p>}
+                          <div className="space-y-2">
+                            {notes.map(note => (
+                              <div key={note.id} className="flex items-start justify-between gap-2 bg-muted/50 p-2 rounded-md">
+                                <p className="text-sm flex-1">{note.text}</p>
+                                <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        </ScrollArea>
+                      </div>
+
+                      <div className="space-y-2">
+                        <h4 className="font-medium">Clarification</h4>
+                         <Button onClick={handleClarify} disabled={isClarifying || notes.length === 0} size="sm">
+                            <BrainCircuit />
+                            {isClarifying ? 'Getting Clarification...' : 'Get Clarification on Notes'}
+                          </Button>
+                        {isClarifying && <Loader2 className="animate-spin text-primary" />}
+                        {clarification && (
+                          <ScrollArea className="h-24 rounded-md border p-2">
+                            <p className="text-sm whitespace-pre-wrap">{clarification}</p>
+                          </ScrollArea>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <h4 className="font-medium">Report Generation</h4>
+                        <div className="flex items-center gap-2">
+                          <Select onValueChange={(value: GenerateReportInput['reportType']) => setReportType(value)} defaultValue={reportType}>
+                            <SelectTrigger className="w-[180px]">
+                              <SelectValue placeholder="Select report type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="technical">Technical Report</SelectItem>
+                              <SelectItem value="managerial">Managerial Report</SelectItem>
+                              <SelectItem value="legal">Legal Report</SelectItem>
+                              <SelectItem value="financial">Financial Report</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Button onClick={handleGenerateReport} disabled={isGeneratingReport || notes.length === 0}>
+                            <FileSignature />
+                            {isGeneratingReport ? 'Generating...' : 'Generate Report'}
+                          </Button>
+                        </div>
+                         {isGeneratingReport && <Loader2 className="animate-spin text-primary" />}
+                        {report && (
+                           <ScrollArea className="h-40 rounded-md border p-2">
+                            <p className="text-sm whitespace-pre-wrap">{report}</p>
+                          </ScrollArea>
+                        )}
+                      </div>
                   </CardContent>
                 </Card>
+
 
                 <Card>
                   <CardHeader>
@@ -227,7 +361,7 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <Image
-                      src="https://placehold.co/800x450"
+                      src="/DLD-CHAIN-MIND-MAP.png"
                       alt="Project Mind Map"
                       width={800}
                       height={450}
@@ -266,6 +400,16 @@ export default function Home() {
                         )}
                       </div>
                     ))}
+                    {isAnswering && (
+                       <div className="flex items-start gap-3 justify-start">
+                          <Avatar className="w-8 h-8">
+                            <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                          </Avatar>
+                          <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
+                            <Loader2 className="animate-spin h-4 w-4" />
+                          </div>
+                        </div>
+                    )}
                     </div>
                   </ScrollArea>
                 </CardContent>
@@ -276,8 +420,9 @@ export default function Home() {
                       onChange={(e) => setInput(e.target.value)}
                       placeholder="Type your question..."
                       autoComplete="off"
+                      disabled={isAnswering}
                     />
-                    <Button type="submit" size="icon">
+                    <Button type="submit" size="icon" disabled={isAnswering}>
                       <Send className="h-4 w-4" />
                     </Button>
                   </form>
