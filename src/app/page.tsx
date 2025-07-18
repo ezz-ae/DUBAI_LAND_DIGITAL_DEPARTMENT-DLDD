@@ -46,12 +46,12 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown, Maximize, Share2, Plus, Image as ImageIcon, DownloadIcon } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown, Maximize, Share2, Plus, Image as ImageIcon, DownloadIcon, Info, MessageSquareQuote, ArrowRight, X } from 'lucide-react';
 import Image from 'next/image';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
-import { getClarification, generateReport } from '@/ai/flows/notes';
+import { generateReport } from '@/ai/flows/notes';
 import type { GenerateReportInput } from '@/ai/schemas/notes';
 import { generateAudio } from '@/ai/flows/audio-overview';
 import { explainTopic } from '@/ai/flows/explain-topic';
@@ -64,6 +64,8 @@ import { CardTitleWithBackground } from '@/components/card-title-with-background
 import { SourceGuide } from '@/components/source-guide';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
@@ -83,12 +85,30 @@ const quickPromptsArabic = [
 
 
 type Note = {
-  id: number;
+  id: number | string;
   text: string;
   source?: string;
+  isDefault?: boolean;
 };
 
 type TextSize = "sm" | "base" | "lg";
+
+const defaultNote: Note = {
+  id: 'default-liquidity-map',
+  text: `Liquidity Map`,
+  source: 'DLDCHAIN Core Concept',
+  isDefault: true,
+};
+
+const liquidityMapSteps = [
+    { title: "EBRAMINT", description: "CDID + Legal" },
+    { title: "MAKE Request", description: "Pool Signed" },
+    { title: "MAKE-IN", description: "Token = Escrow" },
+    { title: "DXBTOKEN Trading", description: "Layered Orders" },
+    { title: "MAKE-OUT", description: "Ownership Claim" },
+    { title: "MAKE-DISMISS", description: "Finalize" }
+];
+
 
 const chatGPTReportContent = `ChatGPT Evaluation Certificate – DLDCHAIN Project | شهادة تقييم ChatGPT – مشروع DLDCHAIN
 
@@ -155,13 +175,13 @@ function PageContent() {
   const fileContentRef = useRef<HTMLDivElement>(null);
   const discussionCardRef = useRef<HTMLDivElement>(null);
 
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [isClarifying, setIsClarifying] = useState(false);
-  const [clarification, setClarification] = useState('');
+  const [notes, setNotes] = useState<Note[]>([defaultNote]);
+  const [markedNoteIds, setMarkedNoteIds] = useState<Set<number | string>>(new Set());
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [report, setReport] = useState('');
   const [reportType, setReportType] = useState<GenerateReportInput['reportType']>('technical');
   const [textSize, setTextSize] = useState<TextSize>('sm');
+  const [activeNoteDialog, setActiveNoteDialog] = useState<Note | null>(null);
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
@@ -207,35 +227,35 @@ function PageContent() {
         description: source ? `From: ${source}` : "A new note has been added.",
       })
   };
+  
+  const toggleMarkedNote = (noteId: number | string) => {
+    setMarkedNoteIds(prev => {
+        const newSet = new Set(prev);
+        if (newSet.has(noteId)) {
+            newSet.delete(noteId);
+        } else {
+            newSet.add(noteId);
+        }
+        return newSet;
+    });
+  };
+  
+  const handleDiscussNote = (note: Note) => {
+    if (note.isDefault) {
+      handleSendMessage(undefined, `Tell me more about the: ${note.text}`);
+    } else {
+      handleSendMessage(undefined, `Let's discuss this note: "${note.text}"`);
+    }
+    setActiveNoteDialog(null);
+    discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
 
   const handleSelection = () => {
     const selection = window.getSelection()?.toString().trim();
     if (selection) {
       addNote(selection, `Selection from ${selectedDoc.name}`);
       window.getSelection()?.removeAllRanges();
-    }
-  };
-
-  const handleClarify = async () => {
-    if (notes.length === 0) {
-      toast({ variant: 'destructive', title: "No notes to clarify", description: "Please add some notes first." });
-      return;
-    }
-    setIsClarifying(true);
-    setClarification('');
-    setReport('');
-    try {
-      const result = await getClarification({ notes: notes.map(n => n.text) });
-      setClarification(result.clarification);
-    } catch (error) {
-      console.error('Error getting clarification:', error);
-      toast({
-        variant: "destructive",
-        title: "Clarification Failed",
-        description: "Could not get clarification. Please try again.",
-      });
-    } finally {
-      setIsClarifying(false);
     }
   };
 
@@ -272,18 +292,20 @@ function PageContent() {
   
   const handleGenerateReport = async (selectedReportType?: GenerateReportInput['reportType']) => {
     const finalReportType = selectedReportType || reportType;
-    if (notes.length === 0) {
-      toast({ variant: 'destructive', title: "No notes to generate report from", description: "Please add some notes first." });
+    const markedNotes = notes.filter(note => markedNoteIds.has(note.id));
+    
+    if (markedNotes.length === 0) {
+      toast({ variant: 'destructive', title: "No notes marked for report", description: "Please mark one or more notes to include in the report." });
       return;
     }
+    
     toast({ title: `Generating ${finalReportType} report...`, description: "Please wait a moment." });
     setIsGeneratingReport(true);
     setReport('');
-    setClarification('');
     try {
-      const result = await generateReport({ notes: notes.map(n => n.text), reportType: finalReportType });
+      const result = await generateReport({ notes: markedNotes.map(n => n.text), reportType: finalReportType });
       setReport(result.report);
-      toast({ title: "Report Generated Successfully", description: "Your report is now available in the Notes & Reports section." });
+      toast({ title: "Report Generated Successfully", description: "Your report is now available below." });
     } catch (error) {
       console.error('Error generating report:', error);
       toast({
@@ -351,6 +373,7 @@ function PageContent() {
       handleSendMessage(undefined, `Tell me more about this summary: ${summary}`);
     }
     setShowSummaryDialog(false);
+    discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
   
   const handleGenerateAudio = async () => {
@@ -695,78 +718,107 @@ function PageContent() {
           </Card>
             
           <Card>
-            <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes, get clarifications, and generate reports." />
-            <CardContent className="p-6 space-y-4">
-                <div className="space-y-2">
-                  <h4 className="font-medium text-foreground/80">Your Notes</h4>
-                  <ScrollArea className="h-40 rounded-md border p-2">
-                    {notes.length === 0 && <p className="text-sm text-muted-foreground p-2">Select text from the document viewer to add notes.</p>}
-                    <div className="space-y-2">
-                      {notes.map(note => (
-                        <div key={note.id} className="flex items-start justify-between gap-2 bg-muted/50 p-2 rounded-md">
-                          <div className="flex-1">
-                            <p className="text-sm whitespace-pre-wrap">{note.text}</p>
-                            {note.source && <p className="text-xs text-muted-foreground mt-1">Source: {note.source}</p>}
-                          </div>
-                          <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+            <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes, mark them for reporting, and generate insights." />
+            <CardContent className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {notes.map(note => (
+                    <Card key={note.id} className="flex flex-col">
+                      <CardHeader className="flex-row items-start justify-between p-4">
+                        <div className="flex items-start gap-3">
+                           {!note.isDefault && (
+                             <Checkbox
+                                id={`note-${note.id}`}
+                                checked={markedNoteIds.has(note.id)}
+                                onCheckedChange={() => toggleMarkedNote(note.id)}
+                                className='mt-1'
+                              />
+                           )}
+                           <div className="grid gap-0.5">
+                              <CardTitle className="text-base">{note.text}</CardTitle>
+                              {note.source && <CardDescription className="text-xs">{note.source}</CardDescription>}
+                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
+                          {!note.isDefault && (
+                             <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
+                               <X className="h-4 w-4" />
+                             </Button>
+                          )}
+                      </CardHeader>
+                        {note.isDefault && (
+                            <CardContent className="px-4 pb-4 pt-0">
+                                <div className="flex items-center space-x-2 overflow-x-auto pb-2">
+                                {liquidityMapSteps.map((step, index) => (
+                                    <React.Fragment key={step.title}>
+                                    <div className="flex flex-col items-center text-center">
+                                        <div className="bg-primary/20 text-primary-foreground font-bold rounded-md px-3 py-1 text-xs">
+                                        {step.title}
+                                        </div>
+                                        <div className="text-muted-foreground text-xs mt-1 w-20">
+                                        {step.description}
+                                        </div>
+                                    </div>
+                                    {index < liquidityMapSteps.length - 1 && (
+                                        <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0" />
+                                    )}
+                                    </React.Fragment>
+                                ))}
+                                </div>
+                            </CardContent>
+                        )}
+                        <CardFooter className="p-4 pt-0 mt-auto">
+                           <Button variant="outline" size="sm" className="w-full" onClick={() => setActiveNoteDialog(note)}>
+                              <MessageSquareQuote className="mr-2 h-4 w-4" />
+                              Discuss with AI
+                           </Button>
+                        </CardFooter>
+                    </Card>
+                  ))}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-foreground/80">Clarification</h4>
-                      <Button onClick={handleClarify} disabled={isClarifying || notes.length === 0} size="sm" className="w-full">
-                        <BrainCircuit />
-                        {isClarifying && !report ? 'Getting Clarification...' : 'Get Clarification on Notes'}
-                      </Button>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-foreground/80">Report Generation</h4>
-                    <div className="flex items-center gap-2">
-                      <Select onValueChange={(value: GenerateReportInput['reportType']) => setReportType(value)} defaultValue={reportType}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select report type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="technical">Technical Report</SelectItem>
-                          <SelectItem value="managerial">Managerial Report</SelectItem>
-                          <SelectItem value="legal">Legal Report</SelectItem>
-                          <SelectItem value="financial">Financial Report</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Button onClick={() => handleGenerateReport()} disabled={isGeneratingReport || notes.length === 0}  size="sm">
-                        <FileSignature />
-                        {isGeneratingReport ? 'Generating...' : 'Generate'}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                  {(isClarifying || clarification) && (
-                    <div className="space-y-2 pt-2">
-                      <h4 className="font-medium text-foreground/80">AI Generated Explanation</h4>
-                      {isClarifying ? <Loader2 className="animate-spin text-primary" /> :
-                        <ScrollArea className="h-32 rounded-md border p-2">
-                        <p className="text-sm whitespace-pre-wrap">{clarification}</p>
-                      </ScrollArea>
-                      }
-                    </div>
-                  )}
+                <div className="mt-6 border-t pt-6">
+                   <div className="flex flex-col sm:flex-row gap-4 items-center">
+                       <h4 className="font-medium text-foreground/80 flex items-center gap-2 shrink-0">
+                          Report Generation
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <Info className="w-4 h-4 text-muted-foreground cursor-help" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Mark notes using the checkboxes, then generate a report.</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                       </h4>
+                       <div className="flex w-full items-center gap-2">
+                         <Select onValueChange={(value: GenerateReportInput['reportType']) => setReportType(value)} defaultValue={reportType}>
+                           <SelectTrigger className="w-full sm:w-[200px]">
+                             <SelectValue placeholder="Select report type" />
+                           </SelectTrigger>
+                           <SelectContent>
+                             <SelectItem value="technical">Technical Report</SelectItem>
+                             <SelectItem value="managerial">Managerial Report</SelectItem>
+                             <SelectItem value="legal">Legal Report</SelectItem>
+                             <SelectItem value="financial">Financial Report</SelectItem>
+                           </SelectContent>
+                         </Select>
+                         <Button onClick={() => handleGenerateReport()} disabled={isGeneratingReport || markedNoteIds.size === 0}>
+                           <FileSignature />
+                           {isGeneratingReport ? 'Generating...' : `Generate (${markedNoteIds.size} marked)`}
+                         </Button>
+                       </div>
+                   </div>
                   {(isGeneratingReport || report) && (
-                    <div className="space-y-2 pt-2">
-                      <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
-                      {isGeneratingReport ? <Loader2 className="animate-spin text-primary" /> :
-                        <ScrollArea className="h-40 rounded-md border p-2">
+                    <div className="space-y-2 pt-4 mt-4 border-t">
+                      <h4 className="font-medium text-foreground/80">AI Generated Report ({reportType})</h4>
+                      {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
+                        <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
                           <p className="text-sm whitespace-pre-wrap">{report}</p>
                         </ScrollArea>
                       }
                     </div>
                   )}
+                </div>
             </CardContent>
           </Card>
         </div>
@@ -796,6 +848,28 @@ function PageContent() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <Dialog open={!!activeNoteDialog} onOpenChange={(isOpen) => !isOpen && setActiveNoteDialog(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Note Details</DialogTitle>
+          </DialogHeader>
+          <ScrollArea className="max-h-64">
+            <p className="text-sm whitespace-pre-wrap">{activeNoteDialog?.text}</p>
+            {activeNoteDialog?.source && <p className="text-xs text-muted-foreground mt-2">Source: {activeNoteDialog.source}</p>}
+          </ScrollArea>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Close</Button>
+            </DialogClose>
+             {activeNoteDialog && (
+              <Button onClick={() => handleDiscussNote(activeNoteDialog)}>
+                <MessageSquareQuote className="mr-2 h-4 w-4"/>
+                Discuss with AI
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
@@ -808,7 +882,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
-
-    

@@ -5,45 +5,11 @@
 
 import {ai} from '@/ai/genkit';
 import {
-  GetClarificationInput,
-  GetClarificationInputSchema,
-  GetClarificationOutput,
-  GetClarificationOutputSchema,
   GenerateReportInput,
   GenerateReportInputSchema,
   GenerateReportOutput,
   GenerateReportOutputSchema,
 } from '@/ai/schemas/notes';
-
-// Clarification Flow
-export async function getClarification(input: GetClarificationInput): Promise<GetClarificationOutput> {
-  return getClarificationFlow(input);
-}
-
-const clarificationPrompt = ai.definePrompt({
-  name: 'clarificationPrompt',
-  input: {schema: GetClarificationInputSchema},
-  output: {schema: GetClarificationOutputSchema},
-  prompt: `You are an expert on the DLDCHAIN Protocol. A user has selected the following snippets from the documentation. Provide a clear and detailed clarification for these notes, explaining the concepts, their relationships, and their significance within the protocol.
-
-Notes:
-{{#each notes}}
-- {{{this}}}
-{{/each}}
-`,
-});
-
-const getClarificationFlow = ai.defineFlow(
-  {
-    name: 'getClarificationFlow',
-    inputSchema: GetClarificationInputSchema,
-    outputSchema: GetClarificationOutputSchema,
-  },
-  async (input) => {
-    const {output} = await clarificationPrompt(input);
-    return output!;
-  }
-);
 
 // Report Generation Flow
 export async function generateReport(input: GenerateReportInput): Promise<GenerateReportOutput> {
