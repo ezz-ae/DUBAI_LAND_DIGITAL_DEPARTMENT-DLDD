@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useState } from 'react';
 import { mindMapData } from '@/lib/mindmap-data';
@@ -13,6 +14,14 @@ interface MindMapNodeProps {
   level: number;
   onNodeClick: (topic: string) => void;
 }
+
+const levelColorClasses = [
+  'bg-card', // Level 0
+  'bg-muted/50', // Level 1
+  'bg-muted/30', // Level 2
+  'bg-muted/20', // Level 3
+  'bg-muted/10', // Level 4+
+];
 
 const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) => {
   const [isOpen, setIsOpen] = useState(level < 1);
@@ -30,6 +39,8 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
     e.stopPropagation();
     onNodeClick(node.name);
   };
+
+  const bgColorClass = levelColorClasses[Math.min(level, levelColorClasses.length - 1)];
 
   return (
     <div className={cn("my-1 relative", level > 0 && 'ml-6')}>
@@ -50,7 +61,8 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
           className={cn(
             'p-2 rounded-md transition-all hover:bg-accent/10 hover:text-accent-foreground',
             'shadow-[0_2px_8px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.5)]',
-            level === 0 ? 'font-bold text-lg text-foreground/90 bg-card' : 'text-sm text-foreground/80 bg-card'
+            level === 0 ? 'font-bold text-lg text-foreground/90' : 'text-sm text-foreground/80',
+            bgColorClass
           )}
           onClick={handleNodeTextClick}
         >
@@ -75,3 +87,5 @@ export const InteractiveMindMap: React.FC<{ onNodeClick: (topic: string) => void
     </div>
   );
 };
+
+    

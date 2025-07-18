@@ -14,6 +14,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog"
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -35,7 +43,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
@@ -54,12 +62,11 @@ const initialMessages = [
 ];
 
 const quickPrompts = [
-  "Explain tokenization",
-  "Summarize the whitepaper",
-  "How does MAKE work?",
-  "What is the EBRAM system?",
-  "Explain the Mashroi platform.",
-  "لخص المشروع باللغة العربية",
+  "Explain the EBRAM system",
+  "What makes the MAKE system different?",
+  "ابدا حوار عن المشروع باللغه العربية",
+  "اذكر اهم ما يميز المشروع وكيف يتوافق ذلك مع البنية الحالية",
+  "اشرح نظام الترميز وماالذي يجعلة مختلفاً",
 ];
 
 type Note = {
@@ -74,8 +81,11 @@ function PageContent() {
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
   const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0]);
+  
   const [summary, setSummary] = useState('');
   const [isSummarizing, setIsSummarizing] = useState(false);
+  const [showSummaryDialog, setShowSummaryDialog] = useState(false);
+
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState('');
   const [isAnswering, setIsAnswering] = useState(false);
@@ -105,8 +115,9 @@ function PageContent() {
   }, [messages]);
   
   useEffect(() => {
-    handleSummarize();
     setMessages(initialMessages);
+    setSummary('');
+    setShowSummaryDialog(false);
     if(audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -196,10 +207,16 @@ function PageContent() {
 
   const handleSummarize = async () => {
     setIsSummarizing(true);
+    setShowSummaryDialog(true);
     setSummary('');
     try {
       const result = await summarizeDocument({ documentText: selectedDoc.content });
       setSummary(result.summary);
+      const newNote: Note = { id: Date.now(), text: `Summary of ${selectedDoc.name}:\n${result.summary}` };
+      setNotes(prev => [newNote, ...prev]);
+      toast({
+        title: "Summary Added to Notes",
+      });
     } catch (error) {
       console.error('Error summarizing document:', error);
       toast({
@@ -213,7 +230,7 @@ function PageContent() {
     }
   };
 
-  const handleSendMessage = async (e: React.FormEvent, message?: string) => {
+  const handleSendMessage = async (e: React.FormEvent | undefined, message?: string) => {
     if(e) e.preventDefault();
     const currentMessage = message || input;
     if (!currentMessage.trim() || isAnswering) return;
@@ -240,6 +257,13 @@ function PageContent() {
       setIsAnswering(false);
     }
   };
+
+  const handleDiscussSummary = () => {
+    if (summary) {
+      handleSendMessage(undefined, `Tell me more about this summary: ${summary}`);
+    }
+    setShowSummaryDialog(false);
+  };
   
   const handlePlayAudio = async () => {
     if (isPlaying) {
@@ -254,11 +278,24 @@ function PageContent() {
       return;
     }
 
-    if (!summary || isGeneratingAudio) return;
+    if (!selectedDoc.content || isGeneratingAudio) return;
 
     setIsGeneratingAudio(true);
+    let textToSummarizeAndPlay = summary;
+    if (!textToSummarizeAndPlay) {
+      try {
+        const result = await summarizeDocument({ documentText: selectedDoc.content });
+        textToSummarizeAndPlay = result.summary;
+        setSummary(textToSummarizeAndPlay);
+      } catch (error) {
+         toast({ variant: 'destructive', title: 'Summarization Failed', description: 'Could not generate summary for audio.' });
+         setIsGeneratingAudio(false);
+         return;
+      }
+    }
+
     try {
-      const result = await generateAudio({ text: summary });
+      const result = await generateAudio({ text: textToSummarizeAndPlay });
       setAudioSrc(result.audio);
     } catch (error) {
       console.error('Error generating audio:', error);
@@ -328,8 +365,8 @@ function PageContent() {
         </SidebarHeader>
       </Sidebar>
 
-      <SidebarInset className="flex-1 flex flex-col">
-        <header className="flex items-center justify-between p-4 border-b h-16">
+      <main className="flex-1 flex flex-col">
+        <header className="flex items-center justify-between p-4 border-b h-16 shrink-0">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="lg:hidden"/>
             <div className="hidden lg:block">
@@ -357,7 +394,7 @@ function PageContent() {
                   <span>Dark</span>
                 </DropdownMenuItem>
                  <DropdownMenuSeparator />
-                <DropdownMenuLabel>Text Size</DropdownMenuLabel>
+                <DropdownMenuLabel>Document Text Size</DropdownMenuLabel>
                 <DropdownMenuItem onClick={() => setTextSize('sm')}>Small</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTextSize('base')}>Medium</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTextSize('lg')}>Large</DropdownMenuItem>
@@ -366,17 +403,23 @@ function PageContent() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto">
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 p-6 items-start">
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start h-full">
             
-            <div className="xl:col-span-2 flex flex-col gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-foreground/90">File Viewer</CardTitle>
-                  <CardDescription>Select any content to take a note and dive deeper.</CardDescription>
+            <div className="lg:col-span-3 flex flex-col gap-6 h-full">
+              <Card className="flex-1 flex flex-col">
+                <CardHeader className='flex-row items-center justify-between'>
+                    <div>
+                      <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">File Viewer</CardTitle>
+                      <CardDescription className="mt-2">Select any content to take a note and dive deeper.</CardDescription>
+                    </div>
+                    <Button onClick={handleSummarize} disabled={isSummarizing} size="sm">
+                      {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
+                      Summarize
+                    </Button>
                 </CardHeader>
-                <CardContent>
-                  <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-96 rounded-md border p-4" ref={fileContentRef} onMouseUp={handleSelection}>
+                <CardContent className="flex-1 flex flex-col">
+                  <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="flex-1 rounded-md border p-4" ref={fileContentRef} onMouseUp={handleSelection}>
                     <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc.content}</p>
                   </ScrollArea>
                 </CardContent>
@@ -384,8 +427,8 @@ function PageContent() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-foreground/90">Project Mind Map</CardTitle>
-                  <CardDescription>Click on a node to get a detailed explanation.</CardDescription>
+                  <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Project Mind Map</CardTitle>
+                  <CardDescription className="mt-2">Click on a node to get a detailed explanation.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <InteractiveMindMap onNodeClick={handleExplainTopic} />
@@ -394,8 +437,8 @@ function PageContent() {
 
               <Card>
                 <CardHeader>
-                    <CardTitle className="text-foreground/90">Notes & Reports</CardTitle>
-                    <CardDescription>Review notes, get clarifications, and generate reports.</CardDescription>
+                    <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Notes & Reports</CardTitle>
+                    <CardDescription className="mt-2">Review notes, get clarifications, and generate reports.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
@@ -405,7 +448,7 @@ function PageContent() {
                         <div className="space-y-2">
                           {notes.map(note => (
                             <div key={note.id} className="flex items-start justify-between gap-2 bg-muted/50 p-2 rounded-md">
-                              <p className="text-sm flex-1">{note.text}</p>
+                              <p className="text-sm flex-1 whitespace-pre-wrap">{note.text}</p>
                               <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
                                 <Trash2 className="h-4 w-4" />
                               </Button>
@@ -469,13 +512,13 @@ function PageContent() {
               </Card>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="flex flex-col">
+                 <Card className="flex flex-col">
                   <CardHeader>
-                    <CardTitle className="text-foreground/90">Audio Overview</CardTitle>
-                    <CardDescription>Listen to the AI-generated summary.</CardDescription>
+                    <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">Audio Overview</CardTitle>
+                    <CardDescription className="mt-2">Listen to an AI-generated summary.</CardDescription>
                   </CardHeader>
                   <CardContent className="flex-1 flex flex-col items-center justify-center p-6">
-                    <Button size="lg" variant="ghost" onClick={handlePlayAudio} disabled={isGeneratingAudio || isSummarizing || !summary}>
+                    <Button size="lg" variant="ghost" onClick={handlePlayAudio} disabled={isGeneratingAudio}>
                       {isGeneratingAudio ? (
                         <Loader2 className="h-16 w-16 animate-spin text-primary" />
                       ) : isPlaying ? (
@@ -499,34 +542,25 @@ function PageContent() {
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-foreground/90">AI Summarization</CardTitle>
-                    <CardDescription>Get key points instantly.</CardDescription>
+                    <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">ChatGPT Evaluation</CardTitle>
+                    <CardDescription className="mt-2">Official project evaluation by OpenAI.</CardDescription>
                   </CardHeader>
-                  <CardContent className="h-24">
-                    {isSummarizing ? (
-                      <div className="flex items-center justify-center h-full">
-                        <Loader2 className="animate-spin text-primary" />
-                      </div>
-                    ) : (
-                      <ScrollArea className="h-full">
-                        <p className="text-sm text-muted-foreground">{summary || 'Summary will appear here.'}</p>
-                      </ScrollArea>
-                    )}
+                  <CardContent className="text-xs text-muted-foreground">
+                    <p className="font-bold text-foreground/90">Project: DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate</p>
+                    <p className="mb-2">المشروع: DLDCHAIN – البنية التحتية السيادية للبلوك تشين في قطاع العقارات</p>
+                    <p>Issued by: ChatGPT (OpenAI) | المصدر: ChatGPT (OpenAI)</p>
+                    <p>Date: 2025-07-14 UTC | التاريخ: ٢٠٢٥-٠٧-١٤ بتوقيت UTC</p>
+                    <p className="font-bold mt-4 text-foreground/90">SHA256 Hash:</p>
+                    <p className="break-words font-mono bg-muted p-1 rounded">df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65</p>
                   </CardContent>
-                  <CardFooter>
-                    <Button onClick={() => handleSendMessage(undefined, `Tell me more about this summary: ${summary}`)} disabled={isSummarizing || !summary} className="w-full">
-                      <Sparkles />
-                      Discuss with AI
-                    </Button>
-                  </CardFooter>
                 </Card>
               </div>
             </div>
 
-            <Card className="xl:col-span-1 h-full flex flex-col sticky top-6">
+            <Card className="lg:col-span-2 h-full flex flex-col sticky top-6">
               <CardHeader className="border-b">
-                <CardTitle className="text-foreground/90">AI Open Discussion</CardTitle>
-                <CardDescription>Ask questions about the project.</CardDescription>
+                <CardTitle className="bg-foreground text-background px-3 py-1 rounded-md text-2xl inline-block">AI Open Discussion</CardTitle>
+                <CardDescription className="mt-2">Ask questions about the project.</CardDescription>
               </CardHeader>
               <CardContent className="flex-1 p-0">
                 <ScrollArea className="h-[calc(100vh-25rem)]" ref={scrollAreaRef}>
@@ -534,19 +568,19 @@ function PageContent() {
                   {messages.map((msg: any, index) => (
                     <div key={index} className={cn("flex items-start gap-3", msg.from === 'user' ? "justify-end" : "justify-start")}>
                       {msg.from === 'bot' && (
-                        <Avatar className="w-8 h-8">
+                        <Avatar className="w-8 h-8 shrink-0">
                           <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
                         </Avatar>
                       )}
                       <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
-                        "max-w-xs rounded-lg px-4 py-2 text-sm",
+                        "max-w-prose rounded-lg px-4 py-2 text-sm",
                         msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
                         msg.isArabic && "font-arabic" 
                       )}>
                         {msg.text}
                       </div>
                        {msg.from === 'user' && (
-                        <Avatar className="w-8 h-8">
+                        <Avatar className="w-8 h-8 shrink-0">
                            <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
                         </Avatar>
                       )}
@@ -595,8 +629,33 @@ function PageContent() {
               </CardFooter>
             </Card>
           </div>
-        </main>
-      </SidebarInset>
+        </div>
+      </main>
+      <Dialog open={showSummaryDialog} onOpenChange={setShowSummaryDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>AI Generated Summary</DialogTitle>
+          </DialogHeader>
+          {isSummarizing ? (
+            <div className="flex items-center justify-center h-24">
+              <Loader2 className="animate-spin text-primary" />
+            </div>
+          ) : (
+            <ScrollArea className="max-h-64">
+              <p className="text-sm whitespace-pre-wrap">{summary}</p>
+            </ScrollArea>
+          )}
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Close</Button>
+            </DialogClose>
+            <Button onClick={handleDiscussSummary} disabled={isSummarizing || !summary}>
+              <Sparkles className="mr-2 h-4 w-4"/>
+              Discuss with AI
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
@@ -609,3 +668,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
