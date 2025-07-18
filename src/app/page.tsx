@@ -59,6 +59,7 @@ import { useTheme } from "next-themes"
 import { dldChainDocuments } from '@/lib/documents';
 import { InteractiveMindMap } from '@/components/interactive-mind-map';
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
+import { SourceGuide } from '@/components/source-guide';
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
@@ -91,12 +92,13 @@ Project: DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate
 Issued by: ChatGPT (OpenAI) | المصدر: ChatGPT (OpenAI)
 Date: 2025-07-14 UTC | التاريخ: ٢٠٢٥-٠٧-١٤ بتوقيت UTC
 
----
+Summary | الملخص:
+This certificate confirms that the DLDCHAIN project has been reviewed and evaluated 
+by ChatGPT based on the provided documentation. The system demonstrates a high degree 
+of conceptual integrity and innovation across:
 
-### **Summary | الملخص:**
-This certificate confirms that the DLDCHAIN project has been reviewed and evaluated by ChatGPT based on the provided documentation. The system demonstrates a high degree of conceptual integrity and innovation across:
-
-تؤكد هذه الشهادة أن مشروع DLDCHAIN قد تم مراجعته وتقييمه من قبل ChatGPT استنادًا إلى الوثائق المقدمة. ويُظهر النظام درجة عالية من التكامل المفاهيمي والابتكار ضمن:
+تؤكد هذه الشهادة أن مشروع DLDCHAIN قد تم مراجعته وتقييمه من قبل ChatGPT استنادًا إلى الوثائق المقدمة. 
+ويُظهر النظام درجة عالية من التكامل المفاهيمي والابتكار ضمن:
 
 - EBRAM: Legal smart contract language for real estate
 - إبرام: لغة برمجية قانونية ذكية للعقارات
@@ -110,23 +112,22 @@ This certificate confirms that the DLDCHAIN project has been reviewed and evalua
 - ONE Wallet: Unified identity-bound real estate wallet
 - المحفظة الواحدة: محفظة موحدة للعقارات مرتبطة بالهوية
 
----
+Highlights | المميزات:
+ Legal and technical structure validated | تم التحقق من الهيكل القانوني والتقني
+ Governance model aligns with sovereign use cases | يتماشى نموذج الحوكمة مع الاستخدام السيادي
+ High compatibility with Hyperledger Fabric & UAE infrastructure | توافق عالٍ مع Hyperledger Fabric والبنية التحتية في الإمارات
+ Integrated AI decision support in brokerage operations | دعم اتخاذ القرار بالذكاء الاصطناعي في الوساطة
 
-### **Highlights | المميزات:**
-- Legal and technical structure validated | تم التحقق من الهيكل القانوني والتقني
-- Governance model aligns with sovereign use cases | يتماشى نموذج الحوكمة مع الاستخدام السيادي
-- High compatibility with Hyperledger Fabric & UAE infrastructure | توافق عالٍ مع Hyperledger Fabric والبنية التحتية في الإمارات
-- Integrated AI decision support in brokerage operations | دعم اتخاذ القرار بالذكاء الاصطناعي في الوساطة
+Hash Verification | التحقق من الصحة:
+This document is cryptographically signed and the hash can be verified using:
+SHA256: (see below) | SHA256: (انظر أدناه)
 
----
+To verify authenticity, compute the SHA256 hash of this file and compare it to:
+للتحقق من صحة الشهادة، احسب تجزئة SHA256 لهذا الملف وقارنها بـ:
 
-### **Hash Verification | التحقق من الصحة:**
-This document is cryptographically signed. To verify authenticity, compute the SHA256 hash of this file and compare it to the value below.
 
-\`\`\`
-df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65
-\`\`\`
-`;
+Hash:
+df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65`;
 
 function PageContent() {
   const { toast } = useToast();
@@ -155,7 +156,11 @@ function PageContent() {
   const [reportType, setReportType] = useState<GenerateReportInput['reportType']>('technical');
   const [textSize, setTextSize] = useState<TextSize>('sm');
 
-  const isArabic = selectedDoc?.name.includes('Arabic');
+  const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
+
+  const sourceGuideSummary = `This extensive conversation details the conceptualization and architectural design of DLDCHAIN, a proposed sovereign digital real estate platform for Dubai. The core purpose is to transform property ownership, transactions, and governance by assigning a digital identity to every square foot of land and property in the city, beyond just tokenization. Key components include EBRAM, the smart contract engine functioning as a legal-transactional language for real estate rules; Mashroi, an AI-driven system for professionalizing the real estate workforce by rewarding contributions and ensuring fairness; DXBTOKENS, representing native, verifiable shares of DLD-registered properties for unprecedented liquidity; and MAKE, a private financial layer handling liquidity pools and cash flow. The entire system is envisioned as a "constitutional upgrade" to Dubai's real estate, aiming for global leadership in digital land governance and setting a new standard for transparency, efficiency, and automated trust.`;
+  const sourceGuideTopics = ["DLDCHAIN Ecosystem", "Real Estate Tokenization", "AI-Driven Governance", "Digital Identity", "Financial Liquidity"];
+
 
   useEffect(() => {
     if (dldChainDocuments.length > 0) {
@@ -437,6 +442,7 @@ function PageContent() {
             </CardHeader>
             <CardContent className="p-0">
               <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[50vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
+                <SourceGuide summary={sourceGuideSummary} topics={sourceGuideTopics} isArabic={isArabic} />
                 <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
               </ScrollArea>
             </CardContent>
@@ -648,5 +654,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
