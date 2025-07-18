@@ -101,7 +101,7 @@ const defaultNote: Note = {
 const liquidityMapSteps = [
     { title: "EBRAMINT", description: "Legal review" },
     { title: "MAKE LISTING", description: "Liquidity officer" },
-    { title: "MAKE Request", description: "Escrow permission" },
+    { title: "Make Request", description: "Escrow permission" },
     { title: "MAKE-IN", description: "Escrow Pool creation" },
     { title: "DXBTOKEN Listing", description: "Token Pool creation" },
     { title: "MAKE-OUT", description: "Token Pool Closure" },
@@ -497,9 +497,8 @@ function PageContent() {
             </CardContent>
           </Card>
           
-          <Card>
-            <CardTitleWithBackground>
-              <div className="flex items-center justify-between w-full">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between w-full px-4">
                 <div>
                   <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
                   <p className="text-sm text-muted-foreground mt-1">An interactive overview of the project's architecture.</p>
@@ -521,11 +520,10 @@ function PageContent() {
                     </DialogContent>
                   </Dialog>
               </div>
-            </CardTitleWithBackground>
-            <div className="h-96 w-full border-t">
+            <div className="h-96 w-full border-t border-b">
               <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
             </div>
-          </Card>
+          </div>
 
           <Card ref={discussionCardRef}>
             <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
