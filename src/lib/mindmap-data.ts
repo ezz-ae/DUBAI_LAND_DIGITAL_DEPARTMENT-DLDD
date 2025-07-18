@@ -1,66 +1,82 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+*/
+
 export const mindMapData = {
-  name: 'DLDCHAIN Protocol',
+  id: 'root',
+  name: "DLDCHAIN: Dubai's Sovereign Real Estate Operating System",
   children: [
     {
-      name: 'Smart Contract Logic',
+      id: 'core-characteristics',
+      name: 'Core Characteristics & Purpose',
       children: [
-        { name: 'EBRAM Syntax' },
-        { name: 'Execution States' },
-        { name: 'Multisig & Governance' },
-        { name: 'Risk Rating' },
-        { name: 'Behavior-Driven Clauses' },
+        { 
+          id: 'overarching-goals', 
+          name: 'Overarching Goals', 
+          children: [
+            { id: 'secure-ownership', name: 'Secure Ownership' },
+            { id: 'inspire-confidence', name: 'Inspire Confidence' },
+            { id: 'export-sovereignty', name: 'Export Sovereignty' },
+          ] 
+        },
+        { 
+          id: 'problem-solving', 
+          name: 'Problem Solving & Benefits', 
+          children: [
+            { id: 'combat-info-asymmetry', name: 'Combat Information Asymmetry' },
+            { id: 'reduce-friction', name: 'Reduce Transactional Friction' },
+            { id: 'enhance-liquidity', name: 'Enhance Liquidity' },
+            { id: 'attract-global-investment', name: 'Attract Global Investment & Talent' },
+            { id: 'eliminate-fragmented-registries', name: 'Eliminate Fragmented Registries' },
+          ]
+        },
+        { 
+          id: 'foundational-nature', 
+          name: 'Foundational & Enduring Nature', 
+          children: [
+            { id: 'not-a-product', name: 'Not a product, not privately owned' },
+            { id: 'national-contribution', name: 'National contribution' },
+            { id: 'legacy-system', name: 'Legacy system' },
+            { id: 'authored-operated', name: 'Authored, Operated, For the world' },
+          ] 
+        },
+        { id: 'sovereign-ledger', name: 'Sovereign Ledger & Control' },
+        { id: 'purpose-built', name: 'Purpose-Built Design' },
+        { id: 'ecosystem-enabler', name: 'Ecosystem Enabler' },
       ],
     },
     {
-      name: 'Tokenization Model',
-      children: [
-        { name: 'Non-Rental Tokenization' },
-        { name: 'DXBTOKENS Lifecycle' },
-        { name: 'Fractional Ownership' },
-        { name: 'Ownership Transfer' },
-        { name: 'Liquidity Pool Sync' },
-      ],
-    },
-     {
-      name: 'Core Pillars',
-      children: [
-        { name: 'DLD Digital Dirham (DLD-AED)' },
-        { name: 'EBRAM Language' },
-        { name: 'EBRAMGPT AI Advisor' },
-        { name: 'DXBTOKENS Value System' },
-        { name: 'The MAKE System' },
-        { name: 'Mashroi Intelligence Grid' },
-        { name: 'UNIVESTOR Wallet' },
-      ],
+      id: 'multi-layered-architecture',
+      name: 'Multi-Layered Architecture',
     },
     {
-      name: 'Governance Model',
-      children: [
-        { name: 'DLD as Chain Governor' },
-        { name: 'Governing Council' },
-        { name: 'Cross-Entity Integration' },
-        { name: 'Sovereign Attribution' },
-      ],
+      id: 'key-integrations',
+      name: 'Key Integrations & Ecosystem',
     },
     {
-      name: 'API & Integration',
-      children: [
-        { name: 'EBRAMGPT Interface API' },
-        { name: 'Wallet & Payment APIs' },
-        { name: 'Mashroi LMS API' },
-        { name: 'DLD Backend Sync' },
-        { name: 'Property Data Feeds' },
-      ],
+      id: 'ebram-details',
+      name: 'EBRAM: Smart Contract System Details',
     },
-     {
-      name: 'Security & Crypto',
-      children: [
-        { name: 'Cryptographic Foundation' },
-        { name: 'Hyperledger Fabric' },
-        { name: 'Lost Key Solution' },
-        { name: 'Passwordless Login' },
-        { name: 'Fiat-Only Approach' },
-      ],
+    {
+      id: 'dxbtokens-dynamics',
+      name: 'DXBTOKENS: Tokenization & Market Dynamics',
+    },
+    {
+      id: 'mashroi-Professional Hub',
+      name: 'Mashroi: AI-Powered Real Estate Professional Hub',
+    },
+    {
+      id: 'compliance-risk',
+      name: 'Compliance, Risk & Dispute Resolution',
+    },
+    {
+      id: 'roadmap',
+      name: 'Roadmap & Future Potential',
+    },
+    {
+      id: 'user-experience',
+      name: 'User Experience & Accessibility',
     },
   ],
 };
