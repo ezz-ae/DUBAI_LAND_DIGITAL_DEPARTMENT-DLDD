@@ -50,13 +50,16 @@ import { dldChainDocuments } from '@/lib/documents';
 import { InteractiveMindMap } from '@/components/interactive-mind-map';
 
 const initialMessages = [
-  { from: 'bot', text: "Welcome to the DLDCHAIN Protocol AI Assistant. I can help you understand this complex project. What would you like to explore first?" },
+  { from: 'bot', text: "a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Mashroi acts as a central hub for real estate professionals, managing broker licensing, education, visa facilitation, and performance-based rewards through AI-powered systems. The entire framework emphasizes deep integration with existing governmental bodies like Ejari, Milka, and Trakheesi, aiming to enhance transparency, efficiency, and trust in Dubai's real estate market while attracting global investment." },
 ];
 
 const quickPrompts = [
   "Explain tokenization",
   "Summarize the whitepaper",
   "How does MAKE work?",
+  "What is the EBRAM system?",
+  "Explain the Mashroi platform.",
+  "لخص المشروع باللغة العربية",
 ];
 
 type Note = {
