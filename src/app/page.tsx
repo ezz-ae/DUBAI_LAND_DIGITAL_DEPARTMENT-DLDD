@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -240,13 +239,16 @@ function PageContent() {
     });
   };
   
-  const handleDiscussNote = (note: Note) => {
+  const handleDiscussNote = () => {
+    const markedNotes = notes.filter(note => markedNoteIds.has(note.id));
+    if (markedNotes.length !== 1) return;
+    const note = markedNotes[0];
+    
     if (note.isDefault) {
       handleSendMessage(undefined, `Tell me more about the: ${note.text}`);
     } else {
       handleSendMessage(undefined, `Let's discuss this note: "${note.text}"`);
     }
-    setActiveNoteDialog(null);
     discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -302,7 +304,6 @@ function PageContent() {
     setIsGeneratingReport(true);
     setReport('');
     try {
-      // Using 'technical' as a default since UI for selection is removed.
       const result = await generateReport({ notes: markedNotes.map(n => n.text), reportType: 'technical' });
       setReport(result.report);
       toast({ title: "Report Generated Successfully", description: "Your report is now available below." });
@@ -697,16 +698,17 @@ function PageContent() {
                    <Button variant="outline" className="w-full" disabled>
                       <Download className="mr-2" /> Download Full Project Study
                   </Button>
-                  <Button variant="outline" className="w-full" onClick={() => handleGenerateReport()}>
-                    <FileSignature className="mr-2" /> Download Report
-                  </Button>
+                   <Button variant="outline" className="w-full" onClick={handleGenerateReport} disabled={isGeneratingReport || markedNoteIds.size === 0}>
+                     <FileSignature className="mr-2" />
+                     {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size} marked)`}
+                   </Button>
                 </div>
               </div>
             </CardContent>
           </Card>
             
           <Card>
-            <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes, mark them for reporting, and generate insights." />
+            <CardTitleWithBackground title="Notes &amp; Reports" subtitle="Review notes, mark them for reporting, and generate insights." />
             <CardContent className="p-6">
                 <div className={cn(
                     "grid gap-4",
@@ -737,7 +739,7 @@ function PageContent() {
                              </Button>
                           )}
                       </CardHeader>
-                        {note.isDefault && (
+                        {note.isDefault ? (
                             <CardContent className="px-4 pb-4 pt-0">
                                 <div className="flex items-center space-x-2 overflow-x-auto pb-2">
                                 {liquidityMapSteps.map((step, index) => (
@@ -757,7 +759,7 @@ function PageContent() {
                                 ))}
                                 </div>
                             </CardContent>
-                        )}
+                        ) : <div className='px-4 pb-4 pt-0 text-sm text-muted-foreground truncate'>{note.text}</div> }
                         <CardFooter className="p-4 pt-0 mt-auto">
                            <Button variant="outline" size="sm" className="w-full" onClick={() => setActiveNoteDialog(note)}>
                               <MessageSquareQuote className="mr-2 h-4 w-4" />
@@ -768,40 +770,41 @@ function PageContent() {
                   ))}
                 </div>
 
-                <div className="mt-6 border-t pt-6">
-                   <div className="flex flex-col sm:flex-row gap-4 items-center">
-                       <h4 className="font-medium text-foreground/80 flex items-center gap-2 shrink-0">
-                          Report Generation
-                       </h4>
-                       <div className="flex w-full items-center gap-2">
-                         <Button onClick={() => handleGenerateReport()} disabled={isGeneratingReport || markedNoteIds.size === 0}>
-                           <FileSignature />
-                           {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size} marked)`}
-                         </Button>
-                         <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <Info className="w-4 h-4 text-muted-foreground cursor-help" />
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Mark notes using the checkboxes, then generate a report.</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                       </div>
-                   </div>
-                  {(isGeneratingReport || report) && (
-                    <div className="space-y-2 pt-4 mt-4 border-t">
-                      <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
-                      {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
-                        <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
-                          <p className="text-sm whitespace-pre-wrap">{report}</p>
-                        </ScrollArea>
-                      }
-                    </div>
-                  )}
-                </div>
+                {(isGeneratingReport || report) && (
+                  <div className="space-y-2 pt-6 mt-6 border-t">
+                    <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
+                    {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
+                      <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
+                        <p className="text-sm whitespace-pre-wrap">{report}</p>
+                      </ScrollArea>
+                    }
+                  </div>
+                )}
             </CardContent>
+            <CardFooter className="border-t p-4 flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Button onClick={handleDiscussNote} disabled={markedNoteIds.size !== 1}>
+                  <MessageSquareQuote />
+                  Discuss with AI
+                </Button>
+                <Button onClick={handleGenerateReport} disabled={isGeneratingReport || markedNoteIds.size === 0}>
+                  <FileSignature />
+                  {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size})`}
+                </Button>
+              </div>
+               <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="icon" className="cursor-help">
+                        <Info className="w-4 h-4 text-muted-foreground" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Mark one or more notes to generate a report. Mark one note to discuss.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+            </CardFooter>
           </Card>
         </div>
       </main>
@@ -844,7 +847,16 @@ function PageContent() {
               <Button variant="outline">Close</Button>
             </DialogClose>
              {activeNoteDialog && (
-              <Button onClick={() => handleDiscussNote(activeNoteDialog)}>
+              <Button onClick={() => {
+                const noteToDiscuss = activeNoteDialog;
+                setActiveNoteDialog(null);
+                if (noteToDiscuss.isDefault) {
+                  handleSendMessage(undefined, `Tell me more about the: ${noteToDiscuss.text}`);
+                } else {
+                  handleSendMessage(undefined, `Let's discuss this note: "${noteToDiscuss.text}"`);
+                }
+                discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 <MessageSquareQuote className="mr-2 h-4 w-4"/>
                 Discuss with AI
               </Button>
@@ -864,5 +876,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
