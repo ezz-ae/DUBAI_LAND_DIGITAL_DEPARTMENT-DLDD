@@ -11,3 +11,5 @@ export const GenerateReportOutputSchema = z.object({
   report: z.string().describe('The generated report.'),
 });
 export type GenerateReportOutput = z.infer<typeof GenerateReportOutputSchema>;
+
+    

@@ -179,7 +179,6 @@ function PageContent() {
   const [markedNoteIds, setMarkedNoteIds] = useState<Set<number | string>>(new Set());
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [report, setReport] = useState('');
-  const [reportType, setReportType] = useState<GenerateReportInput['reportType']>('technical');
   const [textSize, setTextSize] = useState<TextSize>('sm');
   const [activeNoteDialog, setActiveNoteDialog] = useState<Note | null>(null);
 
@@ -290,8 +289,7 @@ function PageContent() {
     }
   };
   
-  const handleGenerateReport = async (selectedReportType?: GenerateReportInput['reportType']) => {
-    const finalReportType = selectedReportType || reportType;
+  const handleGenerateReport = async () => {
     const markedNotes = notes.filter(note => markedNoteIds.has(note.id));
     
     if (markedNotes.length === 0) {
@@ -299,11 +297,12 @@ function PageContent() {
       return;
     }
     
-    toast({ title: `Generating ${finalReportType} report...`, description: "Please wait a moment." });
+    toast({ title: `Generating report...`, description: "Please wait a moment." });
     setIsGeneratingReport(true);
     setReport('');
     try {
-      const result = await generateReport({ notes: markedNotes.map(n => n.text), reportType: finalReportType });
+      // Using 'technical' as a default since UI for selection is removed.
+      const result = await generateReport({ notes: markedNotes.map(n => n.text), reportType: 'technical' });
       setReport(result.report);
       toast({ title: "Report Generated Successfully", description: "Your report is now available below." });
     } catch (error) {
@@ -697,21 +696,9 @@ function PageContent() {
                    <Button variant="outline" className="w-full" disabled>
                       <Download className="mr-2" /> Download Full Project Study
                   </Button>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" className="w-full">
-                        <FileSignature className="mr-2" /> Download Report
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Select Report Type</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => handleGenerateReport('technical')}>Technical Report</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleGenerateReport('managerial')}>Managerial Report</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleGenerateReport('legal')}>Legal Report</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleGenerateReport('financial')}>Financial Report</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Button variant="outline" className="w-full" onClick={() => handleGenerateReport()}>
+                    <FileSignature className="mr-2" /> Download Report
+                  </Button>
                 </div>
               </div>
             </CardContent>
@@ -720,7 +707,12 @@ function PageContent() {
           <Card>
             <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes, mark them for reporting, and generate insights." />
             <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className={cn(
+                    "grid gap-4",
+                    notes.length === 1 && "grid-cols-1",
+                    notes.length === 2 && "grid-cols-1 md:grid-cols-2",
+                    notes.length >= 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                  )}>
                   {notes.map(note => (
                     <Card key={note.id} className="flex flex-col">
                       <CardHeader className="flex-row items-start justify-between p-4">
@@ -779,7 +771,13 @@ function PageContent() {
                    <div className="flex flex-col sm:flex-row gap-4 items-center">
                        <h4 className="font-medium text-foreground/80 flex items-center gap-2 shrink-0">
                           Report Generation
-                          <TooltipProvider>
+                       </h4>
+                       <div className="flex w-full items-center gap-2">
+                         <Button onClick={() => handleGenerateReport()} disabled={isGeneratingReport || markedNoteIds.size === 0}>
+                           <FileSignature />
+                           {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size} marked)`}
+                         </Button>
+                         <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger>
                                 <Info className="w-4 h-4 text-muted-foreground cursor-help" />
@@ -789,28 +787,11 @@ function PageContent() {
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
-                       </h4>
-                       <div className="flex w-full items-center gap-2">
-                         <Select onValueChange={(value: GenerateReportInput['reportType']) => setReportType(value)} defaultValue={reportType}>
-                           <SelectTrigger className="w-full sm:w-[200px]">
-                             <SelectValue placeholder="Select report type" />
-                           </SelectTrigger>
-                           <SelectContent>
-                             <SelectItem value="technical">Technical Report</SelectItem>
-                             <SelectItem value="managerial">Managerial Report</SelectItem>
-                             <SelectItem value="legal">Legal Report</SelectItem>
-                             <SelectItem value="financial">Financial Report</SelectItem>
-                           </SelectContent>
-                         </Select>
-                         <Button onClick={() => handleGenerateReport()} disabled={isGeneratingReport || markedNoteIds.size === 0}>
-                           <FileSignature />
-                           {isGeneratingReport ? 'Generating...' : `Generate (${markedNoteIds.size} marked)`}
-                         </Button>
                        </div>
                    </div>
                   {(isGeneratingReport || report) && (
                     <div className="space-y-2 pt-4 mt-4 border-t">
-                      <h4 className="font-medium text-foreground/80">AI Generated Report ({reportType})</h4>
+                      <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
                       {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
                         <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
                           <p className="text-sm whitespace-pre-wrap">{report}</p>
@@ -882,3 +863,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
