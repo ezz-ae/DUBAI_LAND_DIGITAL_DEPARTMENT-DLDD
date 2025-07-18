@@ -504,7 +504,7 @@ function PageContent() {
               </Card>
             </div>
           </TabsContent>
-          <TabsContent value="document" className="flex-1 overflow-y-auto p-4">
+          <TabsContent value="document" className="flex-1 flex flex-col overflow-y-auto p-4">
               <SourceGuide 
                 summary={selectedDoc.summary} 
                 topics={selectedDoc.topics || []}
@@ -517,14 +517,15 @@ function PageContent() {
                   subtitle="Main document content"
                   className="flex-row items-center justify-between"
                 >
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" onClick={() => setTextSize("sm")} className={cn(textSize === 'sm' && 'bg-muted')}>Sm</Button>
-                    <Button variant="ghost" size="sm" onClick={() => setTextSize("base")} className={cn(textSize === 'base' && 'bg-muted')}>Md</Button>
-                    <Button variant="ghost" size="sm" onClick={() => setTextSize("lg")} className={cn(textSize === 'lg' && 'bg-muted')}>Lg</Button>
-                  </div>
+                    <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
+                    <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm" onClick={() => setTextSize("sm")} className={cn(textSize === 'sm' && 'bg-muted')}>Sm</Button>
+                        <Button variant="ghost" size="sm" onClick={() => setTextSize("base")} className={cn(textSize === 'base' && 'bg-muted')}>Md</Button>
+                        <Button variant="ghost" size="sm" onClick={() => setTextSize("lg")} className={cn(textSize === 'lg' && 'bg-muted')}>Lg</Button>
+                    </div>
                 </CardTitleWithBackground>
                 <CardContent className="flex-1 p-0">
-                  <ScrollArea className="h-full max-h-[calc(100vh-20rem)]">
+                  <ScrollArea className="h-full">
                     <div 
                       dir={isArabic ? 'rtl' : 'ltr'} 
                       className={cn(
