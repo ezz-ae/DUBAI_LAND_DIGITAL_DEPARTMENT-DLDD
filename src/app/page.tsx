@@ -364,7 +364,7 @@ function PageContent() {
             </TabsList>
           </div>
           <TabsContent value="assistant" className="flex-1 overflow-y-auto p-6">
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card className="flex flex-col">
                 <CardHeader>
                   <CardTitle>AI Console</CardTitle>
@@ -441,42 +441,42 @@ function PageContent() {
               
               <Card className="flex flex-col">
                 <CardHeader>
-                  <CardTitle>Notes & Reports</CardTitle>
+                  <CardTitle>Notes &amp; Reports</CardTitle>
                   <CardDescription>Create notes and generate AI-powered reports.</CardDescription>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col gap-4 p-4 overflow-hidden">
-                  <ScrollArea className="flex-1 pr-4 h-96">
-                    {notes.length > 0 ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {notes.map(note => (
-                          <Card key={note.id} className="cursor-pointer hover:border-primary" onClick={() => setSelectedNote(note)}>
-                            <CardHeader className="p-4">
-                              <CardTitle className="text-base flex items-start justify-between">
-                                <span className="truncate flex-1">{note.title}</span>
-                                <Checkbox
-                                  checked={note.marked}
-                                  onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
-                                  className="ml-2"
-                                />
-                              </CardTitle>
-                              <CardDescription className="text-xs truncate">Source: {note.source}</CardDescription>
-                            </CardHeader>
-                            <CardContent className="p-4 pt-0">
-                              <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
-                            </CardContent>
-                          </Card>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center text-muted-foreground py-8">No notes yet. Add one to get started!</div>
-                    )}
-
-                    {generatedReport && (
-                        <div className="mt-4 p-4 border rounded-lg bg-muted/50">
-                            <h3 className="font-semibold mb-2">Generated Report</h3>
-                            <p className="text-sm whitespace-pre-wrap">{generatedReport}</p>
+                <CardContent className="flex-1 flex flex-col gap-4 p-0 overflow-hidden">
+                   <ScrollArea className="flex-1 pr-4 h-96 p-4">
+                      {notes.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {notes.map(note => (
+                            <Card key={note.id} className="cursor-pointer hover:border-primary" onClick={() => setSelectedNote(note)}>
+                              <CardHeader className="p-4">
+                                <CardTitle className="text-base flex items-start justify-between">
+                                  <span className="truncate flex-1">{note.title}</span>
+                                  <Checkbox
+                                    checked={note.marked}
+                                    onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
+                                    className="ml-2"
+                                  />
+                                </CardTitle>
+                                <CardDescription className="text-xs truncate">Source: {note.source}</CardDescription>
+                              </CardHeader>
+                              <CardContent className="p-4 pt-0">
+                                <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
+                              </CardContent>
+                            </Card>
+                          ))}
                         </div>
-                    )}
+                      ) : (
+                        <div className="text-center text-muted-foreground py-8">No notes yet. Add one to get started!</div>
+                      )}
+
+                      {generatedReport && (
+                          <div className="mt-4 p-4 border rounded-lg bg-muted/50">
+                              <h3 className="font-semibold mb-2">Generated Report</h3>
+                              <p className="text-sm whitespace-pre-wrap">{generatedReport}</p>
+                          </div>
+                      )}
                   </ScrollArea>
                 </CardContent>
                   <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
