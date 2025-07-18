@@ -114,16 +114,16 @@ body {
     @apply bg-muted/50 p-1 rounded-md;
   }
   p {
-    @apply mb-3;
+    @apply mb-2;
   }
   h3 {
-    @apply text-2xl font-headline font-semibold mb-2 mt-4;
+    @apply text-lg font-headline font-semibold mb-2 mt-3;
   }
   h4 {
-    @apply text-xl font-headline font-semibold mb-1 mt-3;
+    @apply text-base font-headline font-semibold mb-1 mt-2;
   }
   ul {
-    @apply list-disc list-inside mb-3 pl-4;
+    @apply list-disc list-inside mb-2 pl-4;
   }
   li {
     @apply mb-1;
@@ -132,7 +132,7 @@ body {
     @apply bg-muted text-sm font-code p-1 rounded-md;
   }
   hr {
-    @apply my-4 border-border;
+    @apply my-3 border-border;
   }
 }
 
