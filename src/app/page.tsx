@@ -76,6 +76,7 @@ function PageContent() {
   const [report, setReport] = useState('');
   const [reportType, setReportType] = useState<GenerateReportInput['reportType']>('technical');
 
+  const isArabic = selectedDoc.id === 1;
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -205,10 +206,13 @@ function PageContent() {
 
     try {
       const result = await askQuestion({ question: userMessage, context: selectedDoc.content });
-      setMessages([...newMessages, { from: 'bot', text: result.answer }]);
+      const botAnswer = result.answer;
+      // Simple language detection for RTL
+      const isBotAnswerArabic = /[\u0600-\u06FF]/.test(botAnswer);
+      setMessages([...newMessages, { from: 'bot', text: botAnswer, isArabic: isBotAnswerArabic }]);
     } catch (error) {
       console.error('Error asking question:', error);
-      setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error. Please try again.' }]);
+      setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error. Please try again.', isArabic: false }]);
        toast({
         variant: "destructive",
         title: "Error",
@@ -267,8 +271,6 @@ function PageContent() {
       audioElement?.removeEventListener('ended', handleEnded);
     };
   }, []);
-
-  const isArabic = selectedDoc.id === 1;
 
   return (
     <div className="flex h-screen w-full bg-background text-foreground">
@@ -330,14 +332,14 @@ function PageContent() {
 
         <main className="flex-1 overflow-y-auto">
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 p-6 items-start">
-            <div className="xl:col-span-2 flex flex-col gap-6" dir={isArabic ? 'rtl' : 'ltr'}>
+            <div className="xl:col-span-2 flex flex-col gap-6">
                <Card>
                 <CardHeader>
                   <CardTitle>File Viewer</CardTitle>
                   <CardDescription>Select text to add it to your notes.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ScrollArea className={cn("h-96 rounded-md border p-4", isArabic && "font-arabic")} ref={fileContentRef} onMouseUp={handleSelection}>
+                  <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className={cn("h-96 rounded-md border p-4", isArabic && "font-arabic")} ref={fileContentRef} onMouseUp={handleSelection}>
                     <p className="whitespace-pre-wrap text-sm">{selectedDoc.content}</p>
                   </ScrollArea>
                 </CardContent>
@@ -484,7 +486,7 @@ function PageContent() {
               </Card>
             </div>
 
-            <Card className="xl:col-span-1 h-full flex flex-col sticky top-6" dir={isArabic ? 'rtl' : 'ltr'}>
+            <Card className="xl:col-span-1 h-full flex flex-col sticky top-6">
               <CardHeader className="border-b">
                 <CardTitle>Interactive Q&A</CardTitle>
                 <CardDescription>Ask questions about the project.</CardDescription>
@@ -492,17 +494,17 @@ function PageContent() {
               <CardContent className="flex-1 p-0">
                 <ScrollArea className="h-[calc(100vh-20rem)]" ref={scrollAreaRef}>
                   <div className="p-4 space-y-4">
-                  {messages.map((msg, index) => (
+                  {messages.map((msg: any, index) => (
                     <div key={index} className={cn("flex items-start gap-3", msg.from === 'user' ? "justify-end" : "justify-start")}>
                       {msg.from === 'bot' && (
                         <Avatar className="w-8 h-8">
                           <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
                         </Avatar>
                       )}
-                      <div className={cn(
+                      <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
                         "max-w-xs rounded-lg px-4 py-2 text-sm",
                         msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                        isArabic && "text-right font-arabic" 
+                        msg.isArabic && "font-arabic" 
                       )}>
                         {msg.text}
                       </div>
@@ -529,12 +531,13 @@ function PageContent() {
               <CardFooter className="border-t pt-6">
                 <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
                   <Input
+                    dir={isArabic ? 'rtl' : 'ltr'}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type your question..."
                     autoComplete="off"
                     disabled={isAnswering}
-                    className={cn(isArabic && "text-right font-arabic")}
+                    className={cn(isArabic && "font-arabic")}
                   />
                   <Button type="submit" size="icon" disabled={isAnswering}>
                     <Send className="h-4 w-4" />

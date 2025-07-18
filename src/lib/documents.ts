@@ -149,9 +149,9 @@ MAKE هو الذراع التمويلي المبتكر لمنظومة الترم
 
 إن مشروع DLDCHAIN لا يمثل مجرد مبادرة تقنية؛ بل هو **مشروع سيادي متكامل** يعكس رؤية دبي الطموحة نحو التحول الرقمي الشامل وريادة المستقبل. لقد جرى بناء كل جزء من هذا النظام – من لغة "إبرام" البرمجية القانونية التي تفكر وتفهم وتُشرّع، إلى نظام DXBTOKENS للترميز القائم على القيمة السوقية، ونظام MAKE لحل تحديات السيولة **بنموذجه الفريد والمضمون للأرباح**، وصولًا إلى "مشروعي" الذي أعاد تعريف الجدارة والاحترافية في الوساطة العقارية – ليصبحوا معًا شهادة حية تؤكد أن الحوكمة الذكية والابتكار المستدام لا يتحققان إلا بالرؤية الواضحة والإرادة المؤسسية والتكامل التقني.
 
-**This project is not just a future vision; it is a clear action plan whose code has been developed and successfully tested, its smart contracts written, and has received external validation confirming the ecosystem's readiness to transition from concept to widespread practical application.**
+**إن هذا المشروع ليس مجرد رؤية مستقبلية، بل هو خطة عمل واضحة تم تطوير كودها البرمجي واختباره بنجاح، وكتابة عقودها الذكية، وحصل على تقييم خارجي يؤكد جاهزية المنظومة للتحول من المفهوم إلى التطبيق الفعلي على نطاق واسع.**
 
-Through this, Dubai daily demonstrates that nothing is impossible when sincere vision meets institutional determination and technological integration. Dubai leads its digital sovereignty, transforming the real estate asset from mere bricks or a contract into a digital entity with dignity, value, and protected rights... precisely as envisioned by our wise leadership and society.
+بهذا، تبرهن دبي يوميًا أن لا شيء مستحيل حين تلتقي الرؤية الصادقة بالإرادة المؤسسية والتكامل التقني. تقود دبي سيادتها الرقمية، ويصبح فيها الأصل العقاري ليس مجرد حجر أو عقد، بل كيانًا رقميًا له كرامة، وقيمة، وحقوق محمية... تمامًا كما تتطلع إليه قياداتنا الرشيدة ومجتمعنا.
 
 ---
 `
@@ -532,7 +532,7 @@ modifier enforceNonDualRights(uint tokenId) {
 
 ---
 
-#### Appendix A: Institutional Contribution Tiers — Mashroi for Organizations
+#### Appendix A: Institutional Tiers — Mashroi for Organizations
 Mashroi provides tiered access for institutions (Government, Banks, Developers) to interface with DLDCHAIN as contributing roles with specific authorities, from view-only access to rule proposal rights.
 
 #### Appendix B: DXBTOKEN Trading Model — Orders, Pools & Execution
@@ -631,4 +631,5 @@ Assigns a digital identity (CDID) to every square foot of Dubai, making every pa
     content: 'This appendix explains the DLDCHAIN City Digital Identity Protocol.'
   }
 ];
+
 
