@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -473,34 +474,49 @@ function PageContent() {
         </header>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          <Card>
-            <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
-                <div className='flex items-center gap-4'>
-                  <CardTitle className="text-2xl">{showMap ? "Structure Mindmap" : selectedDoc?.name}</CardTitle>
-                   <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content || showMap} size="sm">
-                    {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
-                    Summarize Document
-                  </Button>
-                </div>
-                <Button onClick={() => setShowMap(!showMap)} variant="outline">
-                    {showMap ? <File className="mr-2" /> : <Map className="mr-2" />}
-                    {showMap ? 'View Document' : 'View Map'}
-                </Button>
-            </CardHeader>
-            <CardContent className="p-0">
-               {showMap ? (
-                 <div className="h-[60vh] w-full bg-background">
-                    <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
-                 </div>
-               ) : (
-                <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[60vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
-                  <SourceGuide summary={selectedDoc?.summary || ''} topics={selectedDoc?.topics || []} isArabic={isArabic} />
-                  <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
-                </ScrollArea>
-               )}
-            </CardContent>
-          </Card>
-          
+            <div className='flex items-center justify-between p-4'>
+                <CardTitle className="text-2xl">DLDCHAIN STRUCTURE MINDMAP</CardTitle>
+                <Dialog onOpenChange={setIsMapDialogOpen}>
+                    <DialogTrigger asChild>
+                        <Button variant="outline">
+                            <Maximize className="mr-2" />
+                            Explore Map
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
+                        <DialogHeader>
+                            <DialogTitle>DLDCHAIN Structure Mindmap</DialogTitle>
+                        </DialogHeader>
+                        <div className="flex-1 relative">
+                          <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            </div>
+            <div className="h-[60vh] w-full relative">
+                <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+            </div>
+
+            {!isMapDialogOpen && (
+              <Card>
+                <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
+                    <div className='flex items-center gap-4'>
+                      <CardTitle className="text-2xl">{selectedDoc?.name}</CardTitle>
+                       <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content} size="sm">
+                        {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
+                        Summarize Document
+                      </Button>
+                    </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                    <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[60vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
+                      <SourceGuide summary={selectedDoc?.summary || ''} topics={selectedDoc?.topics || []} isArabic={isArabic} />
+                      <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
+                    </ScrollArea>
+                </CardContent>
+              </Card>
+            )}
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
             <Card ref={discussionCardRef} className="lg:sticky lg:top-6">
               <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
