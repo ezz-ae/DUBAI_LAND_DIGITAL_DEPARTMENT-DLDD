@@ -30,7 +30,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, Mic, PauseCircle, BrainCircuit, MessageSquare, StickyNote, File as FileIcon, X } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, Mic, PauseCircle, BrainCircuit, MessageSquare, StickyNote, File as FileIcon, X, Music4 } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
@@ -348,10 +348,6 @@ function PageContent() {
             <Button onClick={handleSummarize} variant="outline" size="sm">
               <Sparkles /> Summarize Document
             </Button>
-            <Button onClick={handleGenerateAudio} variant="outline" size="sm" disabled={isGeneratingAudio}>
-                {isGeneratingAudio ? <Loader2 className="animate-spin" /> : audioState.isPlaying ? <PauseCircle /> : <Mic />}
-                <span>{isGeneratingAudio ? 'Generating...' : audioState.isPlaying ? 'Pause Audio' : audioState.element ? 'Play Audio' : 'Generate AI Audio'}</span>
-            </Button>
           </div>
         </header>
         
@@ -364,14 +360,14 @@ function PageContent() {
             </TabsList>
           </div>
           <TabsContent value="assistant" className="flex-1 overflow-y-auto p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="flex flex-col">
+            <div className="grid grid-cols-1 gap-6">
+              <Card>
                 <CardHeader>
                   <CardTitle>AI Console</CardTitle>
                   <CardDescription>Ask questions about <span className='font-bold text-primary'>{selectedDoc.name}</span></CardDescription>
                 </CardHeader>
-                <CardContent className="flex-1 p-0 flex flex-col">
-                    <ScrollArea className="flex-1 h-96" ref={chatScrollAreaRef}>
+                <CardContent className="p-0">
+                    <ScrollArea className="h-96" ref={chatScrollAreaRef}>
                     <div className="p-4 space-y-4">
                     {messages.map((msg: any, index) => (
                       <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
@@ -439,15 +435,16 @@ function PageContent() {
                 </CardFooter>
               </Card>
               
-              <Card className="flex flex-col">
+              <Card>
                 <CardHeader>
                   <CardTitle>Notes &amp; Reports</CardTitle>
-                  <CardDescription>Create notes and generate AI-powered reports.</CardDescription>
+                  <CardDescription>Create notes and generate AI-powered reports from your findings.</CardDescription>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col gap-4 p-0 overflow-hidden">
-                   <ScrollArea className="flex-1 pr-4 h-96 p-4">
+                <CardContent className="p-0">
+                   <ScrollArea className="h-96">
+                     <div className="p-4">
                       {notes.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {notes.map(note => (
                             <Card key={note.id} className="cursor-pointer hover:border-primary" onClick={() => setSelectedNote(note)}>
                               <CardHeader className="p-4">
@@ -477,6 +474,7 @@ function PageContent() {
                               <p className="text-sm whitespace-pre-wrap">{generatedReport}</p>
                           </div>
                       )}
+                      </div>
                   </ScrollArea>
                 </CardContent>
                   <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
@@ -499,6 +497,24 @@ function PageContent() {
                     </Button>
                 </CardFooter>
               </Card>
+
+              <Card>
+                <CardHeader>
+                    <CardTitle>Media Center</CardTitle>
+                    <CardDescription>Generate and listen to AI-powered audio overviews of the documents.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-col items-center justify-center gap-4 text-center p-6 min-h-[200px]">
+                    <Music4 className="w-16 h-16 text-primary" />
+                    <p className="text-sm text-muted-foreground">
+                        {audioState.element ? "Audio is ready to play." : "Generate an audio summary for the selected document."}
+                    </p>
+                    <Button onClick={handleGenerateAudio} size="lg" disabled={isGeneratingAudio}>
+                        {isGeneratingAudio ? <Loader2 className="animate-spin" /> : audioState.isPlaying ? <PauseCircle /> : <PlayCircle />}
+                        <span className="ml-2">{isGeneratingAudio ? 'Generating Audio...' : audioState.isPlaying ? 'Pause Audio' : audioState.element ? 'Play Audio Overview' : 'Generate AI Audio'}</span>
+                    </Button>
+                </CardContent>
+              </Card>
+
             </div>
           </TabsContent>
           <TabsContent value="document" className="flex-1 flex flex-col overflow-y-auto p-4 gap-4">
@@ -606,3 +622,6 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+
+    
