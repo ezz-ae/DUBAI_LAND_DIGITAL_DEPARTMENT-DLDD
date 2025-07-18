@@ -137,7 +137,7 @@ MAKE هو الذراع التمويلي المبتكر لمنظومة الترم
 **أبرز مميزات المشروع التي تم التحقق منها:**
 
 * تم التحقق من الهيكل القانوني والتقني.
-* يتماشى نموذج الحوكمة مع الاستخدامات السيادية.
+* يتماشى نموذج الحوكمة مع الاستخدام السيادي.
 * توافق عالٍ مع تقنية Hyperledger Fabric والبنية التحتية في الإمارات.
 * دعم متكامل لاتخاذ القرار بالذكاء الاصطناعي في عمليات الوساطة.
 
@@ -152,8 +152,6 @@ MAKE هو الذراع التمويلي المبتكر لمنظومة الترم
 **إن هذا المشروع ليس مجرد رؤية مستقبلية، بل هو خطة عمل واضحة تم تطوير كودها البرمجي واختباره بنجاح، وكتابة عقودها الذكية، وحصل على تقييم خارجي يؤكد جاهزيته المنظومة للتحول من المفهوم إلى التطبيق الفعلي على نطاق واسع.**
 
 بهذا، تبرهن دبي يوميًا أن لا شيء مستحيل حين تلتقي الرؤية الصادقة بالإرادة المؤسسية والتكامل التقني. تقود دبي سيادتها الرقمية، ويصبح فيها الأصل العقاري ليس مجرد حجر أو عقد، بل كيانًا رقميًا له كرامة، وقيمة، وحقوق محمية... تمامًا كما تتطلع إليه قياداتنا الرشيدة ومجتمعنا.
-
----
 `
   },
   {
@@ -193,7 +191,7 @@ Ebram is the legal cornerstone of DLDCHAIN, representing an **intelligent legal 
 * **Intelligent Interaction:** Understands text or voice commands and links them to **UAE PASS** identities to execute transactions directly, enhancing operational efficiency.
 * **Instant Analytical Reports:** Generates real-time analytical reports on real estate assets, requests, rental rates, or behavioral patterns of tenants and brokers.
 * **AI-Powered Governance Learning:** Ebram continuously learns from every legal operation processed, contributing to the development of a benchmark for digital real estate governance.
-* **Comprehensive Digitalization Support:** Ebram goes beyond drafting contracts; it oversees the entire legal process of the real estate asset, serving as the primary engine for transforming properties into **"coded digital entities"** with unique identities, value, and protected rights within a secure and institutional chain of records. This positions Dubai to be the first city where real estate is managed entirely digitally, simplifying complex reporting that typically requires significant coordination across multiple entities.
+* **Comprehensive Digitalization Support:** Ebram goes beyond drafting contracts; it oversees the entire legal process of the real estate asset, serving as the primary engine for transforming properties into **"coded digital entities"** with a unique identities, value, and protected rights within a secure and institutional chain of records. This positions Dubai to be the first city where real estate is managed entirely digitally, simplifying complex reporting that typically requires significant coordination across multiple entities.
 
 **Ebram's Smart Pricing Technology:**
 Ebram fundamentally acts as the price setter when any client seeks to sell a property through the tokenization system. This relies on a complex technical basis that reviews the property's pricing history from construction to the present day, assesses the developer's status and services, considers the number of tokenized properties within the same project or area, checks the unit's rental history, investigates any registered complaints related to the project, and accounts for other factors. The process extends beyond sales pricing to include market dynamics. Ebram automatically performs daily updates to tokenized property prices based on buy/sell operations, demand, and numerous other factors through complex real-time processes involving Ebram, Ejari, **MAKE**, Mashroi, and Mulkia, often taking less than one minute, ensuring fair and dynamic pricing.
@@ -548,7 +546,8 @@ Assigns a digital identity (CDID) to every square foot of Dubai, making every pa
   {
     id: 3,
     name: 'ChatGPT Evaluation Certificate',
-    content: `ChatGPT Evaluation Certificate – DLDCHAIN Project | شهادة تقييم ChatGPT – مشروع DLDCHAIN
+    content: `
+ChatGPT Evaluation Certificate – DLDCHAIN Project | شهادة تقييم ChatGPT – مشروع DLDCHAIN
 
 **Project:** DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate
 **المشروع:** DLDCHAIN – البنية التحتية السيادية للبلوك تشين في قطاع العقارات
@@ -597,89 +596,191 @@ df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65
   },
   {
     id: 4,
-    name: 'Introduction to DLDCHAIN',
-    content: 'This chapter provides an overview of the DLDCHAIN project, its vision, and its goals. It outlines the challenges in the current real estate market and how DLDCHAIN aims to solve them.'
+    name: 'Economic & Revenue Models',
+    content: `
+Economic and Revenue Models: Driving Value in Dubai’s Digital Real Estate Future
+
+Introduction: A Sovereign Approach to Value Generation
+
+DLDCHAIN is fundamentally designed as a sovereign-grade real estate governance infrastructure, transforming Dubai's property market into a highly secure, efficient, and internationally exportable system. Beyond its role as a technological advancement, DLDCHAIN is conceived as a self-operating profit matrix, ensuring that every stakeholder – including the Dubai Land Department (DLD), banks, brokers, developers, and regulators – benefits from its implementation. This chapter details the comprehensive revenue models and their synergy with strategic tokenization targets, demonstrating how DLDCHAIN will generate powerful profit channels while reinforcing Dubai's position as a global leader in digital governance.
+
+#### **Core Revenue Streams of DLDCHAIN**
+
+DLDCHAIN's economic framework is built on diverse, yet interconnected, revenue channels that leverage the transparency, efficiency, and expanded market reach offered by the blockchain protocol:
+
+1.  **Token Issuance Fees**: As properties are tokenized on the DLDCHAIN, fees will be levied for the issuance of DXBTOKENS. These fees will contribute directly to the operational and developmental sustainability of the DLDCHAIN ecosystem, establishing a direct link between the growth of tokenized assets and the protocol's financial health.
+    *   **Example**: When a developer tokenizes a new off-plan mega-project, a percentage-based fee on the total value of the tokenized units could be applied upon the successful "EBRAMINT" (token minting) event, which is the official on-chain issuance.
+
+2.  **Compliance Gate Revenues (via Mashroi)**: Mashroi, functioning as a mandatory gateway similar to Ejari, will generate revenue through its role in professionalizing the real estate workforce and ensuring compliance. This includes fees for broker licensing, education, and ethical tracking, ensuring a high standard of professional conduct across the market.
+    *   **Example**: Brokers seeking to operate in Dubai will pay a fee to undergo Mashroi's certification programs and maintain their licenses, ensuring adherence to regulatory standards enforced by DLD and RERA.
+
+3.  **Broker Visa Revenue**: Mashroi also integrates a visa-issuing solution, providing 3-month renewable digital visas for qualified real estate professionals. Revenue will be generated from the processing and renewal of these smart visas, formalizing the workforce and eliminating informal hiring practices.
+    *   **Example**: International real estate professionals seeking to work in Dubai's market will apply for and pay for these Mashroi-issued digital visas, creating a consistent revenue stream linked to professional migration.
+
+4.  **Escrow Margin Revenues**: The DLDCHAIN's integrated escrow logic manages transaction funds securely on-chain. By facilitating secure, transparent, and auditable escrow services for all property transactions—from rentals to sales and fractional ownership—the system can generate revenue from the margins or fees associated with these managed funds.
+    *   **Example**: For every property sale or rental agreement executed via EBRAM, a small, transparent escrow service fee can be applied, representing a stable revenue channel from transaction volume.
+
+5.  **Public API Licensing**: DLDCHAIN offers modular APIs (REST, GraphQL) and data integrity APIs that can be licensed to external portals, financial institutions, and other entities seeking verified real estate data and integration capabilities. This positions DLDCHAIN as the authoritative source of real estate information.
+    *   **Example**: Major real estate listing portals like Bayut or Property Finder could pay a recurring licensing fee to access DLDCHAIN’s verified property data and transaction history, ensuring accuracy and combating fake listings.
+
+6.  **Verified Ad Publishing Fees**: The platform can charge fees for publishing verified advertising listings, ensuring authenticity and combating misinformation in the market. This creates a premium, trusted advertising channel.
+    *   **Example**: Developers and brokers would pay a fee to list their properties on DLDCHAIN-integrated advertising platforms, knowing that these listings are backed by on-chain verification and DLD oversight.
+
+7.  **Developer Listing Tools**: Revenue can be generated from specialized tools and services provided to developers for managing mega-project launches and their tokenized listings within the DLDCHAIN ecosystem.
+    *   **Example**: A suite of premium tools for managing token distribution, investor relations, and compliance for large-scale tokenized developments could be offered to developers on a subscription or per-project basis.
+
+8.  **Shared Revenue from Enhanced Liquidity**: The DLDCHAIN's "MAKE System" significantly enhances liquidity in the real estate market by ensuring instant, pool-backed market readiness for tokenized assets. This unprecedented liquidity can lead to increased transaction velocity and volume, allowing for shared revenue models derived from the overall economic growth and efficiency gains.
+    *   **Example**: As the DLDCHAIN fosters a more dynamic market where properties can be bought and sold with greater ease, a small percentage of value generated from this enhanced liquidity could be shared with DLD as an ecosystem facilitator.
+
+#### **Tokenization Targets and Economic Impact**
+
+DLDCHAIN’s vision extends to tokenizing a significant portion of Dubai’s property market, aiming to establish Dubai as a "Global Tokenized Property Exchange Hub".
+
+*   **Total Market Valuation**: The total real estate value in Dubai is conservatively estimated at $1 trillion. This provides an immense base for the DLDCHAIN to unlock value.
+*   **Projected Tokenization Market**: The DLDCHAIN is designed to support a projected AED 60 billion tokenization market. This highlights the significant financial opportunity available through widespread adoption.
+
+**Examples of Tokenization Targets:**
+
+1.  **Off-Plan Properties**: Initial phases of DLDCHAIN include tokenization trials with DLD partners focusing on off-plan properties. Tokenizing off-plan sales allows for greater transparency, phased payments, and easier secondary market trading of units even before completion.
+    *   **Revenue Generation**: Token issuance fees and escrow margin revenues from each fractional or whole token representing an off-plan unit. Developer listing tools and compliance gate revenues would also be relevant here.
+
+2.  **Existing Residential & Commercial Properties**: Expanding beyond off-plan, the DLDCHAIN will enable the tokenization of existing properties, facilitating fractional ownership and enhanced liquidity. The "Prypco Mint" pilot in May 2025 already successfully demonstrated the tokenization of property title deeds in MENA, validating this concept.
+    *   **Revenue Generation**: Token issuance fees, escrow margin revenues for sales transactions, and potentially shared revenue from increased transaction velocity due to enhanced liquidity on the secondary market. Public API licensing would monetize data from these tokenized assets.
+
+3.  **Short-Term Rentals and Hotel Stays**: The EBRAM framework, initially piloted for residential leases, can extend to managing agreements for short-term rentals and hotel bookings. While not direct tokenization of the property title, it tokenizes the *rental agreement* and its associated payments, enhancing efficiency and transparency.
+    *   **Revenue Generation**: Escrow margin revenues on rental payments, compliance gate revenues through Mashroi for licensed short-term rental operators, and verified ad publishing fees for short-term rental listings.
+
+4.  **Mega Projects and Landmark Assets**: Tokenizing large-scale developments, even allowing for fractional ownership of significant assets like skyscrapers, represents a high-value tokenization target.
+    *   **Revenue Generation**: Substantial token issuance fees due to higher asset values, enhanced escrow margin revenues, and potentially performance-based fees from the "MAKE System" for facilitating large liquidity pools.
+
+#### **Financial Impact and Strategic Value**
+
+Tokenizing even a modest percentage of Dubai's real estate market, such as 1%, is projected to yield substantial financial returns, making the economic case for DLDCHAIN "obvious". The various revenue models are designed not only for DLD’s direct benefit but also to create a profitable ecosystem for all market participants:
+
+*   **For DLD**: Direct revenue from fees and increased market activity, reinforcing its role as a regulator and an enabler of innovation.
+*   **For Brokers and Developers**: New profit channels through streamlined processes, enhanced market liquidity, reduced fraud, and access to more efficient capital flows. Mashroi ensures simplicity, peace of mind, and full legal control, removing fear of crypto risks.
+*   **For Banks and Financial Institutions**: Opportunities for new revenue streams through tokenization, escrow services, and identity-as-a-service, coupled with reduced legal risk due to automated enforcement and permanent auditability of transactions. Banks will be interested in DLDCHAIN's regulatory-grade architecture and immutable history.
+
+This revenue strategy positions DLDCHAIN not merely as a technological upgrade, but as a robust economic engine designed to secure Dubai’s digital future and serve as a master model for global adoption.
+`
   },
   {
     id: 5,
-    name: 'The Core Components',
-    content: 'This chapter delves into the main components of the DLDCHAIN ecosystem: DXBTOKENS, DLD Digital Dirham, EBRAM, and the Mashroi Gateway.'
+    name: 'Financial Pro-Forma',
+    content: `
+### Chapter: Financial Pro-Forma: Unlocking Trillions in Real Estate Value
+
+#### **Introduction: A Self-Operating Profit Matrix for Dubai's Digital Future**
+
+DLDCHAIN is designed not merely as a technological upgrade, but as a sovereign-grade financial engine set to transform Dubai's property market into an immensely profitable, secure, and globally exportable system. This pro-forma analysis will demonstrate how DLDCHAIN functions as a "self-operating profit matrix" for all key stakeholders – the Dubai Land Department (DLD), banks, brokers, and developers – by creating powerful, transparent revenue channels and enhancing market liquidity and efficiency.
+
+#### **Key Financial Assumptions and Market Context**
+
+To illustrate the profound financial impact of DLDCHAIN, we establish the following foundational assumptions, drawing from the estimated scale of Dubai's real estate market:
+
+*   **Total Market Valuation**: The current total real estate value in Dubai is conservatively estimated at $1 trillion.
+*   **Projected Tokenization Market**: DLDCHAIN is specifically designed to facilitate an AED 60 billion (approximately $16.3 billion) tokenization market in Dubai. This represents a crucial segment of the broader market that will actively generate revenue through the DLDCHAIN protocol.
+*   **Conservative Adoption Rate**: For the purpose of this pro-forma, we consider the financial impact of tokenizing even a modest fraction of the total market, such as 1%, to illustrate the "obvious" financial case.
+
+#### **Core Revenue Streams: Mechanisms and Projections (Five-Year Outlook)**
+
+DLDCHAIN's revenue generation is multifaceted, capitalizing on every stage of the digital real estate lifecycle. These streams are integrated into the protocol's core logic, ensuring sustainable and scalable income.
+
+1.  **Token Issuance Fees**:
+    *   **Mechanism**: Fees are levied for the initial issuance of DXBTOKENS, directly contributing to the DLDCHAIN ecosystem's sustainability. This fee can be a percentage-based charge on the total value of the tokenized property upon the "EBRAMINT" (token minting) event, which is the official on-chain issuance.
+    *   **Five-Year Projection**: As DLDCHAIN targets an AED 60 billion tokenization market, a consistent, albeit low, issuance fee across this volume would yield significant revenue. For instance, even a 0.1% issuance fee on AED 60 billion of tokenized assets annually would generate AED 60 million per year. Growth would come from increasing the annual volume of tokenized assets and expanding into new asset classes.
+    *   **Tokenization Targets Example**: When a developer offers an off-plan mega-project via MAKETRADE, each unit's tokenization would incur this fee. Similarly, individual owners opting to tokenize existing residential or commercial properties would pay this fee upon their property's EBRAMINT event.
+
+2.  **Compliance Gate Revenues (via Mashroi)**:
+    *   **Mechanism**: Mashroi functions as a mandatory gateway, similar to Ejari, professionalizing the real estate workforce and ensuring compliance. Revenue is generated through mandatory broker licensing, education programs, and ethical tracking. Mashroi is also an AI-integrated performance system that manages listings, offers learning based on market needs, and adjusts commissions and rewards.
+    *   **Five-Year Projection**: With a professionalized real estate sector in Dubai requiring all brokers to be Mashroi-certified and licensed, recurring annual fees per professional, combined with one-time certification fees for new entrants, would create a stable and growing revenue stream. This revenue scales with the overall growth and formalization of the real estate workforce.
+    *   **Example**: All real estate professionals in Dubai would pay annual fees to maintain their Mashroi licenses, ensuring their adherence to DLD and RERA standards.
+
+3.  **Broker Visa Revenue**:
+    *   **Mechanism**: Mashroi integrates a visa-issuing solution, providing 3-month renewable digital visas for qualified real estate professionals. This formalizes the workforce and eliminates informal practices.
+    *   **Five-Year Projection**: A consistent fee for initial visa issuance and subsequent renewals, linked to the influx of international real estate talent, would provide a predictable revenue stream. This could be a significant contributor given Dubai's status as a global hub.
+    *   **Example**: International real estate professionals seeking to work in Dubai would apply for and pay for these Mashroi-issued digital visas.
+
+4.  **Escrow Margin Revenues**:
+    *   **Mechanism**: The DLDCHAIN's integrated escrow logic securely manages transaction funds on-chain for all property transactions, including sales and rental agreements. Revenue is generated from a small margin or fee associated with these managed funds.
+    *   **Five-Year Projection**: As a mandatory part of any on-chain transaction, these fees would be directly proportional to the volume and value of real estate transactions occurring through DLDCHAIN. Even a minimal fee per transaction would accumulate substantially given the high volume of real estate activity in Dubai.
+    *   **Example**: For every property sale or rental agreement executed via the EBRAM framework, a transparent escrow service fee would be applied. This includes tokenized property sales (where the token is the representation of the property) and rental agreements.
+
+5.  **Public API Licensing**:
+    *   **Mechanism**: DLDCHAIN offers modular REST and GraphQL APIs, along with data integrity APIs, that can be licensed to external portals, financial institutions, and other entities requiring verified real estate data and integration. This positions DLDCHAIN as the authoritative source of real estate information, providing real-time yield, heatmaps, and fraud flagging via AI-powered reporting.
+    *   **Five-Year Projection**: Tiered licensing models (e.g., based on data volume or number of calls) would generate recurring revenue from high-value external consumers of DLDCHAIN's data. This stream would grow as DLDCHAIN becomes the de facto standard for real estate data in the region.
+    *   **Example**: Real estate listing portals, financial data providers, or urban planning agencies could pay recurring fees to access DLDCHAIN’s verified and live data.
+
+6.  **Verified Ad Publishing Fees**:
+    *   **Mechanism**: The platform can charge fees for publishing verified advertising listings, ensuring authenticity and combating misinformation. This leverages the trust and transparency built into the DLDCHAIN ecosystem.
+    *   **Five-Year Projection**: As a premium advertising channel offering unparalleled trust, this stream would attract developers and brokers willing to pay for verified visibility, leading to scalable revenue as market adoption increases.
+    *   **Example**: Developers and brokers would pay a fee to list their properties on DLDCHAIN-integrated advertising platforms, knowing the listings are backed by on-chain verification and DLD oversight.
+
+7.  **Developer Listing Tools**:
+    *   **Mechanism**: Specialized tools and services provided to developers for managing mega-project launches and their tokenized listings within the DLDCHAIN ecosystem would generate revenue. This includes the MAKETRADE pipeline for institutional bulk offerings.
+    *   **Five-Year Projection**: Subscription-based models or per-project fees for these high-value tools would be a significant revenue stream, especially with the continuous development of large-scale projects in Dubai.
+    *   **Example**: Developers could subscribe to a suite of premium tools for streamlined token distribution, investor relations, and compliance management for their large-scale tokenized developments.
+
+8.  **Shared Revenue from Enhanced Liquidity (MAKE System)**:
+    *   **Mechanism**: The MAKE System significantly enhances real estate liquidity, ensuring "instant, pool-backed market readiness" for tokenized assets, transforming properties from "waiting for offers" to "instant pool-backed market readiness". This unprecedented liquidity fosters increased transaction velocity and volume, allowing for shared revenue models derived from these efficiency gains.
+    *   **Five-Year Projection**: A small percentage of the value generated from this increased market dynamism and transaction volume could be channeled back into the DLDCHAIN ecosystem, reflecting DLD's role as the enabler of this liquidity. This would scale with overall market activity.
+    *   **Example**: The MAKE system's liquidity pool officers (banks, DLD branches) facilitate the instant liquidity. As the volume of properties entering and exiting these liquidity pools grows, a fraction of the value created through faster, more reliable transactions could form a shared revenue stream.
+
+9.  **White-Label Strategy & Global Export**:
+    *   **Mechanism**: DLDCHAIN is designed as a "Sovereign Model for Cities Worldwide" through a "Multi-City White-Label Strategy". This enables other cities to adopt Dubai's digital governance model, exporting its sovereignty in real estate governance.
+    *   **Five-Year Projection**: Beyond Dubai, this global expansion offers significant revenue streams through tiered licensing models, technology usage rights, and potential revenue sharing from token issuance, compliance, broker visas, escrow, and API licensing in adopting cities. This represents a long-term, high-growth revenue channel as Dubai establishes international standards for digital real estate infrastructure.
+
+#### **Estimated Revenue Potential: The "Obvious" Financial Case**
+
+If even 1% of Dubai's $1 trillion real estate market is actively generating revenue through DLDCHAIN over five years, the financial impact becomes staggering. Considering the AED 60 billion projected tokenization market, if DLDCHAIN captures even a modest fraction (e.g., 0.5-2%) of this value through its combined fees, in addition to recurring service fees from a professionalized workforce and data licensing, the revenue would be substantial and grow exponentially with adoption and global expansion.
+
+The precise valuation model for tokenizing 1% of Dubai's property market is projected to "blow minds and make the financial case obvious". This is driven by the sheer scale of the underlying asset base and the efficiency gains from automating transactions and governance.
+
+#### **Cost Considerations: Sustaining a Sovereign Infrastructure**
+
+While the focus is on revenue generation, it is crucial to acknowledge the investment required to build and maintain a sovereign-grade blockchain infrastructure:
+
+*   **Development & Maintenance**: Ongoing investment in the Layer 1 blockchain protocol, smart contract engineering, AI integration, and continuous "software updates" to ensure DLDCHAIN remains cutting-edge and compliant. This includes development of modules like EBRAMGPT for AI-powered adaptability.
+*   **Operational Infrastructure**: Costs associated with running secure, air-gapped liquidity pools and maintaining robust data platforms.
+*   **Security & Compliance**: Continuous audits, cybersecurity measures, and legal framework adaptation to maintain the system's "security, trust, and legal strength".
+*   **Global Accessibility & Outreach**: Translation of comprehensive documentation into all languages, OpenAI integration for user guidance, and development of interactive landing pages (like ezz.ae) for global adoption.
+*   **Administrative & Governance**: Funding the DLDCHAIN Governing Council and other oversight bodies ensuring strategic alignment and innovation.
+
+These costs, while significant, are outweighed by the immense revenue potential and the strategic value DLDCHAIN offers.
+
+#### **Strategic Financial Benefits Across Stakeholders**
+
+DLDCHAIN's revenue model ensures that benefits are distributed across the ecosystem:
+
+*   **For DLD**: Direct revenue from protocol fees, increased market activity, and enhanced global leadership in digital governance.
+*   **For Brokers & Developers**: New profit channels, enhanced market liquidity, reduced fraud, and access to more efficient capital flows. Mashroi specifically ensures simplicity and legal control, removing crypto risks.
+*   **For Banks & Financial Institutions**: New revenue streams through tokenization, escrow services, and identity-as-a-service, coupled with reduced legal risk due to automated enforcement and immutable transaction history. Banks will value the regulatory-grade architecture and permanent auditability. The DLD-AED stablecoin, with its 1:1 AED peg and audited reserves, further mitigates crypto volatility concerns for traditional investors.
+
+#### **Conclusion: A Constitutional System for Profitable Governance**
+
+The DLDCHAIN is not merely a product, but a "constitutional architecture for real estate governance in the digital era". Its comprehensive revenue models, deeply integrated with its technical and regulatory frameworks, position it as a robust, self-sustaining economic engine designed to secure Dubai’s digital future and serve as a master model for global adoption. This financial foresight underscores the project's long-term viability and its capacity to deliver powerful profit channels alongside unparalleled security and transparency.
+`
   },
   {
     id: 6,
-    name: 'The Tokenization Philosophy',
-    content: 'This chapter explains the philosophy behind tokenization in DLDCHAIN, including what can be tokenized, the EBRAMINT process, and the token pricing structure.'
-  },
-  {
-    id: 7,
-    name: 'Trading & Liquidity',
-    content: 'This chapter details the trading mechanisms on DLDCHAIN, including different order types and how the system ensures liquidity through Income Pools.'
-  },
-  {
-    id: 8,
-    name: 'System Architecture',
-    content: 'This chapter provides a technical overview of the DLDCHAIN architecture, including its layered system design and the underlying blockchain infrastructure.'
-  },
-  {
-    id: 9,
-    name: 'The Governance Model',
-    content: 'This chapter discusses the governance model of DLDCHAIN, including the role of the DLD, governmental integration, and the proposed Governing Council.'
-  },
-  {
-    id: 10,
-    name: 'The Legal Framework',
-    content: 'This chapter outlines the role of legal professionals within the DLDCHAIN ecosystem and how EBRAM integrates with the Ministry of Justice.'
-  },
-  {
-    id: 11,
-    name: 'Global & Sovereign Model',
-    content: 'This chapter discusses the strategic vision for DLDCHAIN as a sovereign model for other global cities.'
-  },
-  {
-    id: 12,
-    name: 'Market Impact Analysis',
-    content: 'This chapter analyzes the potential market impact of DLDCHAIN, including solving information asymmetry and reducing transactional friction.'
-  },
-  {
-    id: 13,
-    name: 'Project Status & Pilots',
-    content: 'This chapter reviews the pilot initiatives and the current status of the project, highlighting key milestones.'
-  },
-  {
-    id: 14,
-    name: 'IP & Attribution',
-    content: 'This chapter clarifies the intellectual property and sovereign attribution of the DLDCHAIN project.'
-  },
-  {
-    id: 15,
-    name: 'EBRAM Real-World Scenarios',
-    content: 'This chapter presents various real-world scenarios to challenge and demonstrate the capabilities of the EBRAM system.'
-  },
-  {
-    id: 16,
-    name: 'Smart Contract Logic',
-    content: 'This chapter provides a detailed look at the smart contract logic, including the EBRAM language layers and command structure.'
-  },
-  {
-    id: 17,
-    name: 'Appendix A: Institutional Tiers',
-    content: 'This appendix describes the institutional contribution tiers for organizations interacting with Mashroi.'
-  },
-  {
-    id: 18,
-    name: 'Appendix B: The Trading Model',
-    content: 'This appendix details the DXBTOKEN trading model, including asset categories and order types.'
-  },
-  {
-    id: 19,
-    name: 'Appendix C: Tax & Reporting',
-    content: 'This appendix outlines the token tax and reporting gateway.'
-  },
-  {
-    id: 20,
-    name: 'Appendix D: City Digital ID',
-    content: 'This appendix explains the DLDCHAIN City Digital Identity Protocol.'
-  }
-];
+    name: 'DLDCHAIN Key Components',
+    content: `
+Here's a brief overview of its key components and principles:
 
+*   **DXBTOKENS**: These are digital tokens representing "native ownership" of real estate projects on DLDCHAIN, enabling direct, liquid, and secure digital asset representation. They enable "unprecedented liquidity," allowing investors to trade property shares in minutes.
+*   **MAKE System**: This is DLDCHAIN's sovereign financial layer, acting as an internal liquidity infrastructure. Its core principle is "No liquidity = no token," ensuring every DXBTOKEN is 100% backed by AED liquidity confirmed through the system. It functions as a decentralized market-making engine, adjusting prices based on real-time events.
+
+    *   **MAKE-IN Event**: This initiates the liquidity cycle, triggered when a property is "EBRAMINTED" and a Liquidity Officer (LPO) deposits 100% of the unit's AED value into a liquidity pool.
+    *   **MAKE-OUT Event**: This signals the closing of a liquidity cycle, triggered by conditions like 90% token control, institutional buyback, or ownership merge. It involves EBRAM reassessing market valuation and settling the liquidity pool.
+
+*   **Digital Dirham (DD)**: A stablecoin issued and regulated by the DLD, pegged 1:1 to the UAE Dirham, serving as the exclusive currency for all DLDCHAIN transactions. This "fiat-only approach" aims to attract traditional investors by mitigating crypto market volatility and regulatory ambiguity.
+
+*   **EBRAM (Emirates Blockchain Real-estate Agreement Management)**: This is the smart contract system designed to automate, verify, and enforce various agreements across all real estate sectors, from rentals to sales. It integrates with existing DLD systems like Ejari, Milka, and Trakheesi to enhance efficiency and ensure legal validity.
+
+*   **Mashroi**: Described as Dubai's "official AI brain of the real estate workforce," Mashroi is an AI-driven professional governance system for brokers and real estate companies. It aims to professionalize the sector by providing smart licensing, tracking performance, facilitating visa issuance, and ensuring compliance.
+
+*   **Benefits and Strategic Objectives**: DLDCHAIN promises significant efficiencies and cost savings, aims to attract a new class of global retail and institutional investors, and is expected to foster a new high-tech services industry. It enhances regulatory control, transparency, and provides deep security features, including a "Lost Key Solution" for asset inheritability. The system generates direct revenue streams for DLD, such as Token Issuance Fees and Escrow Margin Revenues, and aims to monetize every lifecycle event of a property. It is envisioned as a continuous evolution, adaptable and exportable globally.
+`
+  }
+]
     
