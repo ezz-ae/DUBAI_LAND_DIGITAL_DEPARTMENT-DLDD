@@ -644,7 +644,7 @@ DLDCHAIN’s vision extends to tokenizing a significant portion of Dubai’s pro
     *   **Revenue Generation**: Token issuance fees and escrow margin revenues from each fractional or whole token representing an off-plan unit. Developer listing tools and compliance gate revenues would also be relevant here.
 
 2.  **Existing Residential & Commercial Properties**: Expanding beyond off-plan, the DLDCHAIN will enable the tokenization of existing properties, facilitating fractional ownership and enhanced liquidity. The "Prypco Mint" pilot in May 2025 already successfully demonstrated the tokenization of property title deeds in MENA, validating this concept.
-    *   **Revenue Generation**: Token issuance fees, escrow margin revenues for sales transactions, and potentially shared revenue from increased transaction velocity due to enhanced liquidity on the secondary market. Public API licensing would monetize data from these tokenized assets.
+    *   **Revenue Generation**: Token issuance fees and escrow margin revenues for sales transactions, and potentially shared revenue from increased transaction velocity due to enhanced liquidity on the secondary market. Public API licensing would monetize data from these tokenized assets.
 
 3.  **Short-Term Rentals and Hotel Stays**: The EBRAM framework, initially piloted for residential leases, can extend to managing agreements for short-term rentals and hotel bookings. While not direct tokenization of the property title, it tokenizes the *rental agreement* and its associated payments, enhancing efficiency and transparency.
     *   **Revenue Generation**: Escrow margin revenues on rental payments, compliance gate revenues through Mashroi for licensed short-term rental operators, and verified ad publishing fees for short-term rental listings.
@@ -1042,5 +1042,3 @@ Prepared Q4 2025 – Dubai, UAE
 `
   },
 ];
-
-    
