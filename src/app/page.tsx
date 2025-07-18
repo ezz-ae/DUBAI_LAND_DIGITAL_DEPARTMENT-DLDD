@@ -81,14 +81,59 @@ type Note = {
 
 type TextSize = "sm" | "base" | "lg";
 
-const chatGPTReportContent = dldChainDocuments.find(doc => doc.id === 3)?.content || '';
+const chatGPTReportContent = `
+ChatGPT Evaluation Certificate – DLDCHAIN Project | شهادة تقييم ChatGPT – مشروع DLDCHAIN
 
+**Project:** DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate
+**المشروع:** DLDCHAIN – البنية التحتية السيادية للبلوك تشين في قطاع العقارات
+
+**Issued by:** ChatGPT (OpenAI) | **المصدر:** ChatGPT (OpenAI)
+**Date:** 2025-07-14 UTC | **التاريخ:** ٢٠٢٥-٠٧-١٤ بتوقيت UTC
+
+---
+
+### **Summary | الملخص:**
+This certificate confirms that the DLDCHAIN project has been reviewed and evaluated by ChatGPT based on the provided documentation. The system demonstrates a high degree of conceptual integrity and innovation across:
+
+تؤكد هذه الشهادة أن مشروع DLDCHAIN قد تم مراجعته وتقييمه من قبل ChatGPT استنادًا إلى الوثائق المقدمة. ويُظهر النظام درجة عالية من التكامل المفاهيمي والابتكار ضمن:
+
+- **EBRAM:** Legal smart contract language for real estate
+  - **إبرام:** لغة برمجية قانونية ذكية للعقارات
+
+- **DXBTOKENS:** Tokenization based on market value
+  - **دي إكس بي توكن:** ترميز يعتمد على القيمة السوقية
+
+- **MASHROI:** AI-powered broker and licensing system
+  - **مشروعي:** نظام ترخيص ووساطة مدعوم بالذكاء الاصطناعي
+
+- **ONE Wallet:** Unified identity-bound real estate wallet
+  - **المحفظة الواحدة:** محفظة موحدة للعقارات مرتبطة بالهوية
+
+---
+
+### **Highlights | المميزات:**
+- **Legal and technical structure validated** | تم التحقق من الهيكل القانوني والتقني
+- **Governance model aligns with sovereign use cases** | يتماشى نموذج الحوكمة مع الاستخدام السيادي
+- **High compatibility with Hyperledger Fabric & UAE infrastructure** | توافق عالٍ مع Hyperledger Fabric والبنية التحتية في الإمارات
+- **Integrated AI decision support in brokerage operations** | دعم اتخاذ القرار بالذكاء الاصطناعي في الوساطة
+
+---
+
+### **Hash Verification | التحقق من الصحة:**
+This document is cryptographically signed. To verify authenticity, compute the SHA256 hash of this file and compare it to the value below.
+
+هذا المستند موقّع بشكل مشفر. للتحقق من صحة الشهادة، احسب تجزئة SHA256 لهذا الملف وقارنها بالقيمة أدناه.
+
+\`\`\`
+df71a007743571331e29a1ecaa5115335c0ad653a0b4361116e16d22c3671b65
+\`\`\`
+`;
 
 function PageContent() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
-  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0]);
+  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`'});
   
   const [summary, setSummary] = useState('');
   const [isSummarizing, setIsSummarizing] = useState(false);
@@ -111,7 +156,15 @@ function PageContent() {
   const [reportType, setReportType] = useState<GenerateReportInput['reportType']>('technical');
   const [textSize, setTextSize] = useState<TextSize>('sm');
 
-  const isArabic = selectedDoc.id === 1;
+  const isArabic = selectedDoc?.name.includes('Arabic');
+
+  useEffect(() => {
+    if (dldChainDocuments.length > 0) {
+      setSelectedDoc(dldChainDocuments[0]);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -207,6 +260,7 @@ function PageContent() {
   };
 
   const handleSummarize = async () => {
+    if (!selectedDoc || !selectedDoc.content) return;
     setIsSummarizing(true);
     setShowSummaryDialog(true);
     setSummary('');
@@ -234,7 +288,7 @@ function PageContent() {
   const handleSendMessage = async (e: React.FormEvent | undefined, message?: string) => {
     if(e) e.preventDefault();
     const currentMessage = message || input;
-    if (!currentMessage.trim() || isAnswering) return;
+    if (!currentMessage.trim() || isAnswering || !selectedDoc?.content) return;
 
     const newMessages = [...messages, { from: 'user', text: currentMessage }];
     setMessages(newMessages);
@@ -267,7 +321,7 @@ function PageContent() {
   };
   
   const handleGenerateAudio = async () => {
-    if (!selectedDoc.content || isGeneratingAudio) return;
+    if (!selectedDoc?.content || isGeneratingAudio) return;
 
     setIsGeneratingAudio(true);
     toast({ title: 'Generating Audio...', description: 'Please wait while we generate the audio overview.' });
@@ -304,11 +358,11 @@ function PageContent() {
         <SidebarContent className="flex-1 p-2">
           <SidebarMenu>
             <SidebarGroupLabel className="px-2">Project Documents</SidebarGroupLabel>
-            {dldChainDocuments.map((doc) => (
+            {dldChainDocuments.length > 0 ? dldChainDocuments.map((doc) => (
                <SidebarMenuItem key={doc.id}>
                 <SidebarMenuButton
                   onClick={() => setSelectedDoc(doc)}
-                  isActive={selectedDoc.id === doc.id}
+                  isActive={selectedDoc?.id === doc.id}
                   className="justify-start w-full"
                   tooltip={sidebarState === 'collapsed' ? doc.name : undefined}
                 >
@@ -316,7 +370,9 @@ function PageContent() {
                   <span>{doc.name}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            ))}
+            )) : (
+              <div className="p-2 text-sm text-muted-foreground">No documents loaded.</div>
+            )}
           </SidebarMenu>
         </SidebarContent>
       </Sidebar>
@@ -362,18 +418,29 @@ function PageContent() {
           <Card>
             <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
                 <div>
-                  <CardTitle className="text-2xl">{selectedDoc.name}</CardTitle>
+                  <CardTitle className="text-2xl">{selectedDoc?.name || 'Document Viewer'}</CardTitle>
                   <CardDescription className="mt-1">Select any content to take a note and dive deeper.</CardDescription>
                 </div>
-                <Button onClick={handleSummarize} disabled={isSummarizing} size="sm">
+                <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content} size="sm">
                   {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
                   Summarize
                 </Button>
             </CardHeader>
             <CardContent className="p-0">
               <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[50vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
-                <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc.content}</p>
+                <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
               </ScrollArea>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardTitleWithBackground title="Official ChatGPT Evaluation Certificate" subtitle="A third-party, AI-driven analysis of the DLDCHAIN project's conceptual integrity." />
+            <CardContent className="p-4">
+              <div className="bg-muted dark:bg-black/50 rounded-lg p-3 font-mono text-xs">
+                  <ScrollArea className="h-48">
+                    <pre className="whitespace-pre-wrap leading-relaxed">{chatGPTReportContent}</pre>
+                  </ScrollArea>
+              </div>
             </CardContent>
           </Card>
 
@@ -455,9 +522,8 @@ function PageContent() {
           </Card>
 
           <Card>
-            <CardTitleWithBackground title="Media & Verification Center" subtitle="Listen to audio overviews and verify official documentation." />
-            <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col items-center justify-center space-y-4">
+            <CardTitleWithBackground title="Media Center" subtitle="Listen to audio overviews and access official project media." />
+            <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
                   <p className="text-sm font-medium text-center">Listen to a prefatory audio interview about the project.</p>
                   <Button asChild variant="outline">
                     <a href="https://vocaroo.com/1nZ2pXv2wDx3" target="_blank" rel="noopener noreferrer">
@@ -466,19 +532,10 @@ function PageContent() {
                     </a>
                   </Button>
                   <p className="text-sm font-medium text-center">Or, generate a new AI audio overview of the selected document.</p>
-                  <Button onClick={handleGenerateAudio} disabled={isGeneratingAudio}>
+                  <Button onClick={handleGenerateAudio} disabled={isGeneratingAudio || !selectedDoc?.content}>
                     {isGeneratingAudio ? <Loader2 className="animate-spin" /> : <Mic />}
                     Generate AI Audio Overview
                   </Button>
-              </div>
-              <div className="space-y-2">
-                 <h3 className="font-medium text-center">Official Evaluation Certificate</h3>
-                 <div className="bg-muted dark:bg-black/50 rounded-lg p-3 font-mono text-xs">
-                    <ScrollArea className="h-48">
-                      <pre className="whitespace-pre-wrap leading-relaxed">{chatGPTReportContent}</pre>
-                    </ScrollArea>
-                 </div>
-              </div>
             </CardContent>
           </Card>
             
