@@ -6,6 +6,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 
 interface MindMapNodeProps {
   node: {
+    id: string;
     name: string;
     children?: any[];
   };
@@ -14,7 +15,7 @@ interface MindMapNodeProps {
 }
 
 const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) => {
-  const [isOpen, setIsOpen] = useState(level < 1); // Expand first level by default
+  const [isOpen, setIsOpen] = useState(level < 1);
 
   const hasChildren = node.children && node.children.length > 0;
 
@@ -31,7 +32,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
   };
 
   return (
-    <div className={cn("my-1", level > 0 && 'ml-6')}>
+    <div className={cn("my-1 relative", level > 0 && 'ml-6')}>
       <div
         className={cn(
           'flex items-center gap-1 cursor-pointer group'
@@ -39,7 +40,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
         onClick={handleToggle}
       >
         {hasChildren ? (
-          <div className="w-5 h-5 flex items-center justify-center">
+          <div className="w-5 h-5 flex items-center justify-center text-muted-foreground hover:text-foreground">
             {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
           </div>
         ) : (
@@ -47,8 +48,9 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
         )}
         <span
           className={cn(
-            'p-2 rounded-md transition-all hover:bg-accent',
-            level === 0 ? 'font-bold text-lg' : 'text-sm'
+            'p-2 rounded-md transition-all hover:bg-accent/10 hover:text-accent-foreground',
+            'shadow-sm',
+            level === 0 ? 'font-bold text-lg text-foreground/90' : 'text-sm text-foreground/80'
           )}
           onClick={handleNodeTextClick}
         >
@@ -56,7 +58,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
         </span>
       </div>
       {hasChildren && isOpen && (
-        <div className="border-l-2 border-border ml-3.5 pl-3">
+        <div className="border-l-2 border-[var(--mindmap-line-color)] ml-[14px] pl-5 transition-all duration-300 ease-in-out">
           {node.children.map((child, index) => (
             <MindMapNode key={index} node={child} level={level + 1} onNodeClick={onNodeClick} />
           ))}
