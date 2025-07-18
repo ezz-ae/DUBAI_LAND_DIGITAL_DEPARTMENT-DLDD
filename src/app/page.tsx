@@ -111,7 +111,10 @@ function PageContent() {
   
   useEffect(() => {
     if (chatScrollAreaRef.current) {
-      chatScrollAreaRef.current.scrollTo({ top: chatScrollAreaRef.current.scrollHeight, behavior: 'smooth' });
+        const lastMessage = chatScrollAreaRef.current.lastElementChild;
+        if(lastMessage) {
+            lastMessage.scrollIntoView({ behavior: 'smooth' });
+        }
     }
   }, [messages]);
   
@@ -367,8 +370,7 @@ function PageContent() {
                   <CardDescription>Ask questions about <span className='font-bold text-primary'>{selectedDoc.name}</span></CardDescription>
                 </CardHeader>
                 <CardContent className="p-0">
-                    <ScrollArea className="h-96" ref={chatScrollAreaRef}>
-                    <div className="p-4 space-y-4">
+                    <div className="p-4 space-y-4" ref={chatScrollAreaRef}>
                     {messages.map((msg: any, index) => (
                       <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
                         {msg.from === 'bot' && (
@@ -415,7 +417,6 @@ function PageContent() {
                         </div>
                     )}
                     </div>
-                  </ScrollArea>
                 </CardContent>
                 <CardFooter className="border-t pt-4">
                   <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
@@ -441,7 +442,6 @@ function PageContent() {
                   <CardDescription>Create notes and generate AI-powered reports from your findings.</CardDescription>
                 </CardHeader>
                 <CardContent className="p-0">
-                   <ScrollArea className="h-96">
                      <div className="p-4">
                       {notes.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -475,7 +475,6 @@ function PageContent() {
                           </div>
                       )}
                       </div>
-                  </ScrollArea>
                 </CardContent>
                   <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
                     <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none"><StickyNote className="mr-2"/> Add Note</Button>
@@ -622,6 +621,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-
-    
