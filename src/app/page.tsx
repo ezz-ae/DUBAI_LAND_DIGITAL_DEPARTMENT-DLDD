@@ -29,17 +29,17 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { FileText, Loader2, PlayCircle, Send, Share2, Sparkles, Upload, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
-import Image from 'next/image';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
 import { getClarification, generateReport } from '@/ai/flows/notes';
 import type { GenerateReportInput } from '@/ai/schemas/notes';
 import { generateAudio } from '@/ai/flows/audio-overview';
+import { explainTopic } from '@/ai/flows/explain-topic';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useTheme } from "next-themes"
 import { dldChainDocuments } from '@/lib/documents';
-import { Textarea } from '@/components/ui/textarea';
+import { InteractiveMindMap } from '@/components/interactive-mind-map';
 
 const initialMessages = [
   { from: 'bot', text: 'Hello! How can I help you with the DLDCHAIN Protocol?' },
@@ -115,6 +115,7 @@ function PageContent() {
     }
     setIsClarifying(true);
     setClarification('');
+    setReport('');
     try {
       const result = await getClarification({ notes: notes.map(n => n.text) });
       setClarification(result.clarification);
@@ -129,6 +130,26 @@ function PageContent() {
       setIsClarifying(false);
     }
   };
+
+  const handleExplainTopic = async (topic: string) => {
+    setIsClarifying(true);
+    setClarification('');
+    setReport('');
+    toast({ title: "Generating Explanation", description: `Getting details for: ${topic}` });
+    try {
+      const result = await explainTopic({ topic: topic, context: selectedDoc.content });
+      setClarification(result.explanation);
+    } catch (error) {
+       console.error('Error explaining topic:', error);
+      toast({
+        variant: "destructive",
+        title: "Explanation Failed",
+        description: "Could not get explanation. Please try again.",
+      });
+    } finally {
+      setIsClarifying(false);
+    }
+  };
   
   const handleGenerateReport = async () => {
     if (notes.length === 0) {
@@ -137,6 +158,7 @@ function PageContent() {
     }
     setIsGeneratingReport(true);
     setReport('');
+    setClarification('');
     try {
       const result = await generateReport({ notes: notes.map(n => n.text), reportType });
       setReport(result.report);
@@ -398,62 +420,66 @@ function PageContent() {
                       </ScrollArea>
                     </div>
 
-                    <div className="space-y-2">
-                      <h4 className="font-medium">Clarification</h4>
-                       <Button onClick={handleClarify} disabled={isClarifying || notes.length === 0} size="sm">
-                          <BrainCircuit />
-                          {isClarifying ? 'Getting Clarification...' : 'Get Clarification on Notes'}
-                        </Button>
-                      {isClarifying && <Loader2 className="animate-spin text-primary" />}
-                      {clarification && (
-                        <ScrollArea className="h-24 rounded-md border p-2">
-                          <p className="text-sm whitespace-pre-wrap">{clarification}</p>
-                        </ScrollArea>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <h4 className="font-medium">Report Generation</h4>
-                      <div className="flex items-center gap-2">
-                        <Select onValueChange={(value: GenerateReportInput['reportType']) => setReportType(value)} defaultValue={reportType}>
-                          <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select report type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="technical">Technical Report</SelectItem>
-                            <SelectItem value="managerial">Managerial Report</SelectItem>
-                            <SelectItem value="legal">Legal Report</SelectItem>
-                            <SelectItem value="financial">Financial Report</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <Button onClick={handleGenerateReport} disabled={isGeneratingReport || notes.length === 0}>
-                          <FileSignature />
-                          {isGeneratingReport ? 'Generating...' : 'Generate Report'}
-                        </Button>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <h4 className="font-medium">Clarification</h4>
+                         <Button onClick={handleClarify} disabled={isClarifying || notes.length === 0} size="sm" className="w-full">
+                            <BrainCircuit />
+                            {isClarifying && !report ? 'Getting Clarification...' : 'Get Clarification on Notes'}
+                          </Button>
                       </div>
-                       {isGeneratingReport && <Loader2 className="animate-spin text-primary" />}
-                      {report && (
-                         <ScrollArea className="h-40 rounded-md border p-2">
-                          <p className="text-sm whitespace-pre-wrap">{report}</p>
-                        </ScrollArea>
-                      )}
+
+                      <div className="space-y-2">
+                        <h4 className="font-medium">Report Generation</h4>
+                        <div className="flex items-center gap-2">
+                          <Select onValueChange={(value: GenerateReportInput['reportType']) => setReportType(value)} defaultValue={reportType}>
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select report type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="technical">Technical Report</SelectItem>
+                              <SelectItem value="managerial">Managerial Report</SelectItem>
+                              <SelectItem value="legal">Legal Report</SelectItem>
+                              <SelectItem value="financial">Financial Report</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Button onClick={handleGenerateReport} disabled={isGeneratingReport || notes.length === 0}  size="sm">
+                            <FileSignature />
+                            {isGeneratingReport ? 'Generating...' : 'Generate'}
+                          </Button>
+                        </div>
+                      </div>
                     </div>
+                     {(isClarifying || clarification) && (
+                        <div className="space-y-2 pt-2">
+                          <h4 className="font-medium">AI Generated Explanation</h4>
+                          {isClarifying ? <Loader2 className="animate-spin text-primary" /> :
+                           <ScrollArea className="h-32 rounded-md border p-2">
+                            <p className="text-sm whitespace-pre-wrap">{clarification}</p>
+                          </ScrollArea>
+                          }
+                        </div>
+                      )}
+                      {(isGeneratingReport || report) && (
+                        <div className="space-y-2 pt-2">
+                         <h4 className="font-medium">AI Generated Report</h4>
+                          {isGeneratingReport ? <Loader2 className="animate-spin text-primary" /> :
+                            <ScrollArea className="h-40 rounded-md border p-2">
+                              <p className="text-sm whitespace-pre-wrap">{report}</p>
+                            </ScrollArea>
+                          }
+                        </div>
+                      )}
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
                   <CardTitle>Project Mind Map</CardTitle>
+                  <CardDescription>Click on a node to get a detailed explanation.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Image
-                    src="/DLD-CHAIN-MIND-MAP.png"
-                    alt="Project Mind Map"
-                    width={800}
-                    height={450}
-                    className="rounded-lg object-cover w-full"
-                    data-ai-hint="mind map diagram"
-                  />
+                  <InteractiveMindMap onNodeClick={handleExplainTopic} />
                 </CardContent>
               </Card>
             </div>
