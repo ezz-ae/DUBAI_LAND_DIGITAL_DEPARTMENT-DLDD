@@ -15,7 +15,7 @@ export function SourceGuide({ summary, topics, isArabic }: SourceGuideProps) {
   return (
     <div
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="mb-6 p-4 rounded-lg bg-muted/30 dark:bg-black/30 border border-border/50"
+      className="mb-6 p-4 rounded-lg bg-black border border-border/50"
     >
       <h3 className="flex items-center gap-2 text-lg font-headline font-semibold mb-3">
         <Sparkle className="text-accent" />
@@ -40,3 +40,5 @@ export function SourceGuide({ summary, topics, isArabic }: SourceGuideProps) {
     </div>
   )
 }
+
+    

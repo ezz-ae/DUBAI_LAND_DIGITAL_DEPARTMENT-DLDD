@@ -14,7 +14,7 @@ export const CardTitleWithBackground = React.forwardRef<
 >(({ className, title, subtitle, children, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("bg-card-foreground/5 dark:bg-card-foreground/10 p-4", className)}
+    className={cn("bg-black p-4", className)}
     {...props}
   >
     {children ? (
@@ -29,3 +29,5 @@ export const CardTitleWithBackground = React.forwardRef<
 ))
 
 CardTitleWithBackground.displayName = "CardTitleWithBackground"
+
+    

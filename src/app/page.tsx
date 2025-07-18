@@ -13,7 +13,6 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   DropdownMenu,
@@ -29,13 +28,11 @@ import {
   SidebarContent,
   SidebarHeader,
   SidebarFooter,
-  SidebarInset,
   SidebarMenu,
   SidebarMenuItem,
   SidebarProvider,
   SidebarMenuButton,
   SidebarGroupLabel,
-  SidebarSeparator,
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
@@ -47,17 +44,14 @@ import { askQuestion } from '@/ai/flows/ask-question';
 import { generateReport } from '@/ai/flows/notes';
 import type { GenerateReportInput } from '@/ai/schemas/notes';
 import { generateAudio } from '@/ai/flows/audio-overview';
-import { explainTopic } from '@/ai/flows/explain-topic';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useTheme } from "next-themes"
 import { dldChainDocuments } from '@/lib/documents';
-import { InteractiveMindMap } from '@/components/interactive-mind-map';
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
-import { SourceGuide } from '@/components/source-guide';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Tooltip, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
@@ -80,27 +74,9 @@ type Note = {
   id: number | string;
   text: string;
   source?: string;
-  isDefault?: boolean;
 };
 
 type TextSize = "sm" | "base" | "lg";
-
-const defaultNote: Note = {
-  id: 'default-liquidity-map',
-  text: `Token Liquidity Cycle`,
-  source: 'DLDCHAIN Core Concept',
-  isDefault: true,
-};
-
-const liquidityMapSteps = [
-    { title: "EBRAMINT", description: "Legal Review" },
-    { title: "MAKE LISTING", description: "Liquidity officer" },
-    { title: "Make Request", description: "Escrow permission" },
-    { title: "MAKE-IN", description: "Escrow Pool creation" },
-    { title: "DXBTOKEN Listing", description: "Token Pool creation" },
-    { title: "MAKE-OUT", description: "Token Pool Closure" },
-    { title: "MAKE-DISMISS", description: "Escrow Pool Closure" }
-];
 
 
 const chatGPTReportContent = `ChatGPT Evaluation Certificate – DLDCHAIN Project | شهادة تقييم ChatGPT – مشروع DLDCHAIN
@@ -152,7 +128,7 @@ function PageContent() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
-  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`', summary: '', topics: []});
+  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`'});
   
   const [summary, setSummary] = useState('');
   const [isSummarizing, setIsSummarizing] = useState(false);
@@ -165,34 +141,19 @@ function PageContent() {
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   
   const chatScrollAreaRef = useRef<HTMLDivElement>(null);
-  const fileContentRef = useRef<HTMLDivElement>(null);
-  const discussionCardRef = useRef<HTMLDivElement>(null);
 
-  const [notes, setNotes] = useState<Note[]>([defaultNote]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [markedNoteIds, setMarkedNoteIds] = useState<Set<number | string>>(new Set());
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [report, setReport] = useState('');
-  const [textSize, setTextSize] = useState<TextSize>('sm');
-  const [activeNoteDialog, setActiveNoteDialog] = useState<Note | null>(null);
-  const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
-  const [showMap, setShowMap] = useState(true);
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
-  const mockupImages = [
-    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 1", hint: "futuristic city" },
-    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 2", hint: "blockchain interface" },
-    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 3", hint: "digital wallet" },
-    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 4", hint: "data visualization" },
-    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 5", hint: "real estate" },
-    { src: "https://placehold.co/1200x800.png", alt: "Project mockup 6", hint: "smart contract" },
-  ];
 
   useEffect(() => {
     if (dldChainDocuments.length > 0) {
       setSelectedDoc(dldChainDocuments[0]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
 
@@ -207,7 +168,6 @@ function PageContent() {
     setSummary('');
     setShowSummaryDialog(false);
     setIsGeneratingAudio(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDoc]);
 
   const addNote = (text: string, source?: string) => {
@@ -229,59 +189,6 @@ function PageContent() {
         }
         return newSet;
     });
-  };
-  
-  const handleDiscussNote = () => {
-    const markedNotes = notes.filter(note => markedNoteIds.has(note.id));
-    if (markedNotes.length !== 1) return;
-    const note = markedNotes[0];
-    
-    if (note.isDefault) {
-      handleSendMessage(undefined, `Tell me more about the: ${note.text}`);
-    } else {
-      handleSendMessage(undefined, `Let's discuss this note: "${note.text}"`);
-    }
-    discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-
-  const handleSelection = () => {
-    const selection = window.getSelection()?.toString().trim();
-    if (selection) {
-      addNote(selection, `Selection from ${selectedDoc.name}`);
-      window.getSelection()?.removeAllRanges();
-    }
-  };
-
-  const handleExplainTopic = async (topic: string) => {
-    discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
-    setIsAnswering(true);
-    
-    const newMessages = [...messages, { from: 'user', text: `Please explain: "${topic}"` }];
-    setMessages(newMessages);
-
-    toast({ title: "Generating Explanation", description: `Getting details for: ${topic}` });
-    try {
-      const result = await explainTopic({ topic: topic, context: selectedDoc.content });
-      const botAnswer = result.explanation;
-       const isBotAnswerArabic = /[\u0600-\u06FF]/.test(botAnswer);
-      setMessages([...newMessages, { 
-        from: 'bot', 
-        text: botAnswer, 
-        isArabic: isBotAnswerArabic,
-        topic: topic
-      }]);
-    } catch (error) {
-       console.error('Error explaining topic:', error);
-      toast({
-        variant: "destructive",
-        title: "Explanation Failed",
-        description: "Could not get explanation. Please try again.",
-      });
-      setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error explaining that topic.', isArabic: false }]);
-    } finally {
-      setIsAnswering(false);
-    }
   };
   
   const handleGenerateReport = async () => {
@@ -366,7 +273,6 @@ function PageContent() {
       handleSendMessage(undefined, `Tell me more about this summary: ${summary}`);
     }
     setShowSummaryDialog(false);
-    discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
   
   const handleGenerateAudio = async () => {
@@ -392,12 +298,6 @@ function PageContent() {
     }
   };
 
-  const textSizeClass = {
-    'sm': 'text-sm',
-    'base': 'text-base',
-    'lg': 'text-lg',
-  }
-
   return (
     <div className="flex h-screen w-full bg-background text-foreground">
       <Sidebar collapsible="icon">
@@ -406,7 +306,26 @@ function PageContent() {
         </SidebarHeader>
         <SidebarContent className="flex-1 p-2">
           <SidebarMenu>
-            <SidebarGroupLabel className="px-2">Project Documents</SidebarGroupLabel>
+            <div className='flex items-center justify-between'>
+              <SidebarGroupLabel className="px-2">Project Documents</SidebarGroupLabel>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className='h-7 w-7'>
+                    <ChevronsUpDown />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Actions for {selectedDoc.name}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSummarize}>
+                    <BookText /> Summarize Document
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleGenerateAudio}>
+                    <Mic /> Generate AI Audio
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
             {dldChainDocuments.length > 0 ? dldChainDocuments.map((doc) => (
                <SidebarMenuItem key={doc.id}>
                 <SidebarMenuButton
@@ -436,375 +355,182 @@ function PageContent() {
         </SidebarFooter>
       </Sidebar>
 
-      <main className="flex-1 flex flex-col">
-        <header className="flex items-center justify-between p-4 border-b h-16 shrink-0">
-          <div className="flex items-center gap-2">
-            <SidebarTrigger className="lg:hidden"/>
-            <div className="hidden lg:block">
-              <ProjectPilotLogo />
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <SlidersHorizontal />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Settings</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel>Theme</DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => setTheme('light')}>
-                  <Sun className="mr-2 h-4 w-4" />
-                  <span>Light</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('dark')}>
-                  <Moon className="mr-2 h-4 w-4" />
-                  <span>Dark</span>
-                </DropdownMenuItem>
-                 <DropdownMenuSeparator />
-                <DropdownMenuLabel>Document Text Size</DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => setTextSize('sm')}>Small</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTextSize('base')}>Medium</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTextSize('lg')}>Large</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </header>
-
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
-            <div className='flex items-center justify-between p-4'>
-                <CardTitle className="text-2xl">DLDCHAIN STRUCTURE MINDMAP</CardTitle>
-                <Dialog onOpenChange={setIsMapDialogOpen}>
-                    <DialogTrigger asChild>
-                        <Button variant="outline">
-                            <Maximize className="mr-2" />
-                            Explore Map
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
-                        <DialogHeader>
-                            <DialogTitle>DLDCHAIN Structure Mindmap</DialogTitle>
-                        </DialogHeader>
-                        <div className="flex-1 relative">
-                          <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
-                        </div>
-                    </DialogContent>
-                </Dialog>
-            </div>
-            <div className="h-[60vh] w-full relative">
-                <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
-            </div>
-
-            {!isMapDialogOpen && (
-              <Card>
-                <CardHeader className='flex-row items-center justify-between bg-card-foreground/5 dark:bg-card-foreground/10 p-4'>
-                    <div className='flex items-center gap-4'>
-                      <CardTitle className="text-2xl">{selectedDoc?.name}</CardTitle>
-                       <Button onClick={handleSummarize} disabled={isSummarizing || !selectedDoc?.content} size="sm">
-                        {isSummarizing ? <Loader2 className="animate-spin" /> : <BookText />}
-                        Summarize Document
-                      </Button>
-                    </div>
-                </CardHeader>
-                <CardContent className="p-0">
-                    <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[60vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
-                      <SourceGuide summary={selectedDoc?.summary || ''} topics={selectedDoc?.topics || []} isArabic={isArabic} />
-                      <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
-                    </ScrollArea>
-                </CardContent>
-              </Card>
-            )}
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-            <Card ref={discussionCardRef} className="lg:sticky lg:top-6">
-              <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
-              <CardContent className="p-0">
-                <ScrollArea className="h-96" ref={chatScrollAreaRef}>
-                  <div className="p-4 space-y-4">
-                  {messages.map((msg: any, index) => (
-                    <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
-                      {msg.from === 'bot' && (
-                        <Avatar className="w-8 h-8 shrink-0">
-                          <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
-                        </Avatar>
-                      )}
-                      <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
-                        <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
-                          "max-w-prose rounded-lg px-4 py-2 text-sm",
-                          msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                          msg.from === 'bot' && index === 0 && 'w-full md:w-10/12',
-                          msg.from === 'bot' && index > 0 && 'w-full',
-                          msg.isArabic && "font-arabic"
-                        )}>
-                          {msg.text}
-                        </div>
-                        {msg.from === 'bot' && msg.topic && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => addNote(msg.text, `Explanation for: ${msg.topic}`)}
-                          >
-                            <Plus className="mr-2" /> Add Explanation to Notes
-                          </Button>
-                        )}
-                      </div>
-                        {msg.from === 'user' && (
-                        <Avatar className="w-8 h-8 shrink-0">
-                            <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
-                        </Avatar>
-                      )}
-                    </div>
-                  ))}
-                    {messages.length <= 1 && (
-                      <div className="pt-4">
-                        <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            {quickPromptsEnglish.map((prompt) => (
-                              <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-left h-auto">
-                                {prompt}
-                              </Button>
-                            ))}
-                          </div>
-                          <div className="space-y-2" dir="rtl">
-                            {quickPromptsArabic.map((prompt) => (
-                              <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-right font-arabic h-auto">
-                                {prompt}
-                              </Button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  {isAnswering && (
-                      <div className="flex items-start gap-3 justify-start">
-                        <Avatar className="w-8 h-8">
-                          <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
-                        </Avatar>
-                        <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
-                          <Loader2 className="animate-spin h-4 w-4" />
-                        </div>
-                      </div>
+      <main className="flex-1 flex flex-col p-4 gap-4">
+        
+        <Card className="flex-1 flex flex-col">
+          <CardHeader>
+            <CardTitle>AI Open Discussion</CardTitle>
+            <CardDescription>Ask questions about the selected document: <span className='font-bold text-primary'>{selectedDoc.name}</span></CardDescription>
+          </CardHeader>
+          <CardContent className="flex-1 flex flex-col p-0">
+            <ScrollArea className="h-full" ref={chatScrollAreaRef}>
+              <div className="p-4 space-y-4">
+              {messages.map((msg: any, index) => (
+                <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
+                  {msg.from === 'bot' && (
+                    <Avatar className="w-8 h-8 shrink-0">
+                      <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                    </Avatar>
                   )}
-                  </div>
-                </ScrollArea>
-              </CardContent>
-              <CardFooter className="border-t pt-6">
-                <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
-                  <Input
-                    dir={isArabic ? 'rtl' : 'ltr'}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Type your question..."
-                    autoComplete="off"
-                    disabled={isAnswering}
-                    className={cn(isArabic && "font-arabic")}
-                  />
-                  <Button type="submit" size="icon" disabled={isAnswering}>
-                    <Send className="h-4 w-4" />
-                  </Button>
-                </form>
-              </CardFooter>
-            </Card>
-
-            <Card>
-              <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes and generate insights." />
-              <CardContent className="p-6">
-                <ScrollArea className="h-96">
-                  <div className="space-y-4">
-                    <div className={cn(
-                        "grid gap-4 pr-4",
-                        notes.length === 1 && "grid-cols-1",
-                        notes.length >= 2 && "grid-cols-1 md:grid-cols-2"
-                      )}>
-                      {notes.map(note => (
-                        <Dialog key={note.id} onOpenChange={(isOpen) => !isOpen && setActiveNoteDialog(null)}>
-                          <DialogTrigger asChild>
-                            <Card className="flex flex-col cursor-pointer hover:border-primary transition-colors">
-                              <CardHeader className="flex-row items-start justify-between p-4">
-                                <div className="flex items-start gap-3">
-                                  {!note.isDefault && (
-                                    <Checkbox
-                                      id={`note-cb-${note.id}`}
-                                      checked={markedNoteIds.has(note.id)}
-                                      onCheckedChange={(e) => {
-                                        e.stopPropagation();
-                                        toggleMarkedNote(note.id)
-                                      }}
-                                      onClick={(e) => e.stopPropagation()}
-                                      className='mt-1'
-                                      />
-                                  )}
-                                  <div className="grid gap-0.5">
-                                      <CardTitle className="text-base">{note.text}</CardTitle>
-                                      {note.source && <CardDescription className="text-xs">{note.source}</CardDescription>}
-                                  </div>
-                                </div>
-                                  {!note.isDefault && (
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={(e) => { e.stopPropagation(); setNotes(notes.filter(n => n.id !== note.id))}}>
-                                      <X className="h-4 w-4" />
-                                    </Button>
-                                  )}
-                              </CardHeader>
-                                {note.isDefault ? (
-                                    <CardContent className="px-4 pb-4 pt-0">
-                                        <div className="flex items-center space-x-2 overflow-x-auto pb-2">
-                                        {liquidityMapSteps.map((step, index) => (
-                                            <React.Fragment key={step.title}>
-                                            <div className="flex flex-col items-center text-center">
-                                                <div className="bg-primary/20 text-primary-foreground font-bold rounded-md px-3 py-1 text-xs">
-                                                {step.title}
-                                                </div>
-                                                <div className="text-muted-foreground text-xs mt-1 w-20">
-                                                {step.description}
-                                                </div>
-                                            </div>
-                                            {index < liquidityMapSteps.length - 1 && (
-                                                <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0" />
-                                            )}
-                                            </React.Fragment>
-                                        ))}
-                                        </div>
-                                    </CardContent>
-                                ) : <CardContent className='px-4 pb-4 pt-0 text-sm text-muted-foreground truncate'>{note.text}</CardContent> }
-                            </Card>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>Note Details</DialogTitle>
-                            </DialogHeader>
-                            <ScrollArea className="max-h-64">
-                              <p className="text-sm whitespace-pre-wrap">{note.text}</p>
-                              {note.source && <p className="text-xs text-muted-foreground mt-2">Source: {note.source}</p>}
-                            </ScrollArea>
-                            <DialogFooter>
-                              <DialogClose asChild>
-                                <Button variant="outline">Close</Button>
-                              </DialogClose>
-                              <Button onClick={() => {
-                                  if (note.isDefault) {
-                                    handleSendMessage(undefined, `Tell me more about the: ${note.text}`);
-                                  } else {
-                                    handleSendMessage(undefined, `Let's discuss this note: "${note.text}"`);
-                                  }
-                                  discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
-                                }}>
-                                  <MessageSquareQuote className="mr-2 h-4 w-4"/>
-                                  Discuss with AI
-                                </Button>
-                            </DialogFooter>
-                          </DialogContent>
-                        </Dialog>
-                      ))}
+                  <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
+                    <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
+                      "max-w-prose rounded-lg px-4 py-2 text-sm",
+                      msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
+                      msg.from === 'bot' && index === 0 && 'w-full md:w-10/12',
+                      msg.from === 'bot' && index > 0 && 'w-full',
+                      msg.isArabic && "font-arabic"
+                    )}>
+                      {msg.text}
                     </div>
-                    {(isGeneratingReport || report) && (
-                      <div className="space-y-2 pt-6 mt-6 border-t">
-                        <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
-                        {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
-                          <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
-                            <p className="text-sm whitespace-pre-wrap">{report}</p>
-                          </ScrollArea>
-                        }
-                      </div>
-                    )}
                   </div>
-                </ScrollArea>
-              </CardContent>
-              <CardFooter className="border-t p-4 flex justify-between items-center">
-                 <Button onClick={handleDiscussNote} disabled={markedNoteIds.size !== 1}>
-                    <MessageSquareQuote />
-                    Discuss Note
-                  </Button>
-                <Button onClick={handleGenerateReport} disabled={isGeneratingReport || markedNoteIds.size === 0}>
-                  <FileSignature />
-                  {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size})`}
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-          
-          <Card>
-            <CardTitleWithBackground title="Media Center" subtitle="Explore project audio, visuals, and downloadable assets." />
-            <CardContent className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Audio Section */}
-              <div className="flex flex-col items-center justify-center p-4 border rounded-lg bg-card-foreground/5">
-                <Headphones className="w-10 h-10 mb-2 text-primary" />
-                <h4 className="font-semibold mb-2">Audio</h4>
-                <div className="w-full space-y-2">
-                  <Button asChild variant="outline" className="w-full">
-                    <a href="https://drive.google.com/file/d/1qGmGpJAr65P9OaApzfI03cZdU7kOxEQ9/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-                      <PlayCircle className="mr-2" /> Play Interview
-                    </a>
-                  </Button>
-                  <Button onClick={handleGenerateAudio} disabled={isGeneratingAudio || !selectedDoc?.content} className="w-full">
-                    {isGeneratingAudio ? <Loader2 className="animate-spin" /> : <Mic />}
-                    Generate AI Audio
-                  </Button>
+                    {msg.from === 'user' && (
+                    <Avatar className="w-8 h-8 shrink-0">
+                        <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
+                    </Avatar>
+                  )}
                 </div>
-              </div>
-
-              {/* Mockups Section */}
-              <div className="flex flex-col items-center justify-center p-4 border rounded-lg bg-card-foreground/5">
-                <ImageIcon className="w-10 h-10 mb-2 text-primary" />
-                <h4 className="font-semibold mb-2">Mockups & Concepts</h4>
-                 <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" className="w-full">
-                        <Maximize className="mr-2" /> View Project Mockups
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-5xl h-[80vh] flex flex-col">
-                      <DialogHeader>
-                        <DialogTitle>Project Mockups</DialogTitle>
-                      </DialogHeader>
-                      <div className="flex-1 relative">
-                        <Carousel className="w-full h-full">
-                          <CarouselContent className="h-full">
-                            {mockupImages.map((img, index) => (
-                              <CarouselItem key={index} className="flex items-center justify-center p-4">
-                                <Image 
-                                  src={img.src} 
-                                  alt={img.alt} 
-                                  width={1200}
-                                  height={800}
-                                  className="object-contain max-h-full max-w-full rounded-lg"
-                                  data-ai-hint={img.hint}
-                                />
-                              </CarouselItem>
-                            ))}
-                          </CarouselContent>
-                          <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10" />
-                          <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10" />
-                        </Carousel>
+              ))}
+                {messages.length <= 1 && (
+                  <div className="pt-4">
+                    <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        {quickPromptsEnglish.map((prompt) => (
+                          <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-left h-auto">
+                            {prompt}
+                          </Button>
+                        ))}
                       </div>
-                    </DialogContent>
-                  </Dialog>
+                      <div className="space-y-2" dir="rtl">
+                        {quickPromptsArabic.map((prompt) => (
+                          <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-right font-arabic h-auto">
+                            {prompt}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              {isAnswering && (
+                  <div className="flex items-start gap-3 justify-start">
+                    <Avatar className="w-8 h-8">
+                      <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                    </Avatar>
+                    <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
+                      <Loader2 className="animate-spin h-4 w-4" />
+                    </div>
+                  </div>
+              )}
               </div>
+            </ScrollArea>
+          </CardContent>
+          <CardFooter className="border-t pt-4">
+            <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
+              <Input
+                dir={isArabic ? 'rtl' : 'ltr'}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your question..."
+                autoComplete="off"
+                disabled={isAnswering}
+                className={cn(isArabic && "font-arabic")}
+              />
+              <Button type="submit" size="icon" disabled={isAnswering}>
+                <Send className="h-4 w-4" />
+              </Button>
+            </form>
+          </CardFooter>
+        </Card>
 
-              {/* Downloads Section */}
-              <div className="flex flex-col items-center justify-center p-4 border rounded-lg bg-card-foreground/5">
-                <DownloadIcon className="w-10 h-10 mb-2 text-primary" />
-                <h4 className="font-semibold mb-2">Downloads</h4>
-                <div className="w-full space-y-2">
-                   <Button variant="outline" className="w-full" disabled>
-                      <Download className="mr-2" /> Download Full Project Study
-                  </Button>
-                   <Button variant="outline" className="w-full" onClick={handleGenerateReport} disabled={isGeneratingReport || markedNoteIds.size === 0}>
-                     <FileSignature className="mr-2" />
-                     {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size} marked)`}
-                   </Button>
+        <Card className='h-96 flex flex-col'>
+          <Tabs defaultValue="notes" className="h-full flex flex-col">
+            <TabsList className='mx-4 mt-4'>
+              <TabsTrigger value="notes">Notes & Reports</TabsTrigger>
+              <TabsTrigger value="media">Media Center</TabsTrigger>
+            </TabsList>
+            <TabsContent value="notes" className="flex-1 flex flex-col p-4 m-0">
+              <ScrollArea className='h-full'>
+                <div className="space-y-4 pr-2">
+                  <div className={cn(
+                      "grid gap-4",
+                      notes.length === 0 && "grid-cols-1",
+                      notes.length > 0 && "grid-cols-1 md:grid-cols-2"
+                    )}>
+                    {notes.length === 0 && <p className='text-sm text-muted-foreground text-center col-span-full py-4'>No notes added yet. Select text in a document summary to add a note.</p>}
+                    {notes.map(note => (
+                      <Card key={note.id} className="flex flex-col">
+                        <CardHeader className="flex-row items-start justify-between p-4 pb-2">
+                          <div className="flex items-start gap-3">
+                            <Checkbox
+                              id={`note-cb-${note.id}`}
+                              checked={markedNoteIds.has(note.id)}
+                              onCheckedChange={() => toggleMarkedNote(note.id)}
+                              className='mt-1'
+                            />
+                            <div className="grid gap-0.5">
+                                <CardDescription className="text-xs">{note.source}</CardDescription>
+                            </div>
+                          </div>
+                          <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </CardHeader>
+                        <CardContent className='px-4 pb-4 pt-0 text-sm text-muted-foreground truncate'>{note.text}</CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  {(isGeneratingReport || report) && (
+                    <div className="space-y-2 pt-6 mt-6 border-t">
+                      <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
+                      {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
+                        <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
+                          <p className="text-sm whitespace-pre-wrap">{report}</p>
+                        </ScrollArea>
+                      }
+                    </div>
+                  )}
                 </div>
+              </ScrollArea>
+              <div className='border-t pt-4'>
+                 <Button onClick={handleGenerateReport} disabled={isGeneratingReport || markedNoteIds.size === 0} className="w-full">
+                    <FileSignature />
+                    {isGeneratingReport ? 'Generating...' : `Generate Report from ${markedNoteIds.size} Marked Note(s)`}
+                  </Button>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </TabsContent>
+            <TabsContent value="media" className="p-4 m-0 h-full">
+                <div className="h-full flex items-center justify-center p-4 border rounded-lg bg-card-foreground/5">
+                    <div className="text-center">
+                        <Headphones className="w-16 h-16 mx-auto mb-4 text-primary" />
+                        <h4 className="font-semibold mb-4 text-lg">Audio Overview</h4>
+                        <div className="w-full space-y-2 max-w-xs mx-auto">
+                        <Button asChild variant="outline" className="w-full">
+                            <a href="https://drive.google.com/file/d/1qGmGpJAr65P9OaApzfI03cZdU7kOxEQ9/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                            <PlayCircle className="mr-2" /> Play Interview
+                            </a>
+                        </Button>
+                        <Button onClick={handleGenerateAudio} disabled={isGeneratingAudio || !selectedDoc?.content} className="w-full">
+                            {isGeneratingAudio ? <Loader2 className="animate-spin" /> : <Mic />}
+                            Generate AI Audio of Current Doc
+                        </Button>
+                        </div>
+                    </div>
+                </div>
+            </TabsContent>
+          </Tabs>
+        </Card>
       </main>
       <Dialog open={showSummaryDialog} onOpenChange={setShowSummaryDialog}>
-        <DialogContent>
+        <DialogContent onMouseUp={(e) => {
+            const selection = window.getSelection()?.toString().trim();
+            if (selection) {
+              addNote(selection, `Selection from ${selectedDoc.name} Summary`);
+              window.getSelection()?.removeAllRanges();
+            }
+        }}>
           <DialogHeader>
-            <DialogTitle>AI Generated Summary</DialogTitle>
+            <DialogTitle>AI Generated Summary for <span className='text-primary'>{selectedDoc.name}</span></DialogTitle>
+             <p className='text-sm text-muted-foreground'>You can select any text from this summary to add it to your notes.</p>
           </DialogHeader>
           {isSummarizing ? (
             <div className="flex items-center justify-center h-24">
@@ -838,3 +564,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
