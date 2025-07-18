@@ -70,7 +70,6 @@ const quickPromptsArabic = [
   "كيف تعمل عملية الترميز؟",
 ];
 
-type TextSize = "sm" | "base" | "lg";
 type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 
 function PageContent() {
@@ -92,8 +91,6 @@ function PageContent() {
 
   const chatScrollAreaRef = useRef<HTMLDivElement>(null);
   
-  const [textSize, setTextSize] = useState<TextSize>('base');
-
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNoteTitle, setNewNoteTitle] = useState('');
   const [newNoteContent, setNewNoteContent] = useState('');
@@ -505,6 +502,7 @@ function PageContent() {
             </div>
           </TabsContent>
           <TabsContent value="document" className="flex-1 flex flex-col overflow-y-auto p-4">
+            <div className="flex-1 flex flex-col">
               <SourceGuide 
                 summary={selectedDoc.summary} 
                 topics={selectedDoc.topics || []}
@@ -512,26 +510,19 @@ function PageContent() {
                 onTopicClick={handleTopicClick}
               />
               <Card className="flex-1 flex flex-col mt-4">
-                <CardTitleWithBackground
-                  title={selectedDoc.name}
-                  subtitle="Main document content"
-                  className="flex-row items-center justify-between"
-                >
+                <CardTitleWithBackground>
+                  <div>
                     <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
-                    <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm" onClick={() => setTextSize("sm")} className={cn(textSize === 'sm' && 'bg-muted')}>Sm</Button>
-                        <Button variant="ghost" size="sm" onClick={() => setTextSize("base")} className={cn(textSize === 'base' && 'bg-muted')}>Md</Button>
-                        <Button variant="ghost" size="sm" onClick={() => setTextSize("lg")} className={cn(textSize === 'lg' && 'bg-muted')}>Lg</Button>
-                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">Main document content</p>
+                  </div>
                 </CardTitleWithBackground>
                 <CardContent className="flex-1 p-0">
                   <ScrollArea className="h-full">
                     <div 
                       dir={isArabic ? 'rtl' : 'ltr'} 
                       className={cn(
-                        "p-6 whitespace-pre-wrap leading-relaxed",
-                        isArabic && "font-arabic",
-                        `text-${textSize}`
+                        "p-6 whitespace-pre-wrap leading-relaxed text-base",
+                        isArabic && "font-arabic"
                       )}
                     >
                       {selectedDoc.content}
@@ -539,6 +530,7 @@ function PageContent() {
                   </ScrollArea>
                 </CardContent>
               </Card>
+            </div>
           </TabsContent>
           <TabsContent value="mindmap" className="flex-1 bg-muted/20 relative">
              <InteractiveMindMap onNodeDoubleClick={handleMindMapNodeDoubleClick} />
