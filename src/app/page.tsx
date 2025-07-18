@@ -376,15 +376,15 @@ function PageContent() {
         );
       case 'mindmap':
         return (
-          <div className="flex-1 p-4">
+          <div className="flex-1 p-4 bg-ai-console">
             <InteractiveMindMap onNodeDoubleClick={handleMindMapNodeDoubleClick} />
           </div>
         );
       case 'ai-console':
         return (
-          <ScrollArea className="flex-1">
+          <ScrollArea className="flex-1 bg-ai-console">
             <div className="p-6 grid gap-6">
-              <Card>
+              <Card className="ai-console-card">
                 <CardHeader>
                   <CardTitle>AI Console</CardTitle>
                   <CardDescription>Ask questions about any document or topic.</CardDescription>
@@ -402,7 +402,7 @@ function PageContent() {
                           <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
                             <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
                               "max-w-prose rounded-lg px-4 py-2 text-sm",
-                              msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
+                              msg.from === 'user' ? "bg-accent text-accent-foreground" : "bg-muted/60",
                               msg.isArabic && "font-arabic"
                             )}>
                               {msg.text}
@@ -458,7 +458,7 @@ function PageContent() {
                 </CardFooter>
               </Card>
               
-              <Card>
+              <Card className="ai-console-card">
                 <CardHeader>
                   <CardTitle>Notes &amp; Reports</CardTitle>
                   <CardDescription>Create notes from documents and generate AI-powered reports from your findings.</CardDescription>
@@ -468,7 +468,7 @@ function PageContent() {
                       {notes.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {notes.map(note => (
-                            <Card key={note.id} className="cursor-pointer hover:border-primary" onClick={() => setSelectedNote(note)}>
+                            <Card key={note.id} className="cursor-pointer hover:border-primary bg-card/50" onClick={() => setSelectedNote(note)}>
                               <CardHeader className="p-4">
                                 <CardTitle className="text-base flex items-start justify-between">
                                   <span className="truncate flex-1">{note.title}</span>
@@ -519,7 +519,7 @@ function PageContent() {
                 </CardFooter>
               </Card>
   
-              <Card>
+              <Card className="ai-console-card">
                 <CardHeader>
                     <CardTitle>Media Center</CardTitle>
                     <CardDescription>Generate and listen to AI-powered audio overviews of the documents.</CardDescription>
