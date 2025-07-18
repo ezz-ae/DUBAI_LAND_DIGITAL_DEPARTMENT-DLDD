@@ -70,18 +70,18 @@ const quickPromptsArabic = [
 ];
 
 type Note = { id: number; title: string; content: string; source: string; marked: boolean };
+type DLDDoc = typeof dldChainDocuments[0];
 
 function PageContent() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
-  const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`'});
+  const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(null);
   const [isDocViewerOpen, setIsDocViewerOpen] = useState(false);
   
   const [summary, setSummary] = useState('');
   const [isSummarizing, setIsSummarizing] = useState(false);
-  const [showSummaryDialog, setShowSummaryDialog] = useState(false);
-
+  
   const [messages, setMessages] = useState<any[]>(initialMessages);
   const [input, setInput] = useState('');
   const [isAnswering, setIsAnswering] = useState(false);
@@ -103,13 +103,6 @@ function PageContent() {
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
   useEffect(() => {
-    if (dldChainDocuments.length > 0) {
-      const doc = dldChainDocuments[0]
-      setSelectedDoc(doc);
-    }
-  }, []);
-  
-  useEffect(() => {
     if (chatScrollAreaRef.current) {
         const lastMessage = chatScrollAreaRef.current.lastElementChild;
         if(lastMessage) {
@@ -118,35 +111,20 @@ function PageContent() {
     }
   }, [messages]);
   
-  useEffect(() => {
-    setMessages(initialMessages);
-    setShowSummaryDialog(false);
-    
-    if (audioState.element) {
-        audioState.element.pause();
-        setAudioState({ element: null, isPlaying: false });
-    }
-  }, [selectedDoc]);
-
-  const handleSelectDocument = (doc: typeof dldChainDocuments[0]) => {
+  const handleSelectDocument = async (doc: DLDDoc) => {
     setSelectedDoc(doc);
-    setIsDocViewerOpen(true);
-  };
-
-  const handleSummarize = async () => {
-    if (!selectedDoc || !selectedDoc.content) return;
-    setIsSummarizing(true);
-    setShowSummaryDialog(true);
     setSummary('');
+    setIsDocViewerOpen(true);
+    setIsSummarizing(true);
     try {
-      const result = await summarizeDocument({ documentText: selectedDoc.content });
+      const result = await summarizeDocument({ documentText: doc.content });
       setSummary(result.summary);
     } catch (error) {
       console.error('Error summarizing document:', error);
       toast({
         variant: "destructive",
         title: "Summarization Failed",
-        description: "Could not generate summary. Please try again.",
+        description: "Could not generate summary for this document.",
       });
       setSummary('Failed to generate summary.');
     } finally {
@@ -161,7 +139,7 @@ function PageContent() {
 
     const newMessages = [...messages, { from: 'user', text: currentMessage }];
     setMessages(newMessages);
-    setInput('');
+setInput('');
     setIsAnswering(true);
 
     try {
@@ -183,8 +161,8 @@ function PageContent() {
   };
 
   const handleAddNote = () => {
-    if (!newNoteTitle.trim() || !newNoteContent.trim()) {
-      toast({ variant: 'destructive', title: 'Error', description: 'Both title and content are required.' });
+    if (!newNoteTitle.trim() || !newNoteContent.trim() || !selectedDoc) {
+      toast({ variant: 'destructive', title: 'Error', description: 'Title, content, and a selected document are required.' });
       return;
     }
     const newNote: Note = {
@@ -228,7 +206,6 @@ function PageContent() {
     setSelectedNote(null);
     handleSendMessage(undefined, `Based on my note "${noteContent}", can you elaborate further?`);
   };
-
   
   const handleGenerateAudio = async () => {
     if (!selectedDoc?.content || isGeneratingAudio) return;
@@ -270,6 +247,8 @@ function PageContent() {
   };
 
   const handleTopicClick = async (topic: string) => {
+    if (!selectedDoc) return;
+    setIsDocViewerOpen(false); // Close the doc viewer to show chat
     toast({ title: `Explaining: ${topic}`, description: "The AI is preparing an explanation..."});
     const newMessages = [...messages, { from: 'user', text: `Explain this topic for me: ${topic}` }];
     setMessages(newMessages);
@@ -294,12 +273,10 @@ function PageContent() {
   };
 
   const handleMindMapNodeDoubleClick = (topic: string) => {
-    handleTopicClick(topic);
-    // Potentially switch to the chat tab if not already there
+    handleSendMessage(undefined, `Tell me more about ${topic}.`);
   };
 
   const [textSize, setTextSize] = useState('text-base');
-
 
   return (
     <div className="flex h-screen w-full bg-background text-foreground">
@@ -353,26 +330,22 @@ function PageContent() {
             <h1 className="text-xl font-headline font-semibold">Project Pilot</h1>
           </div>
           <div className="flex items-center gap-2">
-            <Button onClick={handleSummarize} variant="outline" size="sm">
-              <Sparkles /> Summarize Document
-            </Button>
+            
           </div>
         </header>
         
         <div className="flex-1 flex flex-col overflow-y-auto p-6 gap-6">
-          {/* Top Section: Mindmap */}
           <div className="grid grid-cols-1 gap-6">
             <div className="relative min-h-[500px] lg:min-h-0">
                <InteractiveMindMap onNodeDoubleClick={handleMindMapNodeDoubleClick} />
             </div>
           </div>
           
-          {/* Bottom Section: AI Tools */}
           <div className="grid grid-cols-1 gap-6">
             <Card>
               <CardHeader>
                 <CardTitle>AI Console</CardTitle>
-                <CardDescription>Ask questions about <span className='font-bold text-primary'>{selectedDoc.name}</span></CardDescription>
+                <CardDescription>Ask questions about any document or topic from the mind map.</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                   <div className="p-4 space-y-4" ref={chatScrollAreaRef}>
@@ -444,7 +417,7 @@ function PageContent() {
             <Card>
               <CardHeader>
                 <CardTitle>Notes &amp; Reports</CardTitle>
-                <CardDescription>Create notes and generate AI-powered reports from your findings.</CardDescription>
+                <CardDescription>Create notes from documents and generate AI-powered reports from your findings.</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                    <div className="p-4">
@@ -470,7 +443,7 @@ function PageContent() {
                         ))}
                       </div>
                     ) : (
-                      <div className="text-center text-muted-foreground py-8">No notes yet. Add one to get started!</div>
+                      <div className="text-center text-muted-foreground py-8">No notes yet. Select a document and add one to get started!</div>
                     )}
 
                     {generatedReport && (
@@ -482,7 +455,7 @@ function PageContent() {
                     </div>
               </CardContent>
                 <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-                  <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none"><StickyNote className="mr-2"/> Add Note</Button>
+                  <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none" disabled={!selectedDoc}><StickyNote className="mr-2"/> Add Note</Button>
                   <div className="flex-1" />
                   <Select onValueChange={setReportType} defaultValue={reportType}>
                       <SelectTrigger className="w-full sm:w-[150px]">
@@ -512,7 +485,7 @@ function PageContent() {
                   <p className="text-sm text-muted-foreground">
                       {audioState.element ? "Audio is ready to play." : "Generate an audio summary for the selected document."}
                   </p>
-                  <Button onClick={handleGenerateAudio} size="lg" disabled={isGeneratingAudio}>
+                  <Button onClick={handleGenerateAudio} size="lg" disabled={isGeneratingAudio || !selectedDoc}>
                       {isGeneratingAudio ? <Loader2 className="animate-spin" /> : audioState.isPlaying ? <PauseCircle /> : <PlayCircle />}
                       <span className="ml-2">{isGeneratingAudio ? 'Generating Audio...' : audioState.isPlaying ? 'Pause Audio' : audioState.element ? 'Play Audio Overview' : 'Generate AI Audio'}</span>
                   </Button>
@@ -522,78 +495,58 @@ function PageContent() {
         </div>
       </main>
 
-      <Dialog open={isDocViewerOpen} onOpenChange={setIsDocViewerOpen}>
-        <DialogContent className="max-w-4xl h-[90vh] flex flex-col">
-          <DialogHeader>
-            <DialogTitle>Document Viewer</DialogTitle>
-          </DialogHeader>
-          <div className="flex-1 flex flex-col gap-6 overflow-y-auto p-2">
-            <SourceGuide 
-              summary={summary}
-              isArabic={isArabic}
-              onTopicClick={handleTopicClick}
-            />
-            <Card className="flex-1 flex flex-col">
-              <CardTitleWithBackground>
-                <div>
-                  <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Main document content</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button variant={textSize === 'text-sm' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>Sm</Button>
-                  <Button variant={textSize === 'text-base' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>Md</Button>
-                  <Button variant={textSize === 'text-lg' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>Lg</Button>
-                </div>
-              </CardTitleWithBackground>
-              <CardContent className="flex-1 p-0">
-                  <div 
-                    dir={isArabic ? 'rtl' : 'ltr'} 
-                    className={cn(
-                      "p-6 whitespace-pre-wrap leading-relaxed",
-                      textSize,
-                      isArabic && "font-arabic"
-                    )}
-                  >
-                    {selectedDoc.content}
+      {selectedDoc && (
+        <Dialog open={isDocViewerOpen} onOpenChange={setIsDocViewerOpen}>
+          <DialogContent className="max-w-4xl h-[90vh] flex flex-col">
+            <DialogHeader>
+              <DialogTitle>{selectedDoc.name}</DialogTitle>
+            </DialogHeader>
+            <div className="flex-1 flex flex-col gap-4 overflow-y-hidden">
+              <SourceGuide 
+                summary={summary}
+                isSummarizing={isSummarizing}
+                isArabic={isArabic}
+                onTopicClick={handleTopicClick}
+              />
+              <Card className="flex-1 flex flex-col overflow-y-hidden">
+                <CardTitleWithBackground>
+                  <div>
+                    <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">Document Content</h3>
                   </div>
-              </CardContent>
-            </Card>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Close</Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={showSummaryDialog} onOpenChange={setShowSummaryDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>AI Generated Summary for <span className='text-primary'>{selectedDoc.name}</span></DialogTitle>
-          </DialogHeader>
-          {isSummarizing ? (
-            <div className="flex items-center justify-center h-24">
-              <Loader2 className="animate-spin text-primary" />
+                  <div className="flex items-center gap-2">
+                    <Button variant={textSize === 'text-sm' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>Sm</Button>
+                    <Button variant={textSize === 'text-base' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>Md</Button>
+                    <Button variant={textSize === 'text-lg' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>Lg</Button>
+                  </div>
+                </CardTitleWithBackground>
+                <CardContent className="flex-1 p-0 overflow-y-auto">
+                    <div 
+                      dir={isArabic ? 'rtl' : 'ltr'} 
+                      className={cn(
+                        "p-6 whitespace-pre-wrap leading-relaxed",
+                        textSize,
+                        isArabic && "font-arabic"
+                      )}
+                    >
+                      {selectedDoc.content}
+                    </div>
+                </CardContent>
+              </Card>
             </div>
-          ) : (
-            <ScrollArea className="max-h-[60vh]">
-              <p className="text-sm whitespace-pre-wrap">{summary}</p>
-            </ScrollArea>
-          )}
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Close</Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogFooter className='pt-4'>
+              <DialogClose asChild>
+                <Button variant="outline">Close</Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
 
       <Dialog open={showAddNoteDialog} onOpenChange={setShowAddNoteDialog}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add New Note</DialogTitle>
-            <DialogDescription>Create a new note based on document: <span className="font-bold text-primary">{selectedDoc.name}</span></DialogDescription>
+            <DialogDescription>Create a new note based on document: <span className="font-bold text-primary">{selectedDoc?.name}</span></DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <Input placeholder="Note Title" value={newNoteTitle} onChange={e => setNewNoteTitle(e.target.value)} />
@@ -637,5 +590,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
