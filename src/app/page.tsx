@@ -61,7 +61,6 @@ import { dldChainDocuments } from '@/lib/documents';
 import { InteractiveMindMap } from '@/components/interactive-mind-map';
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
 import { SourceGuide } from '@/components/source-guide';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -498,45 +497,35 @@ function PageContent() {
             </CardContent>
           </Card>
           
-          <Collapsible>
-            <Card>
-              <CollapsibleTrigger asChild>
-                  <CardTitleWithBackground
-                    title="DLDCHAIN STRUCTURE MINDMAP"
-                    subtitle="An interactive overview of the project's architecture."
-                  >
-                    <div className="flex items-center justify-between w-full cursor-pointer">
-                      <div>
-                        <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
-                        <p className="text-sm text-muted-foreground mt-1">An interactive overview of the project&apos;s architecture. Click to expand.</p>
-                      </div>
-                       <Dialog>
-                          <DialogTrigger asChild>
-                            <Button variant="outline" onClick={(e) => e.stopPropagation()}>
-                              <Maximize className="mr-2" />
-                              Explore Map
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
-                              <DialogHeader>
-                                <DialogTitle>Interactive Project Mind Map</DialogTitle>
-                              </DialogHeader>
-                              <div className="flex-1 overflow-hidden border rounded-lg bg-background">
-                                <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
-                              </div>
-                          </DialogContent>
-                        </Dialog>
-                    </div>
-                  </CardTitleWithBackground>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                  <div className="h-96 w-full border-t">
-                    <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
-                  </div>
-              </CollapsibleContent>
-            </Card>
-          </Collapsible>
-
+          <Card>
+            <CardTitleWithBackground>
+              <div className="flex items-center justify-between w-full">
+                <div>
+                  <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
+                  <p className="text-sm text-muted-foreground mt-1">An interactive overview of the project's architecture.</p>
+                </div>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline">
+                        <Maximize className="mr-2" />
+                        Explore Map
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
+                        <DialogHeader>
+                          <DialogTitle>Interactive Project Mind Map</DialogTitle>
+                        </DialogHeader>
+                        <div className="flex-1 overflow-hidden border rounded-lg bg-background">
+                          <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+                        </div>
+                    </DialogContent>
+                  </Dialog>
+              </div>
+            </CardTitleWithBackground>
+            <div className="h-96 w-full border-t">
+              <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+            </div>
+          </Card>
 
           <Card ref={discussionCardRef}>
             <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
