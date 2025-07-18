@@ -29,6 +29,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Sidebar,
@@ -45,7 +50,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
@@ -145,8 +150,9 @@ function PageContent() {
   
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const chatScrollAreaRef = useRef<HTMLDivElement>(null);
   const fileContentRef = useRef<HTMLDivElement>(null);
+  const discussionCardRef = useRef<HTMLDivElement>(null);
 
   const [notes, setNotes] = useState<Note[]>([]);
   const [isClarifying, setIsClarifying] = useState(false);
@@ -171,8 +177,8 @@ function PageContent() {
   
 
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
+    if (chatScrollAreaRef.current) {
+      chatScrollAreaRef.current.scrollTo({ top: chatScrollAreaRef.current.scrollHeight, behavior: 'smooth' });
     }
   }, [messages]);
   
@@ -221,6 +227,7 @@ function PageContent() {
   };
 
   const handleExplainTopic = async (topic: string) => {
+    discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
     setIsClarifying(true);
     setClarification('');
     setReport('');
@@ -449,16 +456,31 @@ function PageContent() {
           </Card>
 
           <Card>
-            <CardTitleWithBackground title="DLDCHAIN STRUCTURE MINDMAP" subtitle="Click any part for a deep dive." />
-            <CardContent className="p-4">
-              <InteractiveMindMap onNodeClick={handleExplainTopic} />
-            </CardContent>
+             <Collapsible>
+              <CollapsibleTrigger className='w-full'>
+                <CardTitleWithBackground 
+                  title="DLDCHAIN STRUCTURE MINDMAP" 
+                  subtitle="Click any part for a deep dive. The map is currently closed."
+                >
+                  <div className="flex items-center">
+                    <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
+                    <ChevronsUpDown className="h-5 w-5 ml-2 text-muted-foreground"/>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">Click to expand and explore the project structure.</p>
+                </CardTitleWithBackground>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent className="p-4">
+                  <InteractiveMindMap onNodeClick={handleExplainTopic} />
+                </CardContent>
+              </CollapsibleContent>
+            </Collapsible>
           </Card>
 
-          <Card>
+          <Card ref={discussionCardRef}>
             <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
             <CardContent className="p-0">
-              <ScrollArea className="h-96" ref={scrollAreaRef}>
+              <ScrollArea className="h-96" ref={chatScrollAreaRef}>
                 <div className="p-4 space-y-4">
                 {messages.map((msg: any, index) => (
                   <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>

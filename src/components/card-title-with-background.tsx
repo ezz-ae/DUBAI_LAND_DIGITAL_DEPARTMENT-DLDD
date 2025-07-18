@@ -5,19 +5,26 @@ import { cn } from "@/lib/utils"
 interface CardTitleWithBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   subtitle?: string;
+  children?: React.ReactNode;
 }
 
 export const CardTitleWithBackground = React.forwardRef<
   HTMLDivElement,
   CardTitleWithBackgroundProps
->(({ className, title, subtitle, ...props }, ref) => (
+>(({ className, title, subtitle, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn("bg-card-foreground/5 dark:bg-card-foreground/10 p-4", className)}
     {...props}
   >
-    <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">{title}</h3>
-    {subtitle && <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>}
+    {children ? (
+      children
+    ) : (
+      <>
+        <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">{title}</h3>
+        {subtitle && <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>}
+      </>
+    )}
   </div>
 ))
 

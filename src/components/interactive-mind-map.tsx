@@ -3,56 +3,70 @@
 import React from 'react';
 import { mindMapData } from '@/lib/mindmap-data';
 import { cn } from '@/lib/utils';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
-interface MindMapNodeProps {
-  node: {
-    id: string;
-    name: string;
-    children?: any[];
-  };
-  level: number;
-  onNodeClick: (topic: string) => void;
+interface MindMapNode {
+  id: string;
+  name: string;
+  children?: MindMapNode[];
 }
 
-const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) => {
+interface MindMapNodeProps {
+  node: MindMapNode;
+  level: number;
+  onNodeClick: (topic: string) => void;
+  isRoot?: boolean;
+}
+
+const MindMapNodeComponent: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick, isRoot = false }) => {
   const hasChildren = node.children && node.children.length > 0;
+  
+  const NodeButton = () => (
+     <button
+      onClick={() => onNodeClick(node.name)}
+      className={cn(
+        'flex items-center justify-between gap-2 p-2 rounded-md cursor-pointer transition-all hover:shadow-lg hover:-translate-y-0.5 text-sm',
+        'shadow-[0_2px_8px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.3)]',
+        isRoot 
+          ? 'bg-primary text-primary-foreground font-bold' 
+          : 'bg-mindmap-node-bg hover:bg-mindmap-node-hover-bg text-card-foreground',
+      )}
+    >
+      {isRoot && <ChevronLeft className="w-4 h-4" />}
+      <span>{node.name}</span>
+      {!isRoot && <ChevronRight className="w-4 h-4" />}
+    </button>
+  );
 
   return (
     <div className="flex items-center">
-      <div
-        onClick={() => onNodeClick(node.name)}
-        className={cn(
-          'p-3 rounded-lg cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1',
-          'shadow-[0_4px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.4)]',
-          level === 0 ? 'bg-primary text-primary-foreground font-bold text-lg' : 'bg-card border text-card-foreground'
-        )}
-      >
-        {node.name}
-      </div>
+      {isRoot && <NodeButton />}
 
       {hasChildren && (
-        <div className="flex flex-col justify-center ml-8 space-y-4 relative">
-          {/* Vertical line from node */}
-          <div className="absolute left-[-2rem] top-1/2 h-full w-px bg-mindmap-line-color"></div>
-
-          {node.children.map((child, index) => (
-            <div key={child.id} className="flex items-center relative">
-              {/* Horizontal line to child */}
-              <div className="absolute left-[-2rem] top-1/2 h-px w-8 bg-mindmap-line-color"></div>
-              <MindMapNode node={child} level={level + 1} onNodeClick={onNodeClick} />
-            </div>
-          ))}
+        <div className="flex items-center ml-4">
+          <svg width="20" height={node.children.length * 50} className="mr-4">
+            <path d={`M0,${(node.children.length * 50)/2} C10,${(node.children.length * 50)/2} 10,0 20,0`} stroke="var(--mindmap-line-color)" fill="transparent" strokeWidth="1.5" />
+            {node.children.map((_, index) => (
+                <path key={index} d={`M0,${(node.children.length * 50)/2} C10,${(node.children.length * 50)/2} 10,${25 + index * 50} 20,${25 + index * 50}`} stroke="var(--mindmap-line-color)" fill="transparent" strokeWidth="1.5" />
+            ))}
+          </svg>
+          <div className="flex flex-col justify-around space-y-4">
+            {node.children.map((child) => (
+              <MindMapNodeComponent key={child.id} node={child} level={level + 1} onNodeClick={onNodeClick} />
+            ))}
+          </div>
         </div>
       )}
+
+      {!isRoot && <NodeButton />}
     </div>
   );
 };
 
-
 export const InteractiveMindMap: React.FC<{ onNodeClick: (topic: string) => void }> = ({ onNodeClick }) => {
   return (
-    <div className="p-4 bg-card rounded-lg border flex justify-center">
-      <MindMapNode node={mindMapData} level={0} onNodeClick={onNodeClick} />
+    <div className="p-4 bg-card rounded-lg flex justify-center overflow-x-auto">
+      <MindMapNodeComponent node={mindMapData} level={0} onNodeClick={onNodeClick} isRoot={true} />
     </div>
   );
 };
