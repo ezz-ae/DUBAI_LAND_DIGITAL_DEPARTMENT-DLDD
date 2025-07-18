@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   DropdownMenu,
@@ -29,11 +30,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Sidebar,
@@ -50,7 +46,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle, SlidersHorizontal, BookText, Mic, Headphones, ChevronsUpDown, Maximize, Share2, Plus } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
@@ -85,6 +81,7 @@ const quickPrompts = [
 type Note = {
   id: number;
   text: string;
+  source?: string;
 };
 
 type TextSize = "sm" | "base" | "lg";
@@ -144,7 +141,7 @@ function PageContent() {
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [showSummaryDialog, setShowSummaryDialog] = useState(false);
 
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState<any[]>(initialMessages);
   const [input, setInput] = useState('');
   const [isAnswering, setIsAnswering] = useState(false);
   
@@ -190,15 +187,19 @@ function PageContent() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDoc]);
 
-  const handleSelection = () => {
-    const selection = window.getSelection()?.toString().trim();
-    if (selection) {
-      const newNote: Note = { id: Date.now(), text: selection };
+  const addNote = (text: string, source?: string) => {
+      const newNote: Note = { id: Date.now(), text, source };
       setNotes(prev => [...prev, newNote]);
       toast({
         title: "Note Added",
-        description: "Selected text has been added to your notes.",
+        description: source ? `From: ${source}` : "A new note has been added.",
       })
+  };
+
+  const handleSelection = () => {
+    const selection = window.getSelection()?.toString().trim();
+    if (selection) {
+      addNote(selection, `Selection from ${selectedDoc.name}`);
       window.getSelection()?.removeAllRanges();
     }
   };
@@ -228,13 +229,22 @@ function PageContent() {
 
   const handleExplainTopic = async (topic: string) => {
     discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
-    setIsClarifying(true);
-    setClarification('');
-    setReport('');
+    setIsAnswering(true);
+    
+    const newMessages = [...messages, { from: 'user', text: `Please explain: "${topic}"` }];
+    setMessages(newMessages);
+
     toast({ title: "Generating Explanation", description: `Getting details for: ${topic}` });
     try {
       const result = await explainTopic({ topic: topic, context: selectedDoc.content });
-      setClarification(result.explanation);
+      const botAnswer = result.explanation;
+       const isBotAnswerArabic = /[\u0600-\u06FF]/.test(botAnswer);
+      setMessages([...newMessages, { 
+        from: 'bot', 
+        text: botAnswer, 
+        isArabic: isBotAnswerArabic,
+        topic: topic
+      }]);
     } catch (error) {
        console.error('Error explaining topic:', error);
       toast({
@@ -242,8 +252,9 @@ function PageContent() {
         title: "Explanation Failed",
         description: "Could not get explanation. Please try again.",
       });
+      setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error explaining that topic.', isArabic: false }]);
     } finally {
-      setIsClarifying(false);
+      setIsAnswering(false);
     }
   };
   
@@ -278,11 +289,7 @@ function PageContent() {
     try {
       const result = await summarizeDocument({ documentText: selectedDoc.content });
       setSummary(result.summary);
-      const newNote: Note = { id: Date.now(), text: `Summary of ${selectedDoc.name}:\n${result.summary}` };
-      setNotes(prev => [newNote, ...prev]);
-      toast({
-        title: "Summary Added to Notes",
-      });
+      addNote(result.summary, `Summary of ${selectedDoc.name}`);
     } catch (error) {
       console.error('Error summarizing document:', error);
       toast({
@@ -456,25 +463,33 @@ function PageContent() {
           </Card>
 
           <Card>
-             <Collapsible>
-              <CollapsibleTrigger className='w-full'>
-                <CardTitleWithBackground 
-                  title="DLDCHAIN STRUCTURE MINDMAP" 
-                  subtitle="Click any part for a deep dive. The map is currently closed."
-                >
-                  <div className="flex items-center">
-                    <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
-                    <ChevronsUpDown className="h-5 w-5 ml-2 text-muted-foreground"/>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">Click to expand and explore the project structure.</p>
-                </CardTitleWithBackground>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="p-4">
-                  <InteractiveMindMap onNodeClick={handleExplainTopic} />
-                </CardContent>
-              </CollapsibleContent>
-            </Collapsible>
+            <CardTitleWithBackground
+              title="DLDCHAIN STRUCTURE MINDMAP"
+              subtitle="An interactive overview of the project's architecture."
+            >
+              <div className="flex items-center justify-between w-full">
+                <div>
+                  <h3 className="text-2xl font-headline font-semibold leading-none tracking-tight">DLDCHAIN STRUCTURE MINDMAP</h3>
+                  <p className="text-sm text-muted-foreground mt-1">An interactive overview of the project&apos;s architecture.</p>
+                </div>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">
+                      <Maximize className="mr-2" />
+                      Explore Map
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-7xl h-[90vh] flex flex-col">
+                      <DialogHeader>
+                        <DialogTitle>Interactive Project Mind Map</DialogTitle>
+                      </DialogHeader>
+                      <div className="flex-1 overflow-hidden border rounded-lg bg-background">
+                        <InteractiveMindMap onNodeDoubleClick={handleExplainTopic} />
+                      </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </CardTitleWithBackground>
           </Card>
 
           <Card ref={discussionCardRef}>
@@ -489,13 +504,24 @@ function PageContent() {
                         <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
                       </Avatar>
                     )}
-                    <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
-                      "max-w-prose rounded-lg px-4 py-2 text-sm",
-                      msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                      msg.isArabic && "font-arabic" ,
-                       msg.from === 'bot' && 'w-full'
-                    )}>
-                      {msg.text}
+                    <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start')}>
+                      <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
+                        "max-w-prose rounded-lg px-4 py-2 text-sm",
+                        msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
+                        msg.isArabic && "font-arabic" ,
+                        msg.from === 'bot' && 'w-full'
+                      )}>
+                        {msg.text}
+                      </div>
+                       {msg.from === 'bot' && msg.topic && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => addNote(msg.text, `Explanation for: ${msg.topic}`)}
+                        >
+                          <Plus className="mr-2" /> Add Explanation to Notes
+                        </Button>
+                      )}
                     </div>
                       {msg.from === 'user' && (
                       <Avatar className="w-8 h-8 shrink-0">
@@ -575,7 +601,10 @@ function PageContent() {
                     <div className="space-y-2">
                       {notes.map(note => (
                         <div key={note.id} className="flex items-start justify-between gap-2 bg-muted/50 p-2 rounded-md">
-                          <p className="text-sm flex-1 whitespace-pre-wrap">{note.text}</p>
+                          <div className="flex-1">
+                            <p className="text-sm whitespace-pre-wrap">{note.text}</p>
+                            {note.source && <p className="text-xs text-muted-foreground mt-1">Source: {note.source}</p>}
+                          </div>
                           <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
                             <Trash2 className="h-4 w-4" />
                           </Button>
