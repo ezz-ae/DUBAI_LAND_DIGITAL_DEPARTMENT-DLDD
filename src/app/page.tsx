@@ -95,18 +95,19 @@ type TextSize = "sm" | "base" | "lg";
 
 const defaultNote: Note = {
   id: 'default-liquidity-map',
-  text: `Liquidity Map`,
+  text: `Token Liquidity Cycle`,
   source: 'DLDCHAIN Core Concept',
   isDefault: true,
 };
 
 const liquidityMapSteps = [
     { title: "EBRAMINT", description: "Legal review" },
-    { title: "MAKE Request", description: "Pool Signed" },
-    { title: "MAKE-IN", description: "Token = Escrow" },
-    { title: "DXBTOKEN Trading", description: "Layered Orders" },
-    { title: "MAKE-OUT", description: "Ownership Claim" },
-    { title: "MAKE-DISMISS", description: "Finalize" }
+    { title: "MAKE LISTING", description: "Liquidity officer" },
+    { title: "MAKE Request", description: "Escrow permission" },
+    { title: "MAKE-IN", description: "Escrow Pool creation" },
+    { title: "DXBTOKEN Listing", description: "Token Pool creation" },
+    { title: "MAKE-OUT", description: "Token Pool Closure" },
+    { title: "MAKE-DISMISS", description: "Escrow Pool Closure" }
 ];
 
 
