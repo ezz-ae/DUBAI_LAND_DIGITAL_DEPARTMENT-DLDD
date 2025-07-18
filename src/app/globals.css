@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -43,7 +44,7 @@ body {
     --sidebar-ring: 210 40% 98%;
     
     /* Mind Map Colors */
-    --mindmap-line-color: hsl(206 90% 52%);
+    --mindmap-line-color: hsl(206 90% 52% / 0.5);
     --mindmap-node-bg: hsl(212 28% 14%);
     --mindmap-node-hover-bg: hsl(212 28% 20%);
     --mindmap-node-border-hover: hsl(206 90% 52%);
@@ -90,7 +91,7 @@ body {
     --sidebar-ring: 210 40% 98%;
     
     /* Mind Map Colors */
-    --mindmap-line-color: hsl(206 90% 52%);
+    --mindmap-line-color: hsl(206 90% 52% / 0.5);
     --mindmap-node-bg: hsl(212 28% 14%);
     --mindmap-node-hover-bg: hsl(212 28% 20%);
     --mindmap-node-border-hover: hsl(206 90% 52%);
@@ -122,3 +123,5 @@ body {
     box-shadow: 0 0 8px 1px hsl(var(--mindmap-level-3-bg) / 0.9), 0 0 16px 4px hsl(var(--mindmap-level-3-bg) / 0.4);
   }
 }
+
+    
