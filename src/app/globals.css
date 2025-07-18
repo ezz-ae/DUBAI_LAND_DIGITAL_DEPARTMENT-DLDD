@@ -110,3 +110,15 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .shadow-level-1 {
+    box-shadow: 0 0 10px 2px hsl(var(--mindmap-level-1-bg)), 0 0 20px 5px hsl(var(--mindmap-level-1-bg) / 0.5);
+  }
+  .shadow-level-2 {
+    box-shadow: 0 0 10px 2px hsl(0 0% 100% / 0.8), 0 0 20px 5px hsl(0 0% 100% / 0.4);
+  }
+  .shadow-level-3 {
+    box-shadow: 0 0 10px 2px hsl(0 0% 100% / 0.8), 0 0 20px 5px hsl(0 0% 100% / 0.4);
+  }
+}

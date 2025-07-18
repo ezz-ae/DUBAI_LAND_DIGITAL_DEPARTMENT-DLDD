@@ -22,14 +22,13 @@ interface MindMapNodeProps {
   parentPosition?: { x: number; y: number };
 }
 
-const LEVEL_BG_CLASSES = [
-  'from-mindmap-level-0-bg/50', // Level 0 (Root)
-  'from-mindmap-level-1-bg/50', // Level 1
-  'from-mindmap-level-2-bg/50', // Level 2
-  'from-mindmap-level-3-bg/50', // Level 3
-  'from-mindmap-level-4-bg/50', // Level 4
-];
-
+const LEVEL_BG_CLASSES: Record<number, string> = {
+  0: 'from-mindmap-level-0-bg/50',
+  1: 'from-mindmap-level-1-bg/50 shadow-level-1',
+  2: 'from-mindmap-level-2-bg/50 shadow-level-2',
+  3: 'from-mindmap-level-3-bg/50 shadow-level-3',
+  4: 'from-mindmap-level-4-bg/50',
+};
 
 const NODE_WIDTH = 220;
 const NODE_HEIGHT = 48;
@@ -99,8 +98,8 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
         >
           {node.name}
           {hasChildren && (
-            <div className="absolute -right-2 -top-2 bg-background rounded-full p-0.5">
-              {isExpanded ? <MinusCircle className="w-4 h-4 text-muted-foreground group-hover:text-primary" /> : <PlusCircle className="w-4 h-4 text-muted-foreground group-hover:text-primary"/>}
+            <div className="absolute -right-2.5 -top-2.5 bg-background rounded-full p-0.5 flex items-center justify-center w-6 h-6">
+              {isExpanded ? <MinusCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary" /> : <PlusCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary"/>}
             </div>
           )}
         </button>
@@ -172,6 +171,11 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
       }
       return newSet;
     });
+  }, []);
+  
+  // Collapse all nodes except the root by default
+  React.useEffect(() => {
+    setExpandedNodes(new Set([mindMapData.id]));
   }, []);
 
   const { layout, height } = calculateLayout(mindMapData, expandedNodes);

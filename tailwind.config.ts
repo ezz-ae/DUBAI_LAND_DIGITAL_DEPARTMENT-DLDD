@@ -10,6 +10,11 @@ export default {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'level-1': '0 0 10px 2px hsl(var(--mindmap-level-1-bg)), 0 0 20px 5px hsl(var(--mindmap-level-1-bg) / 0.5)',
+        'level-2': '0 0 10px 2px hsl(0 0% 100% / 0.8), 0 0 20px 5px hsl(0 0% 100% / 0.4)',
+        'level-3': '0 0 10px 2px hsl(0 0% 100% / 0.8), 0 0 20px 5px hsl(0 0% 100% / 0.4)',
+      },
       fontFamily: {
         body: ['Inter', 'sans-serif'],
         headline: ['Space Grotesk', 'sans-serif'],
