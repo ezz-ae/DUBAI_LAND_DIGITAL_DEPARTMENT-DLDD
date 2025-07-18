@@ -24,12 +24,13 @@ import {
   SidebarGroupLabel,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { FileText, Loader2, PlayCircle, Send, Share2, Sparkles, Upload, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Share2, Sparkles, Upload, Bot, User, StickyNote, Moon, Sun, Trash2, FileSignature, BrainCircuit, Download, PauseCircle } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import Image from 'next/image';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
 import { getClarification, generateReport, GenerateReportInput } from '@/ai/flows/notes';
+import { generateAudio } from '@/ai/flows/audio-overview';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useTheme } from "next-themes"
@@ -54,7 +55,12 @@ export default function Home() {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState('');
   const [isAnswering, setIsAnswering] = useState(false);
+  
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [audioSrc, setAudioSrc] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const fileContentRef = useRef<HTMLDivElement>(null);
 
@@ -75,6 +81,12 @@ export default function Home() {
   useEffect(() => {
     handleSummarize();
     setMessages(initialMessages);
+    // Stop audio and reset state when doc changes
+    if(audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+    setAudioSrc(null);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDoc]);
 
@@ -180,6 +192,56 @@ export default function Home() {
       setIsAnswering(false);
     }
   };
+  
+  const handlePlayAudio = async () => {
+    if (isPlaying) {
+      audioRef.current?.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    if (audioSrc) {
+      audioRef.current?.play();
+      setIsPlaying(true);
+      return;
+    }
+
+    if (!summary || isGeneratingAudio) return;
+
+    setIsGeneratingAudio(true);
+    try {
+      const result = await generateAudio({ text: summary });
+      setAudioSrc(result.audio);
+    } catch (error) {
+      console.error('Error generating audio:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Audio Generation Failed',
+        description: 'Could not generate audio overview. Please try again.',
+      });
+    } finally {
+      setIsGeneratingAudio(false);
+    }
+  };
+  
+  useEffect(() => {
+    if (audioSrc && audioRef.current) {
+      audioRef.current.src = audioSrc;
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [audioSrc]);
+
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    const handleEnded = () => setIsPlaying(false);
+
+    audioElement?.addEventListener('ended', handleEnded);
+    return () => {
+      audioElement?.removeEventListener('ended', handleEnded);
+    };
+  }, []);
+
 
   return (
     <SidebarProvider>
@@ -206,9 +268,9 @@ export default function Home() {
             </SidebarMenu>
           </SidebarContent>
           <SidebarHeader className="p-4 border-t">
-            <Button variant="outline" className="w-full">
-              <Upload />
-              Upload Document
+             <Button variant="outline" className="w-full">
+              <Download />
+              Downloads
             </Button>
           </SidebarHeader>
         </Sidebar>
@@ -252,16 +314,28 @@ export default function Home() {
                 </Card>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card>
+                 <Card className="flex flex-col">
                     <CardHeader>
                       <CardTitle>Audio Overview</CardTitle>
-                      <CardDescription>Listen to a quick summary.</CardDescription>
+                      <CardDescription>Listen to the AI-generated summary.</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex items-center justify-center p-6">
-                      <Button size="lg" variant="ghost" onClick={() => setIsPlaying(!isPlaying)}>
-                        <PlayCircle className={cn("h-16 w-16 text-primary transition-transform", isPlaying && "scale-110")} />
+                    <CardContent className="flex-1 flex flex-col items-center justify-center p-6">
+                      <Button size="lg" variant="ghost" onClick={handlePlayAudio} disabled={isGeneratingAudio || isSummarizing || !summary}>
+                        {isGeneratingAudio ? (
+                          <Loader2 className="h-16 w-16 animate-spin text-primary" />
+                        ) : isPlaying ? (
+                          <PauseCircle className="h-16 w-16 text-primary" />
+                        ) : (
+                          <PlayCircle className="h-16 w-16 text-primary" />
+                        )}
                       </Button>
+                      <audio ref={audioRef} className="hidden" />
                     </CardContent>
+                    <CardFooter>
+                      <p className="text-xs text-muted-foreground text-center w-full">
+                        {isGeneratingAudio ? 'Generating audio, please wait...' : 'Click play to hear the summary.'}
+                      </p>
+                    </CardFooter>
                   </Card>
                   <Card>
                     <CardHeader>
@@ -275,14 +349,14 @@ export default function Home() {
                         </div>
                       ) : (
                         <ScrollArea className="h-full">
-                          <p className="text-sm">{summary || 'Click below to generate a summary.'}</p>
+                          <p className="text-sm">{summary || 'Summary will appear here.'}</p>
                         </ScrollArea>
                       )}
                     </CardContent>
                     <CardFooter>
                       <Button onClick={handleSummarize} disabled={isSummarizing} className="w-full">
                         <Sparkles />
-                        {isSummarizing ? 'Summarizing...' : 'Summarize Document'}
+                        {isSummarizing ? 'Summarizing...' : 'Regenerate Summary'}
                       </Button>
                     </CardFooter>
                   </Card>
@@ -389,7 +463,8 @@ export default function Home() {
                         )}
                         <div className={cn(
                           "max-w-xs rounded-lg px-4 py-2 text-sm",
-                          msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted"
+                          msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
+                          {'text-right': msg.from === 'user' && selectedDoc.id === 1} // Right-align user messages in Arabic doc
                         )}>
                           {msg.text}
                         </div>
