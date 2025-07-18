@@ -76,6 +76,7 @@ function PageContent() {
   const { theme, setTheme } = useTheme()
   const { state: sidebarState } = useSidebar();
   const [selectedDoc, setSelectedDoc] = useState(dldChainDocuments[0] || {id: 0, name: 'No documents loaded', content: 'Please add documents to `src/lib/documents.ts`'});
+  const [isDocViewerOpen, setIsDocViewerOpen] = useState(false);
   
   const [summary, setSummary] = useState('');
   const [isSummarizing, setIsSummarizing] = useState(false);
@@ -126,6 +127,11 @@ function PageContent() {
         setAudioState({ element: null, isPlaying: false });
     }
   }, [selectedDoc]);
+
+  const handleSelectDocument = (doc: typeof dldChainDocuments[0]) => {
+    setSelectedDoc(doc);
+    setIsDocViewerOpen(true);
+  };
 
   const handleSummarize = async () => {
     if (!selectedDoc || !selectedDoc.content) return;
@@ -307,7 +313,7 @@ function PageContent() {
             {dldChainDocuments.length > 0 ? dldChainDocuments.map((doc) => (
                <SidebarMenuItem key={doc.id}>
                 <SidebarMenuButton
-                  onClick={() => setSelectedDoc(doc)}
+                  onClick={() => handleSelectDocument(doc)}
                   isActive={selectedDoc?.id === doc.id}
                   className="justify-start w-full"
                   tooltip={sidebarState === 'collapsed' ? doc.name : undefined}
@@ -354,43 +360,8 @@ function PageContent() {
         </header>
         
         <div className="flex-1 flex flex-col overflow-y-auto p-6 gap-6">
-          {/* Top Section: Document & Mindmap */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column: Document Viewer */}
-            <div className="flex flex-col gap-6">
-              <SourceGuide 
-                summary={summary}
-                isArabic={isArabic}
-                onTopicClick={handleTopicClick}
-              />
-              <Card className="flex-1 flex flex-col">
-                <CardTitleWithBackground>
-                  <div>
-                    <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">Main document content</p>
-                  </div>
-                   <div className="flex items-center gap-2">
-                    <Button variant={textSize === 'text-sm' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>Sm</Button>
-                    <Button variant={textSize === 'text-base' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>Md</Button>
-                    <Button variant={textSize === 'text-lg' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>Lg</Button>
-                  </div>
-                </CardTitleWithBackground>
-                <CardContent className="flex-1 p-0">
-                  <div 
-                    dir={isArabic ? 'rtl' : 'ltr'} 
-                    className={cn(
-                      "p-6 whitespace-pre-wrap leading-relaxed",
-                      textSize,
-                      isArabic && "font-arabic"
-                    )}
-                  >
-                    {selectedDoc.content}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            {/* Right Column: Mind Map */}
+          {/* Top Section: Mindmap */}
+          <div className="grid grid-cols-1 gap-6">
             <div className="relative min-h-[500px] lg:min-h-0">
                <InteractiveMindMap onNodeDoubleClick={handleMindMapNodeDoubleClick} />
             </div>
@@ -550,6 +521,51 @@ function PageContent() {
           </div>
         </div>
       </main>
+
+      <Dialog open={isDocViewerOpen} onOpenChange={setIsDocViewerOpen}>
+        <DialogContent className="max-w-4xl h-[90vh] flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Document Viewer</DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 flex flex-col gap-6 overflow-y-auto p-2">
+            <SourceGuide 
+              summary={summary}
+              isArabic={isArabic}
+              onTopicClick={handleTopicClick}
+            />
+            <Card className="flex-1 flex flex-col">
+              <CardTitleWithBackground>
+                <div>
+                  <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">Main document content</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button variant={textSize === 'text-sm' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>Sm</Button>
+                  <Button variant={textSize === 'text-base' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>Md</Button>
+                  <Button variant={textSize === 'text-lg' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>Lg</Button>
+                </div>
+              </CardTitleWithBackground>
+              <CardContent className="flex-1 p-0">
+                  <div 
+                    dir={isArabic ? 'rtl' : 'ltr'} 
+                    className={cn(
+                      "p-6 whitespace-pre-wrap leading-relaxed",
+                      textSize,
+                      isArabic && "font-arabic"
+                    )}
+                  >
+                    {selectedDoc.content}
+                  </div>
+              </CardContent>
+            </Card>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Close</Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={showSummaryDialog} onOpenChange={setShowSummaryDialog}>
         <DialogContent>
