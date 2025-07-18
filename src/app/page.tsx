@@ -521,96 +521,218 @@ function PageContent() {
             </div>
           </div>
 
-          <Card ref={discussionCardRef}>
-            <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
-            <CardContent className="p-0">
-              <ScrollArea className="h-96" ref={chatScrollAreaRef}>
-                <div className="p-4 space-y-4">
-                {messages.map((msg: any, index) => (
-                  <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
-                    {msg.from === 'bot' && (
-                      <Avatar className="w-8 h-8 shrink-0">
-                        <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
-                      </Avatar>
-                    )}
-                    <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
-                      <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
-                        "max-w-prose rounded-lg px-4 py-2 text-sm",
-                        msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                        msg.from === 'bot' && index === 0 && 'w-full md:w-10/12',
-                        msg.from === 'bot' && index > 0 && 'w-full',
-                        msg.isArabic && "font-arabic"
-                      )}>
-                        {msg.text}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+            <Card ref={discussionCardRef} className="lg:sticky lg:top-6">
+              <CardTitleWithBackground title="AI Open Discussion" subtitle="Ask questions about the project." />
+              <CardContent className="p-0">
+                <ScrollArea className="h-96" ref={chatScrollAreaRef}>
+                  <div className="p-4 space-y-4">
+                  {messages.map((msg: any, index) => (
+                    <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
+                      {msg.from === 'bot' && (
+                        <Avatar className="w-8 h-8 shrink-0">
+                          <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
+                        <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
+                          "max-w-prose rounded-lg px-4 py-2 text-sm",
+                          msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
+                          msg.from === 'bot' && index === 0 && 'w-full md:w-10/12',
+                          msg.from === 'bot' && index > 0 && 'w-full',
+                          msg.isArabic && "font-arabic"
+                        )}>
+                          {msg.text}
+                        </div>
+                        {msg.from === 'bot' && msg.topic && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => addNote(msg.text, `Explanation for: ${msg.topic}`)}
+                          >
+                            <Plus className="mr-2" /> Add Explanation to Notes
+                          </Button>
+                        )}
                       </div>
-                       {msg.from === 'bot' && msg.topic && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => addNote(msg.text, `Explanation for: ${msg.topic}`)}
-                        >
-                          <Plus className="mr-2" /> Add Explanation to Notes
-                        </Button>
+                        {msg.from === 'user' && (
+                        <Avatar className="w-8 h-8 shrink-0">
+                            <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
+                        </Avatar>
                       )}
                     </div>
-                      {msg.from === 'user' && (
-                      <Avatar className="w-8 h-8 shrink-0">
-                          <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
-                      </Avatar>
-                    )}
-                  </div>
-                ))}
-                  {messages.length <= 1 && (
-                    <div className="pt-4">
-                      <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
-                      <div className="grid grid-cols-2 gap-4">
-                         <div className="space-y-2">
-                          {quickPromptsEnglish.map((prompt) => (
-                            <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-left h-auto">
-                              {prompt}
-                            </Button>
-                          ))}
-                        </div>
-                        <div className="space-y-2" dir="rtl">
-                           {quickPromptsArabic.map((prompt) => (
-                            <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-right font-arabic h-auto">
-                              {prompt}
-                            </Button>
-                          ))}
+                  ))}
+                    {messages.length <= 1 && (
+                      <div className="pt-4">
+                        <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            {quickPromptsEnglish.map((prompt) => (
+                              <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-left h-auto">
+                                {prompt}
+                              </Button>
+                            ))}
+                          </div>
+                          <div className="space-y-2" dir="rtl">
+                            {quickPromptsArabic.map((prompt) => (
+                              <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className="w-full justify-start text-right font-arabic h-auto">
+                                {prompt}
+                              </Button>
+                            ))}
+                          </div>
                         </div>
                       </div>
+                    )}
+                  {isAnswering && (
+                      <div className="flex items-start gap-3 justify-start">
+                        <Avatar className="w-8 h-8">
+                          <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                        </Avatar>
+                        <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
+                          <Loader2 className="animate-spin h-4 w-4" />
+                        </div>
+                      </div>
+                  )}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+              <CardFooter className="border-t pt-6">
+                <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
+                  <Input
+                    dir={isArabic ? 'rtl' : 'ltr'}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type your question..."
+                    autoComplete="off"
+                    disabled={isAnswering}
+                    className={cn(isArabic && "font-arabic")}
+                  />
+                  <Button type="submit" size="icon" disabled={isAnswering}>
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </form>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardTitleWithBackground title="Notes & Reports" subtitle="Review notes, mark them for reporting, and generate insights." />
+              <CardContent className="p-6">
+                  <div className={cn(
+                      "grid gap-4",
+                      notes.length === 1 && "grid-cols-1",
+                      notes.length >= 2 && "grid-cols-1 md:grid-cols-2"
+                    )}>
+                    {notes.map(note => (
+                      <Dialog key={note.id} onOpenChange={(isOpen) => !isOpen && setActiveNoteDialog(null)}>
+                        <DialogTrigger asChild>
+                          <Card className="flex flex-col cursor-pointer hover:border-primary transition-colors">
+                            <CardHeader className="flex-row items-start justify-between p-4">
+                              <div className="flex items-start gap-3">
+                                {!note.isDefault && (
+                                  <Checkbox
+                                    id={`note-cb-${note.id}`}
+                                    checked={markedNoteIds.has(note.id)}
+                                    onCheckedChange={(e) => {
+                                      e.stopPropagation();
+                                      toggleMarkedNote(note.id)
+                                    }}
+                                    onClick={(e) => e.stopPropagation()}
+                                    className='mt-1'
+                                    />
+                                )}
+                                <div className="grid gap-0.5">
+                                    <CardTitle className="text-base">{note.text}</CardTitle>
+                                    {note.source && <CardDescription className="text-xs">{note.source}</CardDescription>}
+                                </div>
+                              </div>
+                                {!note.isDefault && (
+                                  <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={(e) => { e.stopPropagation(); setNotes(notes.filter(n => n.id !== note.id))}}>
+                                    <X className="h-4 w-4" />
+                                  </Button>
+                                )}
+                            </CardHeader>
+                              {note.isDefault ? (
+                                  <CardContent className="px-4 pb-4 pt-0">
+                                      <div className="flex items-center space-x-2 overflow-x-auto pb-2">
+                                      {liquidityMapSteps.map((step, index) => (
+                                          <React.Fragment key={step.title}>
+                                          <div className="flex flex-col items-center text-center">
+                                              <div className="bg-primary/20 text-primary-foreground font-bold rounded-md px-3 py-1 text-xs">
+                                              {step.title}
+                                              </div>
+                                              <div className="text-muted-foreground text-xs mt-1 w-20">
+                                              {step.description}
+                                              </div>
+                                          </div>
+                                          {index < liquidityMapSteps.length - 1 && (
+                                              <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0" />
+                                          )}
+                                          </React.Fragment>
+                                      ))}
+                                      </div>
+                                  </CardContent>
+                              ) : <CardContent className='px-4 pb-4 pt-0 text-sm text-muted-foreground truncate'>{note.text}</CardContent> }
+                          </Card>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Note Details</DialogTitle>
+                          </DialogHeader>
+                          <ScrollArea className="max-h-64">
+                            <p className="text-sm whitespace-pre-wrap">{note.text}</p>
+                            {note.source && <p className="text-xs text-muted-foreground mt-2">Source: {note.source}</p>}
+                          </ScrollArea>
+                          <DialogFooter>
+                            <DialogClose asChild>
+                              <Button variant="outline">Close</Button>
+                            </DialogClose>
+                            <Button onClick={() => {
+                                if (note.isDefault) {
+                                  handleSendMessage(undefined, `Tell me more about the: ${note.text}`);
+                                } else {
+                                  handleSendMessage(undefined, `Let's discuss this note: "${note.text}"`);
+                                }
+                                discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
+                              }}>
+                                <MessageSquareQuote className="mr-2 h-4 w-4"/>
+                                Discuss with AI
+                              </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    ))}
+                  </div>
+
+                  {(isGeneratingReport || report) && (
+                    <div className="space-y-2 pt-6 mt-6 border-t">
+                      <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
+                      {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
+                        <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
+                          <p className="text-sm whitespace-pre-wrap">{report}</p>
+                        </ScrollArea>
+                      }
                     </div>
                   )}
-                {isAnswering && (
-                    <div className="flex items-start gap-3 justify-start">
-                      <Avatar className="w-8 h-8">
-                        <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
-                      </Avatar>
-                      <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
-                        <Loader2 className="animate-spin h-4 w-4" />
-                      </div>
-                    </div>
-                )}
-                </div>
-              </ScrollArea>
-            </CardContent>
-            <CardFooter className="border-t pt-6">
-              <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
-                <Input
-                  dir={isArabic ? 'rtl' : 'ltr'}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your question..."
-                  autoComplete="off"
-                  disabled={isAnswering}
-                  className={cn(isArabic && "font-arabic")}
-                />
-                <Button type="submit" size="icon" disabled={isAnswering}>
-                  <Send className="h-4 w-4" />
+              </CardContent>
+              <CardFooter className="border-t p-4 flex justify-between items-center">
+                <Button onClick={handleGenerateReport} disabled={isGeneratingReport || markedNoteIds.size === 0}>
+                  <FileSignature />
+                  {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size})`}
                 </Button>
-              </form>
-            </CardFooter>
-          </Card>
+                <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="ghost" size="icon" className="cursor-help">
+                          <Info className="w-4 h-4 text-muted-foreground" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Mark one or more notes to generate a report.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+              </CardFooter>
+            </Card>
+          </div>
           
           <Card>
             <CardTitleWithBackground title="Media Center" subtitle="Explore project audio, visuals, and downloadable assets." />
@@ -686,106 +808,6 @@ function PageContent() {
               </div>
             </CardContent>
           </Card>
-            
-          <Card>
-            <CardTitleWithBackground title="Notes &amp; Reports" subtitle="Review notes, mark them for reporting, and generate insights." />
-            <CardContent className="p-6">
-                <div className={cn(
-                    "grid gap-4",
-                    notes.length === 1 && "grid-cols-1",
-                    notes.length === 2 && "grid-cols-1 md:grid-cols-2",
-                    notes.length >= 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                  )}>
-                  {notes.map(note => (
-                    <Card key={note.id} className="flex flex-col">
-                      <CardHeader className="flex-row items-start justify-between p-4">
-                        <div className="flex items-start gap-3">
-                           {!note.isDefault && (
-                             <Checkbox
-                                id={`note-${note.id}`}
-                                checked={markedNoteIds.has(note.id)}
-                                onCheckedChange={() => toggleMarkedNote(note.id)}
-                                className='mt-1'
-                              />
-                           )}
-                           <div className="grid gap-0.5">
-                              <CardTitle className="text-base">{note.text}</CardTitle>
-                              {note.source && <CardDescription className="text-xs">{note.source}</CardDescription>}
-                           </div>
-                        </div>
-                          {!note.isDefault && (
-                             <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={() => setNotes(notes.filter(n => n.id !== note.id))}>
-                               <X className="h-4 w-4" />
-                             </Button>
-                          )}
-                      </CardHeader>
-                        {note.isDefault ? (
-                            <CardContent className="px-4 pb-4 pt-0">
-                                <div className="flex items-center space-x-2 overflow-x-auto pb-2">
-                                {liquidityMapSteps.map((step, index) => (
-                                    <React.Fragment key={step.title}>
-                                    <div className="flex flex-col items-center text-center">
-                                        <div className="bg-primary/20 text-primary-foreground font-bold rounded-md px-3 py-1 text-xs">
-                                        {step.title}
-                                        </div>
-                                        <div className="text-muted-foreground text-xs mt-1 w-20">
-                                        {step.description}
-                                        </div>
-                                    </div>
-                                    {index < liquidityMapSteps.length - 1 && (
-                                        <ArrowRight className="w-5 h-5 text-muted-foreground shrink-0" />
-                                    )}
-                                    </React.Fragment>
-                                ))}
-                                </div>
-                            </CardContent>
-                        ) : <div className='px-4 pb-4 pt-0 text-sm text-muted-foreground truncate'>{note.text}</div> }
-                        <CardFooter className="p-4 pt-0 mt-auto">
-                           <Button variant="outline" size="sm" className="w-full" onClick={() => setActiveNoteDialog(note)}>
-                              <MessageSquareQuote className="mr-2 h-4 w-4" />
-                              Discuss with AI
-                           </Button>
-                        </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-
-                {(isGeneratingReport || report) && (
-                  <div className="space-y-2 pt-6 mt-6 border-t">
-                    <h4 className="font-medium text-foreground/80">AI Generated Report</h4>
-                    {isGeneratingReport ? <div className="flex items-center justify-center p-4"><Loader2 className="animate-spin text-primary" /></div> :
-                      <ScrollArea className="h-40 rounded-md border bg-muted/20 p-4">
-                        <p className="text-sm whitespace-pre-wrap">{report}</p>
-                      </ScrollArea>
-                    }
-                  </div>
-                )}
-            </CardContent>
-            <CardFooter className="border-t p-4 flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <Button onClick={handleDiscussNote} disabled={markedNoteIds.size !== 1}>
-                  <MessageSquareQuote />
-                  Discuss with AI
-                </Button>
-                <Button onClick={handleGenerateReport} disabled={isGeneratingReport || markedNoteIds.size === 0}>
-                  <FileSignature />
-                  {isGeneratingReport ? 'Generating...' : `Generate Report (${markedNoteIds.size})`}
-                </Button>
-              </div>
-               <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon" className="cursor-help">
-                        <Info className="w-4 h-4 text-muted-foreground" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Mark one note to discuss. Mark one or more notes to generate a report.</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-            </CardFooter>
-          </Card>
         </div>
       </main>
       <Dialog open={showSummaryDialog} onOpenChange={setShowSummaryDialog}>
@@ -810,37 +832,6 @@ function PageContent() {
               <Sparkles className="mr-2 h-4 w-4"/>
               Discuss with AI
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Dialog open={!!activeNoteDialog} onOpenChange={(isOpen) => !isOpen && setActiveNoteDialog(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Note Details</DialogTitle>
-          </DialogHeader>
-          <ScrollArea className="max-h-64">
-            <p className="text-sm whitespace-pre-wrap">{activeNoteDialog?.text}</p>
-            {activeNoteDialog?.source && <p className="text-xs text-muted-foreground mt-2">Source: {activeNoteDialog.source}</p>}
-          </ScrollArea>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Close</Button>
-            </DialogClose>
-             {activeNoteDialog && (
-              <Button onClick={() => {
-                const noteToDiscuss = activeNoteDialog;
-                setActiveNoteDialog(null);
-                if (noteToDiscuss.isDefault) {
-                  handleSendMessage(undefined, `Tell me more about the: ${noteToDiscuss.text}`);
-                } else {
-                  handleSendMessage(undefined, `Let's discuss this note: "${noteToDiscuss.text}"`);
-                }
-                discussionCardRef.current?.scrollIntoView({ behavior: 'smooth' });
-              }}>
-                <MessageSquareQuote className="mr-2 h-4 w-4"/>
-                Discuss with AI
-              </Button>
-            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>
