@@ -493,7 +493,7 @@ function PageContent() {
                 </Button>
             </CardHeader>
             <CardContent className="p-0">
-              <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[50vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
+              <ScrollArea dir={isArabic ? 'rtl' : 'ltr'} className="h-[60vh] p-4" ref={fileContentRef} onMouseUp={handleSelection}>
                 <SourceGuide summary={sourceGuideSummary} topics={sourceGuideTopics} isArabic={isArabic} />
                 <p className={cn("whitespace-pre-wrap", textSizeClass[textSize], isArabic && "font-arabic")}>{selectedDoc?.content || "No document selected or content is empty."}</p>
               </ScrollArea>
