@@ -1,9 +1,8 @@
 
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { mindMapData } from '@/lib/mindmap-data';
 import { cn } from '@/lib/utils';
-import { ChevronDown, ChevronRight } from 'lucide-react';
 
 interface MindMapNodeProps {
   node: {
@@ -15,65 +14,33 @@ interface MindMapNodeProps {
   onNodeClick: (topic: string) => void;
 }
 
-const levelColorClasses = [
-  'bg-card',
-  'bg-muted/50',
-  'bg-muted/40',
-  'bg-muted/30',
-  'bg-muted/20',
-  'bg-muted/10',
-];
-
 const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) => {
-  const [isOpen, setIsOpen] = useState(level < 1);
-
   const hasChildren = node.children && node.children.length > 0;
 
-  const handleToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (hasChildren) {
-      setIsOpen(!isOpen);
-    }
-  };
-  
-  const handleNodeTextClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onNodeClick(node.name);
-  };
-
-  const bgColorClass = levelColorClasses[Math.min(level, levelColorClasses.length - 1)];
-
   return (
-    <div className={cn("my-1 relative", level > 0 && 'ml-6')}>
+    <div className="flex items-center">
       <div
+        onClick={() => onNodeClick(node.name)}
         className={cn(
-          'flex items-center gap-1 cursor-pointer group'
+          'p-3 rounded-lg cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1',
+          'shadow-[0_4px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.4)]',
+          level === 0 ? 'bg-primary text-primary-foreground font-bold text-lg' : 'bg-card border text-card-foreground'
         )}
-        onClick={handleToggle}
       >
-        {hasChildren ? (
-          <div className="w-5 h-5 flex items-center justify-center text-muted-foreground hover:text-foreground">
-            {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-          </div>
-        ) : (
-          <div className="w-5 h-5" /> 
-        )}
-        <span
-          className={cn(
-            'p-2 rounded-md transition-all hover:bg-accent/20',
-            'shadow-[0_2px_8px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.5)]',
-            level === 0 ? 'font-bold text-lg text-foreground/90' : 'text-sm text-foreground/80',
-            bgColorClass
-          )}
-          onClick={handleNodeTextClick}
-        >
-          {node.name}
-        </span>
+        {node.name}
       </div>
-      {hasChildren && isOpen && (
-        <div className="border-l-2 border-green-500/50 ml-[14px] pl-5 transition-all duration-300 ease-in-out">
+
+      {hasChildren && (
+        <div className="flex flex-col justify-center ml-8 space-y-4 relative">
+          {/* Vertical line from node */}
+          <div className="absolute left-[-2rem] top-1/2 h-full w-px bg-mindmap-line-color"></div>
+
           {node.children.map((child, index) => (
-            <MindMapNode key={index} node={child} level={level + 1} onNodeClick={onNodeClick} />
+            <div key={child.id} className="flex items-center relative">
+              {/* Horizontal line to child */}
+              <div className="absolute left-[-2rem] top-1/2 h-px w-8 bg-mindmap-line-color"></div>
+              <MindMapNode node={child} level={level + 1} onNodeClick={onNodeClick} />
+            </div>
           ))}
         </div>
       )}
@@ -81,9 +48,10 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeClick }) =
   );
 };
 
+
 export const InteractiveMindMap: React.FC<{ onNodeClick: (topic: string) => void }> = ({ onNodeClick }) => {
   return (
-    <div className="p-4 bg-card rounded-lg border">
+    <div className="p-4 bg-card rounded-lg border flex justify-center">
       <MindMapNode node={mindMapData} level={0} onNodeClick={onNodeClick} />
     </div>
   );
