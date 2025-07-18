@@ -5,7 +5,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Dialog,
   DialogContent,
@@ -30,7 +29,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, Mic, PauseCircle, BrainCircuit, MessageSquare, StickyNote, File as FileIcon, X, Music4 } from 'lucide-react';
+import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, PauseCircle, MessageSquare, StickyNote, Music4 } from 'lucide-react';
 import { ProjectPilotLogo } from '@/components/logo';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { askQuestion } from '@/ai/flows/ask-question';
@@ -51,6 +50,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 const initialMessages = [
@@ -139,7 +139,7 @@ function PageContent() {
 
     const newMessages = [...messages, { from: 'user', text: currentMessage }];
     setMessages(newMessages);
-setInput('');
+    setInput('');
     setIsAnswering(true);
 
     try {
