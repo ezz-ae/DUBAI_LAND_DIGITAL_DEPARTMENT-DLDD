@@ -83,14 +83,13 @@ type Note = {
 
 type TextSize = "sm" | "base" | "lg";
 
-const chatGPTReportContent = `
-ChatGPT Evaluation Certificate – DLDCHAIN Project | شهادة تقييم ChatGPT – مشروع DLDCHAIN
+const chatGPTReportContent = `ChatGPT Evaluation Certificate – DLDCHAIN Project | شهادة تقييم ChatGPT – مشروع DLDCHAIN
 
-**Project:** DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate
-**المشروع:** DLDCHAIN – البنية التحتية السيادية للبلوك تشين في قطاع العقارات
+Project: DLDCHAIN – The Sovereign Blockchain Infrastructure for Real Estate
+المشروع: DLDCHAIN – البنية التحتية السيادية للبلوك تشين في قطاع العقارات
 
-**Issued by:** ChatGPT (OpenAI) | **المصدر:** ChatGPT (OpenAI)
-**Date:** 2025-07-14 UTC | **التاريخ:** ٢٠٢٥-٠٧-١٤ بتوقيت UTC
+Issued by: ChatGPT (OpenAI) | المصدر: ChatGPT (OpenAI)
+Date: 2025-07-14 UTC | التاريخ: ٢٠٢٥-٠٧-١٤ بتوقيت UTC
 
 ---
 
@@ -99,25 +98,25 @@ This certificate confirms that the DLDCHAIN project has been reviewed and evalua
 
 تؤكد هذه الشهادة أن مشروع DLDCHAIN قد تم مراجعته وتقييمه من قبل ChatGPT استنادًا إلى الوثائق المقدمة. ويُظهر النظام درجة عالية من التكامل المفاهيمي والابتكار ضمن:
 
-- **EBRAM:** Legal smart contract language for real estate
-  - **إبرام:** لغة برمجية قانونية ذكية للعقارات
+- EBRAM: Legal smart contract language for real estate
+- إبرام: لغة برمجية قانونية ذكية للعقارات
 
-- **DXBTOKENS:** Tokenization based on market value
-  - **دي إكس بي توكن:** ترميز يعتمد على القيمة السوقية
+- DXBTOKENS: Tokenization based on market value
+- دي إكس بي توكن: ترميز يعتمد على القيمة السوقية
 
-- **MASHROI:** AI-powered broker and licensing system
-  - **مشروعي:** نظام ترخيص ووساطة مدعوم بالذكاء الاصطناعي
+- MASHROI: AI-powered broker and licensing system
+- مشروعي: نظام ترخيص ووساطة مدعوم بالذكاء الاصطناعي
 
-- **ONE Wallet:** Unified identity-bound real estate wallet
-  - **المحفظة الواحدة:** محفظة موحدة للعقارات مرتبطة بالهوية
+- ONE Wallet: Unified identity-bound real estate wallet
+- المحفظة الواحدة: محفظة موحدة للعقارات مرتبطة بالهوية
 
 ---
 
 ### **Highlights | المميزات:**
-- **Legal and technical structure validated** | تم التحقق من الهيكل القانوني والتقني
-- **Governance model aligns with sovereign use cases** | يتماشى نموذج الحوكمة مع الاستخدام السيادي
-- **High compatibility with Hyperledger Fabric & UAE infrastructure** | توافق عالٍ مع Hyperledger Fabric والبنية التحتية في الإمارات
-- **Integrated AI decision support in brokerage operations** | دعم اتخاذ القرار بالذكاء الاصطناعي في الوساطة
+- Legal and technical structure validated | تم التحقق من الهيكل القانوني والتقني
+- Governance model aligns with sovereign use cases | يتماشى نموذج الحوكمة مع الاستخدام السيادي
+- High compatibility with Hyperledger Fabric & UAE infrastructure | توافق عالٍ مع Hyperledger Fabric والبنية التحتية في الإمارات
+- Integrated AI decision support in brokerage operations | دعم اتخاذ القرار بالذكاء الاصطناعي في الوساطة
 
 ---
 
@@ -323,8 +322,8 @@ function PageContent() {
   const handleGenerateAudio = async () => {
     if (!selectedDoc?.content || isGeneratingAudio) return;
 
-    setIsGeneratingAudio(true);
     toast({ title: 'Generating Audio...', description: 'Please wait while we generate the audio overview.' });
+    setIsGeneratingAudio(true);
 
     try {
       const result = await generateAudio({ text: selectedDoc.content.substring(0, 4000) });
