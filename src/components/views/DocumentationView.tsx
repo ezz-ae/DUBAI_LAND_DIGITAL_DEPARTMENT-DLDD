@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -16,7 +16,6 @@ import { useToast } from '@/hooks/use-toast';
 
 
 export type DLDDoc = typeof dldChainDocuments[0];
-export type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
 
 interface DocumentationViewProps {
   selectedDoc: DLDDoc | null;
@@ -29,13 +28,11 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }:
   const { toast } = useToast();
   const [textSize, setTextSize] = useState('text-base');
 
-  const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
+  const isArabic = selectedDoc?.lang === 'ar';
 
   const handleLanguageToggle = () => {
-    // This logic assumes a direct mapping between English and Arabic documents.
-    // E.g., The first English doc corresponds to the first Arabic doc.
-    const currentDocIndex = dldChainDocuments.findIndex(d => d.id === selectedDoc?.id);
-    const docGroup = dldChainDocuments.filter(d => d.group === selectedDoc?.group);
+    if (!selectedDoc) return;
+    const docGroup = dldChainDocuments.filter(d => d.group === selectedDoc.group);
     const targetLang = isArabic ? 'en' : 'ar';
     const targetDoc = docGroup.find(d => d.lang === targetLang);
     
@@ -62,7 +59,7 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }:
                   tooltip={doc.name}
                   className="w-full justify-start"
                 >
-                  <span className="truncate">{doc.name}</span>
+                  <span className={cn("truncate", doc.lang === 'ar' && 'font-arabic')}>{doc.name}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )) : (
@@ -92,7 +89,7 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }:
               </div>
               <Card className="flex-1 flex flex-col overflow-hidden h-content-area">
                 <CardTitleWithBackground>
-                  <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
+                  <h3 className={cn("text-lg font-headline font-semibold leading-none tracking-tight", isArabic && 'font-arabic')}>{selectedDoc.name}</h3>
                   <div className="flex items-center gap-1">
                      <Button variant='outline' size="sm" onClick={handleLanguageToggle}><Languages className="h-4 w-4 mr-2"/>{isArabic ? 'English' : 'العربية'}</Button>
                     <Button variant={textSize === 'text-sm' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>A</Button>

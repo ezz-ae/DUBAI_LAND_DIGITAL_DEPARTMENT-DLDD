@@ -3,15 +3,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { SidebarProvider } from '@/components/ui/sidebar';
-
 import { AppHeader } from '@/components/views/Header';
-import { DocumentationView, type DLDDoc } from '@/components/views/DocumentationView';
+import { DocumentationView } from '@/components/views/DocumentationView';
 import { TechnicalDocsView } from '@/components/views/TechnicalDocsView';
 import { MindmapView } from '@/components/views/MindmapView';
 import { AiConsoleView } from '@/components/views/AiConsoleView';
 import { ProjectValidationView } from '@/components/views/ProjectValidationView';
 import { MediaCenterView } from '@/components/views/MediaCenterView';
 import { dldChainDocuments } from '@/lib/documents';
+import type { DLDDoc } from '@/components/views/DocumentationView';
 
 export type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
 

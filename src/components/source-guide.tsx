@@ -34,7 +34,7 @@ export function SourceGuide({ summary, isArabic, onTopicClick, keyTopics = [] }:
           <div className="flex flex-wrap gap-2">
             {keyTopics.length > 0 ? (
                 keyTopics.map((topic) => (
-                    <Button key={topic} variant="outline" size="sm" className="bg-card" onClick={() => onTopicClick(topic)}>
+                    <Button key={topic} variant="outline" size="sm" className={cn("bg-card", isArabic && "font-arabic")} onClick={() => onTopicClick(topic)}>
                         {topic}
                     </Button>
                 ))

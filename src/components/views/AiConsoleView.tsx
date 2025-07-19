@@ -33,10 +33,11 @@ import { askQuestion } from '@/ai/flows/ask-question';
 import { generateAudio } from '@/ai/flows/audio-overview';
 import { generateReport } from '@/ai/flows/notes';
 import { explainTopic } from '@/ai/flows/explain-topic';
-import type { DLDDoc, ActiveView } from './DocumentationView';
+import type { ActiveView } from '@/app/page';
 
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 export type ReportType = 'technical' | 'managerial' | 'legal' | 'financial';
+export type DLDDoc = typeof dldChainDocuments[0];
 
 const quickPromptsEnglish = [
   "What is the DLDCHAIN project scope?",
@@ -87,7 +88,7 @@ export function AiConsoleView({
   const [reportType, setReportType] = useState<ReportType>('technical');
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
-  const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
+  const isArabic = selectedDoc?.lang === 'ar';
 
   useEffect(() => {
     if (chatScrollRef.current) {
