@@ -9,103 +9,80 @@ body {
 
 @layer base {
   :root {
-    --background: 212 28% 9%; /* Professional Navy Blue */
-    --foreground: 210 40% 98%; /* Almost White */
-    --card: 212 28% 14%; /* Darker Navy */
-    --card-foreground: 210 40% 98%;
-    --popover: 212 28% 7%; /* Very Dark Navy */
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 70% 45%; /* Modern, vibrant blue */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 206 90% 52%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 206 90% 52%;
-    --chart-1: 160 60% 70%; /* Green */
-    --chart-2: 210 80% 75%; /* Light Blue */
-    --chart-3: 260 80% 75%; /* Purple */
-    --chart-4: 210 20% 50%;
-    --chart-5: 210 20% 40%;
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 220 70% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220 8.9% 46.1%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220 8.9% 46.1%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 70% 50%;
     --radius: 0.75rem;
-    --sidebar-background: 212 28% 9%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 210 40% 98%;
-    --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 212 28% 14%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 212 28% 14%;
-    --sidebar-ring: 210 40% 98%;
 
-    /* AI Console Colors */
-    --ai-console-bg: 212 28% 11%;
-    
-    /* Mind Map Colors */
-    --mindmap-line-color: hsl(206 90% 52% / 0.5);
-    --mindmap-node-bg: hsl(212 28% 14%);
-    --mindmap-node-hover-bg: hsl(212 28% 20%);
-    --mindmap-node-border-hover: hsl(206 90% 52%);
-    --mindmap-level-0-bg: hsl(240 70% 28%);
-    --mindmap-level-1-bg: hsl(206 90% 52%);
-    --mindmap-level-2-bg: hsl(210 40% 85%);
-    --mindmap-level-3-bg: hsl(0 0% 100%);
-    --mindmap-level-4-bg: hsl(45 80% 50%);
+    --sidebar-background: 220 14.3% 98%;
+    --sidebar-foreground: 224 71.4% 4.1%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-accent: 220 13% 91%;
+    --sidebar-accent-foreground: 224 71.4% 4.1%;
+
+    --ai-console-bg: 220 13% 94%;
+
+    --mindmap-line-color: hsl(220 70% 50% / 0.5);
+    --mindmap-node-bg: hsl(0 0% 100%);
+    --mindmap-node-hover-bg: hsl(220 14.3% 95.9%);
+    --mindmap-node-border-hover: hsl(220 70% 50%);
+    --mindmap-level-0-bg: hsl(220 70% 50%);
+    --mindmap-level-1-bg: hsl(210 60% 55%);
+    --mindmap-level-2-bg: hsl(224 71.4% 4.1%);
   }
 
   .dark {
-    --background: 212 28% 9%; /* Professional Navy Blue */
-    --foreground: 210 40% 98%; /* Almost White */
-    --card: 212 28% 14%; /* Darker Navy */
-    --card-foreground: 210 40% 98%;
-    --popover: 212 28% 7%; /* Very Dark Navy */
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 70% 45%; /* Modern, vibrant blue */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 206 90% 52%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 206 90% 52%;
-    --chart-1: 160 60% 70%; /* Green */
-    --chart-2: 210 80% 75%; /* Light Blue */
-    --chart-3: 260 80% 75%; /* Purple */
-    --chart-4: 210 20% 50%;
-    --chart-5: 210 20% 40%;
-    --radius: 0.75rem;
-    --sidebar-background: 212 28% 9%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 210 40% 98%;
-    --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 212 28% 14%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 212 28% 14%;
-    --sidebar-ring: 210 40% 98%;
-    
-    /* AI Console Colors */
-    --ai-console-bg: 212 28% 11%;
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 210 70% 55%;
+    --primary-foreground: 224 71.4% 4.1%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 210 70% 55%;
 
-    /* Mind Map Colors */
-    --mindmap-line-color: hsl(206 90% 52% / 0.5);
-    --mindmap-node-bg: hsl(212 28% 14%);
-    --mindmap-node-hover-bg: hsl(212 28% 20%);
-    --mindmap-node-border-hover: hsl(206 90% 52%);
-    --mindmap-level-0-bg: hsl(240 70% 28%);
-    --mindmap-level-1-bg: hsl(206 90% 52%);
-    --mindmap-level-2-bg: hsl(210 40% 85%);
-    --mindmap-level-3-bg: hsl(0 0% 100%);
-    --mindmap-level-4-bg: hsl(45 80% 50%);
+    --sidebar-background: 224 71.4% 4.1%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-border: 215 27.9% 16.9%;
+    --sidebar-accent: 215 27.9% 16.9%;
+    --sidebar-accent-foreground: 210 20% 98%;
+
+    --ai-console-bg: 224 71.4% 6.1%;
+    
+    --mindmap-line-color: hsl(210 70% 55% / 0.5);
+    --mindmap-node-bg: hsl(215 27.9% 16.9%);
+    --mindmap-node-hover-bg: hsl(215 27.9% 22.9%);
+    --mindmap-node-border-hover: hsl(210 70% 55%);
+    --mindmap-level-0-bg: hsl(210 70% 55%);
+    --mindmap-level-1-bg: hsl(200 60% 60%);
+    --mindmap-level-2-bg: hsl(210 20% 98%);
   }
 }
 
@@ -143,24 +120,13 @@ body {
 }
 
 @layer utilities {
-  .shadow-level-1 {
-    box-shadow: 0 0 8px 1px hsl(var(--mindmap-level-1-bg)), 0 0 16px 4px hsl(var(--mindmap-level-1-bg) / 0.5);
-  }
-  .shadow-level-2 {
-    box-shadow: 0 0 8px 1px hsl(var(--mindmap-level-2-bg) / 0.9), 0 0 16px 4px hsl(var(--mindmap-level-2-bg) / 0.4);
-  }
-  .shadow-level-3 {
-    box-shadow: 0 0 8px 1px hsl(var(--mindmap-level-3-bg) / 0.9), 0 0 16px 4px hsl(var(--mindmap-level-3-bg) / 0.4);
-  }
-
   .bg-ai-console {
     background-color: hsl(var(--ai-console-bg));
   }
   .ai-console-card {
-    @apply bg-gradient-to-br from-card to-background border-border transition-all;
+    @apply bg-card border-border transition-all;
   }
   .ai-console-card:hover {
     @apply border-primary/50;
-    box-shadow: 0 0 15px hsl(var(--primary) / 0.2);
   }
 }

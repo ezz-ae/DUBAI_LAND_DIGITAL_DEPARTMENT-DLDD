@@ -40,11 +40,12 @@ const initialMessages = [
 
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 export type ReportType = 'technical' | 'managerial' | 'legal' | 'financial';
-type DLDDoc = typeof dldChainDocuments[0];
-type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
+export type DLDDoc = typeof dldChainDocuments[0];
+export type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
 
-function PageContent({ activeView, setActiveView }: { activeView: ActiveView, setActiveView: (view: ActiveView) => void }) {
+export default function Home() {
   const { toast } = useToast();
+  const [activeView, setActiveView] = useState<ActiveView>('documentation');
   
   const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(null);
   
@@ -264,10 +265,14 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
   }
 
   return (
-    <>
-      {renderContent()}
-
-      <Dialog open={showAddNoteDialog} onOpenChange={setShowAddNoteDialog}>
+    <SidebarProvider>
+      <div className="h-screen w-full bg-background text-foreground flex flex-col">
+        <AppHeader activeView={activeView} setActiveView={setActiveView} />
+        <div className="flex flex-1 overflow-hidden">
+          {renderContent()}
+        </div>
+      </div>
+       <Dialog open={showAddNoteDialog} onOpenChange={setShowAddNoteDialog}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add New Note</DialogTitle>
@@ -297,28 +302,12 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
             <DialogFooter>
               <Button variant="outline" onClick={() => setSelectedNote(null)}>Close</Button>
               <Button onClick={() => handleDiscussNote(selectedNote.content)}>
-                <MessageSquare className="mr-2" /> Discuss with AI
+                <MessageSquare className="mr-2 h-4 w-4" /> Discuss with AI
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
       )}
-
-    </>
-  );
-}
-
-export default function Home() {
-  const [activeView, setActiveView] = useState<ActiveView>('documentation');
-
-  return (
-    <SidebarProvider>
-      <div className="h-screen w-full bg-background text-foreground flex flex-col">
-        <AppHeader activeView={activeView} setActiveView={setActiveView} />
-        <div className="flex flex-1 overflow-hidden">
-          <PageContent activeView={activeView} setActiveView={setActiveView} />
-        </div>
-      </div>
     </SidebarProvider>
   )
 }

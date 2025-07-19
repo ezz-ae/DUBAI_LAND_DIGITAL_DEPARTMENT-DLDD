@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useRef } from 'react';
@@ -14,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Loader2, Send, Sparkles, Bot, User, StickyNote, PlayCircle, PauseCircle, Music4 } from 'lucide-react';
+import { Loader2, Send, Sparkles, Bot, User, StickyNote, PlayCircle, PauseCircle, Music4, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Note, ReportType } from '@/app/page';
 
@@ -88,10 +89,10 @@ export function AiConsoleView({
   
   return (
     <ScrollArea className="flex-1 bg-ai-console">
-      <div className="p-6 grid gap-6">
+      <div className="container mx-auto p-4 md:p-6 grid gap-6">
         <Card className="ai-console-card">
           <CardHeader>
-            <CardTitle>AI Console</CardTitle>
+            <CardTitle className="flex items-center gap-2"><Bot className="h-5 w-5" /> AI Console</CardTitle>
             <CardDescription>Ask questions about any document or topic.</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
@@ -100,22 +101,22 @@ export function AiConsoleView({
                 {messages.map((msg: any, index) => (
                   <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
                     {msg.from === 'bot' && (
-                      <Avatar className="w-8 h-8 shrink-0">
-                        <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                      <Avatar className="w-8 h-8 shrink-0 border">
+                        <AvatarFallback className="bg-transparent"><Bot className="w-5 h-5 text-primary"/></AvatarFallback>
                       </Avatar>
                     )}
                     <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
                       <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
                         "max-w-prose rounded-lg px-4 py-2 text-sm",
-                        msg.from === 'user' ? "bg-accent text-accent-foreground" : "bg-muted/60",
+                        msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
                         msg.isArabic && "font-arabic"
                       )}>
                         {msg.text}
                       </div>
                     </div>
                       {msg.from === 'user' && (
-                      <Avatar className="w-8 h-8 shrink-0">
-                          <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
+                      <Avatar className="w-8 h-8 shrink-0 border">
+                          <AvatarFallback className="bg-transparent"><User className="w-5 h-5"/></AvatarFallback>
                       </Avatar>
                     )}
                   </div>
@@ -123,9 +124,9 @@ export function AiConsoleView({
                   {messages.length <= 1 && (
                     <div className="pt-4">
                       <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
-                      <div className="grid grid-cols-1 gap-2">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                           {(isArabic ? quickPromptsArabic : quickPromptsEnglish).map((prompt) => (
-                            <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-start text-left h-auto", isArabic && "justify-end text-right font-arabic")}>
+                            <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-start text-left h-auto py-2", isArabic && "justify-end text-right font-arabic")}>
                               {prompt}
                             </Button>
                           ))}
@@ -134,8 +135,8 @@ export function AiConsoleView({
                   )}
                 {isAnswering && (
                     <div className="flex items-start gap-3 justify-start">
-                      <Avatar className="w-8 h-8">
-                        <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
+                      <Avatar className="w-8 h-8 border">
+                        <AvatarFallback className="bg-transparent"><Bot className="w-5 h-5 text-primary"/></AvatarFallback>
                       </Avatar>
                       <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
                         <Loader2 className="animate-spin h-4 w-4" />
@@ -165,7 +166,7 @@ export function AiConsoleView({
         
         <Card className="ai-console-card">
           <CardHeader>
-            <CardTitle>Notes &amp; Reports</CardTitle>
+            <CardTitle className="flex items-center gap-2"><StickyNote className="h-5 w-5" /> Notes &amp; Reports</CardTitle>
             <CardDescription>Create notes from documents and generate AI-powered reports from your findings.</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
@@ -173,17 +174,17 @@ export function AiConsoleView({
                 {notes.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {notes.map(note => (
-                      <Card key={note.id} className="cursor-pointer hover:border-primary bg-card/50" onClick={() => setSelectedNote(note)}>
-                        <CardHeader className="p-4">
-                          <CardTitle className="text-base flex items-start justify-between">
-                            <span className="truncate flex-1">{note.title}</span>
-                            <Checkbox
+                      <Card key={note.id} className="cursor-pointer hover:border-primary bg-card/50 transition-colors" onClick={() => setSelectedNote(note)}>
+                        <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
+                          <div>
+                            <CardTitle className="text-base truncate">{note.title}</CardTitle>
+                            <CardDescription className="text-xs truncate pt-1">Source: {note.source}</CardDescription>
+                          </div>
+                           <Checkbox
                               checked={note.marked}
                               onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
                               className="ml-2"
                             />
-                          </CardTitle>
-                          <CardDescription className="text-xs truncate">Source: {note.source}</CardDescription>
                         </CardHeader>
                         <CardContent className="p-4 pt-0">
                           <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
@@ -197,14 +198,16 @@ export function AiConsoleView({
 
                 {generatedReport && (
                     <div className="mt-4 p-4 border rounded-lg bg-muted/50">
-                        <h3 className="font-semibold mb-2">Generated Report</h3>
-                        <p className="text-sm whitespace-pre-wrap">{generatedReport}</p>
+                        <h3 className="font-semibold mb-2 flex items-center gap-2"><Sparkles className="h-4 w-4 text-primary" /> Generated Report</h3>
+                        <ScrollArea className="max-h-60">
+                           <p className="text-sm whitespace-pre-wrap pr-4">{generatedReport}</p>
+                        </ScrollArea>
                     </div>
                 )}
                 </div>
           </CardContent>
             <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-              <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none" disabled={activeView !== 'documentation' || !selectedDoc}><StickyNote className="mr-2"/> Add Note</Button>
+              <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none" disabled={activeView !== 'documentation' || !selectedDoc}><StickyNote className="mr-2 h-4 w-4"/> Add Note</Button>
               <div className="flex-1" />
               <Select onValueChange={(v) => setReportType(v as ReportType)} defaultValue={reportType}>
                   <SelectTrigger className="w-full sm:w-[150px]">
@@ -217,8 +220,8 @@ export function AiConsoleView({
                       <SelectItem value="financial">Financial</SelectItem>
                   </SelectContent>
               </Select>
-              <Button onClick={handleGenerateReport} disabled={isGeneratingReport}>
-                  {isGeneratingReport ? <Loader2 className="animate-spin" /> : <Sparkles />}
+              <Button onClick={handleGenerateReport} disabled={isGeneratingReport || notes.filter(n => n.marked).length === 0}>
+                  {isGeneratingReport ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
                   Generate Report
               </Button>
           </CardFooter>
@@ -226,7 +229,7 @@ export function AiConsoleView({
 
         <Card className="ai-console-card">
           <CardHeader>
-              <CardTitle>Media Center</CardTitle>
+              <CardTitle className="flex items-center gap-2"><Music4 className="h-5 w-5" /> Media Center</CardTitle>
               <CardDescription>Generate and listen to AI-powered audio overviews of the documents.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center gap-4 text-center p-6 min-h-[200px]">

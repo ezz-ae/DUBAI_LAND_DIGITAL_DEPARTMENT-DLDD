@@ -22,12 +22,10 @@ interface MindMapNodeProps {
   parentPosition?: { x: number; y: number };
 }
 
-const LEVEL_BG_CLASSES: Record<number, string> = {
-  0: 'from-mindmap-level-0-bg/50',
-  1: 'from-mindmap-level-1-bg/50 shadow-level-1',
-  2: 'from-mindmap-level-2-bg/50 shadow-level-2',
-  3: 'from-mindmap-level-3-bg/50 shadow-level-3',
-  4: 'from-mindmap-level-4-bg/50',
+const LEVEL_CLASSES: Record<number, string> = {
+  0: 'bg-mindmap-level-0-bg text-primary-foreground',
+  1: 'bg-mindmap-level-1-bg text-secondary-foreground',
+  2: 'bg-mindmap-level-2-bg text-background',
 };
 
 const NODE_WIDTH = 220;
@@ -35,15 +33,14 @@ const NODE_HEIGHT = 48;
 const HORIZONTAL_SPACING = 150;
 const VERTICAL_SPACING = 20;
 
-const Line = ({ from, to, level }: { from: {x:number, y:number}, to: {x:number, y:number}, level: number }) => {
+const Line = ({ from, to }: { from: {x:number, y:number}, to: {x:number, y:number} }) => {
   const path = `M ${from.x} ${from.y} C ${from.x + HORIZONTAL_SPACING / 2} ${from.y}, ${to.x - HORIZONTAL_SPACING / 2} ${to.y}, ${to.x} ${to.y}`;
-  const strokeColorVar = level > 0 ? `var(--mindmap-line-color)` : 'var(--mindmap-line-color)';
   
   return (
     <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
       <path 
         d={path} 
-        stroke={strokeColorVar}
+        stroke="var(--mindmap-line-color)"
         fill="transparent" 
         strokeWidth="2"
       />
@@ -66,11 +63,11 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
     onNodeDoubleClick(node.name);
   };
   
-  const bgClass = LEVEL_BG_CLASSES[level] || 'from-mindmap-node-bg/50';
+  const levelClass = LEVEL_CLASSES[level] || 'bg-mindmap-node-bg';
 
   return (
     <>
-      {parentPosition && <Line from={{x: parentPosition.x + NODE_WIDTH, y: parentPosition.y + NODE_HEIGHT / 2}} to={{x: position.x, y: position.y + NODE_HEIGHT / 2}} level={level} />}
+      {parentPosition && <Line from={{x: parentPosition.x + NODE_WIDTH, y: parentPosition.y + NODE_HEIGHT / 2}} to={{x: position.x, y: position.y + NODE_HEIGHT / 2}} />}
       <div
         style={{
           left: `${position.x}px`,
@@ -84,20 +81,19 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
       >
         <div
           className={cn(
-            'w-full h-full flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all relative',
-            'bg-gradient-to-br to-mindmap-node-bg shadow-lg border border-white/10',
-            'hover:shadow-2xl hover:border-mindmap-node-border-hover hover:scale-105',
-             'text-xs font-medium text-white/90',
-             bgClass
+            'w-full h-full flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all border',
+            'hover:shadow-lg hover:border-mindmap-node-border-hover hover:scale-105',
+             'text-xs font-medium',
+             levelClass
           )}
         >
           <span className="flex-1 text-center">{node.name}</span>
           {hasChildren && (
-            <div className="flex items-center justify-center w-6 h-6">
-              <ChevronRight className={cn("w-5 h-5 text-muted-foreground/70 group-hover:text-primary transition-transform", isExpanded && "rotate-90")} />
+            <div className="flex items-center justify-center w-5 h-5 rounded-full bg-black/10 dark:bg-white/10">
+              <ChevronRight className={cn("w-4 h-4 transition-transform", isExpanded && "rotate-90")} />
             </div>
           )}
-          {!hasChildren && <div className="w-6 h-6" /> /* Placeholder for alignment */}
+          {!hasChildren && <div className="w-5 h-5" /> /* Placeholder for alignment */}
         </div>
       </div>
     </>
