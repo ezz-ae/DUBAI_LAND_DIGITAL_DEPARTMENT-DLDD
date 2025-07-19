@@ -75,10 +75,9 @@ type DLDDoc = typeof dldChainDocuments[0];
 type TechDoc = typeof technicalDocuments[0];
 type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs';
 
-function PageContent() {
+function PageContent({ activeView, setActiveView }: { activeView: ActiveView, setActiveView: (view: ActiveView) => void }) {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme()
-  const [activeView, setActiveView] = useState<ActiveView>('documentation');
   
   const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(null);
   
@@ -576,10 +575,8 @@ function PageContent() {
   }
 
   return (
-    <div className="flex h-screen w-full bg-background text-foreground flex-col">
-      <div className="flex-1 flex overflow-hidden">
-        {renderContent()}
-      </div>
+    <div className="flex-1 flex flex-col overflow-hidden">
+      {renderContent()}
 
       <Dialog open={showAddNoteDialog} onOpenChange={setShowAddNoteDialog}>
         <DialogContent>
@@ -623,33 +620,37 @@ function PageContent() {
 }
 
 export default function Home() {
+  const [activeView, setActiveView] = useState<ActiveView>('documentation');
+
   return (
     <SidebarProvider>
-      <header className="p-4 border-b flex items-center justify-between h-16 shrink-0">
-        <div className="flex items-center gap-4">
-          <SidebarTrigger className={cn("md:hidden", 'documentation' !== 'documentation' && 'hidden')}/>
-          <h1 className="text-md font-headline font-bold">DLDCHAIN THE FIRST NATIVE REAL ESTATE BLOCKCHAIN</h1>
-        </div>
-        <div className="flex items-center gap-2 bg-muted p-1 rounded-lg">
-            <Button variant={'documentation' === 'documentation' ? 'default' : 'ghost'} onClick={() => 'documentation'}>
-              <BookOpen className="mr-2" />
-              Documentation
-            </Button>
-            <Button variant={'documentation' === 'tech-docs' ? 'default' : 'ghost'} onClick={() => 'tech-docs'}>
-              <Code className="mr-2" />
-              Technical Docs
-            </Button>
-            <Button variant={'documentation' === 'mindmap' ? 'default' : 'ghost'} onClick={() => 'mindmap'}>
-              <Share2 className="mr-2" />
-              Mind Map
-            </Button>
-            <Button variant={'documentation' === 'ai-console' ? 'default' : 'ghost'} onClick={() => 'ai-console'}>
-              <Bot className="mr-2" />
-              AI Console
-            </Button>
-        </div>
-      </header>
-      <PageContent />
+      <div className="flex h-screen w-full bg-background text-foreground flex-col">
+        <header className="p-4 border-b flex items-center justify-between h-16 shrink-0">
+          <div className="flex items-center gap-4">
+            <SidebarTrigger className={cn("md:hidden", activeView !== 'documentation' && 'hidden')}/>
+            <h1 className="text-md font-headline font-bold">DLDCHAIN THE FIRST NATIVE REAL ESTATE BLOCKCHAIN</h1>
+          </div>
+          <div className="flex items-center gap-2 bg-muted p-1 rounded-lg">
+              <Button variant={activeView === 'documentation' ? 'default' : 'ghost'} onClick={() => setActiveView('documentation')}>
+                <BookOpen className="mr-2" />
+                Documentation
+              </Button>
+              <Button variant={activeView === 'tech-docs' ? 'default' : 'ghost'} onClick={() => setActiveView('tech-docs')}>
+                <Code className="mr-2" />
+                Technical Docs
+              </Button>
+              <Button variant={activeView === 'mindmap' ? 'default' : 'ghost'} onClick={() => setActiveView('mindmap')}>
+                <Share2 className="mr-2" />
+                Mind Map
+              </Button>
+              <Button variant={activeView === 'ai-console' ? 'default' : 'ghost'} onClick={() => setActiveView('ai-console')}>
+                <Bot className="mr-2" />
+                AI Console
+              </Button>
+          </div>
+        </header>
+        <PageContent activeView={activeView} setActiveView={setActiveView} />
+      </div>
     </SidebarProvider>
   )
 }

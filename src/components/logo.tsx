@@ -11,9 +11,10 @@ export function ProjectPilotLogo() {
       {state === 'expanded' && (
         <div className="flex flex-col">
            <h1 className="text-sm font-headline font-bold text-foreground leading-tight">DLDCHAIN</h1>
-           <h2 className="text-xs text-muted-foreground font-medium leading-tight">PROTOCOL</h2>
         </div>
       )}
     </div>
   );
 }
+
+    
