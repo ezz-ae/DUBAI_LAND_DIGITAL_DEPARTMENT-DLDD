@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/github-dark.css';
 
-// Import and register only the languages we need, to keep the bundle size down.
+// Import language definitions
 import solidity from 'highlight.js/lib/languages/solidity';
 import python from 'highlight.js/lib/languages/python';
 import bash from 'highlight.js/lib/languages/bash';
