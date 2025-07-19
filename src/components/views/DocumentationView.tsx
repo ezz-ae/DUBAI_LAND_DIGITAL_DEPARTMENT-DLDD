@@ -70,50 +70,52 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
           </Button>
         </SidebarFooter>
       </Sidebar>
-      <div className="flex-1 bg-muted/30 dark:bg-muted/10 p-4 md:p-6 overflow-hidden">
-        {selectedDoc ? (
-          <div className="flex flex-col gap-6 h-full">
-            <div ref={sourceGuideRef}>
-              <SourceGuide
-                summary={selectedDoc.summary}
-                keyTopics={selectedDoc.keyTopics}
-                isArabic={isArabic}
-                onTopicClick={onTopicClick}
-              />
+      <main className="flex-1 bg-muted/30 dark:bg-muted/10 p-4 md:p-6 overflow-auto">
+        <div className="max-w-7xl mx-auto w-full h-full">
+          {selectedDoc ? (
+            <div className="flex flex-col gap-6 h-full">
+              <div ref={sourceGuideRef}>
+                <SourceGuide
+                  summary={selectedDoc.summary}
+                  keyTopics={selectedDoc.keyTopics}
+                  isArabic={isArabic}
+                  onTopicClick={onTopicClick}
+                />
+              </div>
+              <Card className="flex-1 flex flex-col overflow-hidden">
+                <CardTitleWithBackground>
+                  <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
+                  <div className="flex items-center gap-1">
+                     <Button variant='outline' size="sm" onClick={handleLanguageToggle}><Languages className="h-4 w-4 mr-2"/>{isArabic ? 'English' : 'العربية'}</Button>
+                    <Button variant={textSize === 'text-sm' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>A</Button>
+                    <Button variant={textSize === 'text-base' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>A</Button>
+                    <Button variant={textSize === 'text-lg' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>A</Button>
+                  </div>
+                </CardTitleWithBackground>
+                <CardContent className="p-0 flex-1 overflow-hidden">
+                    <ScrollArea className="h-full">
+                      <div
+                        dir={isArabic ? 'rtl' : 'ltr'}
+                        className={cn(
+                          "p-6 whitespace-pre-wrap prose prose-sm md:prose-base dark:prose-invert max-w-none",
+                           textSize,
+                          isArabic && "font-arabic"
+                        )}
+                        dangerouslySetInnerHTML={{ __html: selectedDoc.content }}
+                      >
+                      </div>
+                    </ScrollArea>
+                </CardContent>
+              </Card>
             </div>
-            <Card className="flex-1 flex flex-col overflow-hidden">
-              <CardTitleWithBackground>
-                <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
-                <div className="flex items-center gap-1">
-                   <Button variant='outline' size="sm" onClick={handleLanguageToggle}><Languages className="h-4 w-4 mr-2"/>{isArabic ? 'English' : 'العربية'}</Button>
-                  <Button variant={textSize === 'text-sm' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>A</Button>
-                  <Button variant={textSize === 'text-base' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>A</Button>
-                  <Button variant={textSize === 'text-lg' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>A</Button>
-                </div>
-              </CardTitleWithBackground>
-              <CardContent className="p-0 flex-1 overflow-hidden">
-                  <ScrollArea className="h-full">
-                    <div
-                      dir={isArabic ? 'rtl' : 'ltr'}
-                      className={cn(
-                        "p-6 whitespace-pre-wrap prose prose-sm md:prose-base dark:prose-invert max-w-none",
-                         textSize,
-                        isArabic && "font-arabic"
-                      )}
-                      dangerouslySetInnerHTML={{ __html: selectedDoc.content }}
-                    >
-                    </div>
-                  </ScrollArea>
-              </CardContent>
-            </Card>
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full py-16">
-            <h2 className="text-2xl font-semibold">Select a document to begin</h2>
-            <p>Choose a document from the sidebar to view its content and start your review.</p>
-          </div>
-        )}
-      </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full py-16">
+              <h2 className="text-2xl font-semibold">Select a document to begin</h2>
+              <p>Choose a document from the sidebar to view its content and start your review.</p>
+            </div>
+          )}
+        </div>
+      </main>
     </div>
   );
 }

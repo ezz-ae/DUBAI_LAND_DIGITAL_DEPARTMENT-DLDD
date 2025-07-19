@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +8,7 @@ import { technicalDocuments } from '@/lib/technical-documents';
 export function TechnicalDocsView() {
   return (
     <ScrollArea className="flex-1">
-      <div className="p-6">
+      <div className="p-6 max-w-7xl mx-auto w-full">
         {technicalDocuments.map(doc => (
           <Card key={doc.id} className="mb-6">
             <CardHeader>

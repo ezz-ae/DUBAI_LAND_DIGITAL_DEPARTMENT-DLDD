@@ -86,7 +86,7 @@ export function AiConsoleView({
   
   return (
     <ScrollArea className="flex-1 bg-ai-console">
-      <div className="container mx-auto p-4 md:p-6 grid gap-6">
+      <div className="container mx-auto p-4 md:p-6 grid gap-6 max-w-7xl">
         <Card className="ai-console-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2"><Bot className="h-5 w-5" /> AI Console</CardTitle>
