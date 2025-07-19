@@ -106,8 +106,10 @@ function PageContent() {
 
   useEffect(() => {
     // Set default document on initial load
-    const defaultDoc = dldChainDocuments.find(d => d.id === 18) || dldChainDocuments[0];
-    setSelectedDoc(defaultDoc);
+    if (dldChainDocuments.length > 0) {
+      const defaultDoc = dldChainDocuments.find(d => d.id === 18) || dldChainDocuments[0];
+      setSelectedDoc(defaultDoc);
+    }
   }, []);
 
   useEffect(() => {
@@ -588,8 +590,7 @@ function PageContent() {
       <header className="p-4 border-b flex items-center justify-between h-16 shrink-0">
         <div className="flex items-center gap-4">
           <SidebarTrigger className={cn("md:hidden", activeView !== 'documentation' && 'hidden')}/>
-          <h1 className="text-md font-headline font-bold hidden md:block">DLDCHAIN THE FIRST NATIVE REAL ESTATE BLOCKCHAIN</h1>
-          <h1 className="text-md font-headline font-bold md:hidden">DLDCHAIN</h1>
+          <h1 className="text-md font-headline font-bold">DLDCHAIN THE FIRST NATIVE REAL ESTATE BLOCKCHAIN</h1>
         </div>
         <div className="flex items-center gap-2 bg-muted p-1 rounded-lg">
             <Button variant={activeView === 'documentation' ? 'default' : 'ghost'} onClick={() => setActiveView('documentation')}>
@@ -661,3 +662,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    
