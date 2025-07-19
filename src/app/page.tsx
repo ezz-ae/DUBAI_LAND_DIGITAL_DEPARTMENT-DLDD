@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
   Dialog,
@@ -11,73 +10,41 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogClose,
   DialogDescription,
 } from "@/components/ui/dialog"
-import { Checkbox } from "@/components/ui/checkbox";
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarFooter,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarMenuButton,
-  SidebarGroupLabel,
-  SidebarTrigger,
-  useSidebar,
-} from '@/components/ui/sidebar';
-import { FileText, Loader2, PlayCircle, Send, Sparkles, Bot, User, Moon, Sun, PauseCircle, MessageSquare, StickyNote, Music4, BrainCircuit, LayoutDashboard, BookOpen, Share2, Code } from 'lucide-react';
-import { ProjectPilotLogo } from '@/components/logo';
+import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { MessageSquare } from 'lucide-react';
+
 import { askQuestion } from '@/ai/flows/ask-question';
 import { generateAudio } from '@/ai/flows/audio-overview';
 import { generateReport } from '@/ai/flows/notes';
-import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
-import { useTheme } from "next-themes"
-import { dldChainDocuments } from '@/lib/documents';
-import { technicalDocuments } from '@/lib/technical-documents';
-import { SourceGuide } from '@/components/source-guide';
 import { explainTopic } from '@/ai/flows/explain-topic';
-import { InteractiveMindMap } from '@/components/interactive-mind-map';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { CardTitleWithBackground } from '@/components/card-title-with-background';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Textarea } from '@/components/ui/textarea';
+
+import { useToast } from '@/hooks/use-toast';
+import { dldChainDocuments } from '@/lib/documents';
+
+import { AppHeader } from '@/components/views/Header';
+import { DocumentationView } from '@/components/views/DocumentationView';
+import { TechnicalDocsView } from '@/components/views/TechnicalDocsView';
+import { MindmapView } from '@/components/views/MindmapView';
+import { AiConsoleView } from '@/components/views/AiConsoleView';
+import { ProjectValidationView } from '@/components/views/ProjectValidationView';
+import { MediaCenterView } from '@/components/views/MediaCenterView';
 
 
 const initialMessages = [
   { from: 'bot', text: "Welcome to the DLDCHAIN Project Pilot. This is a sovereign, government-led blockchain ecosystem developed to serve as the digital side of the Dubai Land Department (DLD) to revolutionize real estate governance. This system utilizes DXBTOKENS for property ownership, the DLD Digital Dirham as its exclusive fiat-pegged currency, and EBRAM for automating various smart contracts, including rentals and sales, with AI integration (EBRAMGPT) for legal interpretation and dispute resolution. Please select a document from the sidebar to begin your review or ask me a question." },
 ];
 
-const quickPromptsEnglish = [
-  "What is the DLDCHAIN project scope?",
-  "Explain the EBRAM legal system.",
-  "How does Tokenization work?",
-];
-
-const quickPromptsArabic = [
-  "ما هو نطاق مشروع DLDCHAIN؟",
-  "اشرح نظام أبرام القانوني.",
-  "كيف تعمل عملية الترميز؟",
-];
-
-type Note = { id: number; title: string; content: string; source: string; marked: boolean };
+export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
+export type ReportType = 'technical' | 'managerial' | 'legal' | 'financial';
 type DLDDoc = typeof dldChainDocuments[0];
-type TechDoc = typeof technicalDocuments[0];
-type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs';
+type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
 
 function PageContent({ activeView, setActiveView }: { activeView: ActiveView, setActiveView: (view: ActiveView) => void }) {
   const { toast } = useToast();
-  const { theme, setTheme } = useTheme()
   
   const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(null);
   
@@ -87,8 +54,6 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
   
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [audioState, setAudioState] = useState<{ element: HTMLAudioElement | null; isPlaying: boolean }>({ element: null, isPlaying: false });
-
-  const chatScrollAreaRef = useRef<HTMLDivElement>(null);
   
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNoteTitle, setNewNoteTitle] = useState('');
@@ -96,34 +61,18 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [generatedReport, setGeneratedReport] = useState('');
-  const [reportType, setReportType] = useState('technical');
+  const [reportType, setReportType] = useState<ReportType>('technical');
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
-  
-  const [textSize, setTextSize] = useState('text-base');
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
   useEffect(() => {
-    // Set default document on initial load
     if (dldChainDocuments.length > 0) {
       const defaultDoc = dldChainDocuments.find(d => d.id === 1) || dldChainDocuments[0];
       setSelectedDoc(defaultDoc);
     }
   }, []);
-
-  useEffect(() => {
-    if (chatScrollAreaRef.current) {
-        const lastMessage = chatScrollAreaRef.current.lastElementChild;
-        if(lastMessage) {
-            lastMessage.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-  }, [messages]);
   
-  const handleSelectDocument = (doc: DLDDoc) => {
-    setSelectedDoc(doc);
-  };
-
   const handleSendMessage = async (e?: React.FormEvent, message?: string) => {
     if(e) e.preventDefault();
     const currentMessage = message || input;
@@ -272,303 +221,43 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
     handleSendMessage(undefined, `Tell me more about ${topic}.`);
   };
 
-  const handleLanguageToggle = () => {
-    const targetDocId = isArabic ? 20 : 19;
-    const docToSwitch = dldChainDocuments.find(d => d.id === targetDocId);
-    if (docToSwitch) {
-      setSelectedDoc(docToSwitch);
-    } else {
-      toast({ variant: 'destructive', title: 'Document not found' });
-    }
-  };
-
   const renderContent = () => {
     switch (activeView) {
       case 'documentation':
-        return (
-          <div className="flex flex-1 overflow-hidden">
-            <Sidebar>
-              <SidebarHeader className="p-4 border-b">
-                 <ProjectPilotLogo />
-              </SidebarHeader>
-              <SidebarContent className="flex-1 p-2">
-                <SidebarMenu>
-                  <SidebarGroupLabel className="px-2">Project Documents</SidebarGroupLabel>
-                  {dldChainDocuments.length > 0 ? dldChainDocuments.map((doc) => (
-                     <SidebarMenuItem key={doc.id}>
-                      <SidebarMenuButton
-                        onClick={() => handleSelectDocument(doc)}
-                        isActive={selectedDoc?.id === doc.id}
-                        className="justify-start w-full"
-                      >
-                        <span>{doc.name}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  )) : (
-                    <div className="p-2 text-sm text-muted-foreground">No documents loaded.</div>
-                  )}
-                </SidebarMenu>
-              </SidebarContent>
-              <SidebarFooter className="p-2 border-t flex items-center justify-end">
-                  <Button variant="outline" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} size="icon">
-                      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                      <span className="sr-only">Toggle theme</span>
-                  </Button>
-              </SidebarFooter>
-            </Sidebar>
-            <ScrollArea className="flex-1">
-              <div className="p-6">
-                {selectedDoc ? (
-                  <div className="flex flex-col gap-6">
-                    <SourceGuide 
-                      summary={selectedDoc.summary}
-                      keyTopics={selectedDoc.keyTopics}
-                      isArabic={isArabic}
-                      onTopicClick={handleTopicClick}
-                    />
-                    <Card className="flex-1 flex flex-col">
-                      <CardTitleWithBackground>
-                        <div>
-                          <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Button variant='outline' size="sm" onClick={handleLanguageToggle}>{isArabic ? 'EN' : 'AR'}</Button>
-                          <Button variant={textSize === 'text-sm' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>Sm</Button>
-                          <Button variant={textSize === 'text-base' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>Md</Button>
-                          <Button variant={textSize === 'text-lg' ? 'default' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>Lg</Button>
-                        </div>
-                      </CardTitleWithBackground>
-                      <CardContent className="p-0">
-                          <div className="h-full">
-                              <div 
-                                dir={isArabic ? 'rtl' : 'ltr'} 
-                                className={cn(
-                                  "p-6 whitespace-pre-wrap leading-relaxed",
-                                  textSize,
-                                  isArabic && "font-arabic"
-                                )}
-                                dangerouslySetInnerHTML={{ __html: selectedDoc.content }}
-                              >
-                              </div>
-                          </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full py-16">
-                    <FileText className="w-16 h-16 mb-4" />
-                    <h2 className="text-2xl font-semibold">Select a document to begin</h2>
-                    <p>Choose a document from the sidebar to view its content and start your review.</p>
-                  </div>
-                )}
-              </div>
-            </ScrollArea>
-          </div>
-        );
+        return <DocumentationView selectedDoc={selectedDoc} setSelectedDoc={setSelectedDoc} onTopicClick={handleTopicClick} toast={toast} />;
+      case 'tech-docs':
+        return <TechnicalDocsView />;
       case 'mindmap':
-        return (
-          <div className="flex-1 p-4 bg-ai-console">
-            <InteractiveMindMap onNodeDoubleClick={handleMindMapNodeDoubleClick} />
-          </div>
-        );
-       case 'tech-docs':
-        return (
-          <ScrollArea className="flex-1">
-            <div className="p-6">
-              {technicalDocuments.map(doc => (
-                 <Card key={doc.id} className="mb-6">
-                    <CardHeader>
-                      <CardTitle>{doc.name}</CardTitle>
-                      <CardDescription>{doc.summary}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      {doc.content.map((item, index) => {
-                        if (item.type === 'paragraph') {
-                          return <p key={index} dangerouslySetInnerHTML={{ __html: item.text }} />;
-                        }
-                        if (item.type === 'heading') {
-                          return <h3 key={index} className="mt-4 mb-2 font-semibold text-lg" dangerouslySetInnerHTML={{ __html: item.text }} />;
-                        }
-                        if (item.type === 'subheading') {
-                            return <h4 key={index} className="mt-3 mb-1 font-semibold text-md" dangerouslySetInnerHTML={{ __html: item.text }} />;
-                        }
-                        if (item.type === 'code') {
-                          return (
-                            <pre key={index} className="relative my-4 rounded-lg bg-muted/50 p-4 border font-code text-sm overflow-x-auto">
-                              <code>{item.text}</code>
-                            </pre>
-                          );
-                        }
-                         if (item.type === 'list') {
-                          return <ul key={index} className="list-disc pl-5 my-2 space-y-1">{item.items.map((li, i) => <li key={i} dangerouslySetInnerHTML={{ __html: li }}/>)}</ul>;
-                        }
-                        return null;
-                      })}
-                    </CardContent>
-                 </Card>
-              ))}
-            </div>
-          </ScrollArea>
-        );
+        return <MindmapView onNodeDoubleClick={handleMindMapNodeDoubleClick} />;
       case 'ai-console':
         return (
-          <ScrollArea className="flex-1 bg-ai-console">
-            <div className="p-6 grid gap-6">
-              <Card className="ai-console-card">
-                <CardHeader>
-                  <CardTitle>AI Console</CardTitle>
-                  <CardDescription>Ask questions about any document or topic.</CardDescription>
-                </CardHeader>
-                <CardContent className="p-0">
-                    <ScrollArea className="h-96">
-                      <div className="p-4 space-y-4" ref={chatScrollAreaRef}>
-                      {messages.map((msg: any, index) => (
-                        <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
-                          {msg.from === 'bot' && (
-                            <Avatar className="w-8 h-8 shrink-0">
-                              <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
-                            </Avatar>
-                          )}
-                          <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
-                            <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
-                              "max-w-prose rounded-lg px-4 py-2 text-sm",
-                              msg.from === 'user' ? "bg-accent text-accent-foreground" : "bg-muted/60",
-                              msg.isArabic && "font-arabic"
-                            )}>
-                              {msg.text}
-                            </div>
-                          </div>
-                            {msg.from === 'user' && (
-                            <Avatar className="w-8 h-8 shrink-0">
-                                <AvatarFallback><User className="w-5 h-5"/></AvatarFallback>
-                            </Avatar>
-                          )}
-                        </div>
-                      ))}
-                        {messages.length <= 1 && (
-                          <div className="pt-4">
-                            <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
-                            <div className="grid grid-cols-1 gap-2">
-                                {(isArabic ? quickPromptsArabic : quickPromptsEnglish).map((prompt) => (
-                                  <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-start text-left h-auto", isArabic && "justify-end text-right font-arabic")}>
-                                    {prompt}
-                                  </Button>
-                                ))}
-                            </div>
-                          </div>
-                        )}
-                      {isAnswering && (
-                          <div className="flex items-start gap-3 justify-start">
-                            <Avatar className="w-8 h-8">
-                              <AvatarFallback><Bot className="w-5 h-5"/></AvatarFallback>
-                            </Avatar>
-                            <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
-                              <Loader2 className="animate-spin h-4 w-4" />
-                            </div>
-                          </div>
-                      )}
-                      </div>
-                    </ScrollArea>
-                </CardContent>
-                <CardFooter className="border-t pt-4">
-                  <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
-                    <Input
-                      dir={isArabic ? 'rtl' : 'ltr'}
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      placeholder="Type your question..."
-                      autoComplete="off"
-                      disabled={isAnswering}
-                      className={cn(isArabic && "font-arabic")}
-                    />
-                    <Button type="submit" size="icon" disabled={isAnswering}>
-                      <Send className="h-4 w-4" />
-                    </Button>
-                  </form>
-                </CardFooter>
-              </Card>
-              
-              <Card className="ai-console-card">
-                <CardHeader>
-                  <CardTitle>Notes &amp; Reports</CardTitle>
-                  <CardDescription>Create notes from documents and generate AI-powered reports from your findings.</CardDescription>
-                </CardHeader>
-                <CardContent className="p-0">
-                      <div className="p-4">
-                      {notes.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {notes.map(note => (
-                            <Card key={note.id} className="cursor-pointer hover:border-primary bg-card/50" onClick={() => setSelectedNote(note)}>
-                              <CardHeader className="p-4">
-                                <CardTitle className="text-base flex items-start justify-between">
-                                  <span className="truncate flex-1">{note.title}</span>
-                                  <Checkbox
-                                    checked={note.marked}
-                                    onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
-                                    className="ml-2"
-                                  />
-                                </CardTitle>
-                                <CardDescription className="text-xs truncate">Source: {note.source}</CardDescription>
-                              </CardHeader>
-                              <CardContent className="p-4 pt-0">
-                                <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
-                              </CardContent>
-                            </Card>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="text-center text-muted-foreground py-8">No notes yet. Select a document and add one to get started!</div>
-                      )}
-  
-                      {generatedReport && (
-                          <div className="mt-4 p-4 border rounded-lg bg-muted/50">
-                              <h3 className="font-semibold mb-2">Generated Report</h3>
-                              <p className="text-sm whitespace-pre-wrap">{generatedReport}</p>
-                          </div>
-                      )}
-                      </div>
-                </CardContent>
-                  <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-                    <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none" disabled={activeView !== 'documentation' || !selectedDoc}><StickyNote className="mr-2"/> Add Note</Button>
-                    <div className="flex-1" />
-                    <Select onValueChange={setReportType} defaultValue={reportType}>
-                        <SelectTrigger className="w-full sm:w-[150px]">
-                            <SelectValue placeholder="Report Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="technical">Technical</SelectItem>
-                            <SelectItem value="managerial">Managerial</SelectItem>
-                            <SelectItem value="legal">Legal</SelectItem>
-                            <SelectItem value="financial">Financial</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <Button onClick={handleGenerateReport} disabled={isGeneratingReport}>
-                        {isGeneratingReport ? <Loader2 className="animate-spin" /> : <Sparkles />}
-                        Generate Report
-                    </Button>
-                </CardFooter>
-              </Card>
-  
-              <Card className="ai-console-card">
-                <CardHeader>
-                    <CardTitle>Media Center</CardTitle>
-                    <CardDescription>Generate and listen to AI-powered audio overviews of the documents.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col items-center justify-center gap-4 text-center p-6 min-h-[200px]">
-                    <Music4 className="w-16 h-16 text-primary" />
-                    <p className="text-sm text-muted-foreground">
-                        {audioState.element ? "Audio is ready to play." : "Generate an audio summary for the selected document."}
-                    </p>
-                    <Button onClick={handleGenerateAudio} size="lg" disabled={isGeneratingAudio || activeView !== 'documentation' || !selectedDoc}>
-                        {isGeneratingAudio ? <Loader2 className="animate-spin" /> : audioState.isPlaying ? <PauseCircle /> : <PlayCircle />}
-                        <span className="ml-2">{isGeneratingAudio ? 'Generating Audio...' : audioState.isPlaying ? 'Pause Audio' : audioState.element ? 'Play Audio Overview' : 'Generate AI Audio'}</span>
-                    </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </ScrollArea>
+          <AiConsoleView
+            messages={messages}
+            input={input}
+            setInput={setInput}
+            isAnswering={isAnswering}
+            handleSendMessage={handleSendMessage}
+            isArabic={isArabic}
+            notes={notes}
+            handleToggleNoteMark={handleToggleNoteMark}
+            setSelectedNote={setSelectedNote}
+            generatedReport={generatedReport}
+            reportType={reportType}
+            setReportType={setReportType}
+            isGeneratingReport={isGeneratingReport}
+            handleGenerateReport={handleGenerateReport}
+            setShowAddNoteDialog={setShowAddNoteDialog}
+            activeView={activeView}
+            selectedDoc={selectedDoc}
+            isGeneratingAudio={isGeneratingAudio}
+            audioState={audioState}
+            handleGenerateAudio={handleGenerateAudio}
+          />
         );
+      case 'project-validation':
+        return <ProjectValidationView />;
+      case 'media-center':
+        return <MediaCenterView />;
       default:
         return null;
     }
@@ -625,30 +314,7 @@ export default function Home() {
   return (
     <SidebarProvider>
       <div className="h-screen w-full bg-background text-foreground flex flex-col">
-        <header className="p-4 border-b flex items-center justify-between h-16 shrink-0">
-          <div className="flex items-center gap-4">
-            <SidebarTrigger className={cn("md:hidden", activeView !== 'documentation' && 'hidden')}/>
-            <h1 className="text-md font-headline font-bold">DLDCHAIN THE FIRST NATIVE REAL ESTATE BLOCKCHAIN</h1>
-          </div>
-          <div className="flex items-center gap-2 bg-muted p-1 rounded-lg">
-              <Button variant={activeView === 'documentation' ? 'default' : 'ghost'} onClick={() => setActiveView('documentation')}>
-                <BookOpen className="mr-2" />
-                Documentation
-              </Button>
-              <Button variant={activeView === 'tech-docs' ? 'default' : 'ghost'} onClick={() => setActiveView('tech-docs')}>
-                <Code className="mr-2" />
-                Technical Docs
-              </Button>
-              <Button variant={activeView === 'mindmap' ? 'default' : 'ghost'} onClick={() => setActiveView('mindmap')}>
-                <Share2 className="mr-2" />
-                Mind Map
-              </Button>
-              <Button variant={activeView === 'ai-console' ? 'default' : 'ghost'} onClick={() => setActiveView('ai-console')}>
-                <Bot className="mr-2" />
-                AI Console
-              </Button>
-          </div>
-        </header>
+        <AppHeader activeView={activeView} setActiveView={setActiveView} />
         <div className="flex flex-1 overflow-hidden">
           <PageContent activeView={activeView} setActiveView={setActiveView} />
         </div>
