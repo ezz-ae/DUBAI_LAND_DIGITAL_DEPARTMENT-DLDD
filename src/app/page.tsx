@@ -649,8 +649,12 @@ export default function Home() {
               </Button>
           </div>
         </header>
-        <PageContent activeView={activeView} setActiveView={setActiveView} />
+        <div className="flex flex-1 overflow-hidden">
+          <PageContent activeView={activeView} setActiveView={setActiveView} />
+        </div>
       </div>
     </SidebarProvider>
   )
 }
+
+    
