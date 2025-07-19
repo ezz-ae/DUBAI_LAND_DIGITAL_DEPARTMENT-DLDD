@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { mindMapData } from '@/lib/mindmap-data';
 import { cn } from '@/lib/utils';
-import { Plus, Minus } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 interface MindMapNodeData {
   id: string;
@@ -84,19 +84,20 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
       >
         <div
           className={cn(
-            'w-full h-full flex items-center justify-center p-2 rounded-lg cursor-pointer transition-all relative',
+            'w-full h-full flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all relative',
             'bg-gradient-to-br to-mindmap-node-bg shadow-lg border border-white/10',
             'hover:shadow-2xl hover:border-mindmap-node-border-hover hover:scale-105',
-             'text-xs font-medium text-center text-white/90',
+             'text-xs font-medium text-white/90',
              bgClass
           )}
         >
-          {node.name}
+          <span className="flex-1 text-center">{node.name}</span>
           {hasChildren && (
-            <div className="absolute -right-3 -top-3 bg-background rounded-full flex items-center justify-center w-6 h-6 z-10 border border-muted-foreground/50">
-              {isExpanded ? <Minus className="w-4 h-4 text-muted-foreground group-hover:text-primary" /> : <Plus className="w-4 h-4 text-muted-foreground group-hover:text-primary"/>}
+            <div className="flex items-center justify-center w-6 h-6">
+              <ChevronRight className={cn("w-5 h-5 text-muted-foreground/70 group-hover:text-primary transition-transform", isExpanded && "rotate-90")} />
             </div>
           )}
+          {!hasChildren && <div className="w-6 h-6" /> /* Placeholder for alignment */}
         </div>
       </div>
     </>
