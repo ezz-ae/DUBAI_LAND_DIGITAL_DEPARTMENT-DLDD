@@ -107,7 +107,7 @@ function PageContent() {
   useEffect(() => {
     // Set default document on initial load
     if (dldChainDocuments.length > 0) {
-      const defaultDoc = dldChainDocuments.find(d => d.id === 18) || dldChainDocuments[0];
+      const defaultDoc = dldChainDocuments.find(d => d.id === 1) || dldChainDocuments[0];
       setSelectedDoc(defaultDoc);
     }
   }, []);
@@ -310,17 +310,7 @@ function PageContent() {
                   )}
                 </SidebarMenu>
               </SidebarContent>
-              <SidebarFooter className="p-2 border-t flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                      <Button variant="ghost" size="icon">
-                          <Avatar className="w-8 h-8">
-                              <AvatarFallback>N</AvatarFallback>
-                          </Avatar>
-                      </Button>
-                      <Button variant="ghost" size="icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M15.2 3a2 2 0 0 1 2.8.7l2.8 4.4a2 2 0 0 1 .2 1.6v7a2 2 0 0 1-2 2h-4.4a2 2 0 0 1-1.6-.2l-4.4-2.8a2 2 0 0 1-.7-2.8z"/><path d="M15.2 3a2 2 0 0 0-2.8.7l-2.8 4.4a2 2 0 0 0-.2 1.6v7a2 2 0 0 0 2 2h4.4a2 2 0 0 0 1.6-.2l4.4-2.8a2 2 0 0 0 .7-2.8z"/></svg>
-                      </Button>
-                  </div>
+              <SidebarFooter className="p-2 border-t flex items-center justify-end">
                   <Button variant="outline" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} size="icon">
                       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
