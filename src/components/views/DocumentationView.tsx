@@ -52,9 +52,11 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
                 <SidebarMenuButton
                   onClick={() => setSelectedDoc(doc)}
                   isActive={selectedDoc?.id === doc.id}
-                  className="justify-start w-full"
+                  tooltip={doc.name}
+                  className="w-full"
                 >
-                  <span>{doc.name}</span>
+                  <FileText className="h-4 w-4" />
+                  <span className="truncate">{doc.name}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )) : (
