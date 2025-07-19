@@ -8,7 +8,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarFooter, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel } from '@/components/ui/sidebar';
 import { FileText, Moon, Sun, Languages } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { ProjectPilotLogo } from '@/components/logo';
 import { dldChainDocuments } from '@/lib/documents';
 import { SourceGuide } from '@/components/source-guide';
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
@@ -41,11 +40,11 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
   return (
     <div className="flex flex-1 overflow-hidden">
       <Sidebar>
-        <SidebarHeader className="p-4 border-b">
+        <SidebarHeader className="p-2 border-b">
+          <SidebarGroupLabel className="px-2 font-semibold text-foreground">Project Documents</SidebarGroupLabel>
         </SidebarHeader>
         <SidebarContent className="flex-1 p-2">
           <SidebarMenu>
-            <SidebarGroupLabel className="px-2">Project Documents</SidebarGroupLabel>
             {dldChainDocuments.length > 0 ? dldChainDocuments.map((doc) => (
               <SidebarMenuItem key={doc.id}>
                 <SidebarMenuButton
