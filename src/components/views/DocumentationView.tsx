@@ -42,7 +42,6 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
     <div className="flex flex-1 overflow-hidden">
       <Sidebar>
         <SidebarHeader className="p-4 border-b">
-          <ProjectPilotLogo />
         </SidebarHeader>
         <SidebarContent className="flex-1 p-2">
           <SidebarMenu>
