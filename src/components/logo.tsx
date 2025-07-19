@@ -18,10 +18,7 @@ export function ProjectPilotLogo() {
         </svg>
       </div>
       {state === 'expanded' && (
-        <div className="flex items-baseline gap-1.5">
-           <h1 className="text-sm font-headline font-bold text-foreground">DLDCHAIN</h1>
-           <span className="text-xs text-muted-foreground font-headline">PROTOCOL</span>
-        </div>
+        <h1 className="text-sm font-headline font-bold text-foreground">DLDCHAIN</h1>
       )}
     </div>
   );
