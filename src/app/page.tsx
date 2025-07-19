@@ -52,7 +52,6 @@ import {
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
-import { CodeBlock } from '@/components/code-block';
 
 
 const initialMessages = [
@@ -404,7 +403,11 @@ function PageContent() {
                             return <h4 key={index} className="mt-3 mb-1 font-semibold text-md" dangerouslySetInnerHTML={{ __html: item.text }} />;
                         }
                         if (item.type === 'code') {
-                          return <CodeBlock key={index} code={item.text} language={item.language} />;
+                          return (
+                            <div key={index} className="relative my-4 rounded-lg bg-muted/50 p-4 border font-code text-sm overflow-x-auto">
+                              <pre><code>{item.text}</code></pre>
+                            </div>
+                          );
                         }
                          if (item.type === 'list') {
                           return <ul key={index} className="list-disc pl-5 my-2 space-y-1">{item.items.map((li, i) => <li key={i} dangerouslySetInnerHTML={{ __html: li }}/>)}</ul>;
