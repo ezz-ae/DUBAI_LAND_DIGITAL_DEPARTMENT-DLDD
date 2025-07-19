@@ -384,5 +384,3 @@ export const mindMapData = {
     },
   ],
 };
-
-    
