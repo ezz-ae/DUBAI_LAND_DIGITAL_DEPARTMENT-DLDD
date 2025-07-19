@@ -65,17 +65,17 @@ export const mindMapData = {
       children: [
         {
             id: 'foundational-layer',
-            name: 'Foundational Layer',
+            name: 'Foundational Layer (Hyperledger Fabric)',
             children: [],
         },
         {
             id: 'core-services-layer',
-            name: 'Core Services Layer',
+            name: 'Core Services Layer (Identity, Wallet, EBRAM, DXBTOKENS, Mashroi)',
             children: [],
         },
         {
             id: 'application-layer',
-            name: 'Application Layer',
+            name: 'Application Layer (DLDCHAIN dApps, 3rd Party dApps)',
             children: [],
         },
       ],
