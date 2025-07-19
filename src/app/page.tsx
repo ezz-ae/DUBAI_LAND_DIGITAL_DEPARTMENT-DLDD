@@ -575,7 +575,7 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
   }
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden">
+    <>
       {renderContent()}
 
       <Dialog open={showAddNoteDialog} onOpenChange={setShowAddNoteDialog}>
@@ -615,7 +615,7 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
         </Dialog>
       )}
 
-    </div>
+    </>
   );
 }
 
@@ -649,7 +649,7 @@ export default function Home() {
               </Button>
           </div>
         </header>
-        <div className="flex flex-1 overflow-hidden h-[calc(100vh-4rem)]">
+        <div className="flex flex-1 overflow-hidden">
           <PageContent activeView={activeView} setActiveView={setActiveView} />
         </div>
       </div>
