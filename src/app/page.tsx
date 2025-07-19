@@ -266,7 +266,7 @@ export default function Home() {
 
   return (
     <SidebarProvider>
-      <div className="h-screen w-full bg-background text-foreground flex flex-col">
+      <div className="w-full bg-background text-foreground flex flex-col flex-1">
         <AppHeader activeView={activeView} setActiveView={setActiveView} />
         <div className="flex flex-1 overflow-hidden">
           {renderContent()}

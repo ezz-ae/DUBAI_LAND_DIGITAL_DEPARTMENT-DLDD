@@ -8,7 +8,7 @@ interface MindmapViewProps {
 
 export function MindmapView({ onNodeDoubleClick }: MindmapViewProps) {
   return (
-    <div className="flex-1 p-4 bg-ai-console">
+    <div className="flex-1 p-6 bg-ai-console">
       <InteractiveMindMap onNodeDoubleClick={onNodeDoubleClick} />
     </div>
   );

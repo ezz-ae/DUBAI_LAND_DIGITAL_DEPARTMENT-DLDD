@@ -86,14 +86,14 @@ export function AiConsoleView({
   
   return (
     <ScrollArea className="flex-1 bg-ai-console">
-      <div className="container mx-auto p-4 md:p-6 grid gap-6 max-w-7xl">
+      <div className="container mx-auto p-6 grid gap-6 max-w-7xl">
         <Card className="ai-console-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2"><Bot className="h-5 w-5" /> AI Console</CardTitle>
             <CardDescription>Ask questions about any document or topic.</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
-              <div className="h-96 overflow-y-auto" ref={chatScrollRef}>
+              <ScrollArea className="h-96" ref={chatScrollRef}>
                 <div className="p-4 space-y-4">
                 {messages.map((msg: any, index) => (
                   <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
@@ -141,7 +141,7 @@ export function AiConsoleView({
                     </div>
                 )}
                 </div>
-              </div>
+              </ScrollArea>
           </CardContent>
           <CardFooter className="border-t pt-4">
             <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">

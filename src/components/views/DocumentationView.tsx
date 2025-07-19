@@ -70,7 +70,7 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
           </Button>
         </SidebarFooter>
       </Sidebar>
-      <main className="flex-1 bg-muted/30 dark:bg-muted/10 p-4 md:p-6 overflow-auto">
+      <main className="flex-1 bg-muted/30 dark:bg-muted/10 p-6 overflow-auto">
         <div className="max-w-7xl mx-auto w-full h-full">
           {selectedDoc ? (
             <div className="flex flex-col gap-6 h-full">
