@@ -24,20 +24,19 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Loader2, Send, Sparkles, Bot, User, StickyNote, PlayCircle, PauseCircle, Music4, MessageSquare } from 'lucide-react';
+import { Loader2, Send, Sparkles, Bot, User, StickyNote, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { dldChainDocuments } from '@/lib/documents';
 import { useToast } from '@/hooks/use-toast';
 
 import { askQuestion } from '@/ai/flows/ask-question';
-import { generateAudio } from '@/ai/flows/audio-overview';
 import { generateReport } from '@/ai/flows/notes';
 import { explainTopic } from '@/ai/flows/explain-topic';
 import type { ActiveView } from '@/app/page';
+import type { DLDDoc } from '@/lib/documents';
 
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 export type ReportType = 'technical' | 'managerial' | 'legal' | 'financial';
-export type DLDDoc = typeof dldChainDocuments[0];
 
 const quickPromptsEnglish = [
   "What is the DLDCHAIN project scope?",
@@ -75,9 +74,6 @@ export function AiConsoleView({
   const [messages, setMessages] = useState<any[]>(initialMessages);
   const [input, setInput] = useState('');
   const [isAnswering, setIsAnswering] = useState(false);
-  
-  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const [audioState, setAudioState] = useState<{ element: HTMLAudioElement | null; isPlaying: boolean }>({ element: null, isPlaying: false });
   
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNoteTitle, setNewNoteTitle] = useState('');
@@ -212,48 +208,10 @@ export function AiConsoleView({
     handleSendMessage(undefined, `Based on my note "${noteContent}", can you elaborate further?`);
   };
   
-  const handleGenerateAudio = async () => {
-    if (!selectedDoc?.content || isGeneratingAudio) return;
-
-    if (audioState.element) {
-        if (audioState.isPlaying) {
-            audioState.element.pause();
-            setAudioState(prev => ({...prev, isPlaying: false}));
-        } else {
-            audioState.element.play();
-            setAudioState(prev => ({...prev, isPlaying: true}));
-        }
-        return;
-    }
-
-    toast({ title: 'Generating Audio...', description: 'Please wait while we generate the audio overview.' });
-    setIsGeneratingAudio(true);
-
-    try {
-      const result = await generateAudio({ text: selectedDoc.content.substring(0, 4000) });
-      const audioSrc = result.audio;
-      const audioElement = new Audio(audioSrc);
-      
-      audioElement.onplay = () => setAudioState({ element: audioElement, isPlaying: true });
-      audioElement.onpause = () => setAudioState(prev => ({ ...prev, isPlaying: false }));
-      audioElement.onended = () => setAudioState({ element: null, isPlaying: false });
-
-      audioElement.play();
-    } catch (error) {
-      console.error('Error generating audio:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Audio Generation Failed',
-        description: 'Could not generate audio overview. Please try again.',
-      });
-    } finally {
-      setIsGeneratingAudio(false);
-    }
-  };
   
   return (
     <div className="flex-1 overflow-hidden">
-    <ScrollArea className="h-full bg-ai-console">
+    <ScrollArea className="h-full bg-background/50">
       <div className="container mx-auto p-6 grid gap-6 max-w-7xl">
         <Card className="ai-console-card">
           <CardHeader>
@@ -392,23 +350,6 @@ export function AiConsoleView({
                   Generate Report
               </Button>
           </CardFooter>
-        </Card>
-
-        <Card className="ai-console-card">
-          <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Music4 className="h-5 w-5" /> Media Center</CardTitle>
-              <CardDescription>Generate and listen to AI-powered audio overviews of the documents.</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center justify-center gap-4 text-center p-6 min-h-[200px]">
-              <Music4 className="w-16 h-16 text-primary" />
-              <p className="text-sm text-muted-foreground">
-                  {audioState.element ? "Audio is ready to play." : "Generate an audio summary for the selected document."}
-              </p>
-              <Button onClick={handleGenerateAudio} size="lg" disabled={isGeneratingAudio || !selectedDoc}>
-                  {isGeneratingAudio ? <Loader2 className="animate-spin" /> : audioState.isPlaying ? <PauseCircle /> : <PlayCircle />}
-                  <span className="ml-2">{isGeneratingAudio ? 'Generating Audio...' : audioState.isPlaying ? 'Pause Audio' : audioState.element ? 'Play Audio Overview' : 'Generate AI Audio'}</span>
-              </Button>
-          </CardContent>
         </Card>
       </div>
     </ScrollArea>

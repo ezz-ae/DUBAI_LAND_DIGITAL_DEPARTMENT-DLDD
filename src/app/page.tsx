@@ -11,7 +11,7 @@ import { AiConsoleView } from '@/components/views/AiConsoleView';
 import { ProjectValidationView } from '@/components/views/ProjectValidationView';
 import { MediaCenterView } from '@/components/views/MediaCenterView';
 import { dldChainDocuments } from '@/lib/documents';
-import type { DLDDoc } from '@/components/views/DocumentationView';
+import type { DLDDoc } from '@/lib/documents';
 
 export type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
 
@@ -76,7 +76,7 @@ export default function Home() {
       case 'project-validation':
         return <ProjectValidationView />;
       case 'media-center':
-        return <MediaCenterView />;
+        return <MediaCenterView selectedDoc={selectedDoc} />;
       default:
         return null;
     }
@@ -84,7 +84,7 @@ export default function Home() {
 
   return (
     <SidebarProvider>
-      <div className="w-full bg-background text-foreground flex flex-col flex-1 h-screen">
+      <div className="w-full bg-background text-foreground flex flex-col flex-1 min-h-screen">
         <AppHeader activeView={activeView} setActiveView={setActiveView} />
         <div className="flex flex-1 overflow-hidden">
           {renderContent()}
