@@ -180,7 +180,7 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+            className="w-[--sidebar-width] bg-sidebar-background p-0 text-sidebar-foreground [&>button]:hidden"
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -200,7 +200,7 @@ const Sidebar = React.forwardRef<
           data-state={state}
           data-side={side}
           className={cn(
-            'hidden md:flex flex-col shrink-0 bg-sidebar text-sidebar-foreground border-r transition-all ease-in-out duration-300',
+            'hidden md:flex flex-col shrink-0 bg-sidebar-background text-sidebar-foreground border-r border-sidebar-border transition-all ease-in-out duration-300',
             state === 'expanded' ? 'w-[--sidebar-width]' : 'w-[--sidebar-width-icon]',
             className
           )}
