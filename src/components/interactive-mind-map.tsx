@@ -23,9 +23,9 @@ interface MindMapNodeProps {
 }
 
 const LEVEL_CLASSES: Record<number, string> = {
-  0: 'bg-mindmap-level-0-bg text-primary-foreground',
-  1: 'bg-mindmap-level-1-bg text-primary-foreground',
-  2: 'bg-mindmap-level-2-bg text-foreground',
+  0: 'bg-mindmap-level-0-bg text-white',
+  1: 'bg-mindmap-level-1-bg text-white',
+  2: 'bg-mindmap-level-2-bg text-white',
 };
 
 const NODE_WIDTH = 220;
