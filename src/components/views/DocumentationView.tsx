@@ -12,40 +12,48 @@ import { dldChainDocuments } from '@/lib/documents';
 import { SourceGuide } from '@/components/source-guide';
 import { CardTitleWithBackground } from '@/components/card-title-with-background';
 import { cn } from '@/lib/utils';
-import type { DLDDoc } from '@/app/page';
+import { useToast } from '@/hooks/use-toast';
+
+
+export type DLDDoc = typeof dldChainDocuments[0];
+export type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
 
 interface DocumentationViewProps {
   selectedDoc: DLDDoc | null;
   setSelectedDoc: (doc: DLDDoc) => void;
   onTopicClick: (topic: string) => void;
-  toast: (options: any) => void;
 }
 
-export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, toast }: DocumentationViewProps) {
+export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }: DocumentationViewProps) {
   const { theme, setTheme } = useTheme();
+  const { toast } = useToast();
   const [textSize, setTextSize] = useState('text-base');
-  const sourceGuideRef = useRef<HTMLDivElement>(null);
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
   const handleLanguageToggle = () => {
-    const targetDocId = isArabic ? 1 : 19; // Simplified toggle logic
-    const docToSwitch = dldChainDocuments.find(d => d.id === targetDocId);
-    if (docToSwitch) {
-      setSelectedDoc(docToSwitch);
+    // This logic assumes a direct mapping between English and Arabic documents.
+    // E.g., The first English doc corresponds to the first Arabic doc.
+    const currentDocIndex = dldChainDocuments.findIndex(d => d.id === selectedDoc?.id);
+    const docGroup = dldChainDocuments.filter(d => d.group === selectedDoc?.group);
+    const targetLang = isArabic ? 'en' : 'ar';
+    const targetDoc = docGroup.find(d => d.lang === targetLang);
+    
+    if (targetDoc) {
+      setSelectedDoc(targetDoc);
     } else {
-      toast({ variant: 'destructive', title: 'Document not found' });
+      toast({ variant: 'destructive', title: 'Translation not found' });
     }
   };
 
   return (
     <div className="flex flex-1 overflow-hidden">
       <Sidebar>
-        <SidebarHeader className="p-2 border-b">
-          <SidebarGroupLabel className="px-2 font-semibold text-foreground">Project Documents</SidebarGroupLabel>
+        <SidebarHeader className="p-2 border-b h-14 flex items-center">
+          <SidebarGroupLabel className="px-2 font-semibold text-foreground text-base">Project Documents</SidebarGroupLabel>
         </SidebarHeader>
         <SidebarContent className="flex-1 p-2">
-          <SidebarMenu className="list-none">
+          <SidebarMenu className="list-none p-0">
             {dldChainDocuments.length > 0 ? dldChainDocuments.map((doc) => (
               <SidebarMenuItem key={doc.id}>
                 <SidebarMenuButton
@@ -62,19 +70,19 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
             )}
           </SidebarMenu>
         </SidebarContent>
-        <SidebarFooter className="p-2 border-t flex items-center justify-end">
-          <Button variant="ghost" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} size="icon">
+        <SidebarFooter className="p-2 border-t flex items-center justify-center">
+          <Button variant="ghost" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} size="icon" className="w-full justify-center">
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             <span className="sr-only">Toggle theme</span>
           </Button>
         </SidebarFooter>
       </Sidebar>
-      <main className="flex-1 bg-muted/30 dark:bg-muted/10 p-6 overflow-auto">
-        <div className="max-w-7xl mx-auto w-full h-full">
+      <main className="flex-1 overflow-auto">
+        <div className="max-w-7xl mx-auto w-full h-full p-6">
           {selectedDoc ? (
             <div className="flex flex-col gap-6 h-full">
-              <div ref={sourceGuideRef}>
+              <div>
                 <SourceGuide
                   summary={selectedDoc.summary}
                   keyTopics={selectedDoc.keyTopics}
@@ -82,7 +90,7 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
                   onTopicClick={onTopicClick}
                 />
               </div>
-              <Card className="flex-1 flex flex-col overflow-hidden">
+              <Card className="flex-1 flex flex-col overflow-hidden h-content-area">
                 <CardTitleWithBackground>
                   <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
                   <div className="flex items-center gap-1">
