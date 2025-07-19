@@ -6,7 +6,7 @@
 
 export const mindMapData = {
   id: 'root',
-  name: "DLDCHAIN: Dubai's Sovereign Real Estate Operating System",
+  name: "DLDCHAIN",
   children: [
     {
       id: 'core-characteristics',
@@ -384,3 +384,5 @@ export const mindMapData = {
     },
   ],
 };
+
+    
