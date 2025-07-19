@@ -575,7 +575,7 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex flex-1 flex-col overflow-hidden">
       {renderContent()}
 
       <Dialog open={showAddNoteDialog} onOpenChange={setShowAddNoteDialog}>
@@ -624,7 +624,7 @@ export default function Home() {
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full bg-background text-foreground flex-col">
+      <div className="h-screen w-full bg-background text-foreground flex flex-col">
         <header className="p-4 border-b flex items-center justify-between h-16 shrink-0">
           <div className="flex items-center gap-4">
             <SidebarTrigger className={cn("md:hidden", activeView !== 'documentation' && 'hidden')}/>
@@ -649,7 +649,7 @@ export default function Home() {
               </Button>
           </div>
         </header>
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 overflow-hidden h-[calc(100vh-4rem)]">
           <PageContent activeView={activeView} setActiveView={setActiveView} />
         </div>
       </div>
