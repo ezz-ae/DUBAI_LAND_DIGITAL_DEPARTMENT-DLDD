@@ -395,9 +395,9 @@ function PageContent({ activeView, setActiveView }: { activeView: ActiveView, se
                         }
                         if (item.type === 'code') {
                           return (
-                            <div key={index} className="relative my-4 rounded-lg bg-muted/50 p-4 border font-code text-sm overflow-x-auto">
-                              <pre><code>{item.text}</code></pre>
-                            </div>
+                            <pre key={index} className="relative my-4 rounded-lg bg-muted/50 p-4 border font-code text-sm overflow-x-auto">
+                              <code>{item.text}</code>
+                            </pre>
                           );
                         }
                          if (item.type === 'list') {
@@ -656,5 +656,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
