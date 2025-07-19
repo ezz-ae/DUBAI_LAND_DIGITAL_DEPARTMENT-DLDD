@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarFooter, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel } from '@/components/ui/sidebar';
-import { FileText, Moon, Sun, Languages } from 'lucide-react';
+import { Moon, Sun, Languages } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { dldChainDocuments } from '@/lib/documents';
 import { SourceGuide } from '@/components/source-guide';
@@ -44,7 +44,7 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
           <SidebarGroupLabel className="px-2 font-semibold text-foreground">Project Documents</SidebarGroupLabel>
         </SidebarHeader>
         <SidebarContent className="flex-1 p-2">
-          <SidebarMenu>
+          <SidebarMenu className="list-none">
             {dldChainDocuments.length > 0 ? dldChainDocuments.map((doc) => (
               <SidebarMenuItem key={doc.id}>
                 <SidebarMenuButton
@@ -105,7 +105,6 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full py-16">
-              <FileText className="w-16 h-16 mb-4" />
               <h2 className="text-2xl font-semibold">Select a document to begin</h2>
               <p>Choose a document from the sidebar to view its content and start your review.</p>
             </div>
