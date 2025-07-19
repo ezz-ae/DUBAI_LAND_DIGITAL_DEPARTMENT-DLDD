@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Loader2, Send, Sparkles, Bot, User, StickyNote, PlayCircle, PauseCircle, Music4, MessageSquare } from 'lucide-react';
+import { Loader2, Send, Sparkles, Bot, User, StickyNote, PlayCircle, PauseCircle, Music4 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Note, ReportType } from '@/app/page';
 
@@ -76,16 +76,13 @@ export function AiConsoleView({
   audioState,
   handleGenerateAudio,
 }: AiConsoleViewProps) {
-  const chatScrollAreaRef = useRef<HTMLDivElement>(null);
+  const chatScrollRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    if (chatScrollAreaRef.current) {
-        const lastMessage = chatScrollAreaRef.current.lastElementChild;
-        if(lastMessage) {
-            lastMessage.scrollIntoView({ behavior: 'smooth' });
-        }
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isAnswering]);
   
   return (
     <ScrollArea className="flex-1 bg-ai-console">
@@ -96,8 +93,8 @@ export function AiConsoleView({
             <CardDescription>Ask questions about any document or topic.</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
-              <ScrollArea className="h-96">
-                <div className="p-4 space-y-4" ref={chatScrollAreaRef}>
+              <div className="h-96 overflow-y-auto" ref={chatScrollRef}>
+                <div className="p-4 space-y-4">
                 {messages.map((msg: any, index) => (
                   <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
                     {msg.from === 'bot' && (
@@ -144,7 +141,7 @@ export function AiConsoleView({
                     </div>
                 )}
                 </div>
-              </ScrollArea>
+              </div>
           </CardContent>
           <CardFooter className="border-t pt-4">
             <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
@@ -171,30 +168,32 @@ export function AiConsoleView({
           </CardHeader>
           <CardContent className="p-0">
                 <div className="p-4">
-                {notes.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {notes.map(note => (
-                      <Card key={note.id} className="cursor-pointer hover:border-primary bg-card/50 transition-colors" onClick={() => setSelectedNote(note)}>
-                        <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
-                          <div>
-                            <CardTitle className="text-base truncate">{note.title}</CardTitle>
-                            <CardDescription className="text-xs truncate pt-1">Source: {note.source}</CardDescription>
-                          </div>
-                           <Checkbox
-                              checked={note.marked}
-                              onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
-                              className="ml-2"
-                            />
-                        </CardHeader>
-                        <CardContent className="p-4 pt-0">
-                          <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center text-muted-foreground py-8">No notes yet. Select a document and add one to get started!</div>
-                )}
+                <ScrollArea className="h-72">
+                  {notes.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pr-4">
+                      {notes.map(note => (
+                        <Card key={note.id} className="cursor-pointer hover:border-primary bg-card/50 transition-colors" onClick={() => setSelectedNote(note)}>
+                          <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
+                            <div>
+                              <CardTitle className="text-base truncate">{note.title}</CardTitle>
+                              <CardDescription className="text-xs truncate pt-1">Source: {note.source}</CardDescription>
+                            </div>
+                            <Checkbox
+                                checked={note.marked}
+                                onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
+                                className="ml-2"
+                              />
+                          </CardHeader>
+                          <CardContent className="p-4 pt-0">
+                            <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center text-muted-foreground py-8">No notes yet. Select a document and add one to get started!</div>
+                  )}
+                </ScrollArea>
 
                 {generatedReport && (
                     <div className="mt-4 p-4 border rounded-lg bg-muted/50">

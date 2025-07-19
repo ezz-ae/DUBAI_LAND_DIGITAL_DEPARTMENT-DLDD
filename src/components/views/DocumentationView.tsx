@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -24,6 +24,7 @@ interface DocumentationViewProps {
 export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, toast }: DocumentationViewProps) {
   const { theme, setTheme } = useTheme();
   const [textSize, setTextSize] = useState('text-base');
+  const sourceGuideRef = useRef<HTMLDivElement>(null);
 
   const isArabic = selectedDoc?.name.includes('Arabic') || selectedDoc?.name.includes('الرؤية');
 
@@ -69,27 +70,29 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
           </Button>
         </SidebarFooter>
       </Sidebar>
-      <ScrollArea className="flex-1 bg-muted/30 dark:bg-muted/10">
-        <div className="container mx-auto p-4 md:p-6">
-          {selectedDoc ? (
-            <div className="flex flex-col gap-6">
+      <div className="flex-1 bg-muted/30 dark:bg-muted/10 p-4 md:p-6 overflow-hidden">
+        {selectedDoc ? (
+          <div className="flex flex-col gap-6 h-full">
+            <div ref={sourceGuideRef}>
               <SourceGuide
                 summary={selectedDoc.summary}
                 keyTopics={selectedDoc.keyTopics}
                 isArabic={isArabic}
                 onTopicClick={onTopicClick}
               />
-              <Card className="flex-1 flex flex-col">
-                <CardTitleWithBackground>
-                  <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
-                  <div className="flex items-center gap-1">
-                     <Button variant='outline' size="sm" onClick={handleLanguageToggle}><Languages className="h-4 w-4 mr-2"/>{isArabic ? 'English' : 'العربية'}</Button>
-                    <Button variant={textSize === 'text-sm' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>A</Button>
-                    <Button variant={textSize === 'text-base' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>A</Button>
-                    <Button variant={textSize === 'text-lg' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>A</Button>
-                  </div>
-                </CardTitleWithBackground>
-                <CardContent className="p-0">
+            </div>
+            <Card className="flex-1 flex flex-col overflow-hidden">
+              <CardTitleWithBackground>
+                <h3 className="text-lg font-headline font-semibold leading-none tracking-tight">{selectedDoc.name}</h3>
+                <div className="flex items-center gap-1">
+                   <Button variant='outline' size="sm" onClick={handleLanguageToggle}><Languages className="h-4 w-4 mr-2"/>{isArabic ? 'English' : 'العربية'}</Button>
+                  <Button variant={textSize === 'text-sm' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>A</Button>
+                  <Button variant={textSize === 'text-base' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>A</Button>
+                  <Button variant={textSize === 'text-lg' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>A</Button>
+                </div>
+              </CardTitleWithBackground>
+              <CardContent className="p-0 flex-1 overflow-hidden">
+                  <ScrollArea className="h-full">
                     <div
                       dir={isArabic ? 'rtl' : 'ltr'}
                       className={cn(
@@ -100,17 +103,17 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick, t
                       dangerouslySetInnerHTML={{ __html: selectedDoc.content }}
                     >
                     </div>
-                </CardContent>
-              </Card>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full py-16">
-              <h2 className="text-2xl font-semibold">Select a document to begin</h2>
-              <p>Choose a document from the sidebar to view its content and start your review.</p>
-            </div>
-          )}
-        </div>
-      </ScrollArea>
+                  </ScrollArea>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full py-16">
+            <h2 className="text-2xl font-semibold">Select a document to begin</h2>
+            <p>Choose a document from the sidebar to view its content and start your review.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

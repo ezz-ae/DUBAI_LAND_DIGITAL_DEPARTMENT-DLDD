@@ -129,4 +129,8 @@ body {
   .ai-console-card:hover {
     @apply border-primary/50;
   }
+  .h-content-area {
+      /* 100vh - header height - main container padding - card gap */
+      height: calc(100vh - 4rem - (1.5rem * 2) - 1.5rem);
+  }
 }
