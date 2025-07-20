@@ -1,10 +1,11 @@
 
 'use client';
-import React, { useState, useCallback } from 'react';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { mindMapData } from '@/lib/mindmap-data';
 import { cn } from '@/lib/utils';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ArrowUp, ArrowDown, ArrowLeft, ArrowRight as ArrowRightIcon } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface MindMapNodeData {
   id: string;
@@ -70,6 +71,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
     <>
       {parentPosition && <Line from={{x: parentPosition.x + NODE_WIDTH, y: parentPosition.y + NODE_HEIGHT / 2}} to={{x: position.x, y: position.y + NODE_HEIGHT / 2}} />}
       <div
+        id={`node-${node.id}`}
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
@@ -158,28 +160,31 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>) => {
   return { layout: positions, height: treeHeight + 100, width: totalTreeWidth + 100 };
 };
 
+const findNode = (root: MindMapNodeData, id: string): MindMapNodeData | null => {
+  if (root.id === id) return root;
+  if (root.children) {
+    for (const child of root.children) {
+      const found = findNode(child, id);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 
 export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) => void }> = ({ onNodeDoubleClick }) => {
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set(['root']));
+  const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
+  const lastExpandedNodeId = useRef<string | null>(null);
 
   const toggleExpand = useCallback((nodeId: string) => {
+    lastExpandedNodeId.current = nodeId;
     setExpandedNodes(prev => {
       const newSet = new Set(prev);
       if (newSet.has(nodeId)) {
         const nodesToCollapse = new Set([nodeId]);
         const queue: MindMapNodeData[] = [];
         
-        const findNode = (root: MindMapNodeData, id: string): MindMapNodeData | null => {
-          if (root.id === id) return root;
-          if (root.children) {
-            for (const child of root.children) {
-              const found = findNode(child, id);
-              if (found) return found;
-            }
-          }
-          return null;
-        }
-
         const startNode = findNode(mindMapData, nodeId);
         if (startNode) queue.push(startNode);
         
@@ -202,6 +207,33 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
   }, []);
   
   const { layout, height, width } = calculateLayout(mindMapData, expandedNodes);
+
+  useEffect(() => {
+    if (transformRef.current && lastExpandedNodeId.current) {
+        const nodeId = lastExpandedNodeId.current;
+        const node = findNode(mindMapData, nodeId);
+        if (node && expandedNodes.has(nodeId) && node.children && node.children.length > 0) {
+            // Find the center of the children
+            const childPositions = node.children.map(child => layout[child.id]);
+            const yCoords = childPositions.map(p => p.y);
+            const minY = Math.min(...yCoords);
+            const maxY = Math.max(...yCoords);
+            const centerX = childPositions[0].x + NODE_WIDTH / 2;
+            const centerY = minY + (maxY - minY) / 2;
+            
+            // Pan to the center of the children
+            const { setTransform } = transformRef.current;
+            const { positionX, positionY, scale } = transformRef.current.state;
+            
+            const newX = -centerX * scale + window.innerWidth / 2;
+            const newY = -centerY * scale + window.innerHeight / 2;
+
+            setTransform(newX, newY, scale, 300, 'easeOut');
+        }
+        lastExpandedNodeId.current = null;
+    }
+  }, [expandedNodes, layout]);
+
   
   const renderedNodes: React.ReactNode[] = [];
   
@@ -231,25 +263,41 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
   buildRenderTree(mindMapData);
 
   return (
-    <div className="w-full h-full overflow-hidden bg-background rounded-lg border">
+    <div className="w-full h-full overflow-hidden bg-background rounded-lg border relative">
       <TransformWrapper
+        ref={transformRef}
         minScale={0.2}
         initialScale={1.5}
         centerOnInit
         limitToBounds={false}
       >
-        {({ zoomIn, zoomOut, resetTransform }) => (
-          <React.Fragment>
-            <TransformComponent
-              wrapperStyle={{ width: '100%', height: '100%' }}
-              contentStyle={{ width: `${width}px`, height: `${height}px` }}
-            >
-              <div className="relative" style={{ height: `${height}px`, width: `${width}px`}}>
-                 {renderedNodes}
-              </div>
-            </TransformComponent>
-          </React.Fragment>
-        )}
+        {({ zoomIn, zoomOut, resetTransform, centerView, setTransform }) => {
+            const pan = (dx: number, dy: number) => {
+                 if (!transformRef.current) return;
+                 const { positionX, positionY, scale } = transformRef.current.state;
+                 setTransform(positionX + dx, positionY + dy, scale, 200, "easeOut");
+            };
+            return (
+              <React.Fragment>
+                <div className="absolute top-4 left-4 z-10 flex flex-col items-center space-y-2">
+                    <Button size="icon" variant="outline" className="w-10 h-10" onClick={() => pan(0, 50)}><ArrowUp className="w-5 h-5" /></Button>
+                    <div className="flex space-x-2">
+                        <Button size="icon" variant="outline" className="w-10 h-10" onClick={() => pan(50, 0)}><ArrowLeft className="w-5 h-5" /></Button>
+                        <Button size="icon" variant="outline" className="w-10 h-10" onClick={() => pan(-50, 0)}><ArrowRightIcon className="w-5 h-5" /></Button>
+                    </div>
+                    <Button size="icon" variant="outline" className="w-10 h-10" onClick={() => pan(0, -50)}><ArrowDown className="w-5 h-5" /></Button>
+                </div>
+                <TransformComponent
+                  wrapperStyle={{ width: '100%', height: '100%' }}
+                  contentStyle={{ width: `${width}px`, height: `${height}px` }}
+                >
+                  <div className="relative" style={{ height: `${height}px`, width: `${width}px`}}>
+                     {renderedNodes}
+                  </div>
+                </TransformComponent>
+              </React.Fragment>
+            )
+        }}
       </TransformWrapper>
     </div>
   );
