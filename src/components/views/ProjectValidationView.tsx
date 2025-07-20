@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { CheckCircle2, ShieldCheck, Beaker, BarChart3, FileJson, GanttChartSquare } from 'lucide-react';
+import { Beaker, GanttChartSquare, ShieldCheck } from 'lucide-react';
 
 const ValidationSection = ({ icon, title, description, children }: { icon: React.ReactNode, title: string, description: string, children: React.ReactNode }) => (
   <Card className="bg-card/50">
