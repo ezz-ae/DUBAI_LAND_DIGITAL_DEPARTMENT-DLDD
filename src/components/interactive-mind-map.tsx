@@ -223,7 +223,10 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
             
             // Pan to the center of the children
             const { setTransform } = transformRef.current;
-            const { positionX, positionY, scale } = transformRef.current.state;
+            const state = transformRef.current.state;
+            if (!state) return;
+            const { positionX, positionY, scale } = state;
+
             
             const newX = -centerX * scale + window.innerWidth / 2;
             const newY = -centerY * scale + window.innerHeight / 2;
@@ -273,7 +276,7 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
       >
         {({ zoomIn, zoomOut, resetTransform, centerView, setTransform }) => {
             const pan = (dx: number, dy: number) => {
-                 if (!transformRef.current) return;
+                 if (!transformRef.current || !transformRef.current.state) return;
                  const { positionX, positionY, scale } = transformRef.current.state;
                  setTransform(positionX + dx, positionY + dy, scale, 200, "easeOut");
             };
