@@ -113,11 +113,6 @@ export function TechnicalDocsView() {
               <CardHeader className="text-center">
                 <CardTitle className="font-headline text-4xl">{technicalBook.title}</CardTitle>
                 <CardDescription className="text-md">{technicalBook.subtitle}</CardDescription>
-                 <div className="text-sm text-muted-foreground pt-4">
-                    <p>Prepared for: {technicalBook.preparedFor}</p>
-                    <p>Prepared by: {technicalBook.preparedBy}</p>
-                    <p>Date: {technicalBook.date}</p>
-                 </div>
               </CardHeader>
               <CardContent className="px-4 md:px-8">
                 {showFullBook ? (

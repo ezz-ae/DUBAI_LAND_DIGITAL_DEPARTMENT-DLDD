@@ -3,6 +3,7 @@
 
 
 
+
 interface CodeContent {
     type: 'code';
     language: string;
@@ -54,9 +55,6 @@ export interface BookConclusion {
 export interface TechnicalBook {
     title: string;
     subtitle: string;
-    preparedFor: string;
-    preparedBy: string;
-    date: string;
     introduction: {
         id: string;
         title: string;
@@ -70,9 +68,6 @@ export interface TechnicalBook {
 export const technicalBook: TechnicalBook = {
     title: "DLDCHAIN: The Architectural Governance Protocol for Dubai's Real Estate Future",
     subtitle: "A Comprehensive Technical Analysis",
-    preparedFor: "Dubai Land Department (DLD) and Strategic Partners",
-    preparedBy: "Mahmoud Ezz, Dubai Resident | Real Estate Specialist | Technology Architect",
-    date: "Q4 2025 – Dubai, UAE",
     introduction: {
         id: 'book-introduction',
         title: "Book Conclusion: Realizing the Future of Real Estate Governance",
