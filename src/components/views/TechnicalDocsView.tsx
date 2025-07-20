@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { technicalBook } from '@/lib/technical-documents';
@@ -54,23 +54,54 @@ const renderPart = (part: BookPart) => (
   </section>
 );
 
+const FullBookContent = () => (
+    <>
+        {technicalBook.parts.map(renderPart)}
+        <section id="book-conclusion" className="py-8">
+            <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.conclusion.title}</h1>
+            <Separator className="my-6" />
+            {technicalBook.conclusion.content.map(renderContentItem)}
+        </section>
+        <section id="appendices" className="py-8">
+            <h1 className="font-headline text-5xl font-bold mb-4">Appendices</h1>
+            <Separator className="my-6" />
+            {technicalBook.appendices.map(appendix => (
+                 <section key={appendix.id} id={appendix.id} className="py-4">
+                    <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{appendix.title}</h2>
+                    {appendix.content.map(renderContentItem)}
+                </section>
+            ))}
+        </section>
+    </>
+);
+
 
 export function TechnicalDocsView() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [showFullBook, setShowFullBook] = useState(false);
+  const [pendingScrollId, setPendingScrollId] = useState<string | null>(null);
 
   const handleLinkClick = (id: string) => {
-    const element = document.getElementById(id);
-    if (element && scrollRef.current) {
-        const container = scrollRef.current.querySelector('div[data-radix-scroll-area-viewport]');
-        if(container) {
-            const offsetTop = element.offsetTop - container.getBoundingClientRect().top;
-            container.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    }
+    setShowFullBook(true);
+    setPendingScrollId(id);
   };
+
+  useEffect(() => {
+    if (pendingScrollId && showFullBook) {
+      const element = document.getElementById(pendingScrollId);
+      if (element && scrollRef.current) {
+          const container = scrollRef.current.querySelector('div[data-radix-scroll-area-viewport]');
+          if(container) {
+              const offsetTop = element.offsetTop - container.getBoundingClientRect().top;
+              container.scrollTo({
+                  top: offsetTop,
+                  behavior: 'smooth'
+              });
+          }
+      }
+      setPendingScrollId(null);
+    }
+  }, [pendingScrollId, showFullBook]);
 
   return (
     <div className="flex flex-1 overflow-hidden">
@@ -89,24 +120,15 @@ export function TechnicalDocsView() {
                  </div>
               </CardHeader>
               <CardContent className="px-4 md:px-8">
-                {technicalBook.parts.map(renderPart)}
-
-                <section id="book-conclusion" className="py-8">
-                    <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.conclusion.title}</h1>
-                    <Separator className="my-6" />
-                    {technicalBook.conclusion.content.map(renderContentItem)}
-                </section>
-
-                <section id="appendices" className="py-8">
-                    <h1 className="font-headline text-5xl font-bold mb-4">Appendices</h1>
-                    <Separator className="my-6" />
-                    {technicalBook.appendices.map(appendix => (
-                         <section key={appendix.id} id={appendix.id} className="py-4">
-                            <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{appendix.title}</h2>
-                            {appendix.content.map(renderContentItem)}
-                        </section>
-                    ))}
-                </section>
+                {showFullBook ? (
+                    <FullBookContent />
+                ) : (
+                    <section id="book-introduction" className="py-8">
+                        <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.introduction.title}</h1>
+                        <Separator className="my-6" />
+                        {technicalBook.introduction.content.map(renderContentItem)}
+                    </section>
+                )}
               </CardContent>
             </Card>
           </div>
