@@ -1461,7 +1461,15 @@ class DLDCHAINPropertyTokenization:
         self.transaction_fee_rate = 0.005
         self.broker_commission_rate = 0.01
 
-    # ... other methods like _generateCDID, _encryptData, etc.
+    def _generateCDID(self, land_number: str, building: str) -> str:
+        return hashlib.sha256(f"{land_number}-{building}".encode('utf-8')).hexdigest()
+        
+    def _encryptData(self, data: str) -> str:
+        key = b"DLDCHAIN_SECRET_KEY_32_BYTES_LONG"
+        cipher = AES.new(key, AES.MODE_EAX)
+        nonce = cipher.nonce
+        ciphertext, tag = cipher.encrypt_and_digest(data.encode('utf-8'))
+        return b64encode(nonce + ciphertext).decode('utf-8')
 
     def submitProperty(self, args: List[str]) -> Dict:
         # Simplified for brevity
@@ -1471,11 +1479,8 @@ class DLDCHAINPropertyTokenization:
             "CDID": cdid, "Owner": sender_wallet, "Status": "PendingVerification",
             "AppraisedValue": float(appraised_value_str), "HasMortgage": has_mortgage_str.lower() == 'true'
         }
-        self.ledger.put_state(cdid, self._encryptData(json.dumps(property_data)))
+        self.ledger.put_state(cdid.encode(), self._encryptData(json.dumps(property_data)).encode())
         return self.ledger.success(json.dumps({"CDID": cdid}).encode())
-    
-    # ... other chaincode functions (verify, approve, makeIn, trade, executeMPT)
-    # The full code implementation would be extensive and is represented conceptually here.
 `
                                 }
                             ] 
@@ -1673,7 +1678,7 @@ class DLDCHAINPropertyTokenization:
                             ]
                         },
                     ]
-                },
+                }
             ]
         },
         {
@@ -2194,7 +2199,7 @@ class DLDCHAINPropertyTokenization:
                             ]
                         }
                     ] 
-                },
+                }
             ]
         }
     ],
