@@ -234,8 +234,7 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
     <div className="w-full h-full overflow-hidden bg-background rounded-lg border">
       <TransformWrapper
         minScale={0.2}
-        initialScale={1}
-        initialPositionX={-NODE_WIDTH / 2}
+        initialScale={1.5}
         centerOnInit
         limitToBounds={false}
       >
