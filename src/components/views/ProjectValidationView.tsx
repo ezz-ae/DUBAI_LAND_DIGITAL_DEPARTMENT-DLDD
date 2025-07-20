@@ -74,10 +74,10 @@ export function ProjectValidationView() {
                             <p className="text-sm text-muted-foreground mb-4">Demonstrates the baseline tokenization process, providing instant liquidity to owners and creating accessible investment opportunities.</p>
                             <ul className="text-sm space-y-2">
                                 <li><strong className="text-primary">Property Value:</strong> AED 2,000,000</li>
-                                <li><strong className="text-primary">Owner Cash-Out:</strong> AED 1,200,000 (60%)</li>
-                                <li><strong className="text-primary">Owner Retained Tokens:</strong> 800,000 DXBTOKENS (40%)</li>
-                                <li><strong className="text-primary">Investor ROI:</strong> 118% (based on 5% property appreciation and market trading)</li>
-                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 1,490,000 beyond the initial asset value.</li>
+                                <li><strong className="text-primary">Owner Cash-Out (60%):</strong> AED 1,200,000</li>
+                                <li><strong className="text-primary">Owner Retained Tokens (40%):</strong> 800,000 DXBTOKENS</li>
+                                <li><strong className="text-primary">Investor ROI (12-month simulation):</strong> 118% (based on 5% property appreciation and market trading)</li>
+                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 1,490,000 beyond the initial asset value, distributed among stakeholders (investors, DLD, brokers).</li>
                             </ul>
                         </TabsContent>
                         <TabsContent value="mortgaged" className="p-4 border rounded-lg mt-2 bg-background">
@@ -85,21 +85,22 @@ export function ProjectValidationView() {
                             <p className="text-sm text-muted-foreground mb-4">Proves the system's unique capability to handle complex financial instruments by tokenizing a property with an existing mortgage, seamlessly clearing the lien, and cashing out the owner.</p>
                              <ul className="text-sm space-y-2">
                                 <li><strong className="text-primary">Property Value:</strong> AED 3,000,000</li>
-                                <li><strong className="text-primary">Mortgage Cleared:</strong> AED 1,500,000</li>
-                                <li><strong className="text-primary">Owner Total Cash-Out:</strong> AED 1,693,500 (initial 60% of equity + final MPT payout)</li>
-                                <li><strong className="text-primary">Lender Payout:</strong> Full AED 1.5M mortgage balance paid automatically.</li>
-                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 502,000 beyond the initial asset value.</li>
+                                <li><strong className="text-primary">Mortgage to be Cleared:</strong> AED 1,500,000</li>
+                                <li><strong className="text-primary">Owner's Initial Cash-Out (60% of Equity):</strong> AED 900,000</li>
+                                <li><strong className="text-primary">Owner's Final Payout (MPT Event):</strong> AED 793,500</li>
+                                <li><strong className="text-primary">Lender Payout:</strong> Full AED 1.5M mortgage balance paid automatically via MAKE escrow.</li>
+                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 502,000 beyond the initial asset value, demonstrating value creation even after settling debt.</li>
                             </ul>
                         </TabsContent>
                         <TabsContent value="offplan" className="p-4 border rounded-lg mt-2 bg-background">
                             <h4 className="font-semibold mb-2">Simulation: Off-Plan Unit</h4>
                             <p className="text-sm text-muted-foreground mb-4">Showcases how DLDCHAIN unlocks future value today by providing developers with upfront liquidity and offering investors early access to appreciating assets tied to construction milestones.</p>
                              <ul className="text-sm space-y-2">
-                                <li><strong className="text-primary">Projected Value:</strong> AED 2,500,000</li>
-                                <li><strong className="text-primary">Developer Upfront Liquidity:</strong> AED 500,000 (from 20% initial escrow)</li>
-                                <li><strong className="text-primary">Phased Token Release:</strong> Tokens released at Launch, Foundation, Structure, and Finishing milestones.</li>
-                                <li><strong className="text-primary">Investor ROI:</strong> 135% (reflecting higher risk/reward of off-plan investment)</li>
-                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 2,370,000 beyond the initial projected value.</li>
+                                <li><strong className="text-primary">Projected Completion Value:</strong> AED 2,500,000</li>
+                                <li><strong className="text-primary">Developer Upfront Liquidity (20%):</strong> AED 500,000</li>
+                                <li><strong className="text-primary">Phased Token Release:</strong> Tokens released at Launch, Foundation, Structure, and Finishing milestones, reducing investor risk.</li>
+                                <li><strong className="text-primary">Investor ROI (24-month simulation):</strong> 135% (reflecting higher risk/reward of off-plan investment)</li>
+                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 2,370,000 beyond the initial projected value, accelerating development cycles and investment returns.</li>
                             </ul>
                         </TabsContent>
                     </Tabs>
