@@ -4,8 +4,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { mindMapData } from '@/lib/mindmap-data';
 import { cn } from '@/lib/utils';
-import { ChevronRight, ArrowUp, ArrowDown, ArrowLeft, ArrowRight as ArrowRightIcon } from 'lucide-react';
-import { Button } from './ui/button';
+import { ChevronRight } from 'lucide-react';
 
 interface MindMapNodeData {
   id: string;
@@ -225,7 +224,7 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
             const { setTransform } = transformRef.current;
             const state = transformRef.current.state;
             if (!state) return;
-            const { positionX, positionY, scale } = state;
+            const { scale } = state;
 
             
             const newX = -centerX * scale + window.innerWidth / 2;
@@ -274,33 +273,14 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
         centerOnInit
         limitToBounds={false}
       >
-        {({ zoomIn, zoomOut, resetTransform, centerView, setTransform }) => {
-            const pan = (dx: number, dy: number) => {
-                 if (!transformRef.current || !transformRef.current.state) return;
-                 const { positionX, positionY, scale } = transformRef.current.state;
-                 setTransform(positionX + dx, positionY + dy, scale, 200, "easeOut");
-            };
-            return (
-              <React.Fragment>
-                <div className="absolute top-4 left-4 z-10 flex flex-col items-center space-y-2">
-                    <Button size="icon" variant="outline" className="w-10 h-10" onClick={() => pan(0, 50)}><ArrowUp className="w-5 h-5" /></Button>
-                    <div className="flex space-x-2">
-                        <Button size="icon" variant="outline" className="w-10 h-10" onClick={() => pan(50, 0)}><ArrowLeft className="w-5 h-5" /></Button>
-                        <Button size="icon" variant="outline" className="w-10 h-10" onClick={() => pan(-50, 0)}><ArrowRightIcon className="w-5 h-5" /></Button>
-                    </div>
-                    <Button size="icon" variant="outline" className="w-10 h-10" onClick={() => pan(0, -50)}><ArrowDown className="w-5 h-5" /></Button>
-                </div>
-                <TransformComponent
-                  wrapperStyle={{ width: '100%', height: '100%' }}
-                  contentStyle={{ width: `${width}px`, height: `${height}px` }}
-                >
-                  <div className="relative" style={{ height: `${height}px`, width: `${width}px`}}>
-                     {renderedNodes}
-                  </div>
-                </TransformComponent>
-              </React.Fragment>
-            )
-        }}
+          <TransformComponent
+            wrapperStyle={{ width: '100%', height: '100%' }}
+            contentStyle={{ width: `${width}px`, height: `${height}px` }}
+          >
+            <div className="relative" style={{ height: `${height}px`, width: `${width}px`}}>
+                {renderedNodes}
+            </div>
+          </TransformComponent>
       </TransformWrapper>
     </div>
   );
