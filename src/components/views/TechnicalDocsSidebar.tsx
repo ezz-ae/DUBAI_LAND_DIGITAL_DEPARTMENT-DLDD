@@ -1,6 +1,7 @@
 
 'use client';
 
+import React from 'react';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel } from '@/components/ui/sidebar';
 import { technicalBook } from '@/lib/technical-documents';
 import { cn } from '@/lib/utils';
