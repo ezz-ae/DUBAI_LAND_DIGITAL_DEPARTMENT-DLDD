@@ -17,18 +17,22 @@ interface ListContent {
 
 type ContentItem = CodeContent | TextContent | ListContent;
 
-interface TechnicalDocument {
+export interface TechnicalDocument {
   id: number;
   name: string;
   summary: string;
   content: ContentItem[];
+  group: string;
+  lang: 'en' | 'ar';
 }
 
 export const technicalDocuments: TechnicalDocument[] = [
     {
         id: 1,
-        name: "DLDCHAIN's Market Making System",
+        name: "Market Making System",
         summary: "An explanation of the dynamics of gains and value creation within the DLDCHAIN Market Making System.",
+        group: 'System Design',
+        lang: 'en',
         content: [
             {
                 type: 'heading',
