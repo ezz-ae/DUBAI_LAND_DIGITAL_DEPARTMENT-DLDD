@@ -91,6 +91,12 @@ export function TechnicalDocsView() {
               <CardContent className="px-4 md:px-8">
                 {technicalBook.parts.map(renderPart)}
 
+                <section id="book-conclusion" className="py-8">
+                    <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.conclusion.title}</h1>
+                    <Separator className="my-6" />
+                    {technicalBook.conclusion.content.map(renderContentItem)}
+                </section>
+
                 <section id="appendices" className="py-8">
                     <h1 className="font-headline text-5xl font-bold mb-4">Appendices</h1>
                     <Separator className="my-6" />
@@ -101,13 +107,6 @@ export function TechnicalDocsView() {
                         </section>
                     ))}
                 </section>
-
-                 <section id="book-conclusion" className="py-8">
-                    <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.conclusion.title}</h1>
-                    <Separator className="my-6" />
-                    {technicalBook.conclusion.content.map(renderContentItem)}
-                </section>
-
               </CardContent>
             </Card>
           </div>
