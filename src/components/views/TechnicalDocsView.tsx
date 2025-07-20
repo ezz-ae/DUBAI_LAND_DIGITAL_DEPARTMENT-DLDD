@@ -1,13 +1,15 @@
 
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { technicalBook } from '@/lib/technical-documents';
 import type { BookChapter, BookArticle, ContentItem } from '@/lib/technical-documents';
 import { TechnicalDocsSidebar } from './TechnicalDocsSidebar';
 import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const renderContentItem = (item: ContentItem, index: number) => {
     if (item.type === 'paragraph') {
@@ -43,6 +45,9 @@ const findItem = (id: string) => {
     }
 
     for (const part of technicalBook.parts) {
+        if(part.id === id) {
+            return { ...part, type: 'part' };
+        }
         for (const chapter of part.chapters) {
             if (chapter.id === id) {
                 return { ...chapter, type: 'chapter' };
@@ -68,6 +73,34 @@ const findItem = (id: string) => {
 export function TechnicalDocsView() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+
+  const flatNavItems = useMemo(() => {
+    const items: { id: string; title: string }[] = [];
+    items.push({ id: technicalBook.introduction.id, title: technicalBook.introduction.title });
+    technicalBook.parts.forEach(part => {
+      part.chapters.forEach(chapter => {
+        chapter.articles.forEach(article => {
+          items.push({ id: article.id, title: article.title });
+        });
+      });
+    });
+    technicalBook.appendices.forEach(appendix => {
+        items.push({ id: appendix.id, title: appendix.title });
+    });
+    return items;
+  }, []);
+
+  const { prevItem, nextItem } = useMemo(() => {
+    if (!selectedItemId) return { prevItem: null, nextItem: null };
+    const currentIndex = flatNavItems.findIndex(item => item.id === selectedItemId);
+    if (currentIndex === -1) return { prevItem: null, nextItem: null };
+    
+    const prev = currentIndex > 0 ? flatNavItems[currentIndex - 1] : null;
+    const next = currentIndex < flatNavItems.length - 1 ? flatNavItems[currentIndex + 1] : null;
+
+    return { prevItem: prev, nextItem: next };
+  }, [selectedItemId, flatNavItems]);
+
 
   const handleLinkClick = (id: string) => {
     setSelectedItemId(id);
@@ -104,14 +137,33 @@ export function TechnicalDocsView() {
           </section>
       )
     }
-
+    
     // This handles articles, appendices, and the book introduction
+    if ('content' in selectedItem && Array.isArray(selectedItem.content)) {
+        return (
+            <section id={selectedItem.id} className="py-4">
+                <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
+                {selectedItem.content.map(renderContentItem)}
+            </section>
+        );
+    }
+  }
+
+  const renderNavigationFooter = () => {
+    if (!selectedItemId || !findItem(selectedItemId)) return null;
+
     return (
-        <section id={selectedItem.id} className="py-4">
-            <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
-            {selectedItem.content.map(renderContentItem)}
-        </section>
-    );
+        <div className="flex justify-between items-center mt-8 pt-6 border-t">
+            <Button variant="outline" onClick={() => handleLinkClick(prevItem!.id)} disabled={!prevItem}>
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Previous
+            </Button>
+            <Button variant="outline" onClick={() => handleLinkClick(nextItem!.id)} disabled={!nextItem}>
+                Next
+                <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+        </div>
+    )
   }
 
   return (
@@ -121,12 +173,9 @@ export function TechnicalDocsView() {
         <ScrollArea className="h-full" ref={scrollRef}>
           <div className="max-w-7xl mx-auto w-full h-full p-6 md:p-10">
             <Card className="flex-1 flex flex-col overflow-hidden prose dark:prose-invert max-w-none">
-              <CardHeader className="text-center">
-                <CardTitle className="font-headline text-4xl">{technicalBook.title}</CardTitle>
-                <CardDescription className="text-md">{technicalBook.subtitle}</CardDescription>
-              </CardHeader>
               <CardContent className="px-4 md:px-8">
                 {renderContent()}
+                {renderNavigationFooter()}
               </CardContent>
             </Card>
           </div>
