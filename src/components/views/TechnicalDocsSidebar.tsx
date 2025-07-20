@@ -15,9 +15,10 @@ import type { BookPart, BookChapter, BookArticle } from '@/lib/technical-documen
 
 interface TechnicalDocsSidebarProps {
   onLinkClick: (id: string) => void;
+  selectedItemId: string | null;
 }
 
-export function TechnicalDocsSidebar({ onLinkClick }: TechnicalDocsSidebarProps) {
+export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalDocsSidebarProps) {
   
   const handleLinkClick = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
@@ -31,7 +32,11 @@ export function TechnicalDocsSidebar({ onLinkClick }: TechnicalDocsSidebarProps)
       </SidebarHeader>
       <SidebarContent className="flex-1 p-0">
         <SidebarMenu className="list-none p-2">
-            <Accordion type="multiple" className="w-full">
+            <Accordion type="multiple" className="w-full" defaultValue={technicalBook.parts.map(p => p.id)}>
+              <a href="#book-introduction" onClick={(e) => handleLinkClick(e, 'book-introduction')} 
+                 className={cn("font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors block px-3", selectedItemId === 'book-introduction' && 'text-primary')}>
+                  Book Introduction
+              </a>
               {technicalBook.parts.map((part) => (
                   <AccordionItem value={part.id} key={part.id}>
                     <AccordionTrigger className="text-sm font-semibold text-primary hover:no-underline px-3 py-2">
@@ -41,13 +46,15 @@ export function TechnicalDocsSidebar({ onLinkClick }: TechnicalDocsSidebarProps)
                       <ul className="list-none p-0">
                           {part.chapters.map((chapter) => (
                              <li key={chapter.id} className="flex flex-col items-start pl-3">
-                                <a href={`#${chapter.id}`} onClick={(e) => handleLinkClick(e, chapter.id)} className="font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors">
+                                <a href={`#${chapter.id}`} onClick={(e) => handleLinkClick(e, chapter.id)} 
+                                   className={cn("font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors", selectedItemId === chapter.id && 'text-primary')}>
                                     {chapter.title}
                                 </a>
                                 <ul className="list-none p-0 pl-3">
                                     {chapter.articles.map((article) => (
                                         <li key={article.id}>
-                                            <a href={`#${article.id}`} onClick={(e) => handleLinkClick(e, article.id)} className="text-muted-foreground py-1 text-sm w-full text-left block hover:text-primary transition-colors">
+                                            <a href={`#${article.id}`} onClick={(e) => handleLinkClick(e, article.id)} 
+                                               className={cn("text-muted-foreground py-1 text-sm w-full text-left block hover:text-primary transition-colors", selectedItemId === article.id && 'text-primary')}>
                                                 {article.title}
                                             </a>
                                         </li>
@@ -68,7 +75,8 @@ export function TechnicalDocsSidebar({ onLinkClick }: TechnicalDocsSidebarProps)
                   <ul className="list-none p-0">
                     {technicalBook.appendices.map((appendix) => (
                        <li key={appendix.id} className="pl-3">
-                           <a href={`#${appendix.id}`} onClick={(e) => handleLinkClick(e, appendix.id)} className="text-muted-foreground py-1 text-sm w-full text-left block hover:text-primary transition-colors">
+                           <a href={`#${appendix.id}`} onClick={(e) => handleLinkClick(e, appendix.id)} 
+                              className={cn("text-muted-foreground py-1 text-sm w-full text-left block hover:text-primary transition-colors", selectedItemId === appendix.id && 'text-primary')}>
                                 {appendix.title}
                            </a>
                        </li>
