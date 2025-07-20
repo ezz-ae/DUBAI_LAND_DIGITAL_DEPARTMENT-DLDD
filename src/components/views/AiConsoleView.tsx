@@ -97,7 +97,7 @@ export function AiConsoleView({
     const currentMessage = message || input;
     if (!currentMessage.trim() || isAnswering ) return;
     
-    const context = selectedDoc?.content || dldChainDocuments.map(d => d.content).join('\n\n');
+    const context = dldChainDocuments.map(d => d.content).join('\n\n');
 
     const newMessages = [...messages, { from: 'user', text: currentMessage }];
     setMessages(newMessages);
@@ -123,14 +123,14 @@ export function AiConsoleView({
   };
 
   const handleExplainTopic = async (topic: string) => {
-    if (!selectedDoc) return;
     toast({ title: `Explaining: ${topic}`, description: "The AI is preparing an explanation..."});
     const newMessages = [...messages, { from: 'user', text: `Explain this topic for me: ${topic}` }];
     setMessages(newMessages);
     setIsAnswering(true);
     
     try {
-      const result = await explainTopic({ topic: topic, context: selectedDoc.content });
+      const context = dldChainDocuments.map(d => d.content).join('\n\n');
+      const result = await explainTopic({ topic: topic, context: context });
       const botAnswer = result.explanation;
       const isBotAnswerArabic = /[\u0600-\u06FF]/.test(botAnswer);
       setMessages([...newMessages, { from: 'bot', text: botAnswer, isArabic: isBotAnswerArabic }]);
