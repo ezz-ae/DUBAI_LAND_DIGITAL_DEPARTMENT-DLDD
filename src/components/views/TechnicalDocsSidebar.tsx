@@ -32,7 +32,7 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
       </SidebarHeader>
       <SidebarContent className="flex-1 p-0">
         <SidebarMenu className="list-none p-2">
-            <Accordion type="multiple" className="w-full" defaultValue={technicalBook.parts.map(p => p.id)}>
+            <Accordion type="single" className="w-full" collapsible>
               <a href="#book-introduction" onClick={(e) => handleLinkClick(e, 'book-introduction')} 
                  className={cn("font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors block px-3", selectedItemId === 'book-introduction' && 'text-primary')}>
                   Book Introduction
