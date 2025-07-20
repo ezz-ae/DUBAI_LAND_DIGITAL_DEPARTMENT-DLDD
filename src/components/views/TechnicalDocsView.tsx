@@ -89,6 +89,23 @@ export function TechnicalDocsView() {
         )
     }
 
+    if (selectedItem.type === 'chapter') {
+      return (
+          <section id={selectedItem.id} className="py-8">
+              <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
+              {selectedItem.introduction.map(renderContentItem)}
+              <Separator className="my-6"/>
+              {selectedItem.articles.map(article => (
+                  <article key={article.id} id={article.id} className="pt-6">
+                      <h3 className="font-headline text-xl font-bold mb-4">{article.title}</h3>
+                      {article.content.map(renderContentItem)}
+                  </article>
+              ))}
+          </section>
+      )
+    }
+
+    // This handles articles, appendices, and the book introduction
     return (
         <section id={selectedItem.id} className="py-4">
             <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
