@@ -1,65 +1,117 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { technicalDocuments } from '@/lib/technical-documents';
-import type { TechnicalDocument } from '@/lib/technical-documents';
+import { technicalBook } from '@/lib/technical-documents';
+import type { BookPart, BookChapter, BookArticle, ContentItem } from '@/lib/technical-documents';
 import { TechnicalDocsSidebar } from './TechnicalDocsSidebar';
+import { Separator } from '@/components/ui/separator';
+
+const renderContentItem = (item: ContentItem, index: number) => {
+    if (item.type === 'paragraph') {
+      return <p key={index} className="mb-4" dangerouslySetInnerHTML={{ __html: item.text }} />;
+    }
+    if (item.type === 'heading') {
+      return <h3 key={index} className="mt-6 mb-3 font-headline text-xl font-bold" dangerouslySetInnerHTML={{ __html: item.text }} />;
+    }
+    if (item.type === 'subheading') {
+      return <h4 key={index} className="mt-4 mb-2 font-headline text-lg font-semibold" dangerouslySetInnerHTML={{ __html: item.text }} />;
+    }
+    if (item.type === 'code') {
+      return (
+        <pre key={index} className="relative my-4 rounded-lg bg-muted/50 p-4 border font-code text-sm overflow-x-auto">
+          <code>{item.text}</code>
+        </pre>
+      );
+    }
+    if (item.type === 'list') {
+      return <ul key={index} className="list-disc pl-6 my-4 space-y-2">{item.items.map((li, i) => <li key={i} dangerouslySetInnerHTML={{ __html: li }} />)}</ul>;
+    }
+    return null;
+}
+
+const renderArticle = (article: BookArticle) => (
+  <section key={article.id} id={article.id} className="py-4">
+    <h3 className="font-headline text-2xl font-bold border-b pb-2 mb-4">{article.title}</h3>
+    {article.content.map(renderContentItem)}
+  </section>
+);
+
+const renderChapter = (chapter: BookChapter) => (
+  <section key={chapter.id} id={chapter.id} className="py-4">
+    <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{chapter.title}</h2>
+    {chapter.articles.map(renderArticle)}
+  </section>
+);
+
+const renderPart = (part: BookPart) => (
+  <section key={part.id} id={part.id} className="py-8">
+     <h1 className="font-headline text-5xl font-bold mb-4">{part.title}</h1>
+     <Separator className="my-6" />
+    {part.chapters.map(renderChapter)}
+  </section>
+);
+
 
 export function TechnicalDocsView() {
-  const [selectedDoc, setSelectedDoc] = useState<TechnicalDocument | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (technicalDocuments.length > 0 && !selectedDoc) {
-      setSelectedDoc(technicalDocuments[0]);
+  const handleLinkClick = (id: string) => {
+    const element = document.getElementById(id);
+    if (element && scrollRef.current) {
+        const container = scrollRef.current.querySelector('div[data-radix-scroll-area-viewport]');
+        if(container) {
+            const offsetTop = element.offsetTop - container.getBoundingClientRect().top;
+            container.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
     }
-  }, [selectedDoc]);
+  };
 
   return (
     <div className="flex flex-1 overflow-hidden">
-      <TechnicalDocsSidebar selectedDoc={selectedDoc} setSelectedDoc={setSelectedDoc} />
-      <main className="flex-1 overflow-auto">
-        <div className="max-w-7xl mx-auto w-full h-full p-6">
-          {selectedDoc ? (
-            <Card className="flex-1 flex flex-col overflow-hidden">
-              <CardHeader>
-                <CardTitle>{selectedDoc.name}</CardTitle>
-                {selectedDoc.summary && <CardDescription>{selectedDoc.summary}</CardDescription>}
+      <TechnicalDocsSidebar onLinkClick={handleLinkClick} />
+      <main className="flex-1 overflow-hidden">
+        <ScrollArea className="h-full" ref={scrollRef}>
+          <div className="max-w-7xl mx-auto w-full h-full p-6 md:p-10">
+            <Card className="flex-1 flex flex-col overflow-hidden prose dark:prose-invert max-w-none">
+              <CardHeader className="text-center">
+                <CardTitle className="font-headline text-4xl">{technicalBook.title}</CardTitle>
+                <CardDescription className="text-md">{technicalBook.subtitle}</CardDescription>
+                 <div className="text-sm text-muted-foreground pt-4">
+                    <p>Prepared for: {technicalBook.preparedFor}</p>
+                    <p>Prepared by: {technicalBook.preparedBy}</p>
+                    <p>Date: {technicalBook.date}</p>
+                 </div>
               </CardHeader>
-              <CardContent>
-                {selectedDoc.content.map((item, index) => {
-                  if (item.type === 'paragraph') {
-                    return <p key={index} dangerouslySetInnerHTML={{ __html: item.text }} />;
-                  }
-                  if (item.type === 'heading') {
-                    return <h3 key={index} className="mt-4 mb-2 font-semibold text-lg" dangerouslySetInnerHTML={{ __html: item.text }} />;
-                  }
-                  if (item.type === 'subheading') {
-                    return <h4 key={index} className="mt-3 mb-1 font-semibold text-md" dangerouslySetInnerHTML={{ __html: item.text }} />;
-                  }
-                  if (item.type === 'code') {
-                    return (
-                      <pre key={index} className="relative my-4 rounded-lg bg-muted/50 p-4 border font-code text-sm overflow-x-auto">
-                        <code>{item.text}</code>
-                      </pre>
-                    );
-                  }
-                  if (item.type === 'list') {
-                    return <ul key={index} className="list-disc pl-5 my-2 space-y-1">{item.items.map((li, i) => <li key={i} dangerouslySetInnerHTML={{ __html: li }} />)}</ul>;
-                  }
-                  return null;
-                })}
+              <CardContent className="px-4 md:px-8">
+                {technicalBook.parts.map(renderPart)}
+
+                <section id="appendices" className="py-8">
+                    <h1 className="font-headline text-5xl font-bold mb-4">Appendices</h1>
+                    <Separator className="my-6" />
+                    {technicalBook.appendices.map(appendix => (
+                         <section key={appendix.id} id={appendix.id} className="py-4">
+                            <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{appendix.title}</h2>
+                            {appendix.content.map(renderContentItem)}
+                        </section>
+                    ))}
+                </section>
+
+                 <section id="book-conclusion" className="py-8">
+                    <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.conclusion.title}</h1>
+                    <Separator className="my-6" />
+                    {technicalBook.conclusion.content.map(renderContentItem)}
+                </section>
+
               </CardContent>
             </Card>
-          ) : (
-            <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full py-16">
-              <h2 className="text-2xl font-semibold">Select a document to begin</h2>
-              <p>Choose a document from the sidebar to view its content.</p>
-            </div>
-          )}
-        </div>
+          </div>
+        </ScrollArea>
       </main>
     </div>
   );

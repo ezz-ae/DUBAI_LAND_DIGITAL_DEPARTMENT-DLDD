@@ -2,52 +2,88 @@
 'use client';
 
 import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel } from '@/components/ui/sidebar';
-import { technicalDocuments } from '@/lib/technical-documents';
+import { technicalBook } from '@/lib/technical-documents';
 import { cn } from '@/lib/utils';
-import type { TechnicalDocument } from '@/lib/technical-documents';
+import type { BookPart, BookChapter, BookArticle } from '@/lib/technical-documents';
 
 interface TechnicalDocsSidebarProps {
-  selectedDoc: TechnicalDocument | null;
-  setSelectedDoc: (doc: TechnicalDocument) => void;
+  onLinkClick: (id: string) => void;
 }
 
-export function TechnicalDocsSidebar({ selectedDoc, setSelectedDoc }: TechnicalDocsSidebarProps) {
-  const documentGroups = technicalDocuments.reduce((acc, doc) => {
-    const group = doc.group || 'general';
-    if (!acc[group]) {
-      acc[group] = [];
+export function TechnicalDocsSidebar({ onLinkClick }: TechnicalDocsSidebarProps) {
+  
+  const renderEntry = (entry: BookPart | BookChapter | BookArticle, level: number) => {
+    const id = entry.id;
+
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      onLinkClick(id);
+    };
+
+    const commonClasses = "w-full justify-start text-left h-auto py-1.5";
+    let button;
+
+    switch (level) {
+      case 0: // Part
+        button = (
+          <h3 className="px-3 py-2 text-sm font-semibold text-primary">{entry.title}</h3>
+        );
+        break;
+      case 1: // Chapter
+        button = (
+          <SidebarMenuButton
+            asChild
+            size="sm"
+            className={cn(commonClasses, "font-semibold pl-3")}
+          >
+            <a href={`#${id}`} onClick={handleClick}>{entry.title}</a>
+          </SidebarMenuButton>
+        );
+        break;
+      default: // Article
+        button = (
+           <SidebarMenuButton
+            asChild
+            size="sm"
+            className={cn(commonClasses, "text-muted-foreground pl-6")}
+          >
+            <a href={`#${id}`} onClick={handleClick}>{entry.title}</a>
+          </SidebarMenuButton>
+        );
+        break;
     }
-    acc[group].push(doc);
-    return acc;
-  }, {} as Record<string, TechnicalDocument[]>);
+
+    return (
+      <React.Fragment key={id}>
+        <SidebarMenuItem>
+          {button}
+        </SidebarMenuItem>
+        {'chapters' in entry && entry.chapters.map(chapter => renderEntry(chapter, 1))}
+        {'articles' in entry && entry.articles.map(article => renderEntry(article, 2))}
+      </React.Fragment>
+    );
+  };
 
   return (
     <Sidebar>
       <SidebarHeader className="p-2 border-b h-14 flex items-center">
-        <SidebarGroupLabel className="px-2 font-semibold text-foreground text-base">Technical Book</SidebarGroupLabel>
+        <SidebarGroupLabel className="px-2 font-semibold text-foreground text-base">Table of Contents</SidebarGroupLabel>
       </SidebarHeader>
-      <SidebarContent className="flex-1 p-2">
-        <SidebarMenu className="list-none p-0">
-          {Object.entries(documentGroups).map(([groupName, docs]) => (
-            <div key={groupName}>
-              <SidebarGroupLabel className="capitalize">{groupName}</SidebarGroupLabel>
-              {docs.map((doc) => (
-                <SidebarMenuItem key={doc.id}>
-                  <SidebarMenuButton
-                    onClick={() => setSelectedDoc(doc)}
-                    isActive={selectedDoc?.id === doc.id}
-                    tooltip={doc.name}
-                    className="w-full justify-start"
-                  >
-                    <span className={cn("truncate", doc.lang === 'ar' && 'font-arabic')}>{doc.name}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </div>
-          ))}
-          {technicalDocuments.length === 0 ? (
-            <div className="p-2 text-sm text-muted-foreground">No documents loaded.</div>
-          ): null}
+      <SidebarContent className="flex-1 p-0">
+        <SidebarMenu className="list-none p-2">
+            {technicalBook.parts.map(part => renderEntry(part, 0))}
+             <h3 className="px-3 py-2 text-sm font-semibold text-primary">Appendices</h3>
+             {technicalBook.appendices.map(appendix => (
+                 <SidebarMenuItem key={appendix.id}>
+                     <SidebarMenuButton
+                        asChild
+                        size="sm"
+                        className="w-full justify-start text-left h-auto py-1.5 text-muted-foreground pl-3"
+                      >
+                        <a href={`#${appendix.id}`} onClick={(e) => {e.preventDefault(); onLinkClick(appendix.id);}}>{appendix.title}</a>
+                      </SidebarMenuButton>
+                 </SidebarMenuItem>
+             ))}
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>
