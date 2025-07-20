@@ -81,8 +81,8 @@ export function ProjectValidationView() {
                             </ul>
                         </TabsContent>
                         <TabsContent value="mortgaged" className="p-4 border rounded-lg mt-2 bg-background">
-                            <h4 className="font-semibold mb-2">Simulation: Mortgaged Villa</h4>
-                            <p className="text-sm text-muted-foreground mb-4">Proves the system's unique capability to handle complex financial instruments by tokenizing a property with an existing mortgage, seamlessly clearing the lien, and cashing out the owner.</p>
+                             <h4 className="font-semibold mb-2">Simulation: Mortgaged Villa with Lien Clearance</h4>
+                             <p className="text-sm text-muted-foreground mb-4">Proves the system's unique capability to handle complex financial instruments by tokenizing a property with an existing mortgage, seamlessly clearing the lien, and cashing out the owner.</p>
                              <ul className="text-sm space-y-2">
                                 <li className="flex justify-between"><span>Property Value:</span> <strong className="text-primary">AED 3,000,000</strong></li>
                                 <li className="flex justify-between"><span>Mortgage to be Cleared:</span> <strong className="text-primary">AED 1,500,000</strong></li>
