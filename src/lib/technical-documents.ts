@@ -78,7 +78,7 @@ export const technicalBook: TechnicalBook = {
             },
             {
                 type: 'paragraph',
-                text: "Drawing upon extensive research, detailed simulations (including real-world scenarios for mortgaged and off-plan properties), and a deep understanding of Dubai's unique regulatory and economic landscape, this analysis demonstrates DLDCHAIN's unprecedented capabilities in unlocking liquidity, ensuring immutable trust, streamlining compliance, and fostering new economic opportunities. Furthermore, it highlights Dubai's strategic intent to position DLDCHAIN as a global blueprint for digital real estate governance, offering a model of efficiency and security to cities worldwide."
+                text: "Drawing upon extensive research, detailed simulations (including real-world scenarios for mortgaged and off-plan properties), and a deep understanding of Dubai's unique regulatory and economic landscape, this analysis demonstrates DLDCHAIN's unprecedented capabilities in unlocking liquidity, ensuring immutable trust, streamlining compliance, and fostering new economic opportunities. Furthermore, it highlights Dubai's strategic intent to position DLDCHAIN as a global blueprint for digital governance in real estate, offering a model of efficiency and security to cities worldwide."
             },
             {
                 type: 'paragraph',
@@ -155,16 +155,7 @@ export const technicalBook: TechnicalBook = {
                 {
                     id: 'chapter-2',
                     title: "Chapter 2: Project Foundational Principles & Core Components Overview",
-                    introduction: [
-                        {
-                            type: 'paragraph',
-                            text: 'The DLD Digital Dirham (DLD-AED) functions as a cornerstone of the DLDCHAIN ecosystem, serving as its native currency and financial backbone. Its meticulously designed structure and "fiat-only approach" are deemed critical for fostering investor confidence and driving market adoption. This strategic decision aligns DLDCHAIN with traditional financial practices while leveraging the efficiencies of digital currency.'
-                        },
-                        {
-                            type: 'paragraph',
-                            text: 'The DLD-AED is formally defined as a stablecoin, issued and regulated by the DLD, and precisely pegged 1:1 to the UAE Dirham (AED). It serves as the exclusive currency for all transactions within the DLDCHAIN ecosystem, encompassing DXBTOKEN purchases, sales, rental payments, service fees, and commissions. This exclusivity is intended to create a controlled and predictable financial environment within the platform, minimizing currency conversion risks and streamlining financial flows. As a central bank digital currency (CBDC)-like instrument, it embodies governmental backing and oversight, distinguishing it from volatile cryptocurrencies.'
-                        }
-                    ],
+                    introduction: [],
                     articles: [
                         { 
                             id: 'article-2-1', 
@@ -705,7 +696,7 @@ export const technicalBook: TechnicalBook = {
                                 },
                                 {
                                     type: 'subheading',
-                                    text: 'Core Identity and Purpose'
+                                    text: 'Core Identity and Purpose:'
                                 },
                                 {
                                     type: 'paragraph',
@@ -719,7 +710,7 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 {
                                     type: 'subheading',
-                                    text: 'Key Functionalities and Services for Brokers'
+                                    text: 'Key Functionalities and Services for Brokers:'
                                 },
                                 {
                                     type: 'list',
@@ -964,3 +955,5 @@ export const technicalBook: TechnicalBook = {
         { id: 'appendix-n', title: 'Appendix N: Smart Contract Auditing Workflow (Flowchart)', content: [] },
     ]
 };
+
+    
