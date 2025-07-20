@@ -146,7 +146,7 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>) => {
   const minY = Math.min(...allY);
   const maxY = Math.max(...allY);
   const treeHeight = maxY - minY;
-  const yOffset = -minY - treeHeight / 2;
+  const yOffset = -minY;
 
   Object.keys(positions).forEach(id => {
     positions[id].y += yOffset;
@@ -212,25 +212,29 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
         const nodeId = lastExpandedNodeId.current;
         const node = findNode(mindMapData, nodeId);
         if (node && expandedNodes.has(nodeId) && node.children && node.children.length > 0) {
-            // Find the center of the children
-            const childPositions = node.children.map(child => layout[child.id]);
-            const yCoords = childPositions.map(p => p.y);
-            const minY = Math.min(...yCoords);
-            const maxY = Math.max(...yCoords);
-            const centerX = childPositions[0].x + NODE_WIDTH / 2;
-            const centerY = minY + (maxY - minY) / 2;
+            const { zoomToElement } = transformRef.current;
+            const groupNode = document.createElement('div');
             
-            // Pan to the center of the children
-            const { setTransform } = transformRef.current;
-            const state = transformRef.current.state;
-            if (!state) return;
-            const { scale } = state;
-
+            const parentPos = layout[nodeId];
+            const childrenPos = node.children.map(child => layout[child.id]);
             
-            const newX = -centerX * scale + window.innerWidth / 2;
-            const newY = -centerY * scale + window.innerHeight / 2;
+            const allX = [parentPos, ...childrenPos].map(p => p.x);
+            const allY = [parentPos, ...childrenPos].map(p => p.y);
 
-            setTransform(newX, newY, scale, 300, 'easeOut');
+            const minX = Math.min(...allX);
+            const maxX = Math.max(...allX);
+            const minY = Math.min(...allY);
+            const maxY = Math.max(...allY);
+
+            groupNode.style.position = 'absolute';
+            groupNode.style.left = `${minX}px`;
+            groupNode.style.top = `${minY}px`;
+            groupNode.style.width = `${maxX - minX + NODE_WIDTH}px`;
+            groupNode.style.height = `${maxY - minY + NODE_HEIGHT}px`;
+            
+            document.getElementById('mindmap-content')?.appendChild(groupNode);
+            zoomToElement(groupNode, 1.2, 300, 'easeOut');
+            groupNode.remove();
         }
         lastExpandedNodeId.current = null;
     }
@@ -277,7 +281,7 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
             wrapperStyle={{ width: '100%', height: '100%' }}
             contentStyle={{ width: `${width}px`, height: `${height}px` }}
           >
-            <div className="relative" style={{ height: `${height}px`, width: `${width}px`}}>
+            <div id="mindmap-content" className="relative" style={{ height: `${height}px`, width: `${width}px`}}>
                 {renderedNodes}
             </div>
           </TransformComponent>
