@@ -33,21 +33,21 @@ const renderContentItem = (item: ContentItem, index: number) => {
 }
 
 const renderArticle = (article: BookArticle) => (
-  <section key={article.id} id={article.id} className="py-4">
+  <section key={article.id} id={article.id} className="py-4 article-section">
     <h3 className="font-headline text-2xl font-bold border-b pb-2 mb-4">{article.title}</h3>
     {article.content.map(renderContentItem)}
   </section>
 );
 
 const renderChapter = (chapter: BookChapter) => (
-  <section key={chapter.id} id={chapter.id} className="py-4">
+  <section key={chapter.id} id={chapter.id} className="py-4 chapter-section">
     <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{chapter.title}</h2>
     {chapter.articles.map(renderArticle)}
   </section>
 );
 
 const renderPart = (part: BookPart) => (
-  <section key={part.id} id={part.id} className="py-8">
+  <section key={part.id} id={part.id} className="py-8 part-section">
      <h1 className="font-headline text-5xl font-bold mb-4">{part.title}</h1>
      <Separator className="my-6" />
     {part.chapters.map(renderChapter)}

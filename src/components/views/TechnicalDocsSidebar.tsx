@@ -3,6 +3,12 @@
 
 import React from 'react';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel } from '@/components/ui/sidebar';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { technicalBook } from '@/lib/technical-documents';
 import { cn } from '@/lib/utils';
 import type { BookPart, BookChapter, BookArticle } from '@/lib/technical-documents';
@@ -13,56 +19,9 @@ interface TechnicalDocsSidebarProps {
 
 export function TechnicalDocsSidebar({ onLinkClick }: TechnicalDocsSidebarProps) {
   
-  const renderEntry = (entry: BookPart | BookChapter | BookArticle, level: number) => {
-    const id = entry.id;
-
-    const handleClick = (e: React.MouseEvent) => {
-      e.preventDefault();
-      onLinkClick(id);
-    };
-
-    const commonClasses = "w-full justify-start text-left h-auto py-1.5";
-    let button;
-
-    switch (level) {
-      case 0: // Part
-        button = (
-          <h3 className="px-3 py-2 text-sm font-semibold text-primary">{entry.title}</h3>
-        );
-        break;
-      case 1: // Chapter
-        button = (
-          <SidebarMenuButton
-            asChild
-            size="sm"
-            className={cn(commonClasses, "font-semibold pl-3")}
-          >
-            <a href={`#${id}`} onClick={handleClick}>{entry.title}</a>
-          </SidebarMenuButton>
-        );
-        break;
-      default: // Article
-        button = (
-           <SidebarMenuButton
-            asChild
-            size="sm"
-            className={cn(commonClasses, "text-muted-foreground pl-6")}
-          >
-            <a href={`#${id}`} onClick={handleClick}>{entry.title}</a>
-          </SidebarMenuButton>
-        );
-        break;
-    }
-
-    return (
-      <React.Fragment key={id}>
-        <SidebarMenuItem>
-          {button}
-        </SidebarMenuItem>
-        {'chapters' in entry && entry.chapters.map(chapter => renderEntry(chapter, 1))}
-        {'articles' in entry && entry.articles.map(article => renderEntry(article, 2))}
-      </React.Fragment>
-    );
+  const handleLinkClick = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    onLinkClick(id);
   };
 
   return (
@@ -72,19 +31,53 @@ export function TechnicalDocsSidebar({ onLinkClick }: TechnicalDocsSidebarProps)
       </SidebarHeader>
       <SidebarContent className="flex-1 p-0">
         <SidebarMenu className="list-none p-2">
-            {technicalBook.parts.map(part => renderEntry(part, 0))}
-             <h3 className="px-3 py-2 text-sm font-semibold text-primary">Appendices</h3>
-             {technicalBook.appendices.map(appendix => (
-                 <SidebarMenuItem key={appendix.id}>
-                     <SidebarMenuButton
-                        asChild
-                        size="sm"
-                        className="w-full justify-start text-left h-auto py-1.5 text-muted-foreground pl-3"
-                      >
-                        <a href={`#${appendix.id}`} onClick={(e) => {e.preventDefault(); onLinkClick(appendix.id);}}>{appendix.title}</a>
-                      </SidebarMenuButton>
-                 </SidebarMenuItem>
-             ))}
+            <Accordion type="multiple" className="w-full">
+              {technicalBook.parts.map((part) => (
+                  <AccordionItem value={part.id} key={part.id}>
+                    <AccordionTrigger className="text-sm font-semibold text-primary hover:no-underline px-3 py-2">
+                      {part.title}
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-0">
+                      <ul className="list-none p-0">
+                          {part.chapters.map((chapter) => (
+                             <li key={chapter.id} className="flex flex-col items-start pl-3">
+                                <a href={`#${chapter.id}`} onClick={(e) => handleLinkClick(e, chapter.id)} className="font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors">
+                                    {chapter.title}
+                                </a>
+                                <ul className="list-none p-0 pl-3">
+                                    {chapter.articles.map((article) => (
+                                        <li key={article.id}>
+                                            <a href={`#${article.id}`} onClick={(e) => handleLinkClick(e, article.id)} className="text-muted-foreground py-1 text-sm w-full text-left block hover:text-primary transition-colors">
+                                                {article.title}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                             </li>
+                          ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+              ))}
+
+              <AccordionItem value="appendices">
+                <AccordionTrigger className="text-sm font-semibold text-primary hover:no-underline px-3 py-2">
+                  Appendices
+                </AccordionTrigger>
+                <AccordionContent>
+                  <ul className="list-none p-0">
+                    {technicalBook.appendices.map((appendix) => (
+                       <li key={appendix.id} className="pl-3">
+                           <a href={`#${appendix.id}`} onClick={(e) => handleLinkClick(e, appendix.id)} className="text-muted-foreground py-1 text-sm w-full text-left block hover:text-primary transition-colors">
+                                {appendix.title}
+                           </a>
+                       </li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+            </Accordion>
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>
