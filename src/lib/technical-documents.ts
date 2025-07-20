@@ -766,11 +766,11 @@ export const technicalBook: TechnicalBook = {
                                 },
                                 {
                                     type: 'subheading',
-                                    text: 'Universality and Tiered Access'
+                                    text: 'Universality and Tiered Access:'
                                 },
                                 {
                                     type: 'paragraph',
-                                    text: 'The Universal Wallet is engineered to accommodate a broad spectrum of users engaged in the real estate sector, including investors, developers, realtors, and government personnel. Its functionalities and transaction limits for the DLD Digital Dirham (DLD-AED) are structured with tiered access, contingent upon the user\'s Know Your Customer (KYC) level. This tiered system is intended to ensure that access and permissions are commensurate with the user\'s verified identity and role within the ecosystem, providing a tailored experience while maintaining security. The wallet incorporates customizable "smart tiers" that are non-realizable, meaning they are specific to the user\'s KYC tier and merely confer access to distinct interfaces or functionalities without constituting actual financial assets. The interface dynamically adjusts to display only pertinent features and permissions, thereby optimizing the user experience and mitigating information overload by prioritizing "one brilliant insight, one choice" at any given time. This adaptive interface is intended to ensure intuitive navigation for users of varying technical proficiencies, from novice investors to seasoned developers.'
+                                    text: "The Universal Wallet is engineered to accommodate a broad spectrum of users engaged in the real estate sector, including investors, developers, realtors, and government personnel. Its functionalities and transaction limits for the DLD Digital Dirham (DLD-AED) are structured with tiered access, contingent upon the user's Know Your Customer (KYC) level. This tiered system is intended to ensure that access and permissions are commensurate with the user's verified identity and role within the ecosystem, providing a tailored experience while maintaining security. The wallet incorporates customizable \"smart tiers\" that are non-realizable, meaning they are specific to the user's KYC tier and merely confer access to distinct interfaces or functionalities without constituting actual financial assets. The interface dynamically adjusts to display only pertinent features and permissions, thereby optimizing the user experience and mitigating information overload by prioritizing \"one brilliant insight, one choice\" at any given time. This adaptive interface is intended to ensure intuitive navigation for users of varying technical proficiencies, from novice investors to seasoned developers."
                                 }
                             ] 
                         },
@@ -796,7 +796,7 @@ export const technicalBook: TechnicalBook = {
                                 },
                                 {
                                     type: 'subheading',
-                                    text: 'Login and Security Features'
+                                    text: 'Login and Security Features:'
                                 },
                                 {
                                     type: 'paragraph',
@@ -804,7 +804,7 @@ export const technicalBook: TechnicalBook = {
                                 },
                                 {
                                     type: 'subheading',
-                                    text: 'Other Functionalities'
+                                    text: 'Other Functionalities:'
                                 },
                                 {
                                     type: 'paragraph',
@@ -825,7 +825,30 @@ export const technicalBook: TechnicalBook = {
                     title: "Chapter 9: Core Blockchain Architecture: Hyperledger Fabric under Sovereign Oversight",
                     introduction: [],
                     articles: [
-                        { id: 'article-9-1', title: 'Article 9.1: Hyperledger Fabric in DLDCHAIN: Enterprise-Grade Blockchain for Real Estate Governance', content: [] }
+                        { 
+                            id: 'article-9-1', 
+                            title: 'Article 9.1: Hyperledger Fabric in DLDCHAIN: Enterprise-Grade Blockchain for Real Estate Governance', 
+                            content: [
+                                {
+                                    type: 'paragraph',
+                                    text: 'Hyperledger Fabric forms the bedrock of the DLDCHAIN ecosystem, chosen specifically for its enterprise-grade capabilities that align perfectly with the demands of a national, sovereign real estate protocol. Unlike public blockchains, Fabric provides a permissioned network, ensuring that all participating entities—from government departments to financial institutions and licensed professionals—are known and verified, which is paramount for regulatory compliance and trust in a critical sector like real estate. Its modular architecture and private channels enable secure, confidential data exchange between specific parties (e.g., DLD and a bank for a mortgage transaction) while maintaining an immutable, transparent record on the main ledger. This robust framework ensures the security, scalability, and legal enforceability required for DLDCHAIN to manage millions of real estate assets and transactions with unwavering integrity and efficiency.'
+                                },
+                                {
+                                    type: 'subheading',
+                                    text: 'Key Aspects of Hyperledger Fabric Customized for DLDCHAIN:'
+                                },
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Permissioned Network for Verified Participants:</strong> Unlike public blockchains where anyone can participate, Fabric\'s permissioned nature means only known and authorized entities (such as the DLD, RERA-licensed brokers via Mashroi, approved financial institutions through MAKE, and other government bodies) can operate nodes and execute transactions on the DLDCHAIN network. This is crucial for maintaining stringent regulatory compliance, preventing illicit activities, and ensuring absolute trust and accountability within a critical sector like real estate.',
+                                        '<strong>Modular Architecture for Tailored Real Estate Logic:</strong> Fabric\'s modular design allows DLDCHAIN to customize core components like consensus mechanisms and smart contracts (known as chaincode). This flexibility is vital for directly encoding complex real estate laws, DLD regulations, and bespoke transactional logic into the system via Ebram, ensuring the platform is specifically tailored to Dubai\'s unique legal and administrative landscape rather than using a generic blockchain solution.',
+                                        '<strong>Data Confidentiality via Private Channels:</strong> Fabric\'s "channels" feature allows for the creation of private, isolated sub-networks within the main blockchain. DLDCHAIN leverages this to handle sensitive real estate data, such as private negotiation details between a buyer and a seller, confidential financial agreements for mortgages, or specific due diligence reports. This ensures that such information remains confidential between the transacting parties, visible only to authorized participants on that channel, while the final, legally binding outcome is immutably committed to the broader, transparent ledger.',
+                                        '<strong>High Performance and Scalability for a City-Scale Market:</strong> Fabric is specifically engineered for high transaction throughput and low latency, capabilities that are essential for managing the vast and dynamic volume of real estate transactions in a major global city like Dubai. DLDCHAIN utilizes this performance to ensure that property registrations, token transfers, smart contract executions, and data updates can occur almost instantly, supporting a vibrant, real-time digital economy that processes thousands of transactions daily.',
+                                        '<strong>Exclusion of Volatile Cryptocurrencies:</strong> Fabric does not rely on a native, speculative cryptocurrency for its internal operations or transaction fees. This fundamental characteristic aligns perfectly with DLDCHAIN\'s "fiat-only" approach, where all values are denominated in the stable DLD Digital Dirham (DLD-AED). This customization insulates real estate tokenization from the market volatility and speculative pressures associated with public cryptocurrencies, fostering greater confidence among traditional investors and ensuring unparalleled financial stability within the ecosystem.'
+                                    ]
+                                }
+                            ] 
+                        }
                     ]
                 },
                 {
@@ -833,11 +856,359 @@ export const technicalBook: TechnicalBook = {
                     title: "Chapter 10: Technical Plan for DLDCHAIN Development (Roadmap Alignment)",
                     introduction: [],
                     articles: [
-                        { id: 'article-10-1', title: 'Article 10.1: System Architecture Overview', content: [] },
-                        { id: 'article-10-2', title: 'Article 10.2: Mocking Up Key Elements (UNIVESTOR Wallet, EBRAMGPT, Mashroi, DXBTOKEN Marketplace)', content: [] },
-                        { id: 'article-10-3', title: 'Article 10.3: EBRAM Smart Contract Development (Technology Stack, Structure, Workflow)', content: [] },
-                        { id: 'article-10-4', title: 'Article 10.4: Phased Technical Development Plan (Phases 1-4)', content: [] },
-                        { id: 'article-10-5', title: 'Article 10.5: Tools and Technologies Overview', content: [] }
+                        { 
+                            id: 'article-10-1', 
+                            title: 'Article 10.1: System Architecture Overview', 
+                            content: [
+                                {
+                                    type: 'paragraph',
+                                    text: 'The DLDCHAIN proposal is an ambitious and comprehensive vision for a blockchain-based real estate governance system tailored to Dubai’s unique needs. It integrates legal, financial, and operational frameworks into a sovereign digital infrastructure. This technical plan outlines the strategies for mocking up key elements, developing smart contracts, and advancing the technical development of DLDCHAIN, focusing on feasibility, modularity, and scalability. The plan is structured to align with the document’s vision, leveraging existing technologies while addressing Dubai’s regulatory and operational requirements.'
+                                },
+                                {
+                                    type: 'paragraph',
+                                    text: 'DLDCHAIN is built on Hyperledger Fabric, a permissioned blockchain, to ensure data confidentiality, regulatory compliance, and sovereign control. The system comprises modular components (EBRAM, DXBTOKENS, Mashroi, UNIVESTOR Wallet, etc.) integrated through APIs and smart contracts, with a fiat-only stablecoin (DLD-AED) as the financial backbone. The architecture emphasizes:'
+                                },
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Immutability:</strong> Permanent, tamper-proof property records.',
+                                        '<strong>Interoperability:</strong> Deep integration with existing DLD systems (Ejari, Milka, Trakheesi) and external governmental entities (GDRFA, CBUAE, etc.).',
+                                        '<strong>Security:</strong> Zero-trust architecture, passwordless login, and cryptographic validation.',
+                                        '<strong>Scalability:</strong> Hierarchical smart contract structure (EBRAM Contract Tree) for granular asset management.'
+                                    ]
+                                }
+                            ] 
+                        },
+                        { 
+                            id: 'article-10-2', 
+                            title: 'Article 10.2: Mocking Up Key Elements (UNIVESTOR Wallet, EBRAMGPT, Mashroi, DXBTOKEN Marketplace)', 
+                            content: [
+                                {
+                                    type: 'paragraph',
+                                    text: 'Mockups are essential to validate the user experience, system interfaces, and workflows before full development. Below are mockup strategies for key components:'
+                                },
+                                { type: 'heading', text: 'a. UNIVESTOR Wallet'},
+                                { type: 'paragraph', text: '<strong>Purpose:</strong> A role-based, secure interface for all stakeholders (investors, brokers, developers, regulators) to manage DLD-AED, DXBTOKENS, and EBRAM contracts.'},
+                                { type: 'paragraph', text: '<strong>Mockup Plan:</strong>'},
+                                { type: 'paragraph', text: '<strong>Tools:</strong> Use Figma or Adobe XD to design responsive interfaces for web, mobile (iOS/Android), and API-driven developer dashboards.'},
+                                { type: 'paragraph', text: '<strong>Features:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Role-Based Dashboard:</strong> Dynamic UI adjusting to user roles (e.g., investor sees DXBTOKEN portfolio, broker sees Mashroi tasks).',
+                                        '<strong>DLD-AED Transactions:</strong> Mock fiat-to-DLD-AED conversion, deposit/withdrawal flows, and tiered KYC limits.',
+                                        '<strong>DXBTOKEN Management:</strong> Visualize token portfolios, spot/limit order placements, and fractional trading.',
+                                        '<strong>Security:</strong> Mock OTP-based login, biometric verification, and UAE Pass integration.'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Deliverables:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Wireframes for mobile and web interfaces.',
+                                        'Interactive prototype simulating wallet interactions (e.g., token purchase, contract signing).',
+                                        'API mockups for developer integration (e.g., REST endpoints for wallet functions).'
+                                    ]
+                                },
+                                { type: 'heading', text: 'b. EBRAMGPT Interface'},
+                                { type: 'paragraph', text: '<strong>Purpose:</strong> AI-powered legal assistant for natural language interaction with EBRAM smart contracts.'},
+                                { type: 'paragraph', text: '<strong>Mockup Plan:</strong>'},
+                                { type: 'paragraph', text: '<strong>Tools:</strong> Use Dialogflow or Rasa for conversational UI prototyping, integrated with a web-based frontend (React) and mobile app (Flutter).'},
+                                { type: 'paragraph', text: '<strong>Features:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Natural Language Input:</strong> Simulate Arabic/English input for contract drafting (e.g., “Draft a lease for 12 months at AED 100,000”).',
+                                        '<strong>Contract Visualization:</strong> Display EBRAM syntax and Python code translations, with explanations in plain language.',
+                                        '<strong>Context-Aware Suggestions:</strong> Mock AI-driven prompts for legal clauses based on user role and transaction type.',
+                                        '<strong>Multi-Channel Access:</strong> Prototype mobile chat, web terminal, and voice (Arabic) interfaces.'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Deliverables:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Conversational flow diagrams for EBRAMGPT interactions.',
+                                        'Prototype of AI-driven contract drafting and clause explanation.',
+                                        'Mock API responses for real-time data integration (e.g., Ejari triggers).'
+                                    ]
+                                },
+                                { type: 'heading', text: 'c. Mashroi Platform'},
+                                { type: 'paragraph', text: '<strong>Purpose:</strong> A professional hub for broker licensing, education, and job matching.'},
+                                { type: 'paragraph', text: '<strong>Mockup Plan:</strong>'},
+                                { type: 'paragraph', text: '<strong>Tools:</strong> Use WordPress or Bubble for rapid prototyping of the web platform, with Firebase for real-time data simulation.'},
+                                { type: 'paragraph', text: '<strong>Features:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Broker Dashboard:</strong> Mock licensing status, CPD progress, and job matches.',
+                                        '<strong>Smart Visa Workflow:</strong> Simulate visa issuance/renewal tied to performance metrics.',
+                                        '<strong>Gamified Rewards:</strong> Visualize reward points, visa extensions, and mentorship missions.',
+                                        '<strong>Developer Integration:</strong> Mock daily project updates (unit availability, sales status).'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Deliverables:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Wireframes for broker and developer dashboards.',
+                                        'Prototype of smart quiz engine and job-matching algorithm.',
+                                        'Mock API for GDRFA visa integration.'
+                                    ]
+                                },
+                                { type: 'heading', text: 'd. DXBTOKEN Marketplace'},
+                                { type: 'paragraph', text: '<strong>Purpose:</strong> Platform for trading tokenized real estate assets.'},
+                                { type: 'paragraph', text: '<strong>Mockup Plan:</strong>'},
+                                { type: 'paragraph', text: '<strong>Tools:</strong> Use Sketch or Figma for UI design, with Node.js for simulating backend APIs.'},
+                                { type: 'paragraph', text: '<strong>Features:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Token Trading:</strong> Mock spot buy/sell, limit orders, and auto-split sell interfaces.',
+                                        '<strong>Liquidity Pool:</strong> Visualize MAKE events, escrow deposits, and token allocation (40% owner, 55% public, etc.).',
+                                        '<strong>Market Analytics:</strong> Simulate live dashboards for token prices, market trends, and MPT events.'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Deliverables:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Prototype of trading interface with real-time price updates.',
+                                        'Mock data feeds for EBRAM’s AI market-making logic.'
+                                    ]
+                                }
+                            ] 
+                        },
+                        { 
+                            id: 'article-10-3', 
+                            title: 'Article 10.3: EBRAM Smart Contract Development (Technology Stack, Structure, Workflow)', 
+                            content: [
+                                { type: 'heading', text: 'a. Technology Stack'},
+                                { type: 'paragraph', text: '<strong>Blockchain:</strong> Hyperledger Fabric (v2.5 or later) for permissioned, modular architecture.'},
+                                { type: 'paragraph', text: '<strong>Smart Contract Language:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>EBRAM Layer:</strong> Custom DSL (Domain-Specific Language) for legal logic, implemented as a high-level abstraction.',
+                                        '<strong>Python Layer:</strong> Chaincode in Python for computational backend, handling blockchain interactions and API calls.'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Database:</strong> CouchDB for state database, supporting rich queries for property data.'},
+                                { type: 'paragraph', text: '<strong>APIs:</strong> RESTful APIs using Node.js/Express for integration with external systems (Ejari, Milka, etc.).'},
+                                { type: 'paragraph', text: '<strong>AI Integration:</strong> TensorFlow or PyTorch for EBRAMGPT’s natural language processing and contract generation.'},
+                                { type: 'heading', text: 'b. EBRAM Smart Contract Structure'},
+                                { type: 'paragraph', text: '<strong>Contract Tree:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Root:</strong> Land Number (unique identifier for land parcels).',
+                                        '<strong>Nodes:</strong> Zone → Project → Building → Unit (non-dividable ownerable asset).',
+                                        '<strong>Implementation:</strong> Use Fabric’s chaincode to define hierarchical data structures, with each node storing metadata (e.g., legal status, ownership, EBRAMINT status).'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Core Constructs:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Conditions:</strong> IF/THEN/ELSE/UNLESS logic (e.g., IF payment.received THEN transfer.title).',
+                                        '<strong>Roles:</strong> Define participants (e.g., Owner, Tenant, DLD) with role-based access control.',
+                                        '<strong>Actions:</strong> Programmable operations (e.g., transfer.title, issue.fine).',
+                                        '<strong>Triggers:</strong> Event-based (e.g., lease.startDate + 3 days && noKeyPickup → auto-cancel).'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>EBRAMINT Process:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Step 1:</strong> Validate property data via Ejari/Milka oracles.',
+                                        '<strong>Step 2:</strong> Assign City Digital ID (CDID) using SHA-256 hashing.',
+                                        '<strong>Step 3:</strong> Publish contract to Fabric ledger with multi-signature approval (DLD, MAKE Officer).',
+                                        '<strong>Step 4:</strong> Record EBRAMINT event, marking the asset as tokenized and immutable.'
+                                    ]
+                                },
+                                { type: 'heading', text: 'c. Sample EBRAM Smart Contract (Pseudocode)'},
+                                {
+                                    type: 'code',
+                                    language: 'pseudocode',
+                                    text: `# EBRAM Smart Contract for Residential Lease
+contract LeaseAgreement {
+    # Property Bindings
+    property LandNumber, Zone, Project, Building, Unit
+    binding rental.status, contract.state
+
+    # Roles
+    role Owner, Tenant, DLD
+
+    # Conditions and Triggers
+    condition paymentReceived = (rental.status == "paid")
+    condition leaseExpired = (contract.state == "expired")
+    trigger autoCancel = (lease.startDate + 3 days && noKeyPickup)
+
+    # Logic
+    IF paymentReceived THEN
+        action releaseFunds(Owner, amount)
+    ELSE
+        action issueFine(Tenant, 0.05 * rental.amount)
+    UNLESS leaseExpired THEN
+        action renewContract(Tenant, newTerms)
+
+    # Execution
+    function execute() {
+        validate(Ejari.record, Milka.title)
+        assign(CDID, hash(Unit))
+        multiSign(DLD, Owner, EBRAM)
+        publishToLedger()
+    }
+}`
+                                },
+                                { type: 'heading', text: 'd. Development Workflow'},
+                                { type: 'paragraph', text: '<strong>Design Phase:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Define EBRAM syntax and grammar for legal clauses.',
+                                        'Map Dubai’s real estate laws (e.g., Ejari, RERA) to EBRAM constructs.'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Coding Phase:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Develop chaincode in Python for core logic.',
+                                        'Implement EBRAM DSL as a parser that translates legal clauses to Python.'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Testing Phase:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Use Hyperledger Fabric’s test network to simulate contract execution.',
+                                        'Test edge cases (e.g., breach conditions, multi-signature failures).'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Integration Phase:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Connect EBRAM to Ejari/Milka via secure APIs.',
+                                        'Validate triggers with real-world data (e.g., DEWA utility status).'
+                                    ]
+                                }
+                            ] 
+                        },
+                        { 
+                            id: 'article-10-4', 
+                            title: 'Article 10.4: Phased Technical Development Plan (Phases 1-4)', 
+                            content: [
+                                {
+                                    type: 'paragraph',
+                                    text: 'The development plan aligns with the phased roadmap outlined in Chapter 17, focusing on modularity, security, and integration.'
+                                },
+                                { type: 'heading', text: 'a. Phase 1: DLDCHAIN Development (12-18 months)'},
+                                { type: 'paragraph', text: '<strong>Objective:</strong> Build core infrastructure and governance framework.'},
+                                { type: 'paragraph', text: '<strong>Tasks:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Blockchain Setup:</strong> Deploy Hyperledger Fabric network with private channels for DLD, VARA, and CBUAE.',
+                                        '<strong>DLD-AED Stablecoin:</strong><ul><li>Develop smart contract for DLD-AED issuance, pegged 1:1 to AED.</li><li>Integrate with CBUAE for reserve audits and AML/KYC compliance.</li></ul>',
+                                        '<strong>Governance:</strong><ul><li>Form Governing Council with DLD as Chair, VARA as Vice-Chair.</li><li>Define endorsement policies for chaincode deployment.</li></ul>',
+                                        '<strong>Security:</strong><ul><li>Implement zero-trust architecture with UAE Pass integration.</li><li>Develop OTP and biometric authentication for UNIVESTOR Wallet.</li></ul>'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Deliverables:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'Hyperledger Fabric network with initial chaincode.',
+                                        'DLD-AED wallet prototype with KYC tiers.',
+                                        'Governance charter for DLDCHAIN Council.'
+                                    ]
+                                },
+                                { type: 'heading', text: 'b. Phase 2: EBRAM Pilot (18-24 months)'},
+                                { type: 'paragraph', text: '<strong>Objective:</strong> Pilot EBRAM for residential leases.'},
+                                { type: 'paragraph', text: '<strong>Tasks:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>EBRAM Development:</strong><ul><li>Build EBRAM DSL and Python chaincode for lease contracts.</li><li>Integrate with Ejari for genesis event triggers.</li></ul>',
+                                        '<strong>EBRAMGPT:</strong><ul><li>Train NLP model for Arabic/English contract drafting.</li><li>Develop API for real-time data integration (Ejari, Milka, DEWA).</li></ul>',
+                                        '<strong>Testing:</strong><ul><li>Conduct security audits for chaincode vulnerabilities.</li><li>Simulate lease lifecycle (drafting, signing, execution, renewal).</li></ul>',
+                                        '<strong>Pilot:</strong><ul><li>Deploy pilot for 1,000 residential leases in Dubai.</li><li>Collect feedback from landlords, tenants, and brokers.</li></ul>'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Deliverables:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'EBRAM smart contract suite for residential leases.',
+                                        'EBRAMGPT prototype with conversational UI.',
+                                        'Pilot report with performance metrics and user feedback.'
+                                    ]
+                                },
+                                { type: 'heading', text: 'c. Phase 3: Full Rollout & Secondary Market (24-36 months)'},
+                                { type: 'paragraph', text: '<strong>Objective:</strong> Expand EBRAM to all property types and enable DXBTOKEN trading.'},
+                                { type: 'paragraph', text: '<strong>Tasks:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>EBRAM Expansion:</strong><ul><li>Extend EBRAM to commercial, retail, and fractional ownership contracts.</li><li>Integrate with Trakheesi for advertising compliance.</li></ul>',
+                                        '<strong>DXBTOKEN Marketplace:</strong><ul><li>Develop chaincode for spot/limit orders and pool takeovers.</li><li>Implement EBRAM’s AI market-making logic for price stability.</li></ul>',
+                                        '<strong>Secondary Market:</strong><ul><li>Partner with VARA-licensed exchange for DXBTOKEN trading.</li><li>Enable auto-split sell and pre-pledge buy mechanisms.</li></ul>',
+                                        '<strong>Mashroi Rollout:</strong><ul><li>Deploy broker licensing and CPD platform.</li><li>Integrate with GDRFA for smart visa issuance.</li></ul>'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Deliverables:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'EBRAM contracts for all property types.',
+                                        'DXBTOKEN marketplace with live trading dashboard.',
+                                        'Mashroi platform with 10,000 registered brokers.'
+                                    ]
+                                },
+                                { type: 'heading', text: 'd. Phase 4: Advanced Features & Global Expansion (36+ months / 2027+)'},
+                                { type: 'paragraph', text: '<strong>Objective:</strong> To fully realize DLDCHAIN\'s potential as a comprehensive, globally interoperable real estate governance system, thereby solidifying Dubai\'s global leadership in digital real estate. This includes developing on-chain dispute resolution and digital asset inheritance protocols, and exploring cross-chain interoperability with other sovereign digital infrastructures.'},
+                                { type: 'paragraph', text: '<strong>Tasks:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Dispute Resolution:</strong><ul><li>Develop on-chain arbitration logic with Dubai Courts integration.</li><li>Test automated fine issuance and title transfer for breaches.</li></ul>',
+                                        '<strong>Inheritance Protocol:</strong><ul><li>Implement “Lost Key Solution” with DIFC Courts’ Digital Assets Will.</li><li>Use multi-signature contracts for heir verification.</li></ul>',
+                                        '<strong>Cross-Chain Interoperability:</strong><ul><li>Explore bridges with other Hyperledger-based sovereign blockchains.</li><li>Ensure data sovereignty with localized Fabric instances.</li></ul>',
+                                        '<strong>Global White-Label:</strong><ul><li>Develop localization playbook for EBRAM syntax and legal mappings.</li><li>Pilot DLDCHAIN in one international city (e.g., Singapore).</li></ul>'
+                                    ]
+                                },
+                                { type: 'paragraph', text: '<strong>Deliverables:</strong>'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        'On-chain dispute resolution module.',
+                                        'Digital asset inheritance protocol.',
+                                        'White-label DLDCHAIN package for global adoption.'
+                                    ]
+                                }
+                            ] 
+                        },
+                        { 
+                            id: 'article-10-5', 
+                            title: 'Article 10.5: Tools and Technologies Overview', 
+                            content: [
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Blockchain:</strong> Hyperledger Fabric (v2.5+), CouchDB for state database.',
+                                        '<strong>Smart Contracts:</strong> Python for chaincode, custom EBRAM DSL parser.',
+                                        '<strong>AI:</strong> TensorFlow/PyTorch for EBRAMGPT, Dialogflow/Rasa for conversational UI.',
+                                        '<strong>Frontend:</strong> React (web), Flutter (mobile) for UNIVESTOR Wallet and Mashroi.',
+                                        '<strong>Backend:</strong> Node.js/Express for APIs, Go for high-performance components.',
+                                        '<strong>Security:</strong> OpenSSL for cryptographic hashing, UAE Pass for KYC/AML.',
+                                        '<strong>Testing:</strong> Hyperledger Fabric’s test network, Jest for API testing, Truffle for smart contract testing.',
+                                        '<strong>CI/CD:</strong> Jenkins or GitHub Actions for continuous integration and deployment.'
+                                    ]
+                                }
+                            ] 
+                        }
                     ]
                 },
                 {
