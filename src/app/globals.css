@@ -9,7 +9,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 40% 98%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 224 71.4% 4.1%;
@@ -25,12 +25,12 @@ body {
     --accent-foreground: 215.4 16.3% 46.9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 215 20.2% 65.1%;
-    --input: 215 20.2% 65.1%;
+    --border: 215 20.2% 25.1%;
+    --input: 215 20.2% 25.1%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 100%;
+    --sidebar-background: 210 40% 98%;
     --sidebar-foreground: 224 71.4% 4.1%;
     --sidebar-border: 215 20.2% 65.1%;
     --sidebar-accent: 210 40% 96.1%;
@@ -42,9 +42,12 @@ body {
     --mindmap-node-bg: hsl(0 0% 100%);
     --mindmap-node-hover-bg: hsl(220 14.3% 95.9%);
     --mindmap-node-border-hover: hsl(220 70% 50%);
-    --mindmap-level-0-bg: hsl(220 70% 50%);
-    --mindmap-level-1-bg: hsl(210 60% 55%);
-    --mindmap-level-2-bg: hsl(224 71.4% 4.1%);
+    --mindmap-level-0-bg: hsl(221.2 83.2% 53.3%);
+    --mindmap-level-1-bg: hsl(215.4 16.3% 46.9%);
+    --mindmap-level-2-bg: hsl(210 40% 96.1%);
+    --mindmap-level-0-text: hsl(210 40% 98%);
+    --mindmap-level-1-text: hsl(210 40% 98%);
+    --mindmap-level-2-text: hsl(224 71.4% 4.1%);
   }
 
   .dark {
@@ -80,9 +83,12 @@ body {
     --mindmap-node-bg: hsl(215 27.9% 16.9%);
     --mindmap-node-hover-bg: hsl(215 27.9% 22.9%);
     --mindmap-node-border-hover: hsl(210 70% 55%);
-    --mindmap-level-0-bg: hsl(210 70% 55%);
-    --mindmap-level-1-bg: hsl(200 60% 60%);
-    --mindmap-level-2-bg: hsl(210 20% 98%);
+    --mindmap-level-0-bg: hsl(217.2 91.2% 59.8%);
+    --mindmap-level-1-bg: hsl(217.2 32.6% 17.5%);
+    --mindmap-level-2-bg: hsl(215 20.2% 65.1%);
+    --mindmap-level-0-text: hsl(210 40% 98%);
+    --mindmap-level-1-text: hsl(210 40% 98%);
+    --mindmap-level-2-text: hsl(222.2 84% 4.9%);
   }
 }
 

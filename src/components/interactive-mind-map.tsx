@@ -22,11 +22,12 @@ interface MindMapNodeProps {
   parentPosition?: { x: number; y: number };
 }
 
-const LEVEL_CLASSES: Record<number, string> = {
-  0: 'bg-mindmap-level-0-bg text-white',
-  1: 'bg-mindmap-level-1-bg text-white',
-  2: 'bg-mindmap-level-2-bg text-white',
+const LEVEL_CLASSES: Record<number, { bg: string; text: string }> = {
+  0: { bg: 'bg-[hsl(var(--mindmap-level-0-bg))]', text: 'text-[hsl(var(--mindmap-level-0-text))]' },
+  1: { bg: 'bg-[hsl(var(--mindmap-level-1-bg))]', text: 'text-[hsl(var(--mindmap-level-1-text))]' },
+  2: { bg: 'bg-[hsl(var(--mindmap-level-2-bg))]', text: 'text-[hsl(var(--mindmap-level-2-text))]' },
 };
+
 
 const NODE_WIDTH = 220;
 const NODE_HEIGHT = 48;
@@ -63,7 +64,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
     onNodeDoubleClick(node.name);
   };
   
-  const levelClass = LEVEL_CLASSES[level] || 'bg-mindmap-node-bg';
+  const levelClass = LEVEL_CLASSES[level] || { bg: 'bg-mindmap-node-bg', text: 'text-foreground' };
 
   return (
     <>
@@ -84,7 +85,8 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
             'w-full h-full flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all border',
             'hover:shadow-lg hover:border-mindmap-node-border-hover hover:scale-105',
              'text-xs font-medium',
-             levelClass
+             levelClass.bg,
+             levelClass.text
           )}
         >
           <span className="flex-1 text-center">{node.name}</span>
