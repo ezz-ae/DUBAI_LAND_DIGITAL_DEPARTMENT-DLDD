@@ -381,12 +381,12 @@ const SidebarMenuButton = React.forwardRef<
     const { isMobile, state } = useSidebar()
 
     const buttonContent = (
-      <>
+      <div className="flex w-full items-center gap-3">
         {React.Children.toArray(children).find(child => React.isValidElement(child) && (child.type as any).displayName?.includes('Icon'))}
         <span className={cn("truncate", state === 'collapsed' && 'sr-only')}>
             {React.Children.toArray(children).filter(child => typeof child === 'string' || (React.isValidElement(child) && !(child.type as any).displayName?.includes('Icon')))}
         </span>
-      </>
+      </div>
     )
 
     const button = (
