@@ -160,7 +160,7 @@ const calculateLayout = (node: MindMapNodeData, expandedNodes: Set<string>) => {
 
 
 export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) => void }> = ({ onNodeDoubleClick }) => {
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set([mindMapData.id]));
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
 
   const toggleExpand = useCallback((nodeId: string) => {
     setExpandedNodes(prev => {
@@ -234,7 +234,8 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) =
     <div className="w-full h-full overflow-hidden bg-background rounded-lg border">
       <TransformWrapper
         minScale={0.2}
-        initialScale={0.8}
+        initialScale={1}
+        initialPositionX={-NODE_WIDTH / 2}
         centerOnInit
         limitToBounds={false}
       >
