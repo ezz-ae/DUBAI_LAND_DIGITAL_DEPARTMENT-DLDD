@@ -73,34 +73,33 @@ export function ProjectValidationView() {
                             <h4 className="font-semibold mb-2">Simulation: Standard Completed Property</h4>
                             <p className="text-sm text-muted-foreground mb-4">Demonstrates the baseline tokenization process, providing instant liquidity to owners and creating accessible investment opportunities.</p>
                             <ul className="text-sm space-y-2">
-                                <li><strong className="text-primary">Property Value:</strong> AED 2,000,000</li>
-                                <li><strong className="text-primary">Owner Cash-Out (60%):</strong> AED 1,200,000</li>
-                                <li><strong className="text-primary">Owner Retained Tokens (40%):</strong> 800,000 DXBTOKENS</li>
-                                <li><strong className="text-primary">Investor ROI (12-month simulation):</strong> 118% (based on 5% property appreciation and market trading)</li>
-                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 1,490,000 beyond the initial asset value, distributed among stakeholders (investors, DLD, brokers).</li>
+                                <li className="flex justify-between"><span>Property Value:</span> <strong className="text-primary">AED 2,000,000</strong></li>
+                                <li className="flex justify-between"><span>Owner Cash-Out (60%):</span> <strong className="text-primary">AED 1,200,000</strong></li>
+                                <li className="flex justify-between"><span>Owner Retained Tokens (40%):</span> <strong className="text-primary">800,000 DXBTOKENS</strong></li>
+                                <li className="flex justify-between"><span>Projected Investor ROI (12 months):</span> <strong className="text-primary">~118%</strong></li>
+                                <li className="flex justify-between border-t pt-2 mt-2"><span>Net Value Created by DLDCHAIN:</span> <strong className="text-primary">~AED 1,490,000</strong></li>
                             </ul>
                         </TabsContent>
                         <TabsContent value="mortgaged" className="p-4 border rounded-lg mt-2 bg-background">
                             <h4 className="font-semibold mb-2">Simulation: Mortgaged Villa</h4>
                             <p className="text-sm text-muted-foreground mb-4">Proves the system's unique capability to handle complex financial instruments by tokenizing a property with an existing mortgage, seamlessly clearing the lien, and cashing out the owner.</p>
                              <ul className="text-sm space-y-2">
-                                <li><strong className="text-primary">Property Value:</strong> AED 3,000,000</li>
-                                <li><strong className="text-primary">Mortgage to be Cleared:</strong> AED 1,500,000</li>
-                                <li><strong className="text-primary">Owner's Initial Cash-Out (60% of Equity):</strong> AED 900,000</li>
-                                <li><strong className="text-primary">Owner's Final Payout (MPT Event):</strong> AED 793,500</li>
-                                <li><strong className="text-primary">Lender Payout:</strong> Full AED 1.5M mortgage balance paid automatically via MAKE escrow.</li>
-                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 502,000 beyond the initial asset value, demonstrating value creation even after settling debt.</li>
+                                <li className="flex justify-between"><span>Property Value:</span> <strong className="text-primary">AED 3,000,000</strong></li>
+                                <li className="flex justify-between"><span>Mortgage to be Cleared:</span> <strong className="text-primary">AED 1,500,000</strong></li>
+                                <li className="flex justify-between"><span>Owner's Initial Cash-Out (60% of Equity):</span> <strong className="text-primary">AED 900,000</strong></li>
+                                <li className="flex justify-between"><span>Owner's Final Payout (MPT Event):</span> <strong className="text-primary">AED 793,500</strong></li>
+                                <li className="flex justify-between border-t pt-2 mt-2"><span>Net Value Created by DLDCHAIN:</span> <strong className="text-primary">~AED 502,000</strong></li>
                             </ul>
                         </TabsContent>
                         <TabsContent value="offplan" className="p-4 border rounded-lg mt-2 bg-background">
                             <h4 className="font-semibold mb-2">Simulation: Off-Plan Unit</h4>
                             <p className="text-sm text-muted-foreground mb-4">Showcases how DLDCHAIN unlocks future value today by providing developers with upfront liquidity and offering investors early access to appreciating assets tied to construction milestones.</p>
                              <ul className="text-sm space-y-2">
-                                <li><strong className="text-primary">Projected Completion Value:</strong> AED 2,500,000</li>
-                                <li><strong className="text-primary">Developer Upfront Liquidity (20%):</strong> AED 500,000</li>
-                                <li><strong className="text-primary">Phased Token Release:</strong> Tokens released at Launch, Foundation, Structure, and Finishing milestones, reducing investor risk.</li>
-                                <li><strong className="text-primary">Investor ROI (24-month simulation):</strong> 135% (reflecting higher risk/reward of off-plan investment)</li>
-                                <li><strong className="text-primary">Net Value Created:</strong> ~AED 2,370,000 beyond the initial projected value, accelerating development cycles and investment returns.</li>
+                                <li className="flex justify-between"><span>Projected Completion Value:</span> <strong className="text-primary">AED 2,500,000</strong></li>
+                                <li className="flex justify-between"><span>Developer Upfront Liquidity (20%):</span> <strong className="text-primary">AED 500,000</strong></li>
+                                <li className="flex justify-between"><span>Phased Token Release:</span> <strong className="text-primary">4 Tranches (Launch, Foundation, etc.)</strong></li>
+                                <li className="flex justify-between"><span>Projected Investor ROI (24 months):</span> <strong className="text-primary">~135%</strong></li>
+                                <li className="flex justify-between border-t pt-2 mt-2"><span>Net Value Created by DLDCHAIN:</span> <strong className="text-primary">~AED 2,370,000</strong></li>
                             </ul>
                         </TabsContent>
                     </Tabs>
