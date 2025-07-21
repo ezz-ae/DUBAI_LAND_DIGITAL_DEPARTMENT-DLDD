@@ -129,6 +129,13 @@ body {
   hr {
     @apply my-3 border-border;
   }
+  .prose pre {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+  .prose code {
+    word-break: break-word !important;
+  }
 }
 
 @layer utilities {
@@ -145,10 +152,4 @@ body {
       /* 100vh - header height - main container padding - card gap */
       height: calc(100vh - 4rem - (1.5rem * 2) - 1.5rem);
   }
-}
-
-/* Ensure code blocks in prose always wrap */
-.prose pre, .prose code {
-  white-space: pre-wrap !important;
-  word-break: break-word !important;
 }

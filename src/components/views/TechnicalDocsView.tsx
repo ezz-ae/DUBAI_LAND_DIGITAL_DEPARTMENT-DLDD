@@ -76,9 +76,8 @@ const findItem = (id: string) => {
     for (const part of technicalBook.parts) {
         for (const chapter of part.chapters) {
             if (chapter.id === id) return { ...chapter, type: 'chapter' };
-            for (const article of chapter.articles) {
-                if (article.id === id) return { ...article, type: 'article' };
-            }
+            const article = chapter.articles.find(a => a.id === id);
+            if (article) return { ...article, type: 'article' };
         }
     }
 
@@ -110,23 +109,24 @@ export function TechnicalDocsView() {
 
     let title: string = '';
     let contentToRender: ContentItem[] = [];
+    let allContent: React.ReactNode[] = [];
 
-    if ('content' in current && Array.isArray(current.content)) {
+    if (current.type === 'chapter') {
         title = current.title;
-        contentToRender = current.content;
-    } else if (current.type === 'chapter') {
-        title = current.title;
-        contentToRender.push(...current.introduction);
+        allContent.push(...current.introduction.map(renderContentItem));
         current.articles.forEach(article => {
-            contentToRender.push({ type: 'heading', text: article.title });
-            contentToRender.push(...article.content);
+            allContent.push(renderContentItem({ type: 'heading', text: article.title }, 0));
+            allContent.push(...article.content.map(renderContentItem));
         });
+    } else if ('content' in current && Array.isArray(current.content)) {
+        title = current.title;
+        allContent.push(...current.content.map(renderContentItem));
     }
 
     return (
         <div id={current.id} className="py-4">
             <h1 className="font-headline text-4xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{title}</h1>
-            {contentToRender.map(renderContentItem)}
+            {allContent}
         </div>
     );
   }
