@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { LucideProps } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -15,7 +16,14 @@ interface AppHeaderProps {
   setActiveView: (view: ActiveView) => void;
 }
 
-const navItems = [
+interface NavItem {
+  view: ActiveView;
+  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+  label: string;
+}
+
+
+const navItems: NavItem[] = [
     { view: 'documentation', icon: BookOpen, label: 'Documentation' },
     { view: 'tech-docs', icon: Code, label: 'Technical Docs' },
     { view: 'mindmap', icon: Share2, label: 'Mind Map' },
@@ -23,7 +31,7 @@ const navItems = [
     { view: 'project-validation', icon: Send, label: 'Project Validation' },
     { view: 'simulator', icon: FlaskConical, label: 'Simulator' },
     { view: 'media-center', icon: Music, label: 'Media Center' },
-] as const;
+];
 
 
 export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
