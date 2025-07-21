@@ -1,11 +1,11 @@
 
 'use client';
 
-import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useRef, useState, useMemo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { technicalBook } from '@/lib/technical-documents';
-import type { BookChapter, BookArticle, ContentItem } from '@/lib/technical-documents';
+import type { ContentItem } from '@/lib/technical-documents';
 import { TechnicalDocsSidebar } from './TechnicalDocsSidebar';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
@@ -174,7 +174,7 @@ export function TechnicalDocsView() {
           <div className="max-w-7xl mx-auto w-full h-full p-6 md:p-10">
             <Card className="flex-1 flex flex-col overflow-hidden">
               <CardContent className="px-4 md:px-8">
-                <div className="prose dark:prose-invert max-w-none">
+                <div className="prose dark:prose-invert">
                   {renderContent()}
                   {renderNavigationFooter()}
                 </div>
