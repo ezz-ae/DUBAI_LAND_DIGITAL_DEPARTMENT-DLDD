@@ -79,7 +79,7 @@ body {
 
     --ai-console-bg: 222.2 84% 6.9%;
     
-    --mindmap-line-color: hsl(210 70% 55% / 0.5);
+    --mindmap-line-color: hsl(210 70% 55% / 0.3);
     --mindmap-node-bg: hsl(215 27.9% 16.9%);
     --mindmap-node-hover-bg: hsl(215 27.9% 22.9%);
     --mindmap-node-border-hover: hsl(210 70% 55%);
@@ -128,10 +128,10 @@ body {
   }
   .prose pre {
     white-space: pre-wrap !important;
-    word-break: break-word !important;
+    word-break: break-all !important;
   }
   .prose code {
-    word-break: break-word !important;
+    word-break: break-all !important;
   }
 }
 

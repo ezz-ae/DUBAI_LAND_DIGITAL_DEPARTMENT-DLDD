@@ -34,7 +34,10 @@ export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
     <header className="p-4 border-b flex items-center justify-between h-16 shrink-0 gap-4">
       <div className="flex items-center gap-4 flex-shrink-0">
         <SidebarTrigger className={cn('md:hidden', !['documentation', 'tech-docs'].includes(activeView) && 'hidden')} />
-        <h1 className="text-md font-headline font-bold whitespace-nowrap">DLDCHAIN THE FIRST NATIVE REAL ESTATE BLOCKCHAIN</h1>
+        <h1 className="text-md font-headline font-bold whitespace-nowrap">
+          <span className="hidden sm:inline">DLDCHAIN NATIVE REAL ESTATE BLOCKCHAIN</span>
+          <span className="sm:hidden">DLDCHAIN</span>
+        </h1>
       </div>
 
       {/* Desktop Navigation */}
