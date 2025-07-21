@@ -115,7 +115,7 @@ export function TechnicalDocsView() {
         // Default view: Render introduction
         return (
             <section id={technicalBook.introduction.id} className="py-8">
-                <div className="prose dark:prose-invert max-w-none">
+                <div className="prose dark:prose-invert max-w-full">
                   <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.introduction.title}</h1>
                   <Separator className="my-6" />
                   {technicalBook.introduction.content.map(renderContentItem)}
@@ -127,7 +127,7 @@ export function TechnicalDocsView() {
     if (selectedItem.type === 'chapter') {
       return (
           <section id={selectedItem.id} className="py-8">
-              <div className="prose dark:prose-invert max-w-none">
+              <div className="prose dark:prose-invert max-w-full">
                 <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
                 {selectedItem.introduction.map(renderContentItem)}
                 <Separator className="my-6"/>
@@ -146,7 +146,7 @@ export function TechnicalDocsView() {
     if ('content' in selectedItem && Array.isArray(selectedItem.content)) {
         return (
             <section id={selectedItem.id} className="py-4">
-               <div className="prose dark:prose-invert max-w-none">
+               <div className="prose dark:prose-invert max-w-full">
                 <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
                 {selectedItem.content.map(renderContentItem)}
                </div>

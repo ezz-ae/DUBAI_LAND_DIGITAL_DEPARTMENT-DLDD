@@ -120,6 +120,14 @@ body {
   code {
     @apply bg-muted text-sm font-code p-1 rounded-md;
   }
+  pre {
+    @apply bg-muted text-sm font-code p-4 rounded-md overflow-x-auto;
+    white-space: pre-wrap;       /* CSS3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  }
   hr {
     @apply my-3 border-border;
   }
