@@ -203,9 +203,9 @@ export function AiConsoleView({
   };
 
   const handleDiscussNote = (noteContent: string) => {
-    setSelectedNote(null);
-    onViewChange('ai-console');
-    handleSendMessage(undefined, `Based on my note "${noteContent}", can you elaborate further?`);
+    setSelectedNote(null); // Close the dialog first
+    const prompt = `Based on my note "${noteContent}", can you elaborate further?`;
+    handleSendMessage(undefined, prompt);
   };
   
   
