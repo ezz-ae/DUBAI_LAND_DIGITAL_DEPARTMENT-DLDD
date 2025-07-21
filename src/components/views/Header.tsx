@@ -8,6 +8,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { BookOpen, Bot, Code, Send, Share2, Music, Menu, FlaskConical } from 'lucide-react';
+import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
 
 type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center' | 'simulator';
 
@@ -18,10 +19,9 @@ interface AppHeaderProps {
 
 interface NavItem {
   view: ActiveView;
-  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+  icon: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
   label: string;
 }
-
 
 const navItems: NavItem[] = [
     { view: 'documentation', icon: BookOpen, label: 'Documentation' },
