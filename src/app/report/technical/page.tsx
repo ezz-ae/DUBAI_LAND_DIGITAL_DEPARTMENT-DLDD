@@ -1,3 +1,4 @@
+
 export default function TechnicalAnalysisPage() {
   return (
     <article>
@@ -32,7 +33,7 @@ export default function TechnicalAnalysisPage() {
             For example, the financial details of a mortgage agreement between a
             bank and a property owner can be shared privately between them, while
             only a hash of the transaction is committed to the main ledger for
--           verification, preserving privacy.
+            verification, preserving privacy.
           </li>
           <li>
             <strong>No Native Cryptocurrency:</strong> Fabric does not require
