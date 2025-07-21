@@ -108,13 +108,13 @@ export function TechnicalDocsView() {
     if (!current) return null;
 
     let title: string = '';
-    let contentToRender: ContentItem[] = [];
     let allContent: React.ReactNode[] = [];
 
     if (current.type === 'chapter') {
         title = current.title;
         allContent.push(...current.introduction.map(renderContentItem));
         current.articles.forEach(article => {
+            allContent.push(<Separator key={`${article.id}-separator`} className="my-8" />);
             allContent.push(renderContentItem({ type: 'heading', text: article.title }, 0));
             allContent.push(...article.content.map(renderContentItem));
         });
@@ -153,7 +153,7 @@ export function TechnicalDocsView() {
         <ScrollArea className="h-full" ref={scrollRef}>
           <div className="max-w-7xl mx-auto w-full h-full p-6 md:p-10">
             <Card className="flex-1 flex flex-col overflow-hidden">
-              <CardContent className="px-4 md:px-8">
+              <CardContent className="p-4 md:p-8">
                   <div className="prose dark:prose-invert max-w-full">
                     {renderContent()}
                   </div>

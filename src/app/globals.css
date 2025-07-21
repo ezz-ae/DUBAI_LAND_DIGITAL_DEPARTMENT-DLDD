@@ -119,12 +119,9 @@ body {
   }
   code {
     @apply bg-muted text-sm font-code p-1 rounded-md;
-    word-break: break-all;
   }
   pre {
     @apply bg-muted text-sm font-code p-4 rounded-md;
-    white-space: pre-wrap;
-    word-break: break-all;
   }
   hr {
     @apply my-3 border-border;
