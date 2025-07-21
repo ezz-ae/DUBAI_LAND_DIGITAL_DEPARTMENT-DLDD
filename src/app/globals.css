@@ -122,9 +122,10 @@ body {
     word-break: break-all;
   }
   pre {
-    @apply bg-muted text-sm font-code p-4 rounded-md overflow-x-auto;
-    white-space: pre-wrap !important;
+    @apply bg-muted text-sm font-code p-4 rounded-md;
+    white-space: pre-wrap;
     word-break: break-all;
+    overflow-x: hidden;
   }
   hr {
     @apply my-3 border-border;
