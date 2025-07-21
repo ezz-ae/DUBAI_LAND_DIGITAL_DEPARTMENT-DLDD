@@ -23,7 +23,7 @@ const renderContentItem = (item: ContentItem, index: number) => {
     }
     if (item.type === 'code') {
       return (
-        <pre key={index} className="relative my-4 rounded-lg bg-muted/50 p-4 border font-code text-sm overflow-x-auto">
+        <pre key={index} className="my-4">
           <code>{item.text}</code>
         </pre>
       );
@@ -112,14 +112,11 @@ export function TechnicalDocsView() {
 
   const renderContent = () => {
     if (!selectedItem) {
-        // Default view: Render introduction
         return (
             <section id={technicalBook.introduction.id} className="py-8">
-                <div className="prose dark:prose-invert max-w-full">
-                  <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.introduction.title}</h1>
-                  <Separator className="my-6" />
-                  {technicalBook.introduction.content.map(renderContentItem)}
-                </div>
+                <h1 className="font-headline text-5xl font-bold mb-4">{technicalBook.introduction.title}</h1>
+                <Separator className="my-6" />
+                {technicalBook.introduction.content.map(renderContentItem)}
             </section>
         )
     }
@@ -127,32 +124,29 @@ export function TechnicalDocsView() {
     if (selectedItem.type === 'chapter') {
       return (
           <section id={selectedItem.id} className="py-8">
-              <div className="prose dark:prose-invert max-w-full">
-                <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
-                {selectedItem.introduction.map(renderContentItem)}
-                <Separator className="my-6"/>
-                {selectedItem.articles.map(article => (
-                    <article key={article.id} id={article.id} className="pt-6">
-                        <h3 className="font-headline text-xl font-bold mb-4">{article.title}</h3>
-                        {article.content.map(renderContentItem)}
-                    </article>
-                ))}
-              </div>
+              <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
+              {selectedItem.introduction.map(renderContentItem)}
+              <Separator className="my-6"/>
+              {selectedItem.articles.map(article => (
+                  <article key={article.id} id={article.id} className="pt-6">
+                      <h3 className="font-headline text-xl font-bold mb-4">{article.title}</h3>
+                      {article.content.map(renderContentItem)}
+                  </article>
+              ))}
           </section>
       )
     }
     
-    // This handles articles, appendices, and the book introduction
     if ('content' in selectedItem && Array.isArray(selectedItem.content)) {
         return (
             <section id={selectedItem.id} className="py-4">
-               <div className="prose dark:prose-invert max-w-full">
-                <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
-                {selectedItem.content.map(renderContentItem)}
-               </div>
+              <h2 className="font-headline text-3xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{selectedItem.title}</h2>
+              {selectedItem.content.map(renderContentItem)}
             </section>
         );
     }
+
+    return null;
   }
 
   const renderNavigationFooter = () => {
@@ -180,7 +174,9 @@ export function TechnicalDocsView() {
           <div className="max-w-7xl mx-auto w-full h-full p-6 md:p-10">
             <Card className="flex-1 flex flex-col overflow-hidden">
               <CardContent className="px-4 md:px-8">
-                  {renderContent()}
+                  <div className="prose dark:prose-invert max-w-none">
+                    {renderContent()}
+                  </div>
                   {renderNavigationFooter()}
               </CardContent>
             </Card>
