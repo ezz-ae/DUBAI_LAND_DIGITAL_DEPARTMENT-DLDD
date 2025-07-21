@@ -172,10 +172,12 @@ export function TechnicalDocsView() {
       <main className="flex-1 overflow-hidden">
         <ScrollArea className="h-full" ref={scrollRef}>
           <div className="max-w-7xl mx-auto w-full h-full p-6 md:p-10">
-            <Card className="flex-1 flex flex-col overflow-hidden prose dark:prose-invert max-w-none">
+            <Card className="flex-1 flex flex-col overflow-hidden">
               <CardContent className="px-4 md:px-8">
-                {renderContent()}
-                {renderNavigationFooter()}
+                <div className="prose dark:prose-invert max-w-none">
+                  {renderContent()}
+                  {renderNavigationFooter()}
+                </div>
               </CardContent>
             </Card>
           </div>
