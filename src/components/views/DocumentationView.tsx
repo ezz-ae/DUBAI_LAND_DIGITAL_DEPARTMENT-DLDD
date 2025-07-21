@@ -92,9 +92,11 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }:
                   <h3 className={cn("text-lg font-headline font-semibold leading-none tracking-tight", isArabic && 'font-arabic')}>{selectedDoc.name}</h3>
                   <div className="flex items-center gap-1">
                      <Button variant='outline' size="sm" onClick={handleLanguageToggle}><Languages className="h-4 w-4 mr-2"/>{isArabic ? 'English' : 'العربية'}</Button>
-                    <Button variant={textSize === 'text-sm' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-sm')}>A</Button>
-                    <Button variant={textSize === 'text-base' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-base')}>A</Button>
-                    <Button variant={textSize === 'text-lg' ? 'secondary' : 'outline'} size="sm" onClick={() => setTextSize('text-lg')}>A</Button>
+                    <div className="flex items-center rounded-md border bg-background p-0.5">
+                      <Button variant={textSize === 'text-sm' ? 'secondary' : 'ghost'} size="sm" className="h-7 px-2" onClick={() => setTextSize('text-sm')}>A</Button>
+                      <Button variant={textSize === 'text-base' ? 'secondary' : 'ghost'} size="sm" className="h-7 px-2" onClick={() => setTextSize('text-base')}>A</Button>
+                      <Button variant={textSize === 'text-lg' ? 'secondary' : 'ghost'} size="sm" className="h-7 px-2" onClick={() => setTextSize('text-lg')}>A</Button>
+                    </div>
                   </div>
                 </CardTitleWithBackground>
                 <CardContent className="p-0 flex-1 overflow-hidden">

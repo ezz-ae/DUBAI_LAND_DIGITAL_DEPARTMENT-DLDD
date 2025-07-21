@@ -154,19 +154,19 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                 <ul className="space-y-3 flex-1">
                     {downloadItems.map((item, index) => (
                         <React.Fragment key={item.title}>
-                            <li className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50">
+                            <li className="flex items-start justify-between p-2 rounded-lg hover:bg-muted/50 gap-2">
                                 <div className="flex-1">
                                     <h4 className="font-semibold">{item.title}</h4>
                                     <p className="text-sm text-muted-foreground">{item.description}</p>
                                 </div>
-                                <Button asChild variant="outline" size="sm" disabled={item.disabled}>
-                                    <a href={item.file} target="_blank" rel="noopener noreferrer">
+                                <Button asChild variant="outline" size="sm" disabled={item.disabled} className="shrink-0">
+                                    <a href={item.disabled ? undefined : item.file} target={item.disabled ? undefined : "_blank"} rel="noopener noreferrer">
                                         <Download className="h-4 w-4 mr-2" />
                                         {item.disabled ? 'Coming Soon' : 'View & Print'}
                                     </a>
                                 </Button>
                             </li>
-                            {index < downloadItems.length - 1 && !item.disabled && <Separator />}
+                            {index < downloadItems.length - 1 && <Separator />}
                         </React.Fragment>
                     ))}
                 </ul>

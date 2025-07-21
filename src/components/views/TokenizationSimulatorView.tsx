@@ -20,7 +20,7 @@ const formSchema = z.object({
   propertyType: z.enum(['apartment', 'villa', 'off-plan']),
   appraisedValue: z.coerce.number().positive({ message: "Appraised value must be positive." }),
   sizeSqFt: z.coerce.number().positive({ message: "Size must be positive." }),
-  mortgageBalance: z.coerce.number().min(0).optional().default(0),
+  mortgageBalance: z.coerce.number().min(0, "Mortgage balance cannot be negative.").default(0),
 });
 
 const propertyTypeIcons = {
@@ -48,7 +48,10 @@ export function TokenizationSimulatorView() {
     setIsLoading(true);
     setSimulationResult(null);
     try {
-      const result = await simulateTokenization(values);
+      const result = await simulateTokenization({
+          ...values,
+          mortgageBalance: values.mortgageBalance || 0,
+      });
       setSimulationResult(result);
     } catch (error) {
       console.error("Error running simulation:", error);
@@ -163,7 +166,7 @@ export function TokenizationSimulatorView() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                        {propertyTypeIcons[simulationResult.setup.propertyType.toLowerCase() as keyof typeof propertyTypeIcons]}
+                        {propertyTypeIcons[(simulationResult.setup.propertyType.toLowerCase() as keyof typeof propertyTypeIcons) || 'apartment']}
                         {simulationResult.simulationTitle}
                     </CardTitle>
                     <CardDescription>This simulation outlines the complete tokenization process from submission to value distribution.</CardDescription>
@@ -184,7 +187,7 @@ export function TokenizationSimulatorView() {
                             <dd className="font-semibold text-primary text-base">{simulationResult.setup.totalTokens}</dd>
                         </div>
                          <div className="bg-muted/50 p-3 rounded-md">
-                            <dt className="font-medium text-muted-foreground">Value per sq ft / Token</dt>
+                            <dt className="font-medium text-muted-foreground">Value per Token</dt>
                             <dd className="font-semibold text-primary text-base">{simulationResult.setup.pricePerSqFt}</dd>
                         </div>
                          <div className="bg-muted/50 p-3 rounded-md">

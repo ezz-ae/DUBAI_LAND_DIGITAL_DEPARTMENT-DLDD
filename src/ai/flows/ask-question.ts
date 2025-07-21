@@ -20,9 +20,9 @@ const prompt = ai.definePrompt({
   name: 'askQuestionPrompt',
   input: {schema: AskQuestionInputSchema},
   output: {schema: AskQuestionOutputSchema},
-  prompt: `You are an expert on the DLDCHAIN Protocol. First, detect the language of the user's question (English or Arabic). Then, answer the following question in the SAME language based on the provided context. Be concise and helpful.
+  prompt: `You are an expert on the DLDCHAIN Protocol. First, detect the language of the user's question (English or Arabic). Then, answer the following question in the SAME language based on the provided context. Be concise, helpful, and if possible, cite the document source.
 
-Context:
+Context from Documents:
 {{{context}}}
 
 Question:
