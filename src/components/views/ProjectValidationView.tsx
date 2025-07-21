@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Beaker, GanttChartSquare, ShieldCheck } from 'lucide-react';
+import { Separator } from '../ui/separator';
 
 const ValidationSection = ({ icon, title, description, children }: { icon: React.ReactNode, title: string, description: string, children: React.ReactNode }) => (
   <Card className="bg-card/50">
@@ -28,6 +29,14 @@ const ValidationSection = ({ icon, title, description, children }: { icon: React
     </CardContent>
   </Card>
 );
+
+const OutcomeRow = ({ label, value, isHighlighted = false, isTotal = false }: { label: string, value: string, isHighlighted?: boolean, isTotal?: boolean }) => (
+    <div className={`flex justify-between items-center p-3 rounded-md ${isHighlighted ? 'bg-primary/10' : ''} ${isTotal ? 'border-t mt-2 pt-3' : ''}`}>
+        <span className={`${isTotal ? 'font-bold' : 'text-muted-foreground'}`}>{label}</span>
+        <span className={`font-semibold text-base ${isHighlighted || isTotal ? 'text-primary' : ''}`}>{value}</span>
+    </div>
+);
+
 
 export function ProjectValidationView() {
   return (
@@ -91,11 +100,11 @@ export function ProjectValidationView() {
                             </ol>
                             
                             <h5 className="font-semibold mt-4 mb-2">Financial Outcome</h5>
-                            <ul className="space-y-2">
-                                <li className="flex justify-between"><span>Owner's Total Value:</span> <strong className="text-primary">AED 2,064,000</strong> (Initial Cash + Value of Retained Tokens at MPT)</li>
-                                <li className="flex justify-between"><span>Projected Investor ROI (12 months):</span> <strong className="text-primary">~15%</strong> (Capital gain from token price appreciation)</li>
-                                <li className="flex justify-between border-t pt-2 mt-2"><span>Net Value Created by DLDCHAIN:</span> <strong className="text-primary">~AED 252,000</strong> (Investor Profits + Fees + Owner Gains)</li>
-                            </ul>
+                            <div className="space-y-1 mt-2">
+                                <OutcomeRow label="Owner's Total Value (Cash + Tokens @ MPT)" value="AED 2,064,000" isHighlighted={true} />
+                                <OutcomeRow label="Projected Investor ROI (12 months)" value="~15%" />
+                                <OutcomeRow label="Net Value Created by DLDCHAIN" value="~AED 252,000" isTotal={true} />
+                            </div>
                         </TabsContent>
                         <TabsContent value="mortgaged" className="p-4 border rounded-lg mt-2 bg-background text-sm">
                              <h4 className="font-semibold mb-2 text-base">Simulation 2: Mortgaged Villa with Lien Clearance</h4>
@@ -118,14 +127,15 @@ export function ProjectValidationView() {
                                 <li><strong>Pool Closure & Payout (MPT):</strong> After 12 months, the property appreciates by 5% to AED 3,150,000 (AED 1,260/token). An investor triggers the MPT.</li>
                             </ol>
                             
-                             <h5 className="font-semibold mt-4 mb-2">Financial Outcome</h5>
-                             <ul className="space-y-2">
-                                <li className="flex justify-between"><span>Lender Payoff:</span> <strong className="text-primary">AED 1,500,000</strong> (Mortgage cleared instantly)</li>
-                                <li className="flex justify-between"><span>Owner's Initial Cash-Out:</span> <strong className="text-primary">AED 900,000</strong></li>
-                                <li className="flex justify-between"><span>Owner's Final Value (from retained tokens):</span> <strong className="text-primary">AED 1,260,000</strong></li>
-                                <li className="flex justify-between"><span>Projected Investor ROI (12 months):</span> <strong className="text-primary">~12%</strong></li>
-                                <li className="flex justify-between border-t pt-2 mt-2"><span>Net Value Created by DLDCHAIN:</span> <strong className="text-primary">~AED 480,000</strong> (Appreciation + Fees + Investor Gains)</li>
-                            </ul>
+                            <h5 className="font-semibold mt-4 mb-2">Financial Outcome</h5>
+                            <div className="space-y-1 mt-2">
+                                <OutcomeRow label="Lender Payoff (Mortgage Cleared)" value="AED 1,500,000" />
+                                <OutcomeRow label="Owner's Initial Cash-Out" value="AED 900,000" />
+                                <OutcomeRow label="Owner's Final Value (from retained tokens)" value="AED 1,260,000" />
+                                <OutcomeRow label="Owner's Total Value" value="AED 2,160,000" isHighlighted={true} />
+                                <OutcomeRow label="Projected Investor ROI (12 months)" value="~12%" />
+                                <OutcomeRow label="Net Value Created by DLDCHAIN" value="~AED 480,000" isTotal={true} />
+                            </div>
                         </TabsContent>
                         <TabsContent value="offplan" className="p-4 border rounded-lg mt-2 bg-background text-sm">
                             <h4 className="font-semibold mb-2 text-base">Simulation 3: Off-Plan Unit</h4>
@@ -147,13 +157,13 @@ export function ProjectValidationView() {
                                 <li><strong>Pool Closure (MPT at Handover):</strong> At 24 months, the property value has appreciated by 16% to AED 2,900,000 (~AED 3,412/token). The MPT is triggered at handover.</li>
                             </ol>
                              
-                             <h5 className="font-semibold mt-4 mb-2">Financial Outcome</h5>
-                             <ul className="space-y-2">
-                                <li className="flex justify-between"><span>Developer Upfront Liquidity:</span> <strong className="text-primary">AED 500,000</strong></li>
-                                <li className="flex justify-between"><span>Developer Total Value (Cash + Tokens):</span> <strong className="text-primary">~AED 1,660,000</strong></li>
-                                <li className="flex justify-between"><span>Projected Investor ROI (24 months):</span> <strong className="text-primary">~40-60%</strong> (From buying early and selling at handover)</li>
-                                <li className="flex justify-between border-t pt-2 mt-2"><span>Net Value Created by DLDCHAIN:</span> <strong className="text-primary">~AED 850,000</strong> (Appreciation + Fees + Investor Gains)</li>
-                            </ul>
+                            <h5 className="font-semibold mt-4 mb-2">Financial Outcome</h5>
+                            <div className="space-y-1 mt-2">
+                                <OutcomeRow label="Developer Upfront Liquidity" value="AED 500,000" />
+                                <OutcomeRow label="Developer Total Value (Cash + Tokens)" value="~AED 1,660,000" isHighlighted={true} />
+                                <OutcomeRow label="Projected Investor ROI (24 months)" value="~40-60%" />
+                                <OutcomeRow label="Net Value Created by DLDCHAIN" value="~AED 850,000" isTotal={true} />
+                            </div>
                         </TabsContent>
                     </Tabs>
                 </ValidationSection>
