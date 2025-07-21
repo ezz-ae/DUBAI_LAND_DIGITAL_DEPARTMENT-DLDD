@@ -18,9 +18,9 @@ interface MediaCenterViewProps {
 }
 
 const downloadItems = [
-    { title: "DLDCHAIN Project Overview", description: "A high-level summary of the project's vision, goals, and core components.", file: "/downloads/dldchain-project-overview.pdf" },
-    { title: "Project Feasibility Study", description: "In-depth analysis of the project's viability, market fit, and economic model.", file: "/downloads/dldchain-feasibility-study.pdf" },
-    { title: "Technical Analysis Overview", description: "A summary of the technical architecture, including blockchain choice and security protocols.", file: "/downloads/dldchain-technical-analysis.pdf" },
+    { title: "DLDCHAIN Project Overview", description: "A high-level summary of the project's vision, goals, and core components.", file: "/report/overview" },
+    { title: "Project Feasibility Study", description: "In-depth analysis of the project's viability, market fit, and economic model.", file: "/report/feasibility" },
+    { title: "Technical Analysis Overview", description: "A summary of the technical architecture, including blockchain choice and security protocols.", file: "/report/technical" },
     { title: "Generated Reports", description: "Access AI-generated reports created from your notes in the AI Console.", file: "#", disabled: true },
 ]
 
@@ -143,9 +143,9 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                     <p className="text-sm text-muted-foreground">{item.description}</p>
                                 </div>
                                 <Button asChild variant="outline" size="sm" disabled={item.disabled}>
-                                    <a href={item.file} download>
+                                    <a href={item.file} target="_blank" rel="noopener noreferrer">
                                         <Download className="h-4 w-4 mr-2" />
-                                        Download
+                                        {item.disabled ? 'Coming Soon' : 'View & Print'}
                                     </a>
                                 </Button>
                             </li>
