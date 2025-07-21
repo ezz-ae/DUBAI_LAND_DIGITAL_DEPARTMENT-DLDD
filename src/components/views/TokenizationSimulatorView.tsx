@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Sparkles, Building, Home, LandPlot, CheckCircle, ArrowRight, FlaskConical } from 'lucide-react';
+import { Loader2, Sparkles, Building, Home, LandPlot, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { simulateTokenization } from '@/ai/flows/simulate-tokenization';
 import type { SimulateTokenizationOutput } from '@/ai/schemas/simulate-tokenization';
@@ -176,8 +176,12 @@ export function TokenizationSimulatorView() {
                             <dd className="font-semibold text-primary text-base">{simulationResult.setup.appraisedValue}</dd>
                         </div>
                          <div className="bg-muted/50 p-3 rounded-md">
-                            <dt className="font-medium text-muted-foreground">Size / Total Tokens</dt>
-                            <dd className="font-semibold text-primary text-base">{simulationResult.setup.sizeSqFt} sq ft ({simulationResult.setup.totalTokens} DXBTOKENS)</dd>
+                            <dt className="font-medium text-muted-foreground">Size</dt>
+                            <dd className="font-semibold text-primary text-base">{simulationResult.setup.sizeSqFt}</dd>
+                        </div>
+                        <div className="bg-muted/50 p-3 rounded-md">
+                            <dt className="font-medium text-muted-foreground">Total Tokens</dt>
+                            <dd className="font-semibold text-primary text-base">{simulationResult.setup.totalTokens}</dd>
                         </div>
                          <div className="bg-muted/50 p-3 rounded-md">
                             <dt className="font-medium text-muted-foreground">Value per sq ft / Token</dt>
