@@ -1,7 +1,8 @@
 import {z} from 'genkit';
 
 export const GenerateAudioInputSchema = z.object({
-  text: z.string().describe('The text to convert to speech.'),
+  content: z.string().describe('The text content to generate an audio overview from.'),
+  length: z.enum(['short', 'long']).describe('The desired length of the interview.'),
 });
 export type GenerateAudioInput = z.infer<typeof GenerateAudioInputSchema>;
 
