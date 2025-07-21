@@ -173,7 +173,7 @@ export function TokenizationSimulatorView() {
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                         <div className="bg-muted/50 p-3 rounded-md">
                             <dt className="font-medium text-muted-foreground">Appraised Value</dt>
-                            <dd className="font-semibold text-primary text-base">{simulationResult.setup.appraisedValue} AED</dd>
+                            <dd className="font-semibold text-primary text-base">{simulationResult.setup.appraisedValue}</dd>
                         </div>
                          <div className="bg-muted/50 p-3 rounded-md">
                             <dt className="font-medium text-muted-foreground">Size / Total Tokens</dt>
@@ -181,15 +181,15 @@ export function TokenizationSimulatorView() {
                         </div>
                          <div className="bg-muted/50 p-3 rounded-md">
                             <dt className="font-medium text-muted-foreground">Value per sq ft / Token</dt>
-                            <dd className="font-semibold text-primary text-base">{simulationResult.setup.pricePerSqFt} AED</dd>
+                            <dd className="font-semibold text-primary text-base">{simulationResult.setup.pricePerSqFt}</dd>
                         </div>
                          <div className="bg-muted/50 p-3 rounded-md">
                             <dt className="font-medium text-muted-foreground">Mortgage Balance</dt>
-                            <dd className="font-semibold text-base">{simulationResult.setup.mortgageBalance} AED</dd>
+                            <dd className="font-semibold text-base">{simulationResult.setup.mortgageBalance}</dd>
                         </div>
                          <div className="bg-muted/50 p-3 rounded-md">
                             <dt className="font-medium text-muted-foreground">Owner's Equity</dt>
-                            <dd className="font-semibold text-base">{simulationResult.setup.ownerEquity} AED</dd>
+                            <dd className="font-semibold text-base">{simulationResult.setup.ownerEquity}</dd>
                         </div>
                     </div>
                   </CardContent>
@@ -226,20 +226,20 @@ export function TokenizationSimulatorView() {
                     <CardContent className="space-y-3 text-sm">
                        <div className="flex justify-between items-center p-3 bg-muted/50 rounded-md">
                            <span className="font-medium">Owner's Initial Cash-Out</span>
-                           <span className="font-bold text-lg">{simulationResult.financialOutcome.ownerInitialCashOut} AED</span>
+                           <span className="font-bold text-lg">{simulationResult.financialOutcome.ownerInitialCashOut}</span>
                        </div>
                        <div className="flex justify-between items-center p-3">
                            <span className="text-muted-foreground">Owner's Retained Tokens Value (at MPT)</span>
-                           <span className="font-semibold">{simulationResult.financialOutcome.ownerRetainedTokensValue} AED</span>
+                           <span className="font-semibold">{simulationResult.financialOutcome.ownerRetainedTokensValue}</span>
                        </div>
                        <div className="flex justify-between items-center p-3 bg-primary/10 rounded-md">
                            <strong className="text-primary">Owner's Total Realized Value</strong>
-                           <strong className="text-primary text-lg">{simulationResult.financialOutcome.ownerTotalValue} AED</strong>
+                           <strong className="text-primary text-lg">{simulationResult.financialOutcome.ownerTotalValue}</strong>
                        </div>
                        <Separator className="my-4" />
                        <div className="flex justify-between items-center p-3">
                            <span className="text-muted-foreground">Liquidity Provider (MAKE) Profit</span>
-                           <span className="font-semibold">{simulationResult.financialOutcome.liquidityProviderProfit} AED</span>
+                           <span className="font-semibold">{simulationResult.financialOutcome.liquidityProviderProfit}</span>
                        </div>
                        <div className="flex justify-between items-center p-3">
                            <span className="text-muted-foreground">Market Investor Potential ROI</span>
@@ -247,7 +247,7 @@ export function TokenizationSimulatorView() {
                        </div>
                        <div className="flex justify-between items-center p-3 bg-muted/50 rounded-md mt-4">
                            <strong className="text-lg">Total Value Created by DLDCHAIN</strong>
-                           <strong className="text-lg text-green-600">{simulationResult.financialOutcome.totalValueCreated} AED</strong>
+                           <strong className="text-lg text-green-600">{simulationResult.financialOutcome.totalValueCreated}</strong>
                        </div>
                     </CardContent>
                 </Card>
