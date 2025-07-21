@@ -106,7 +106,6 @@ export default function FeasibilityStudyPage() {
           <li>
             <strong>Integration:</strong> The plan to connect with existing
             systems like Ejari and Milka via secure APIs (as "oracles") is a
-
             standard and feasible approach to system integration, reducing the
             risk associated with a full replacement strategy.
           </li>
