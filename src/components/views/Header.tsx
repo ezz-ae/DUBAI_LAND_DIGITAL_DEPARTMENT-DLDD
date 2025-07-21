@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { BookOpen, Bot, Code, Send, Share2, Music, Menu } from 'lucide-react';
+import { BookOpen, Bot, Code, Send, Share2, Music, Menu, FlaskConical } from 'lucide-react';
 
-type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
+type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center' | 'simulator';
 
 interface AppHeaderProps {
   activeView: ActiveView;
@@ -21,6 +21,7 @@ const navItems = [
     { view: 'mindmap', icon: Share2, label: 'Mind Map' },
     { view: 'ai-console', icon: Bot, label: 'AI Console' },
     { view: 'project-validation', icon: Send, label: 'Project Validation' },
+    { view: 'simulator', icon: FlaskConical, label: 'Simulator' },
     { view: 'media-center', icon: Music, label: 'Media Center' },
 ] as const;
 

@@ -10,10 +10,11 @@ import { MindmapView } from '@/components/views/MindmapView';
 import { AiConsoleView } from '@/components/views/AiConsoleView';
 import { ProjectValidationView } from '@/components/views/ProjectValidationView';
 import { MediaCenterView } from '@/components/views/MediaCenterView';
+import { TokenizationSimulatorView } from '@/components/views/TokenizationSimulatorView';
 import { dldChainDocuments } from '@/lib/documents';
 import type { DLDDoc } from '@/lib/documents';
 
-export type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center';
+export type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center' | 'simulator';
 
 export default function Home() {
   const [activeView, setActiveView] = useState<ActiveView>('documentation');
@@ -77,6 +78,8 @@ export default function Home() {
         return <ProjectValidationView />;
       case 'media-center':
         return <MediaCenterView selectedDoc={selectedDoc} />;
+      case 'simulator':
+        return <TokenizationSimulatorView />;
       default:
         return null;
     }
