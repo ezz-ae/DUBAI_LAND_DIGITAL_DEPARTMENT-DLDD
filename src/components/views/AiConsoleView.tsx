@@ -151,12 +151,14 @@ export function AiConsoleView({
     if (initialTopicToExplain) {
       handleExplainTopic(initialTopicToExplain);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialTopicToExplain]);
 
   useEffect(() => {
     if (initialTopicToDiscuss) {
       handleSendMessage(undefined, `Tell me more about ${initialTopicToDiscuss}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialTopicToDiscuss]);
 
 
@@ -203,11 +205,12 @@ export function AiConsoleView({
   };
 
   const handleDiscussNote = (noteContent: string) => {
-    setSelectedNote(null); // Close the dialog first
+    setSelectedNote(null);
     const prompt = `Based on my note "${noteContent}", can you elaborate further?`;
     handleSendMessage(undefined, prompt);
   };
   
+  const isChatEmpty = messages.length <= 1;
   
   return (
     <div className="flex-1 overflow-hidden">
@@ -244,7 +247,7 @@ export function AiConsoleView({
                     )}
                   </div>
                 ))}
-                  {messages.length <= 1 && (
+                  {isChatEmpty && (
                     <div className="pt-4">
                       <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -280,7 +283,7 @@ export function AiConsoleView({
                 disabled={isAnswering}
                 className={cn(isArabic && "font-arabic")}
               />
-              <Button type="submit" size="icon" disabled={isAnswering}>
+              <Button type="submit" size="icon" disabled={isAnswering || !input.trim()}>
                 <Send className="h-4 w-4" />
               </Button>
             </form>

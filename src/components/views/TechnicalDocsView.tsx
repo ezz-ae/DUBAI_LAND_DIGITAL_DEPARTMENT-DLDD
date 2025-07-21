@@ -72,7 +72,7 @@ const findItem = (id: string) => {
 
 export function TechnicalDocsView() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [selectedItemId, setSelectedItemId] = useState<string | null>('book-introduction');
 
   const flatNavItems = useMemo(() => {
     const items: { id: string; title: string }[] = [];
@@ -108,7 +108,7 @@ export function TechnicalDocsView() {
     container?.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
-  const selectedItem = selectedItemId ? findItem(selectedItemId) : null;
+  const selectedItem = selectedItemId ? findItem(selectedItemId) : findItem('book-introduction');
 
   const renderContent = () => {
     if (!selectedItem) {
@@ -156,10 +156,10 @@ export function TechnicalDocsView() {
         <div className="flex justify-between items-center mt-8 pt-6 border-t">
             <Button variant="outline" onClick={() => handleLinkClick(prevItem!.id)} disabled={!prevItem}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous
+                Previous: {prevItem?.title}
             </Button>
             <Button variant="outline" onClick={() => handleLinkClick(nextItem!.id)} disabled={!nextItem}>
-                Next
+                Next: {nextItem?.title}
                 <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
         </div>
