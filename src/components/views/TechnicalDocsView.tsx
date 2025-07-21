@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useRef, useState, useMemo, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { technicalBook } from '@/lib/technical-documents';
@@ -115,7 +115,7 @@ export function TechnicalDocsView() {
         allContent.push(...current.introduction.map(renderContentItem));
         current.articles.forEach(article => {
             allContent.push(<Separator key={`${article.id}-separator`} className="my-8" />);
-            allContent.push(renderContentItem({ type: 'heading', text: article.title }, 0));
+            allContent.push(<div key={`${article.id}-content`}>{renderContentItem({ type: 'heading', text: article.title }, 0)}</div>);
             allContent.push(...article.content.map(renderContentItem));
         });
     } else if ('content' in current && Array.isArray(current.content)) {
@@ -151,15 +151,17 @@ export function TechnicalDocsView() {
       <TechnicalDocsSidebar onLinkClick={handleLinkClick} selectedItemId={selectedItemId} />
       <main className="flex-1 overflow-hidden">
         <ScrollArea className="h-full" ref={scrollRef}>
-          <div className="max-w-7xl mx-auto w-full h-full p-6 md:p-10">
-            <Card className="flex-1 flex flex-col overflow-hidden">
-              <CardContent className="p-4 md:p-8">
-                  <div className="prose dark:prose-invert max-w-full">
-                    {renderContent()}
-                  </div>
-                  {renderNavigationFooter()}
-              </CardContent>
-            </Card>
+          <div className="flex justify-center p-6 md:p-10">
+            <div className="w-full max-w-4xl">
+              <Card className="flex-1 flex flex-col overflow-hidden">
+                <CardContent className="p-4 md:p-8">
+                    <div className="prose dark:prose-invert max-w-full">
+                      {renderContent()}
+                    </div>
+                    {renderNavigationFooter()}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </ScrollArea>
       </main>
