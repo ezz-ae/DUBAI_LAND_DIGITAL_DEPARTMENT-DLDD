@@ -125,7 +125,6 @@ body {
     @apply bg-muted text-sm font-code p-4 rounded-md;
     white-space: pre-wrap;
     word-break: break-all;
-    overflow-x: hidden;
   }
   hr {
     @apply my-3 border-border;
@@ -146,4 +145,10 @@ body {
       /* 100vh - header height - main container padding - card gap */
       height: calc(100vh - 4rem - (1.5rem * 2) - 1.5rem);
   }
+}
+
+/* Ensure code blocks in prose always wrap */
+.prose pre, .prose code {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
 }
