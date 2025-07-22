@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { generateAudio } from '@/ai/flows/audio-overview';
 import { Loader2, Music4, PauseCircle, PlayCircle, Download, Mic2 } from 'lucide-react';
 import type { DLDDoc } from '@/lib/documents';
 import { Label } from '@/components/ui/label';
@@ -49,17 +48,12 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
     setIsGeneratingAudio(true);
 
     try {
-      const result = await generateAudio({ content: selectedDoc.content, length: interviewLength });
-      const audioSrc = result.audio;
-      const audioElement = new Audio(audioSrc);
-      
-      audioElement.onplay = () => setAudioState({ element: audioElement, isPlaying: true });
-      audioElement.onpause = () => setAudioState(prev => ({ ...prev, isPlaying: false }));
-      audioElement.onended = () => {
-        setAudioState({ element: null, isPlaying: false });
-      };
-
-      audioElement.play();
+      // AI functionality is temporarily disabled.
+      toast({
+        variant: 'destructive',
+        title: 'Audio Generation Failed',
+        description: 'AI features are currently unavailable. Please try again later.',
+      });
     } catch (error) {
       console.error('Error generating audio:', error);
       toast({

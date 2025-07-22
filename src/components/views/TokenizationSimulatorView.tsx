@@ -12,7 +12,6 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, Sparkles, Building, Home, LandPlot, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { simulateTokenization } from '@/ai/flows/simulate-tokenization';
 import type { SimulateTokenizationOutput } from '@/ai/schemas/simulate-tokenization';
 import { Separator } from '../ui/separator';
 
@@ -48,11 +47,12 @@ export function TokenizationSimulatorView() {
     setIsLoading(true);
     setSimulationResult(null);
     try {
-      const result = await simulateTokenization({
-          ...values,
-          mortgageBalance: values.mortgageBalance || 0,
-      });
-      setSimulationResult(result);
+        // AI functionality is temporarily disabled.
+        toast({
+            variant: "destructive",
+            title: "Simulation Failed",
+            description: "AI features are currently unavailable. Please try again later.",
+        });
     } catch (error) {
       console.error("Error running simulation:", error);
       toast({

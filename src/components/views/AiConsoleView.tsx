@@ -29,9 +29,6 @@ import { cn } from '@/lib/utils';
 import { dldChainDocuments } from '@/lib/documents';
 import { useToast } from '@/hooks/use-toast';
 
-import { askQuestion } from '@/ai/flows/ask-question';
-import { generateReport } from '@/ai/flows/notes';
-import { explainTopic } from '@/ai/flows/explain-topic';
 import type { ActiveView } from '@/app/page';
 import type { DLDDoc } from '@/lib/documents';
 
@@ -96,8 +93,6 @@ export function AiConsoleView({
     if(e) e.preventDefault();
     const currentMessage = message || input;
     if (!currentMessage.trim() || isAnswering ) return;
-    
-    const context = dldChainDocuments.map(d => d.content).join('\n\n');
 
     const newMessages = [...messages, { from: 'user', text: currentMessage }];
     setMessages(newMessages);
@@ -105,10 +100,9 @@ export function AiConsoleView({
     setIsAnswering(true);
 
     try {
-      const result = await askQuestion({ question: currentMessage, context: context });
-      const botAnswer = result.answer;
-      const isBotAnswerArabic = /[\u0600-\u06FF]/.test(botAnswer);
-      setMessages([...newMessages, { from: 'bot', text: botAnswer, isArabic: isBotAnswerArabic }]);
+      // AI functionality is temporarily disabled.
+      const botAnswer = "AI features are currently unavailable. Please try again later.";
+      setMessages([...newMessages, { from: 'bot', text: botAnswer, isArabic: false }]);
     } catch (error) {
       console.error('Error asking question:', error);
       setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error. Please try again.', isArabic: false }]);
@@ -129,11 +123,9 @@ export function AiConsoleView({
     setIsAnswering(true);
     
     try {
-      const context = dldChainDocuments.map(d => d.content).join('\n\n');
-      const result = await explainTopic({ topic: topic, context: context });
-      const botAnswer = result.explanation;
-      const isBotAnswerArabic = /[\u0600-\u06FF]/.test(botAnswer);
-      setMessages([...newMessages, { from: 'bot', text: botAnswer, isArabic: isBotAnswerArabic }]);
+      // AI functionality is temporarily disabled.
+      const botAnswer = "AI features are currently unavailable. Please try again later.";
+      setMessages([...newMessages, { from: 'bot', text: botAnswer, isArabic: false }]);
     } catch (error) {
       console.error('Error explaining topic:', error);
       setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error explaining that topic. Please try again.', isArabic: false }]);
@@ -194,8 +186,8 @@ export function AiConsoleView({
     setIsGeneratingReport(true);
     setGeneratedReport('');
     try {
-      const result = await generateReport({ notes: markedNotes, reportType: reportType as any });
-      setGeneratedReport(result.report);
+        // AI functionality is temporarily disabled.
+       setGeneratedReport("AI features are currently unavailable. Please try again later.");
     } catch (error) {
       console.error('Error generating report:', error);
       toast({ variant: "destructive", title: "Report Generation Failed", description: "Could not generate report. Please try again." });
