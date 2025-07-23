@@ -1232,8 +1232,53 @@ export const technicalBook: TechnicalBook = {
                                 }
                             ] 
                         },
-                        { id: 'article-12-2', title: 'Article 12.2: Contract Explanation & Security Features', content: [] },
-                        { id: 'article-12-3', title: 'Article 12.3: Auditability & Compliance Measures', content: [] }
+                        { 
+                            id: 'article-12-2', 
+                            title: 'Article 12.2: Contract Explanation & Security Features', 
+                            content: [
+                                { type: 'heading', text: 'Contract Explanation:'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>submitProperty:</strong> Initiates the tokenization process by creating a property record with a unique CDID. Includes basic property details and mortgage status.',
+                                        '<strong>_generateCDID:</strong> Generates a unique City Digital ID using SHA-256 hashing to ensure data integrity.',
+                                        '<strong>_encryptData:</strong> Encrypts sensitive property and financial data using AES-256 before storing it on the ledger, ensuring confidentiality.',
+                                    ]
+                                },
+                                { type: 'heading', text: 'Security Features:'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Encryption:</strong> AES-256 encryption protects sensitive data at rest on the ledger.',
+                                        '<strong>Multi-Signature Approvals:</strong> Critical functions like EBRAMINT and MAKE events require multi-signature approvals from the DLD and other authorized parties.',
+                                        '<strong>Access Control:</strong> Role-based access control limits who can execute specific functions (e.g., only DLD can approve tokenization).',
+                                    ]
+                                },
+                            ] 
+                        },
+                        { 
+                            id: 'article-12-3', 
+                            title: 'Article 12.3: Auditability & Compliance Measures', 
+                            content: [
+                                { type: 'heading', text: 'Auditability:'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Immutable Ledger:</strong> All transactions are recorded on the Hyperledger Fabric ledger, providing an immutable audit trail.',
+                                        '<strong>Transaction History:</strong> The contract logs all state changes, allowing for full traceability of property status, ownership, and financial transactions.',
+                                    ]
+                                },
+                                { type: 'heading', text: 'Compliance Measures:'},
+                                {
+                                    type: 'list',
+                                    items: [
+                                        '<strong>Regulatory Checks:</strong> The contract integrates with external oracles (Ejari, Milka) to validate property data against official records.',
+                                        '<strong>Automated Fee Calculation:</strong> RERA MPT fees, EBRAM protocol fees, and broker commissions are automatically calculated and disbursed, ensuring regulatory compliance.',
+                                        '<strong>AML/KYC Integration:</strong> The UNIVESTOR Wallet and CBUAE integration ensure all participants meet AML/KYC requirements.',
+                                    ]
+                                },
+                            ] 
+                        }
                     ]
                 }
             ]
@@ -1867,5 +1912,3 @@ export const technicalBook: TechnicalBook = {
         },
     ]
 };
-
-    
