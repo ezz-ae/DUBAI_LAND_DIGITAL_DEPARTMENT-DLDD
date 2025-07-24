@@ -11,25 +11,25 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-const renderContentItem = (item: ContentItem, index: number) => {
+const renderContentItem = (item: ContentItem, baseKey: string) => {
     if (item.type === 'paragraph') {
-      return <p key={index} dangerouslySetInnerHTML={{ __html: item.text }} />;
+      return <p key={`${baseKey}-p`} dangerouslySetInnerHTML={{ __html: item.text }} />;
     }
     if (item.type === 'heading') {
-      return <h3 key={index} className="font-headline font-bold" dangerouslySetInnerHTML={{ __html: item.text }} />;
+      return <h3 key={`${baseKey}-h3`} className="font-headline font-bold" dangerouslySetInnerHTML={{ __html: item.text }} />;
     }
     if (item.type === 'subheading') {
-      return <h4 key={index} className="font-headline font-semibold" dangerouslySetInnerHTML={{ __html: item.text }} />;
+      return <h4 key={`${baseKey}-h4`} className="font-headline font-semibold" dangerouslySetInnerHTML={{ __html: item.text }} />;
     }
     if (item.type === 'code') {
       return (
-        <pre key={index}>
+        <pre key={`${baseKey}-pre`}>
           <code>{item.text}</code>
         </pre>
       );
     }
     if (item.type === 'list') {
-      return <ul key={index} className="list-disc space-y-2">{item.items.map((li, i) => <li key={i} dangerouslySetInnerHTML={{ __html: li }} />)}</ul>;
+      return <ul key={`${baseKey}-ul`} className="list-disc space-y-2">{item.items.map((li, i) => <li key={`${baseKey}-li-${i}`} dangerouslySetInnerHTML={{ __html: li }} />)}</ul>;
     }
     return null;
 }
@@ -112,15 +112,15 @@ export function TechnicalDocsView() {
 
     if (current.type === 'chapter') {
         title = current.title;
-        allContent.push(...current.introduction.map(renderContentItem));
+        allContent.push(...current.introduction.map((item, index) => renderContentItem(item, `${current.id}-intro-${index}`)));
         current.articles.forEach(article => {
             allContent.push(<Separator key={`${article.id}-separator`} className="my-8" />);
-            allContent.push(<div key={`${article.id}-content`}>{renderContentItem({ type: 'heading', text: article.title }, 0)}</div>);
-            allContent.push(...article.content.map(renderContentItem));
+            allContent.push(<div key={`${article.id}-content-wrapper`}>{renderContentItem({ type: 'heading', text: article.title }, `${article.id}-heading`)}</div>);
+            allContent.push(...article.content.map((item, index) => renderContentItem(item, `${article.id}-content-${index}`)));
         });
     } else if ('content' in current && Array.isArray(current.content)) {
         title = current.title;
-        allContent.push(...current.content.map(renderContentItem));
+        allContent.push(...current.content.map((item, index) => renderContentItem(item, `${current.id}-content-${index}`)));
     }
 
     return (
