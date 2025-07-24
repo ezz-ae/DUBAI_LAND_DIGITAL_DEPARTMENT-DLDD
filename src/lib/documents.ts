@@ -1,5 +1,7 @@
 
 import { documentContents } from './document-content';
+import { technicalBook } from './technical-documents';
+import type { ContentItem } from './technical-documents';
 
 interface DLDDocument {
   id: number;
@@ -10,6 +12,39 @@ interface DLDDocument {
   keyTopics: string[];
   content: string;
 }
+
+function flattenContent(content: ContentItem[]): string {
+  return content.map(item => {
+    if (item.type === 'list') {
+      return `<ul>${item.items.map(li => `<li>${li}</li>`).join('')}</ul>`;
+    }
+    return item.text || '';
+  }).join('\\n\\n');
+}
+
+const fullTechnicalBookText = flattenContent(
+  [
+    ...technicalBook.introduction.content,
+    ...technicalBook.parts.flatMap(part => [
+        { type: 'heading', text: part.title },
+        ...part.chapters.flatMap(chapter => [
+            { type: 'heading', text: chapter.title },
+            ...chapter.introduction,
+            ...chapter.articles.flatMap(article => [
+                { type: 'subheading', text: article.title },
+                ...article.content
+            ])
+        ])
+    ]),
+    { type: 'heading', text: technicalBook.conclusion.title },
+    ...technicalBook.conclusion.content,
+    ...technicalBook.appendices.flatMap(appendix => [
+        { type: 'heading', text: appendix.title },
+        ...appendix.content
+    ])
+  ]
+);
+
 
 export const dldChainDocuments: DLDDocument[] = [
   {
@@ -22,7 +57,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['vision-en']
   },
   {
-    id: 19,
+    id: 2,
     name: "رؤية مشروع DLDCHAIN",
     group: 'vision',
     lang: 'ar',
@@ -31,7 +66,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['vision-ar']
   },
   {
-    id: 2,
+    id: 3,
     name: "The Philosophy of DLDCHAIN™",
     group: 'philosophy',
     lang: 'en',
@@ -40,7 +75,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['philosophy-en']
   },
   {
-    id: 3,
+    id: 4,
     name: "EBRAMGPT™: The AI Legal Copilot",
     group: 'components',
     lang: 'en',
@@ -49,7 +84,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['ebramgpt-en']
   },
   {
-    id: 4,
+    id: 5,
     name: "UNIVESTOR Wallet™: The Gateway",
     group: 'components',
     lang: 'en',
@@ -58,7 +93,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['univestor-en']
   },
   {
-    id: 5,
+    id: 6,
     name: "Mashroi™: The Intelligence Grid",
     group: 'components',
     lang: 'en',
@@ -67,7 +102,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['mashroi-en']
   },
   {
-    id: 6,
+    id: 7,
     name: "Mashroi™ Digital Events",
     group: 'components',
     lang: 'en',
@@ -76,7 +111,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['mashroi-events-en']
   },
   {
-    id: 7,
+    id: 8,
     name: "DXBTOKENS™: Programmable Ownership",
     group: 'components',
     lang: 'en',
@@ -85,7 +120,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['dxbtokens-en']
   },
   {
-    id: 8,
+    id: 9,
     name: "DLDCHAIN vs. Global Tokenization",
     group: 'strategy',
     lang: 'en',
@@ -94,7 +129,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['tokenization-comparison-en']
   },
   {
-    id: 9,
+    id: 10,
     name: "The Governance of DLDCHAIN™",
     group: 'strategy',
     lang: 'en',
@@ -103,7 +138,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['governance-en']
   },
   {
-    id: 10,
+    id: 11,
     name: "The Rise of the DLDD",
     group: 'strategy',
     lang: 'en',
@@ -112,7 +147,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['dldd-en']
   },
   {
-    id: 11,
+    id: 12,
     name: "Market Benefits of DLDCHAIN™",
     group: 'strategy',
     lang: 'en',
@@ -121,7 +156,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['market-benefits-en']
   },
   {
-    id: 12,
+    id: 13,
     name: "Liquidity on DLDCHAIN™",
     group: 'strategy',
     lang: 'en',
@@ -130,7 +165,7 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['liquidity-en']
   },
   {
-    id: 13,
+    id: 14,
     name: "The Mix of AI & Blockchain",
     group: 'strategy',
     lang: 'en',
@@ -139,12 +174,25 @@ export const dldChainDocuments: DLDDocument[] = [
     content: documentContents['ai-blockchain-mix-en']
   },
   {
-    id: 14,
+    id: 15,
     name: "New Market Opportunities",
     group: 'strategy',
     lang: 'en',
     summary: "A study of how DLDCHAIN™ acts as a catalyst for business innovation, creating new economic frontiers for all stakeholders.",
     keyTopics: ["Digital Kiosks", "Data Licensing", "Verified Listings", "Earn and Learn Model"],
     content: documentContents['new-market-opps-en']
+  },
+  {
+    id: 16,
+    name: "Full Technical Analysis Book",
+    group: 'technical',
+    lang: 'en',
+    summary: "The complete, unabridged technical analysis of the DLDCHAIN™ protocol, covering architecture, core components, smart contracts, security, and implementation plans.",
+    keyTopics: ["Hyperledger Fabric", "EBRAM", "MAKE System", "Smart Contracts", "Security Audits"],
+    content: fullTechnicalBookText,
   }
 ];
+
+export type DLDDoc = (typeof dldChainDocuments)[0];
+
+    
