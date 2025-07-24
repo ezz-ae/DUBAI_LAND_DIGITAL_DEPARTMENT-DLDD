@@ -197,7 +197,8 @@ export const technicalBook: TechnicalBook = {
                             id: 'article-2-7',
                             title: "2.7. Endorsement Policies",
                             content: [
-                                { type: 'paragraph', text: "Government workflows often require specific approvals and multi-party sign-offs for critical transactions. Fabric's endorsement policies codify these rules directly at the smart contract (chaincode) level. A transaction can be defined to be valid only if it is digitally signed (endorsed) by a specific set of authorized organizations. For example, the transfer of a tokenized property title could require simultaneous endorsements from DLD, the seller, and the buyer's financing bank, creating a tamper-proof, automated workflow for multi-party approvals that is enforced by the network itself, eliminating manual bottlenecks, reducing fraud, and enhancing security. This robust foundation ensures smart ownership contracts are \"unbreakable, undeletable, and uneditable,\" establishing the highest level of trust and legal certainty in property records. This forms the bedrock of Dubai's digital land matrix and its future as a \"City as Code,\" where the digital representation of property is as legally binding and secure as its physical counterpart." }
+                                { type: 'paragraph', text: "Government workflows often require specific approvals and multi-party sign-offs for critical transactions. Fabric's endorsement policies codify these rules directly at the smart contract (chaincode) level. A transaction can be defined to be valid only if it is digitally signed (endorsed) by a specific set of authorized organizations. For example, the transfer of a tokenized property title could require simultaneous endorsements from DLD, the seller, and the buyer's financing bank, creating a tamper-proof, automated workflow for multi-party approvals that is enforced by the network itself, eliminating manual bottlenecks, reducing fraud, and enhancing security." },
+                                { type: 'paragraph', text: "This robust foundation ensures smart ownership contracts are \"unbreakable, undeletable, and uneditable,\" establishing the highest level of trust and legal certainty in property records. This forms the bedrock of Dubai's digital land matrix and its future as a \"City as Code,\" where the digital representation of property is as legally binding and secure as its physical counterpart." }
                             ]
                         }
                     ]
@@ -212,7 +213,8 @@ export const technicalBook: TechnicalBook = {
                     id: 'chapter-3',
                     title: "EBRAM™: Real Estate Legal Programming Language",
                     introduction: [
-                        { type: 'paragraph', text: "EBRAM™ (إبرام), derived from the Arabic word meaning \"agreement,\" and also standing for \"Emirates Blockchain Real-estate Agreement Management,\" is the unified smart contract layer and core application within the DLDCHAIN™ protocol. It is designed as a revolutionary smart contract system that fundamentally reshapes how agreements, reputation, and legal accountability function in the digital age. EBRAM™ is envisioned as the \"smart contract of the chain\" and the \"smart agreement engine\" of DLDCHAIN™, serving as the very consciousness of Dubai's real estate. It acts as the digital nervous system for all real estate transactions, ensuring precision and legal certainty in every interaction.\nMore than just a smart contract system, EBRAM™ is conceptualized as a \"legal-transactional language\" and a \"domain-specific programmable language for real estate governance.\" It is designed to be \"the law, coded and automated,\" functioning as a \"global language of agreement\" that fosters trust and transparency. Inspired by Prophet Ibrahim, it represents a bridge between faith in tradition and trust in technology, ensuring that legal intent is precisely executed without ambiguity. Its primary role is to serve as a \"global infrastructure for binding agreements, offering a seamless, legally valid, and transparent way to create, sign, verify, and monitor transactions and promises across all sectors.\" This vision extends to making legal agreements as fluid and reliable as software, capable of self-execution and real-time adaptation." }
+                        { type: 'paragraph', text: "EBRAM™ (إبرام), derived from the Arabic word meaning \"agreement,\" and also standing for \"Emirates Blockchain Real-estate Agreement Management,\" is the unified smart contract layer and core application within the DLDCHAIN™ protocol. It is designed as a revolutionary smart contract system that fundamentally reshapes how agreements, reputation, and legal accountability function in the digital age. EBRAM™ is envisioned as the \"smart contract of the chain\" and the \"smart agreement engine\" of DLDCHAIN™, serving as the very consciousness of Dubai's real estate. It acts as the digital nervous system for all real estate transactions, ensuring precision and legal certainty in every interaction." },
+                        { type: 'paragraph', text: "More than just a smart contract system, EBRAM™ is conceptualized as a \"legal-transactional language\" and a \"domain-specific programmable language for real estate governance.\" It is designed to be \"the law, coded and automated,\" functioning as a \"global language of agreement\" that fosters trust and transparency. Inspired by Prophet Ibrahim, it represents a bridge between faith in tradition and trust in technology, ensuring that legal intent is precisely executed without ambiguity. Its primary role is to serve as a \"global infrastructure for binding agreements, offering a seamless, legally valid, and transparent way to create, sign, verify, and monitor transactions and promises across all sectors.\" This vision extends to making legal agreements as fluid and reliable as software, capable of self-execution and real-time adaptation." }
                     ],
                     articles: [
                         {
@@ -243,7 +245,8 @@ export const technicalBook: TechnicalBook = {
                                     "<strong>Triggers:</strong> Events or time-based initiations can trigger actions within the contract. For example, a trigger might be if lease.startDate + 3 days && noKeyPickup then auto-cancel, automating responses to specific conditions without manual intervention, such as lease terminations or penalty applications. These triggers ensure proactive contract management."
                                 ]},
                                 { type: 'subheading', text: "Python Layer (Computational execution)" },
-                                { type: 'paragraph', text: "This layer is the underlying code that executes the logic defined in the EBRAM™ layer on the blockchain. It serves as an intermediate Domain Specific Language (DSL), translating the human-readable legal logic into executable commands for the Hyperledger Fabric network. This separation ensures that legal clarity is maintained while technical execution is precise and efficient, guaranteeing the integrity of automated legal processes and providing a robust, auditable execution environment that can be verified by technical experts. This dual-layer approach allows for the tokenization of \"enforceable rights, behaviors, and consequences,\" not just properties, establishing a new paradigm for real estate governance where legal agreements are self-executing and auditable." },
+                                { type: 'paragraph', text: "This layer is the underlying code that executes the logic defined in the EBRAM™ layer on the blockchain. It serves as an intermediate Domain Specific Language (DSL), translating the human-readable legal logic into executable commands for the Hyperledger Fabric network. This separation ensures that legal clarity is maintained while technical execution is precise and efficient, guaranteeing the integrity of automated legal processes and providing a robust, auditable execution environment that can be verified by technical experts." },
+                                { type: 'paragraph', text: "This dual-layer approach allows for the tokenization of \"enforceable rights, behaviors, and consequences,\" not just properties, establishing a new paradigm for real estate governance where legal agreements are self-executing and auditable." },
                                 { type: 'subheading', text: "Example: Automated Late Rent Payment and Access Lock" },
                                 { type: 'code', language: 'pseudocode', text: "# EBRAM™ Clause (Legal Logic Layer):\n# IF tenant.payment.status == late FOR > 5d AND no_response_from_owner FOR 3d THEN trigger notice_to_DLD AND pause_token_transfer = TRUE.\n\n# Python Execution Layer:\nif tenant.payment_overdue(days=5) and not owner.responded(within_days=3):\n    trigger_dld_notice()\n    lock_token_transfer()" },
                                 { type: 'paragraph', text: "This example demonstrates how a clear legal clause is directly translated into executable code, ensuring automated and legally compliant responses to contractual breaches, eliminating ambiguity and manual enforcement. This level of automation drastically reduces the need for human intervention in dispute resolution, accelerating outcomes and reducing costs." }
@@ -478,7 +481,7 @@ export const technicalBook: TechnicalBook = {
                                 { type: 'subheading', text: "1. MAKELIST (Event: Token Candidate Listing)" },
                                 { type: 'list', items: [
                                   "<strong>Writer:</strong> No (Status-only event).",
-                                  "<strong>Description:</strong> An EBRAM™-qualified property is listed as a candidate for tokenization on a MAKELIST. This is a status-only event created by EBRAM™ and approved by a DLDLOG (silent signature). It indicates a property is eligible for liquidity but not yet funded. The property is still owned by the original owner.",
+                                  "<strong>Description:</strong> An EBRAM™-qualified property is listed as a candidate for tokenization on a MAKELIST. This is a status-only event created by EBRAM™ and approved by a DLDLOG (silent signature). It indicates a property is eligible for liquidity but not yet funded.",
                                   "<strong>Code Implication:</strong> TokenState.MakeListed"
                                 ]},
                                 { type: 'subheading', text: "2. MAKETRADE (Event: Pool Interest Expressed)" },
@@ -726,12 +729,12 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "To ensure the long-term success and integrity of DLDCHAIN™, several technical best practices are recommended." },
                                 { type: 'list', items: [
-                                  "Modular Chaincode Development",
-                                  "Comprehensive Monitoring and Alerting",
-                                  "Automated Testing Suite",
-                                  "Version Control and CI/CD",
-                                  "Disaster Recovery and Business Continuity",
-                                  "API Management Gateway"
+                                  "<strong>Modular Chaincode Development:</strong> Develop chaincode for each major function as separate, independently deployable units.",
+                                  "<strong>Comprehensive Monitoring and Alerting:</strong> Implement a robust monitoring system with automated alerts.",
+                                  "<strong>Automated Testing Suite:</strong> Develop a comprehensive suite of automated tests for all layers.",
+                                  "<strong>Version Control and CI/CD:</strong> Utilize strict version control and Continuous Integration/Continuous Deployment pipelines.",
+                                  "<strong>Disaster Recovery and Business Continuity:</strong> Establish detailed disaster recovery plans.",
+                                  "<strong>API Management Gateway:</strong> Implement a robust API management gateway for all API interactions."
                                 ]}
                             ]
                         }
@@ -824,7 +827,7 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "DLDCHAIN™ primarily utilizes GoLang chaincode for its Hyperledger Fabric backbone. However, conceptual Solidity examples are provided to illustrate compatibility principles for potential hybrid or cross-chain integrations with EVM-compatible networks, enhancing global reach." },
                                 { type: 'subheading', text: "EBRAMTokenPool.sol (Solidity - Conceptual for Hybrid/EVM Bridge)" },
-                                { type: 'code', language: 'solidity', text: `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\n// This contract would manage the state transitions of token pools for DXBTOKENS™\n// and conceptually interact with an external EBRAM Chaincode on Hyperledger Fabric\n// via an oracle bridge for legal finality and cross-chain operations.\n\ncontract EBRAMTokenPool {\n    // Enum to track the lifecycle status of a token pool within the MAKE™ System\n    enum Status { None, MakeListed, MakeID, MakeIn, MakeOut, MakeDismissed }\n    // Enum to define roles within the DLDCHAIN™ ecosystem for access control\n    enum Role { None, PoolOfficer, TokenHolder, EBRAM, ServiceManager }\n\n    // Struct to define the properties of a TokenPool\n    struct TokenPool {\n        address propertyCDIDRef; // Reference to the property's CDID (on Fabric)\n        address[] tokenHolders;  // Addresses of current token holders in this pool\n        uint256 totalTokens;     // Total number of DXBTOKENS™ for this property\n        uint256[4] distribution; // [OriginalOwner%, Market%, EBRAM%, Service%] e.g., [40, 40, 10, 10]\n        Status status;           // Current status of the token pool\n        address poolOfficer;     // Address of the Liquidity Pool Officer (LPO)\n        mapping(address => uint256) balances; // Balances of DXBTOKENS™ within this pool\n        bool rentEnabled;        // Flag if this pool is configured for rental income distribution\n    }\n\n    // Mapping to store TokenPool data, indexed by a unique pool ID (bytes32)\n    mapping(bytes32 => TokenPool) public pools;\n    // Mapping to store roles of participants, assigned by EBRAM™\n    mapping(address => Role) public roles;\n\n    // Events to log critical state transitions for off-chain monitoring and auditing\n    event MakeListed(bytes32 indexed poolId);\n    event MakeIDConfirmed(bytes32 indexed poolId);\n    event MakeInConfirmed(bytes32 indexed poolId);\n    event MakeOutExecuted(bytes32 indexed poolId);\n    event MakeDismissed(bytes32 indexed poolId);\n    event RentDistributed(bytes32 indexed poolId, uint256 amount, uint256 timestamp);\n\n    // Modifier to restrict functions to only be called by the EBRAM™ entity\n    modifier onlyEBRAM() {\n        require(roles[msg.sender] == Role.EBRAM, "Caller not authorized as EBRAM™");\n        _; // Continues execution of the function\n    }\n\n    // Function to assign roles to users, callable only by EBRAM™\n    function assignRole(address user, Role role) external onlyEBRAM {\n        roles[user] = role;\n    }\n\n    // Function to list a property as a candidate for tokenization (MAKELIST event)\n    // Called by EBRAM™ after initial property qualification\n    function makeList(bytes32 poolId, address propertyCDID, address poolOfficerAddress, uint256 totalPropertyTokens) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.None, "Pool already exists or has a status"); // Ensure pool doesn't exist\n\n        pool.propertyCDIDRef = propertyCDID;\n        pool.totalTokens = totalPropertyTokens;\n        pool.status = Status.MakeListed;\n        pool.poolOfficer = poolOfficerAddress;\n        pool.distribution = [40, 40, 10, 10]; // Default distribution: Original Owner, Market, EBRAM, Service\n        pool.rentEnabled = false; // Default: Rent distribution is off\n\n        emit MakeListed(poolId); // Log the event\n    }\n\n    // Function to confirm liquidity commitment and token registration (MAKE_ID event)\n    // Called by EBRAM™ after LPO's 100% AED deposit verification\n    function makeID(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeListed, "Invalid status for MAKE_ID: Must be MakeListed");\n        // Placeholder for external oracle call to verify 100% AED backing\n        // require(IMakeOracle(oracleAddress).verifyDeposit(poolId, pool.totalTokens * 1 AED_PRICE), "AED deposit not confirmed by Oracle");\n\n        pool.status = Status.MakeID;\n        emit MakeIDConfirmed(poolId);\n    }\n\n    // Function to activate token for trading and distribute initial shares (MAKE_IN event)\n    // Called by EBRAM™ after MAKE_ID confirmation\n    function makeIn(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeID, "Invalid status for MAKE_IN: Must be MakeID");\n\n        // Conceptual logic for distributing DXBTOKENS™\n        // This would involve interacting with a separate DXBTOKEN™ contract\n        // Example: DXBTOKEN_Contract.transfer(originalOwnerAddress, pool.totalTokens * pool.distribution[0] / 100);\n        // Example: DXBTOKEN_Contract.transfer(marketOfferingAddress, pool.totalTokens * pool.distribution[1] / 100);\n        // ... and other allocations for EBRAM™ and Service Pool ...\n\n        pool.status = Status.MakeIn;\n        // Activate EBRAM™ Watcher for this pool in the broader EBRAM™ system (off-chain notification)\n        emit MakeInConfirmed(poolId);\n    }\n\n    // Function to temporarily exit from liquidity lock (MAKE_OUT event)\n    // Called by EBRAM™ for specific purposes like direct sale outside pool\n    function makeOut(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn, "Invalid status for MAKE_OUT: Must be MakeIn");\n        // Logic to temporarily halt trading for these tokens (e.g., in DXBTOKEN™ contract)\n        // Example: DXBTOKEN_Contract.pauseTrading(poolId);\n        pool.status = Status.MakeOut;\n        emit MakeOutExecuted(poolId);\n    }\n\n    // Function for final exit and D-EBRAMINT™ execution (MAKE_DISMISS event)\n    // Called by EBRAM™ for pool closure, 90%+ stake claim, or legal settlement\n    function makeDismiss(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeOut || pool.status == Status.MakeIn, "Invalid status for MAKE_DISMISS");\n\n        // Trigger D-EBRAMINT™ procedure in main EBRAM™ contract (off-chain notification)\n        // Example: EBRAM_Main_Contract.deEbramint(pool.propertyCDIDRef, newOwnerAddress);\n        // Logic to perform MPT (Market Price Transaction) and finalize funds distribution\n\n        pool.status = Status.MakeDismissed;\n        // Optionally, clear pool data or mark for archival\n        emit MakeDismissed(poolId);\n    }\n\n    // Function to enable rental income distribution for a pool\n    function enableRentDistribution(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn, "Pool must be in MAKE_IN status to enable rent");\n        pool.rentEnabled = true;\n    }\n\n    // Function to distribute rental income\n    // Called by EBRAM™ based on verified rental payments\n    function distributeRent(bytes32 poolId, uint256 rentAmount) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn && pool.rentEnabled, "Rent distribution not enabled or invalid pool state");\n\n        uint256 poolOfficerShare = rentAmount * pool.distribution[2] / 100; // 10%\n        uint256 ebramShare = rentAmount * pool.distribution[3] / 100;     // 10%\n        uint256 serviceManagerShare = rentAmount * pool.distribution[4] / 100; // 40% (assuming distribution array is [Owner, Market, PoolOfficer, EBRAM, ServiceManager])\n        uint256 tokenHoldersShare = rentAmount * pool.distribution[1] / 100; // 40%\n\n        // Simulate transfers (actual transfers would be handled by DLD-AED gateway)\n        // payable(pool.poolOfficer).transfer(poolOfficerShare);\n        // payable(EBRAM_Address).transfer(ebramShare);\n        // payable(ServiceManager_Address).transfer(serviceManagerShare);\n\n        // Distribute to token holders proportionally\n        // For simplicity, this is a conceptual loop. In reality, it would iterate through tokenHolders and transfer\n        // uint256 sharePerToken = tokenHoldersShare / pool.totalTokens;\n        // for (uint i = 0; i < pool.tokenHolders.length; i++) {\n        //     payable(pool.tokenHolders[i]).transfer(sharePerToken * pool.balances[pool.tokenHolders[i]]);\n        // }\n\n        emit RentDistributed(poolId, rentAmount, block.timestamp);\n    }\n}`},
+                                { type: 'code', language: 'solidity', text: `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\n// This contract would manage the state transitions of token pools for DXBTOKENS™\n// and conceptually interact with an external EBRAM Chaincode on Hyperledger Fabric\n// via an oracle bridge for legal finality and cross-chain operations.\n\ncontract EBRAMTokenPool {\n    // Enum to track the lifecycle status of a token pool within the MAKE™ System\n    enum Status { None, MakeListed, MakeID, MakeIn, MakeOut, MakeDismissed }\n    // Enum to define roles within the DLDCHAIN™ ecosystem for access control\n    enum Role { None, PoolOfficer, TokenHolder, EBRAM, ServiceManager }\n\n    // Struct to define the properties of a TokenPool\n    struct TokenPool {\n        address propertyCDIDRef; // Reference to the property's CDID (on Fabric)\n        address[] tokenHolders;  // Addresses of current token holders in this pool\n        uint256 totalTokens;     // Total number of DXBTOKENS™ for this property\n        uint256[4] distribution; // [OriginalOwner%, Market%, EBRAM%, Service%] e.g., [40, 40, 10, 10]\n        Status status;           // Current status of the token pool\n        address poolOfficer;     // Address of the Liquidity Pool Officer (LPO)\n        mapping(address => uint256) balances; // Balances of DXBTOKENS™ within this pool\n        bool rentEnabled;        // Flag if this pool is configured for rental income distribution\n    }\n\n    // Mapping to store TokenPool data, indexed by a unique pool ID (bytes32)\n    mapping(bytes32 => TokenPool) public pools;\n    // Mapping to store roles of participants, assigned by EBRAM™\n    mapping(address => Role) public roles;\n\n    // Events to log critical state transitions for off-chain monitoring and auditing\n    event MakeListed(bytes32 indexed poolId);\n    event MakeIDConfirmed(bytes32 indexed poolId);\n    event MakeInConfirmed(bytes32 indexed poolId);\n    event MakeOutExecuted(bytes32 indexed poolId);\n    event MakeDismissed(bytes32 indexed poolId);\n    event RentDistributed(bytes32 indexed poolId, uint256 amount, uint256 timestamp);\n\n    // Modifier to restrict functions to only be called by the EBRAM™ entity\n    modifier onlyEBRAM() {\n        require(roles[msg.sender] == Role.EBRAM, "Caller not authorized as EBRAM™");\n        _; // Continues execution of the function\n    }\n\n    // Function to assign roles to users, callable only by EBRAM™\n    function assignRole(address user, Role role) external onlyEBRAM {\n        roles[user] = role;\n    }\n\n    // Function to list a property as a candidate for tokenization (MAKELIST event)\n    // Called by EBRAM™ after initial property qualification\n    function makeList(bytes32 poolId, address propertyCDID, address poolOfficerAddress, uint256 totalPropertyTokens) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.None, "Pool already exists or has a status"); // Ensure pool doesn't exist\n\n        pool.propertyCDIDRef = propertyCDID;\n        pool.totalTokens = totalPropertyTokens;\n        pool.status = Status.MakeListed;\n        pool.poolOfficer = poolOfficerAddress;\n        pool.distribution = [40, 40, 10, 10]; // Default distribution: Original Owner, Market, EBRAM, Service\n        pool.rentEnabled = false; // Default: Rent distribution is off\n\n        emit MakeListed(poolId); // Log the event\n    }\n\n    // Function to confirm liquidity commitment and token registration (MAKE_ID event)\n    // Called by EBRAM™ after LPO's 100% AED deposit verification\n    function makeID(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeListed, "Invalid status for MAKE_ID: Must be MakeListed");\n        // Placeholder for external oracle call to verify 100% AED backing\n        // require(IMakeOracle(oracleAddress).verifyDeposit(poolId, pool.totalTokens * 1 AED_PRICE), "AED deposit not confirmed by Oracle");\n\n        pool.status = Status.MakeID;\n        emit MakeIDConfirmed(poolId);\n    }\n\n    // Function to activate token for trading and distribute initial shares (MAKE_IN event)\n    // Called by EBRAM™ after MAKE_ID confirmation\n    function makeIn(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeID, "Invalid status for MAKE_IN: Must be MakeID");\n\n        // Conceptual logic for distributing DXBTOKENS™\n        // This would involve interacting with a separate DXBTOKEN™ contract\n        // Example: DXBTOKEN_Contract.transfer(originalOwnerAddress, pool.totalTokens * pool.distribution[0] / 100);\n        // Example: DXBTOKEN_Contract.transfer(marketOfferingAddress, pool.totalTokens * pool.distribution[1] / 100);\n        // ... and other allocations for EBRAM™ and Service Pool ...\n\n        pool.status = Status.MakeIn;\n        // Activate EBRAM™ Watcher for this pool in the broader EBRAM™ system (off-chain notification)\n        emit MakeInConfirmed(poolId);\n    }\n\n    // Function to temporarily exit from liquidity lock (MAKE_OUT event)\n    // Called by EBRAM™ for specific purposes like direct sale outside pool\n    function makeOut(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn, "Invalid status for MAKE_OUT: Must be MakeIn");\n\n        // Logic to temporarily halt trading for these tokens (e.g., in DXBTOKEN™ contract)\n        // Example: DXBTOKEN_Contract.pauseTrading(poolId);\n        pool.status = Status.MakeOut;\n        emit MakeOutExecuted(poolId);\n    }\n\n    // Function for final exit and D-EBRAMINT™ execution (MAKE_DISMISS event)\n    // Called by EBRAM™ for pool closure, 90%+ stake claim, or legal settlement\n    function makeDismiss(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeOut || pool.status == Status.MakeIn, "Invalid status for MAKE_DISMISS");\n\n        // Trigger D-EBRAMINT™ procedure in main EBRAM™ contract (off-chain notification)\n        // Example: EBRAM_Main_Contract.deEbramint(pool.propertyCDIDRef, newOwnerAddress);\n        // Logic to perform MPT (Market Price Transaction) and finalize funds distribution\n\n        pool.status = Status.MakeDismissed;\n        // Optionally, clear pool data or mark for archival\n        emit MakeDismissed(poolId);\n    }\n\n    // Function to enable rental income distribution for a pool\n    function enableRentDistribution(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn, "Pool must be in MAKE_IN status to enable rent");\n        pool.rentEnabled = true;\n    }\n\n    // Function to distribute rental income\n    // Called by EBRAM™ based on verified rental payments\n    function distributeRent(bytes32 poolId, uint256 rentAmount) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn && pool.rentEnabled, "Rent distribution not enabled or invalid pool state");\n\n        uint256 poolOfficerShare = rentAmount * pool.distribution[2] / 100; // 10%\n        uint256 ebramShare = rentAmount * pool.distribution[3] / 100;     // 10%\n        uint256 serviceManagerShare = rentAmount * pool.distribution[4] / 100; // 40% (assuming distribution array is [Owner, Market, PoolOfficer, EBRAM, ServiceManager])\n        uint256 tokenHoldersShare = rentAmount * pool.distribution[1] / 100; // 40%\n\n        // Simulate transfers (actual transfers would be handled by DLD-AED gateway)\n        // payable(pool.poolOfficer).transfer(poolOfficerShare);\n        // payable(EBRAM_Address).transfer(ebramShare);\n        // payable(ServiceManager_Address).transfer(serviceManagerShare);\n\n        // Distribute to token holders proportionally\n        // For simplicity, this is a conceptual loop. In reality, it would iterate through tokenHolders and transfer\n        // uint256 sharePerToken = tokenHoldersShare / pool.totalTokens;\n        // for (uint i = 0; i < pool.tokenHolders.length; i++) {\n        //     payable(pool.tokenHolders[i]).transfer(sharePerToken * pool.balances[pool.tokenHolders[i]]);\n        // }\n\n        emit RentDistributed(poolId, rentAmount, block.timestamp);\n    }\n}`},
                                 { type: 'subheading', text: "EBRAMChaincode.go (Go Chaincode - Conceptual for Hyperledger Fabric)"},
                                 { type: 'code', language: 'go', text: `package main\n\nimport (\n\t"encoding/json"\n\t"fmt"\n\t"time"\n\n\t"github.com/hyperledger/fabric-contract-api-go/contractapi"\n)\n\n// SmartContract defines the EBRAM™ Chaincode structure\ntype SmartContract struct {\n\tcontractapi.Contract\n}\n\n// PropertyAsset defines the structure for a property in the ledger\ntype PropertyAsset struct {\n\tID            string \`json:"ID"\`\n\tOwner         string \`json:"owner"\`\n\tStatus        string \`json:"status"\`\n\tCDID          string \`json:"cdid"\`\n\tMortgageDetails string \`json:"mortgageDetails,omitempty"\`\n\tLienStatus    bool   \`json:"lienStatus"\`\n}\n\n// EbramintProperty is the function to formalize property digital identity\nfunc (s *SmartContract) EbramintProperty(ctx contractapi.TransactionContextInterface, propertyID string, ownerID string, params string) error {\n\t// ... extensive validation (unoccupied, clear title, broker qualification) ...\n\n\t// Example: Check if property already exists\n\tpropertyAsBytes, err := ctx.GetStub().GetState(propertyID)\n\tif err != nil {\n\t\treturn fmt.Errorf("Failed to read from world state: %v", err)\n\t}\n\tif propertyAsBytes != nil {\n\t\treturn fmt.Errorf("Property with ID %s already exists", propertyID)\n\t}\n\n\tproperty := PropertyAsset{\n\t\tID: propertyID,\n\t\tOwner: ownerID,\n\t\tStatus: "EBRAMINTED",\n\t\tCDID: generateCDID(propertyID), // Conceptual CDID generation\n\t\tLienStatus: false,\n\t}\n\tpropertyAsBytes, _ = json.Marshal(property)\n\treturn ctx.GetStub().PutState(propertyID, propertyAsBytes)\n}\n\n// CreateMortgage registers a lien on the property\nfunc (s *SmartContract) CreateMortgage(ctx contractapi.TransactionContextInterface, propertyID string, borrowerID string, loanAmount string, interestRate string, terms string) error {\n\t// ... authorization and validation ...\n\tpropertyAsBytes, err := ctx.GetStub().GetState(propertyID)\n\tif err != nil {\n\t\treturn fmt.Errorf("Failed to read property: %v", err)\n\t}\n\tif propertyAsBytes == nil {\n\t\treturn fmt.Errorf("Property %s does not exist", propertyID)\n\t}\n\n\tproperty := PropertyAsset{}\n\tjson.Unmarshal(propertyAsBytes, &property)\n\n\tproperty.MortgageDetails = fmt.Sprintf("Loan: %s, Rate: %s, Terms: %s", loanAmount, interestRate, terms)\n\tproperty.LienStatus = true\n\tproperty.Status = "Mortgaged" // Update status in EBRAM™ registry\n\n\tupdatedPropertyAsBytes, _ := json.Marshal(property)\n\treturn ctx.GetStub().PutState(propertyID, updatedPropertyAsBytes)\n}\n\n// CloseMortgage removes a lien from the property\nfunc (s *SmartContract) CloseMortgage(ctx contractapi.TransactionContextInterface, propertyID string) error {\n\t// ... authorization and validation ...\n\tpropertyAsBytes, err := ctx.GetStub().GetState(propertyID)\n\tif err != nil {\n\t\treturn fmt.Errorf("Failed to read property: %v", err)\n\t}\n\tif propertyAsBytes == nil {\n\t\treturn fmt.Errorf("Property %s does not exist", propertyID)\n\t}\n\n\tproperty := PropertyAsset{}\n\tjson.Unmarshal(propertyAsBytes, &property)\n\n\tproperty.MortgageDetails = ""\n\tproperty.LienStatus = false\n\tproperty.Status = "Ready" // Update status in EBRAM™ registry\n\n\tupdatedPropertyAsBytes, _ := json.Marshal(property)\n\treturn ctx.GetStub().PutState(propertyID, updatedPropertyAsBytes)\n}\n\n// Conceptual function for generating a CDID\nfunc generateCDID(propertyID string) string {\n\treturn fmt.Sprintf("CDID-%s-%d", propertyID, time.Now().UnixNano())\n}\n\n// Main function to start the chaincode\nfunc main() {\n\tchaincode, err := contractapi.NewChaincode(&SmartContract{})\n\tif err != nil {\n\t\tfmt.Printf("Error creating EBRAM™ chaincode: %s", err.Error())\n\t\treturn\n\t}\n\tif err := chaincode.Start(); err != nil {\n\t\tfmt.Printf("Error starting EBRAM™ chaincode: %s", err.Error())\n\t}\n}`}
                             ]
@@ -842,12 +845,12 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "DLDCHAIN™ smart contracts are designed for maximum auditability, enabling both automated tools and human auditors to verify their correctness, security, and compliance." },
                                 { type: 'list', items: [
-                                  "Static Analysis",
-                                  "Symbolic Execution",
-                                  "Formal Verification",
-                                  "Hyperledger Explorer",
-                                  "Event Logging",
-                                  "Transparent Logic"
+                                  "<strong>Static Analysis:</strong> The well-defined Go Chaincode and Solidity (if applicable) allow static analysis tools to analyze the code without execution.",
+                                  "<strong>Symbolic Execution:</strong> Tools like Mythril can explore all possible execution paths of the smart contracts.",
+                                  "<strong>Formal Verification:</strong> For critical, high-value smart contract modules, formal verification techniques can be applied.",
+                                  "<strong>Hyperledger Explorer:</strong> Provides real-time visibility into all on-chain transactions and chaincode invocations.",
+                                  "<strong>Event Logging:</strong> Extensive use of events allows off-chain monitoring tools to track the lifecycle of properties and tokens.",
+                                  "<strong>Transparent Logic:</strong> The dual-layer design of EBRAM™ facilitates audits by allowing legal experts to easily compare the human-understandable legal terms with the underlying code's execution logic."
                                 ]}
                             ]
                         },
@@ -857,14 +860,14 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "Security is paramount for DLDCHAIN™, implemented at the smart contract level through a combination of cryptographic controls and design patterns." },
                                 { type: 'list', items: [
-                                  "Access Control (Modifiers)",
-                                  "Input Validation",
-                                  "State Machine Enforcement",
-                                  "Re-entrancy Protection",
-                                  "Integer Overflow/Underflow Prevention",
-                                  "Timestamp Dependency Mitigation",
-                                  "Event-Driven Communication",
-                                  "Multi-Signature (Multisig) Requirements"
+                                  "<strong>Access Control (Modifiers):</strong> Functions are protected by modifiers ensuring only authorized entities can invoke specific actions.",
+                                  "<strong>Input Validation:</strong> Rigorous validation of all input parameters.",
+                                  "<strong>State Machine Enforcement:</strong> Smart contracts strictly enforce state transitions.",
+                                  "<strong>Re-entrancy Protection:</strong> Ensuring functions cannot be re-entered while an ongoing call is in progress.",
+                                  "<strong>Integer Overflow/Underflow Prevention:</strong> Using safe math libraries or compiler checks.",
+                                  "<strong>Timestamp Dependency Mitigation:</strong> Avoiding critical logic that relies solely on block.timestamp.",
+                                  "<strong>Event-Driven Communication:</strong> Utilizing events for inter-contract or off-chain communication.",
+                                  "<strong>Multi-Signature (Multisig) Requirements:</strong> For critical transactions, multi-signature wallets enforce a requirement for multiple authorized parties to sign."
                                 ]}
                             ]
                         },
@@ -904,13 +907,13 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "The MAKE™ System's escrow logic is integrated into the DXBTOKEN™ lifecycle through a series of precise, atomic events, enforced by EBRAM™'s overarching legal authority." },
                                 { type: 'list', items: [
-                                  "Step 1: Property Qualification (EBRAMINT™)",
-                                  "Step 2: Liquidity Request (MAKELIST / MAKETRADE)",
-                                  "Step 3: Liquidity Commitment (MAKE_ID)",
-                                  "Step 4: Token Minting & Trading Activation (MAKE_IN)",
-                                  "Step 5: Continuous Trading (In-Escrow)",
-                                  "Step 6: Temporary Exit (MAKE_OUT)",
-                                  "Step 7: Final Exit (MAKE_DISMISS)"
+                                  "<strong>Step 1: Property Qualification (EBRAMINT™):</strong> A property undergoes EBRAMINT™, formalizing its digital identity (CDID) and ensuring it meets all legal and technical criteria for tokenization.",
+                                  "<strong>Step 2: Liquidity Request (MAKELIST / MAKETRADE):</strong> The EBRAMINTED™ property is added to a MAKELIST. An LPO signals interest by submitting a MAKETRADE request.",
+                                  "<strong>Step 3: Liquidity Commitment (MAKE_ID):</strong> An LPO signs a MAKE™ transaction, depositing 100% of the property's AED value into a dedicated, unit-bound liquidity pool.",
+                                  "<strong>Step 4: Token Minting & Trading Activation (MAKE_IN):</strong> DXBTOKENS™ are minted and distributed. Tokens are now active for trading within the DLDCHAIN™ marketplace.",
+                                  "<strong>Step 5: Continuous Trading (In-Escrow):</strong> DXBTOKENS™ are bought and sold in the secondary market. The underlying property remains held by the MAKE™ Pool's legal entity.",
+                                  "<strong>Step 6: Temporary Exit (MAKE_OUT):</strong> An EBRAM™-initiated event temporarily detaches the DXBTOKENS™ from the active liquidity pool.",
+                                  "<strong>Step 7: Final Exit (MAKE_DISMISS):</strong> Triggered by 90%+ stake acquisition. Ownership of the physical property transfers from the MAKE™ Pool's legal entity to the new 100% legal owner."
                                 ]}
                             ]
                         },
@@ -919,7 +922,7 @@ export const technicalBook: TechnicalBook = {
                             title: "11.3. Escrow Smart Contract (Pseudocode for MAKE™ contract logic)",
                             content: [
                                 { type: 'paragraph', text: "The MAKE™ System's core escrow logic would reside within the EBRAMTokenPool smart contract (as previously defined in Solidity) and related Go chaincode. The following pseudocode illustrates key aspects of its escrow management." },
-                                { type: 'code', language: 'solidity', text: `// Simplified conceptual code for MAKE™ Escrow Logic within EBRAMTokenPool\ncontract EBRAMTokenPool {\n    // ... (previous enums, structs, mappings, events, onlyEBRAM modifier) ...\n\n    // State variable to track the actual escrow holding address\n    address public immutable MAKE_ESCROW_ADDRESS;\n\n    // ... (rest of the conceptual Solidity code)\n}`},
+                                { type: 'code', language: 'solidity', text: `// Simplified conceptual code for MAKE™ Escrow Logic within EBRAMTokenPool\ncontract EBRAMTokenPool {\n    // ... (previous enums, structs, mappings, events, onlyEBRAM modifier) ...\n\n    // State variable to track the actual escrow holding address\n    address public immutable MAKE_ESCROW_ADDRESS;\n\n    // ... (rest of the conceptual Solidity code)\n}`}
                             ]
                         },
                         {
@@ -928,14 +931,14 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "The MAKE™ System's escrow logic is built with paramount security and strict compliance controls, forming an unbreakable financial backbone for DLDCHAIN™." },
                                 { type: 'list', items: [
-                                  "Cryptographic Immutability",
-                                  "Multi-Signature (Multisig) Approvals",
-                                  "Role-Based Access Control (RBAC)",
-                                  "Air-Gapped Operation",
-                                  "Audited Reserves",
-                                  "Non-Public Contracts",
-                                  "Sovereign Logic Freeze",
-                                  "No Renting from Escrow Pools"
+                                  "<strong>Cryptographic Immutability:</strong> Every state change and transaction related to escrowed DXBTOKENS™ is recorded on Hyperledger Fabric.",
+                                  "<strong>Multi-Signature (Multisig) Approvals:</strong> Critical escrow-related actions require multi-signature approval from the LPO and DLD authority.",
+                                  "<strong>Role-Based Access Control (RBAC):</strong> Strict RBAC is enforced at the chaincode level and API gateways.",
+                                  "<strong>Air-Gapped Operation:</strong> The core MAKE™ System's financial operations are conceptually \"air-gapped\" from public trading layers.",
+                                  "<strong>Audited Reserves:</strong> The 100% AED backing for DXBTOKENS™ is continuously verified through integration with CBUAE and regulated banks.",
+                                  "<strong>Non-Public Contracts:</strong> MAKE™ Smart Contracts™ are not publicly searchable on blockchain explorers.",
+                                  "<strong>Sovereign Logic Freeze:</strong> In extreme scenarios, DLDCHAIN™ governance can enforce a \"sovereign logic freeze\" on MAKE™ Wallets™ or pools.",
+                                  "<strong>No Renting from Escrow Pools:</strong> The technical design strictly enforces that `Escrowship ≠ Utility ≠ Rental Rights`."
                                 ]}
                             ]
                         },
@@ -988,16 +991,16 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "This simulation details the technical flow of a property entering and moving through the DLDCHAIN™ liquidity ecosystem." },
                                 { type: 'list', items: [
-                                  "Step 1: Owner Submission (Initiation)",
-                                  "Step 2: Broker Pre-Checks & Document Upload",
-                                  "Step 3: EBRAMINT™ (Digital Identity Activation)",
-                                  "Step 4: MAKELIST Event (Candidate Listing for Liquidity)",
-                                  "Step 5: MAKETRADE Request (LPO Interest)",
-                                  "Step 6: MAKE_ID (Liquidity Commitment & Token Registration)",
-                                  "Step 7: MAKE_IN (Token Escrow & Trading Activation)",
-                                  "Step 8: Market Trading (Continuous)",
-                                  "Step 9: MAKE_OUT (Temporary Exit from Liquidity Lock)",
-                                  "Step 10: MAKE_DISMISS (Final Exit & D-EBRAMINT™ Execution)"
+                                  "<strong>Step 1: Owner Submission (Initiation):</strong> Owner initiates a tokenization request via their UNIVESTOR Wallet™.",
+                                  "<strong>Step 2: Broker Pre-Checks & Document Upload:</strong> Mashroi™-qualified broker performs necessary pre-checks.",
+                                  "<strong>Step 3: EBRAMINT™ (Digital Identity Activation):</strong> EBRAM™ formalizes the property's digital identity on DLDCHAIN™.",
+                                  "<strong>Step 4: MAKELIST Event (Candidate Listing for Liquidity):</strong> The EBRAMINTED™ property is added to a MAKELIST.",
+                                  "<strong>Step 5: MAKETRADE Request (LPO Interest):</strong> An LPO signals intent to provide liquidity.",
+                                  "<strong>Step 6: MAKE_ID (Liquidity Commitment & Token Registration):</strong> LPO signs the MAKE™ transaction, depositing 100% of property's AED value.",
+                                  "<strong>Step 7: MAKE_IN (Token Escrow & Trading Activation):</strong> Tokens activate for trading. Original owner receives cash and tokens.",
+                                  "<strong>Step 8: Market Trading (Continuous):</strong> Investors buy/sell DXBTOKENS™ on the marketplace.",
+                                  "<strong>Step 9: MAKE_OUT (Temporary Exit from Liquidity Lock):</strong> Token detaches from active liquidity pool for specific purposes.",
+                                  "<strong>Step 10: MAKE_DISMISS (Final Exit & D-EBRAMINT™ Execution):</strong> Formal closure of the token pool and un-tokenization."
                                 ]}
                             ]
                         },
@@ -1007,10 +1010,10 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "The seamless operation relies on robust technical integrations." },
                                 { type: 'list', items: [
-                                  "Blockchain-to-Blockchain (Cross-Chain) Integration",
-                                  "Oracle Integration",
-                                  "Payment Gateway Integration",
-                                  "Identity Provider Integration"
+                                  "<strong>Blockchain-to-Blockchain (Cross-Chain) Integration:</strong> Future potential for limited cross-chain interaction via oracle-based bridges.",
+                                  "<strong>Oracle Integration:</strong> Secure APIs from DLD and external data providers into EBRAM™ chaincode.",
+                                  "<strong>Payment Gateway Integration:</strong> Secure integration with CBUAE and DLD-AED gateway for instant fiat transfers.",
+                                  "<strong>Identity Provider Integration:</strong> UAE Pass integration for secure user authentication across all DApps."
                                 ]}
                             ]
                         },
@@ -1063,11 +1066,11 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "The simulation follows a similar flow to general properties but with specific technical additions for construction milestones." },
                                 { type: 'list', items: [
-                                  "Step 1-3: Developer Submission & EBRAMINT™ (Automated Clearance)",
-                                  "Step 4: MAKETRADE Listing & MAKE_ID/MAKE_IN Execution (Capital Unlock)",
-                                  "Step 5: Milestone-Based Value Accrual & Trading",
-                                  "Step 6: Handover Event (Final Value Realization)",
-                                  "Step 7: DXBTOKEN™ Resale/Utility Activation"
+                                  "<strong>Step 1-3: Developer Submission & EBRAMINT™ (Automated Clearance):</strong> Developer submits project for MAKETRADE listing. EBRAMINT™ assigns temporary CDIDs and smart tree nodes for all units.",
+                                  "<strong>Step 4: MAKETRADE Listing & MAKE_ID/MAKE_IN Execution (Capital Unlock):</strong> An LPO signs a MAKE-IN, committing 100% AED. DXBTOKENS™ are minted and distributed.",
+                                  "<strong>Step 5: Milestone-Based Value Accrual & Trading:</strong> As construction progresses, verifiable milestones are reached. EBRAM™'s AI-Weighted Node System automatically adjusts the DXBTOKEN™ price upwards.",
+                                  "<strong>Step 6: Handover Event (Final Value Realization):</strong> The property reaches final handover. EBRAM™ updates the property's CDID status to \"Ready.\"",
+                                  "<strong>Step 7: DXBTOKEN™ Resale/Utility Activation:</strong> Investors can now trade the fully completed DXBTOKENS™ at their appreciated value."
                                 ]}
                             ]
                         },
@@ -1120,7 +1123,7 @@ export const technicalBook: TechnicalBook = {
                                 { type: 'list', items: [
                                   "<strong>Property:</strong> Existing residential villa in Dubai with an active mortgage.",
                                   "<strong>Owner:</strong> Individual owner (has existing mortgage liability).",
-                                  "<strong>Lender:</strong> DLDCHAIN™-approved financial institution (e.g., Dubai Islamic Bank - DIB).",
+                                  "<strong>Lender:</strong> DLDCHAIN™-approved financial institution.",
                                   "<strong>LPO:</strong> MAKE™ System-approved Liquidity Pool Officer.",
                                   "<strong>DLDCHAIN™ Components:</strong> EBRAM™, DXBTOKENS™, MAKE™ System, UNIVESTOR Wallet™, Lender Integration Module."
                                 ]}
@@ -1132,11 +1135,11 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "The simulation follows the standard tokenization flow but with additional steps for mortgage handling." },
                                 { type: 'list', items: [
-                                  "Step 1: Owner Submission (Mortgaged Property)",
-                                  "Step 2: EBRAMINT™ & Lender Notification",
-                                  "Step 3: MAKETRADE & MAKE_ID (Liquidity Commitment with Lender Payout)",
-                                  "Step 4: Market Trading (Continuous)",
-                                  "Step 5: MAKE_DISMISS (Final Ownership Transfer to New Buyer)"
+                                  "<strong>Step 1: Owner Submission (Mortgaged Property):</strong> Owner initiates tokenization request, declaring existing mortgage.",
+                                  "<strong>Step 2: EBRAMINT™ & Lender Notification:</strong> EBRAMINT™ confirms the property's digital identity and notifies the registered lender.",
+                                  "<strong>Step 3: MAKETRADE & MAKE_ID (Liquidity Commitment with Lender Payout):</strong> LPO commits 100% AED liquidity. EBRAM™ prioritizes the mortgage payout to the lender.",
+                                  "<strong>Step 4: Market Trading (Continuous):</strong> DXBTOKENS™ are traded on the marketplace. Property now has \"mortgage closed\" flag.",
+                                  "<strong>Step 5: MAKE_DISMISS (Final Ownership Transfer to New Buyer):</strong> A buyer acquires 90%+ of the tokens, triggering final ownership transfer."
                                 ]}
                             ]
                         },
@@ -1203,10 +1206,10 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "This workflow outlines the technical steps for a new mortgage origination and its integration with DLDCHAIN™." },
                                 { type: 'list', items: [
-                                  "Step 1: Mortgage Application & Pre-Approval (Off-Chain/API)",
-                                  "Step 2: Mortgage Origination & On-Chain Registration",
-                                  "Step 3: Automated Mortgage Servicing (On-Chain Payments)",
-                                  "Step 4: Mortgage Closure & Lien Release (Automated)"
+                                  "<strong>Step 1: Mortgage Application & Pre-Approval (Off-Chain/API):</strong> Borrower applies for mortgage; lender pre-approves.",
+                                  "<strong>Step 2: Mortgage Origination & On-Chain Registration:</strong> Mortgage is approved; a lien is placed on the property via chaincode.",
+                                  "<strong>Step 3: Automated Mortgage Servicing (On-Chain Payments):</strong> Smart contract automatically debits borrower's wallet.",
+                                  "<strong>Step 4: Mortgage Closure & Lien Release (Automated):</strong> Mortgage is fully paid or closed via a property sale."
                                 ]}
                             ]
                         },
@@ -1252,10 +1255,10 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "Proving the organic nature of a digital ecosystem involves transparently demonstrating that its activities are a true reflection of real-world demand and legitimate interactions, uninfluenced by hidden biases or inorganic triggers." },
                                 { type: 'list', items: [
-                                  "<strong>Behavioral Pattern Analysis (AI-Driven):</strong> Mashroi™'s AI Compliance Engine continuously monitors user (broker, investor, developer) behavior on the platform. It identifies and flags \"unnatural\" patterns such as: Rapid, synchronized large-volume buys/sells by new, unverified wallets; Wash trading attempts (buying and selling to oneself to inflate volume); Sudden, unexplained price spikes/drops without corresponding market news or EBRAM™ events; Automated bot activity (e.g., excessive API calls from a single source without legitimate user behavior).",
-                                  "<strong>Transaction Provenance and Traceability:</strong> Every transaction on DLDCHAIN™ is immutably recorded with full provenance (source, destination, timestamp, associated smart contract). This allows for complete auditability by DLD and consortium members, enabling detailed forensic analysis to trace market activity back to its origins.",
-                                  "<strong>Decentralized Data Feeds (Oracles):</strong> Key market inputs (e.g., DLD's official property valuations, Ejari rental data, DEWA status) are sourced from trusted, verifiable oracles, preventing manipulation of foundational data that influences market dynamics.",
-                                  "<strong>EBRAM™'s \"No More, No Less\" Pricing Logic:</strong> The AI-Weighted Node System's pricing mechanism is transparently driven by predefined, weighted parameters (e.g., tower activity, owner verified status, last trade date). This algorithmic approach ensures prices reflect fundamental values and verifiable events, not speculative hype. Users can query EBRAMGPT™ for breakdowns of price decisions."
+                                  "<strong>Behavioral Pattern Analysis (AI-Driven):</strong> Mashroi™'s AI Compliance Engine continuously monitors user behavior and flags \"unnatural\" patterns.",
+                                  "<strong>Transaction Provenance and Traceability:</strong> Every transaction on DLDCHAIN™ is immutably recorded with full provenance.",
+                                  "<strong>Decentralized Data Feeds (Oracles):</strong> Key market inputs are sourced from trusted, verifiable oracles.",
+                                  "<strong>EBRAM™'s \"No More, No Less\" Pricing Logic:</strong> The AI-Weighted Node System's pricing mechanism is transparently driven by predefined, weighted parameters."
                                 ]}
                             ]
                         },
@@ -1282,7 +1285,7 @@ export const technicalBook: TechnicalBook = {
                             id: 'article-16-4',
                             title: "16.4. Flowchart: DLDCHAIN™ Organic Workflow",
                             content: [
-                                { type: 'paragraph', text: "This section would feature a conceptual flowchart illustrating the continuous feedback loop that ensures DLDCHAIN™'s organic nature: Real-world activity (owner actions, broker activity) -> On-chain transactions -> AI monitoring -> Anomaly detection -> Alerts -> Human review/intervention -> Policy/model adaptation -> Influence on market rules -> (Loop back to real-world activity)." }
+                                { type: 'paragraph', text: "This section would feature a conceptual flowchart illustrating the continuous feedback loop that ensures DLDCHAIN™'s organic nature." }
                             ]
                         }
                     ]
@@ -1299,12 +1302,12 @@ export const technicalBook: TechnicalBook = {
                             title: "17.1. Validation Objectives (Technical goals)",
                             content: [
                                 { type: 'list', items: [
-                                  "Verify the functional correctness of all smart contracts (chaincode) and APIs.",
-                                  "Measure performance metrics (throughput, latency) under various load conditions.",
-                                  "Confirm data integrity and immutability across the Hyperledger Fabric ledger.",
-                                  "Validate the accuracy and robustness of AI models (EBRAMGPT™, AI-Weighted Node System).",
-                                  "Ensure seamless integration and data synchronization across all DLDCHAIN™ components and external systems.",
-                                  "Identify and rectify any technical bugs, vulnerabilities, or performance bottlenecks."
+                                  "Verify the functional correctness of all smart contracts and APIs.",
+                                  "Measure performance metrics under various load conditions.",
+                                  "Confirm data integrity and immutability across the ledger.",
+                                  "Validate the accuracy and robustness of AI models.",
+                                  "Ensure seamless integration and data synchronization.",
+                                  "Identify and rectify any technical bugs or vulnerabilities."
                                 ]}
                             ]
                         },
@@ -1328,13 +1331,13 @@ export const technicalBook: TechnicalBook = {
                             title: "17.3. Validation Process (Step-by-Step technical validation)",
                             content: [
                                 { type: 'list', items: [
-                                  "Step 1: Unit Testing",
-                                  "Step 2: Integration Testing",
-                                  "Step 3: System Testing",
-                                  "Step 4: Performance and Load Testing",
-                                  "Step 5: Security Testing",
-                                  "Step 6: AI Model Validation",
-                                  "Step 7: User Acceptance Testing (UAT)"
+                                  "<strong>Step 1: Unit Testing:</strong> Individual functions and modules.",
+                                  "<strong>Step 2: Integration Testing:</strong> Data flow and communication between interconnected components.",
+                                  "<strong>Step 3: System Testing:</strong> Full user journeys.",
+                                  "<strong>Step 4: Performance and Load Testing:</strong> System behavior under peak loads.",
+                                  "<strong>Step 5: Security Testing:</strong> Identifying security vulnerabilities.",
+                                  "<strong>Step 6: AI Model Validation:</strong> Accuracy, robustness, and fairness of AI models.",
+                                  "<strong>Step 7: User Acceptance Testing (UAT):</strong> Real-world usability validation by end-users."
                                 ]}
                             ]
                         },
@@ -1343,13 +1346,13 @@ export const technicalBook: TechnicalBook = {
                             title: "17.4. Validation Metrics and Success Criteria (Quantifiable technical benchmarks)",
                             content: [
                                 { type: 'list', items: [
-                                  "Functional Correctness: 100% pass rate for critical tests.",
-                                  "Transaction Throughput: Target 1,000+ TPS.",
-                                  "Latency: Average <500ms for core transactions.",
-                                  "Data Consistency: Near real-time sync.",
-                                  "Uptime: Target 99.99%.",
-                                  "AI Accuracy: Defined thresholds (e.g., 95% for suggestions).",
-                                  "Security Vulnerabilities: Zero critical/high-severity vulnerabilities."
+                                  "<strong>Functional Correctness:</strong> 100% pass rate for critical tests.",
+                                  "<strong>Transaction Throughput:</strong> Target 1,000+ TPS.",
+                                  "<strong>Latency:</strong> Average <500ms for core transactions.",
+                                  "<strong>Data Consistency:</strong> Near real-time sync.",
+                                  "<strong>Uptime:</strong> Target 99.99%.",
+                                  "<strong>AI Accuracy:</strong> Defined thresholds (e.g., 95% for suggestions).",
+                                  "<strong>Security Vulnerabilities:</strong> Zero critical/high-severity vulnerabilities."
                                 ]}
                             ]
                         },
@@ -1358,13 +1361,13 @@ export const technicalBook: TechnicalBook = {
                             title: "17.5. Validation Tools and Environment (Specific software, platforms)",
                             content: [
                                 { type: 'list', items: [
-                                  "Test Environment: Isolated Hyperledger Fabric testnet.",
-                                  "Smart Contract Testing Frameworks: Go's built-in testing framework, Hardhat/Foundry.",
-                                  "API Testing Tools: Postman, JMeter, Locust.",
-                                  "UI Automation Tools: Selenium, Playwright.",
-                                  "Performance Testing Tools: JMeter, K6.",
-                                  "Security Testing Tools: OWASP ZAP, Burp Suite, Nmap.",
-                                  "Monitoring Tools: Prometheus, Grafana, ELK Stack."
+                                  "<strong>Test Environment:</strong> Isolated Hyperledger Fabric testnet.",
+                                  "<strong>Smart Contract Testing Frameworks:</strong> Go's built-in testing framework, Hardhat/Foundry.",
+                                  "<strong>API Testing Tools:</strong> Postman, JMeter, Locust.",
+                                  "<strong>UI Automation Tools:</strong> Selenium, Playwright.",
+                                  "<strong>Performance Testing Tools:</strong> JMeter, K6.",
+                                  "<strong>Security Testing Tools:</strong> OWASP ZAP, Burp Suite, Nmap.",
+                                  "<strong>Monitoring Tools:</strong> Prometheus, Grafana, ELK Stack."
                                 ]}
                             ]
                         },
@@ -1379,7 +1382,7 @@ export const technicalBook: TechnicalBook = {
                             id: 'article-17-7',
                             title: "17.7. Flowchart: Technical Validation Workflow",
                             content: [
-                                { type: 'paragraph', text: "This section would feature a flowchart illustrating the iterative technical validation workflow: Design -> Develop -> Unit Test -> Integration Test -> System Test -> Performance Test -> Security Test -> AI Validation -> UAT -> Deploy." }
+                                { type: 'paragraph', text: "This section would feature a flowchart illustrating the iterative technical validation workflow." }
                             ]
                         }
                     ]
@@ -1427,15 +1430,15 @@ export const technicalBook: TechnicalBook = {
                             title: "18.3. Security Testing Process (Step-by-Step penetration testing, audits)",
                             content: [
                                 { type: 'list', items: [
-                                  "Step 1: Security Requirements Definition & Threat Modeling",
-                                  "Step 2: Static Application Security Testing (SAST)",
-                                  "Step 3: Dynamic Application Security Testing (DAST)",
-                                  "Step 4: Smart Contract Audits",
-                                  "Step 5: Penetration Testing",
-                                  "Step 6: Vulnerability Scanning & Management",
-                                  "Step 7: Incident Response Testing",
-                                  "Step 8: AI Security Testing",
-                                  "Step 9: Compliance Audits"
+                                  "<strong>Step 1: Security Requirements Definition & Threat Modeling:</strong> Conduct detailed threat modeling workshops to identify potential threats.",
+                                  "<strong>Step 2: Static Application Security Testing (SAST):</strong> Automated code analysis tools to identify security flaws in source code.",
+                                  "<strong>Step 3: Dynamic Application Security Testing (DAST):</strong> Automated testing tools to test the running application for vulnerabilities.",
+                                  "<strong>Step 4: Smart Contract Audits (Manual & Automated):</strong> Independent manual code review and automated analysis.",
+                                  "<strong>Step 5: Penetration Testing:</strong> Ethical hacking simulations by external security experts.",
+                                  "<strong>Step 6: Vulnerability Scanning & Management:</strong> Regular scanning of network infrastructure and applications.",
+                                  "<strong>Step 7: Incident Response Testing:</strong> Simulate various security incidents to test the incident response plan.",
+                                  "<strong>Step 8: AI Security Testing:</strong> Testing AI models for robustness against adversarial attacks.",
+                                  "<strong>Step 9: Compliance Audits:</strong> Regular audits to ensure adherence to regulatory requirements."
                                 ]}
                             ]
                         },
@@ -1444,12 +1447,12 @@ export const technicalBook: TechnicalBook = {
                             title: "18.4. Security Testing Metrics and Success Criteria (Quantifiable security benchmarks)",
                             content: [
                                 { type: 'list', items: [
-                                  "Zero Critical/High Severity Vulnerabilities",
-                                  "Compliance Score: 100%",
-                                  "Threat Coverage",
-                                  "Penetration Test Pass Rate",
-                                  "Incident Response Time (MTTD/MTTR)",
-                                  "AI Robustness Score"
+                                  "<strong>Zero Critical/High Severity Vulnerabilities:</strong> No critical or high-severity vulnerabilities in production.",
+                                  "<strong>Compliance Score:</strong> Achieve 100% compliance with defined regulatory and internal security standards.",
+                                  "<strong>Threat Coverage:</strong> Percentage of identified threats covered by mitigation strategies and tested.",
+                                  "<strong>Penetration Test Pass Rate:</strong> High success rate in resisting simulated attacks.",
+                                  "<strong>Incident Response Time:</strong> MTTD/MTTR for security incidents below defined thresholds.",
+                                  "<strong>AI Robustness Score:</strong> Metrics for AI model resilience against adversarial inputs and bias."
                                 ]}
                             ]
                         },
@@ -1458,13 +1461,13 @@ export const technicalBook: TechnicalBook = {
                             title: "18.5. Security Testing Tools and Environment (Specific security software, platforms)",
                             content: [
                                 { type: 'list', items: [
-                                  "Automated Security Scanners: OWASP ZAP, Nessus, SonarQube.",
-                                  "Blockchain Security Tools: Slither, Mythril, Oyente, Securify, Manticore.",
-                                  "Penetration Testing Frameworks: Metasploit, Nmap, Burp Suite Pro.",
-                                  "Cloud Security Tools: CSPM, CWPP.",
-                                  "IAM Tools",
-                                  "SIEM: Splunk, Elastic SIEM.",
-                                  "Dedicated Testnet"
+                                  "<strong>Automated Security Scanners:</strong> OWASP ZAP, Nessus, SonarQube.",
+                                  "<strong>Blockchain Security Tools:</strong> Slither, Mythril, Oyente, Securify, Manticore.",
+                                  "<strong>Penetration Testing Frameworks:</strong> Metasploit, Nmap, Burp Suite Pro.",
+                                  "<strong>Cloud Security Tools:</strong> CSPM, CWPP.",
+                                  "<strong>IAM Tools:</strong> Tools for managing MSPs, user certificates, and multi-signature configurations.",
+                                  "<strong>SIEM:</strong> Centralized logging and threat detection (e.g., Splunk, Elastic SIEM).",
+                                  "<strong>Dedicated Testnet:</strong> An isolated Hyperledger Fabric testnet mimicking production."
                                 ]}
                             ]
                         },
@@ -1479,7 +1482,7 @@ export const technicalBook: TechnicalBook = {
                             id: 'article-18-7',
                             title: "18.7. Flowchart: Security Testing Workflow",
                             content: [
-                                { type: 'paragraph', text: "A flowchart would illustrate the iterative security testing workflow: Threat Modeling -> SAST -> DAST -> Audits -> Pen Testing -> AI Security -> Compliance -> Management -> Response Testing -> (Loop)." }
+                                { type: 'paragraph', text: "A flowchart would illustrate the iterative security testing workflow." }
                             ]
                         }
                     ]
@@ -1552,70 +1555,70 @@ export const technicalBook: TechnicalBook = {
             ]
         },
         {
-          id: 'part-5',
-          title: "Part V: Technical Appendices",
-          chapters: [
-            {
-              id: 'chapter-20',
-              title: "Appendices",
-              introduction: [],
-              articles: [
+            id: 'part-5',
+            title: "Part V: Technical Appendices",
+            chapters: [
                 {
-                  id: 'appendix-a',
-                  title: "A. Glossary of Key Technical Terms and Acronyms",
-                  content: [
-                    { type: 'list', items: [
-                      "<strong>AI-Weighted Node System:</strong> An EBRAM™ component that uses AI to assign numerical \"weights\" to various real-world and on-chain events (e.g., property attributes, market conditions, user behavior) to dynamically influence property valuations, pricing, and risk scores.",
-                      "<strong>CDID (City Digital ID):</strong> A unique, immutable digital identifier assigned to every real estate asset (land, unit, building) in Dubai upon its initial registration within the DLDCHAIN™ system.",
-                      "<strong>Chaincode:</strong> Smart contracts deployed on a Hyperledger Fabric blockchain. In DLDCHAIN™, these are primarily written in GoLang and define the core logic for EBRAM™, MAKE™ System, and other modules.",
-                      "<strong>Channels (Hyperledger Fabric):</strong> Private \"sub-ledgers\" within a Hyperledger Fabric network that allow specific groups of participants to conduct confidential transactions and maintain private data, isolated from other network members.",
-                      "<strong>D-EBRAMINT™ (De-EBRAMINT™):</strong> The finalization event that formally closes a token pool within the EBRAM™ system and \"un-tokenizes\" a property, ending its active tokenization lifecycle under a specific EBRAMINT™ contract. This often involves a transfer of 100% ownership to a single entity.",
-                      "<strong>DLD-AED (Dubai Land Department Digital Dirham):</strong> The DLD-issued stablecoin, fully pegged 1:1 to the UAE Dirham, serving as the exclusive medium of exchange for all transactions within the DLDCHAIN™ ecosystem.",
-                      "<strong>DXBTOKENS™:</strong> Fractionalized, value-centric digital assets representing verifiable shares of physical, DLD-registered properties (1 sqft = 1 token). Their value is unlinked from rental income.",
-                      "<strong>EBRAM™ (Emirates Blockchain Real-estate Agreement Management):</strong> The core smart contract system and legal-transactional programming language of DLDCHAIN™, designed to automate, verify, and enforce real estate agreements.",
-                      "<strong>EBRAMGPT™:</strong> An AI-powered Legal Copilot that serves as the natural language interface for EBRAM™, translating human language into smart contract clauses and providing legal insights.",
-                      "<strong>EBRAMINT™:</strong> The foundational act of formally digitizing and registering a real estate property's agreement onto the DLDCHAIN™ blockchain via the EBRAM™ smart contract system, creating its immutable digital identity.",
-                      "<strong>EBRAM ML NOTES™:</strong> A collective intelligence layer within EBRAM™ where authorized experts contribute to refine evolving real estate contract intelligence, enabling continuous learning and adaptation of legal logic.",
-                      "<strong>Escrowship:</strong> A state where DXBTOKENS™ are held within a MAKE™ Pool, enabling trading but not direct legal ownership or utility rights (e.g., cannot apply for DEWA). The MAKE™ Pool Officer acts as the legal holder/custodian in this state.",
-                      "<strong>Hyperledger Fabric:</strong> The open-source, permissioned Distributed Ledger Technology (DLT) platform forming the immutable core of DLDCHAIN™.",
-                      "<strong>Liquidity Pool Officer (LPO):</strong> A verified MAKE™ signer, typically a regulated financial institution (e.g., bank, DLD-approved entity), responsible for underwriting and maintaining liquidity within MAKE™ Pools.",
-                      "<strong>MAKE™ System:</strong> DLDCHAIN™'s sovereign financial layer, an internal, non-public liquidity infrastructure that ensures every DXBTOKEN™ is 100% AED-backed.",
-                      "<strong>MAKE™ Event:</strong> A key transaction within the MAKE™ System lifecycle (e.g., MAKELIST, MAKETRADE, MAKE_ID, MAKE_IN, MAKE_OUT, MAKE_DISMISS).",
-                      "<strong>MAKE_ID:</strong> A critical writer event in the MAKE™ lifecycle that confirms liquidity commitment, formally registers the token ID, and transfers property custodianship to the TokenPool.",
-                      "<strong>MAKE_IN:</strong> An event that signifies a token's entry into escrow within a MAKEPOOL, activating it for trading on the DLDCHAIN™ marketplace.",
-                      "<strong>MAKE_OUT:</strong> An event that temporarily detaches DXBTOKENS™ from their active liquidity pool, pausing trading for specific purposes (e.g., owner direct sale outside the pool).",
-                      "<strong>MAKE_DISMISS:</strong> The finalization event for a tokenized property's lifecycle within the DLDCHAIN™ MAKE™ System, representing the formal closure of the token pool and execution of D-EBRAMINT™.",
-                      "<strong>Mashroi™:</strong> The AI-powered Real Estate Professional Hub, managing broker licensing, education, compliance, and smart visa issuance.",
-                      "<strong>MPT (Market Price Transaction):</strong> The final settlement price for a token pool, calculated by EBRAM™'s AI-Weighted Node System based on market signals, triggered during a MAKE_DISMISS event.",
-                      "<strong>MSP (Membership Service Provider):</strong> A component in Hyperledger Fabric that manages identities and authenticates participants in the permissioned network.",
-                      "<strong>Private Data Collections:</strong> A Fabric feature allowing a subset of organizations on a channel to share sensitive data privately, with only a cryptographic hash on the main ledger.",
-                      "<strong>UNIVESTOR Wallet™:</strong> The singular, secure, government-issued digital identity and access point for all DLDCHAIN™ interactions, designed for zero user technical knowledge."
-                    ]}
-                  ]
-                },
-                {
-                  id: 'appendix-b',
-                  title: "B. Detailed Technical Specifications",
-                  content: [
-                    { type: 'subheading', text: "Network Topology Diagrams" },
-                    { type: 'paragraph', text: "A high-level diagram illustrating the Hyperledger Fabric network, showing DLD, VARA, CBUAE, DFF as Orderer and Peer nodes, and major banks/developers as Peer nodes. Channels would be depicted as separate communication lines." },
-                    { type: 'subheading', text: "Consensus Mechanism Details" },
-                    { type: 'paragraph', text: "DLDCHAIN™ utilizes the Raft consensus mechanism for its ordering service in Hyperledger Fabric. Raft is a crash-fault-tolerant (CFT) consensus algorithm that provides high throughput and resilience by electing a leader to manage log replication." },
-                    { type: 'subheading', text: "Smart Contract Code Samples (Full Solidity, Go Chaincode)" },
-                    { type: 'paragraph', text: "This section would contain full, production-ready smart contract code samples." },
-                    { type: 'subheading', text: "API Schemas (REST, GraphQL, gRPC)" },
-                    { type: 'paragraph', text: "A full OpenAPI 3.0 specification for all DLDCHAIN™ APIs would be provided here." },
-                    { type: 'subheading', text: "Data Models and Schemas for On-Chain Records" },
-                    { type: 'paragraph', text: "Detailed JSON schemas for all data structures stored on the Hyperledger Fabric ledger (e.g., PropertyAsset, TokenPool, BrokerProfile)." },
-                    { type: 'subheading', text: "Security Protocols (Encryption, Key Management, Access Control)" },
-                    { type: 'paragraph', text: "Detailed specifications of encryption algorithms (AES-256), key management procedures, and RBAC policies." },
-                    { type: 'subheading', text: "Performance Benchmarking and Scalability Projections" },
-                    { type: 'paragraph', text: "This section would provide detailed results from performance tests, including TPS, latency measurements, and scalability projections under various load scenarios." },
-                  ]
+                    id: 'chapter-20',
+                    title: "Appendices",
+                    introduction: [{ type: 'paragraph', text: "This section provides supplementary technical details, including a comprehensive glossary of terms, specific code examples, API schemas, and performance benchmarks. These appendices serve as a technical reference for developers, auditors, and deep technical stakeholders." }],
+                    articles: [
+                        {
+                          id: 'appendix-a',
+                          title: "A. Glossary of Key Technical Terms and Acronyms",
+                          content: [
+                            { type: 'list', items: [
+                              "<strong>AI-Weighted Node System:</strong> An EBRAM™ component that uses AI to assign numerical \"weights\" to various real-world and on-chain events to dynamically influence property valuations, pricing, and risk scores.",
+                              "<strong>CDID (City Digital ID):</strong> A unique, immutable digital identifier assigned to every real estate asset in Dubai upon its initial registration within the DLDCHAIN™ system.",
+                              "<strong>Chaincode:</strong> Smart contracts deployed on a Hyperledger Fabric blockchain. In DLDCHAIN™, these are primarily written in GoLang.",
+                              "<strong>Channels (Hyperledger Fabric):</strong> Private \"sub-ledgers\" within a Hyperledger Fabric network that allow specific groups of participants to conduct confidential transactions.",
+                              "<strong>D-EBRAMINT™ (De-EBRAMINT™):</strong> The finalization event that formally closes a token pool and \"un-tokenizes\" a property.",
+                              "<strong>DLD-AED (Dubai Land Department Digital Dirham):</strong> The DLD-issued stablecoin, fully pegged 1:1 to the UAE Dirham.",
+                              "<strong>DXBTOKENS™:</strong> Fractionalized, value-centric digital assets representing verifiable shares of physical, DLD-registered properties (1 sqft = 1 token).",
+                              "<strong>EBRAM™ (Emirates Blockchain Real-estate Agreement Management):</strong> The core smart contract system and legal-transactional programming language of DLDCHAIN™.",
+                              "<strong>EBRAMGPT™:</strong> An AI-powered Legal Copilot that serves as the natural language interface for EBRAM™.",
+                              "<strong>EBRAMINT™:</strong> The foundational act of formally digitizing and registering a real estate property's agreement onto the DLDCHAIN™ blockchain.",
+                              "<strong>EBRAM ML NOTES™:</strong> A collective intelligence layer within EBRAM™ where authorized experts contribute to refine evolving real estate contract intelligence.",
+                              "<strong>Escrowship:</strong> A state where DXBTOKENS™ are held within a MAKE™ Pool, enabling trading but not direct legal ownership or utility rights.",
+                              "<strong>Hyperledger Fabric:</strong> The open-source, permissioned DLT platform forming the immutable core of DLDCHAIN™.",
+                              "<strong>Liquidity Pool Officer (LPO):</strong> A verified MAKE™ signer, typically a regulated financial institution, responsible for underwriting and maintaining liquidity.",
+                              "<strong>MAKE™ System:</strong> DLDCHAIN™'s sovereign financial layer, an internal, non-public liquidity infrastructure that ensures every DXBTOKEN™ is 100% AED-backed.",
+                              "<strong>MAKE™ Event:</strong> A key transaction within the MAKE™ System lifecycle (e.g., MAKELIST, MAKETRADE, MAKE_ID, MAKE_IN, MAKE_OUT, MAKE_DISMISS).",
+                              "<strong>MAKE_ID:</strong> A critical writer event that confirms liquidity commitment and formally registers the token ID.",
+                              "<strong>MAKE_IN:</strong> An event that signifies a token's entry into escrow within a MAKEPOOL, activating it for trading.",
+                              "<strong>MAKE_OUT:</strong> An event that temporarily detaches DXBTOKENS™ from their active liquidity pool.",
+                              "<strong>MAKE_DISMISS:</strong> The finalization event for a tokenized property's lifecycle within the MAKE™ System.",
+                              "<strong>Mashroi™:</strong> The AI-powered Real Estate Professional Hub, managing broker licensing, education, compliance, and smart visa issuance.",
+                              "<strong>MPT (Market Price Transaction):</strong> The final settlement price for a token pool, calculated by EBRAM™'s AI-Weighted Node System.",
+                              "<strong>MSP (Membership Service Provider):</strong> A component in Hyperledger Fabric that manages identities and authenticates participants.",
+                              "<strong>Private Data Collections:</strong> A Fabric feature allowing a subset of organizations on a channel to share sensitive data privately.",
+                              "<strong>UNIVESTOR Wallet™:</strong> The singular, secure, government-issued digital identity and access point for all DLDCHAIN™ interactions."
+                            ]}
+                          ]
+                        },
+                        {
+                          id: 'appendix-b',
+                          title: "B. Detailed Technical Specifications",
+                          content: [
+                            { type: 'subheading', text: "Network Topology Diagrams" },
+                            { type: 'paragraph', text: "A high-level diagram illustrating the Hyperledger Fabric network, showing DLD, VARA, CBUAE, DFF as Orderer and Peer nodes, and major banks/developers as Peer nodes. Channels would be depicted as separate communication lines." },
+                            { type: 'subheading', text: "Consensus Mechanism Details" },
+                            { type: 'paragraph', text: "DLDCHAIN™ utilizes the Raft consensus mechanism for its ordering service in Hyperledger Fabric. Raft is a crash-fault-tolerant (CFT) consensus algorithm that provides high throughput and resilience by electing a leader to manage log replication." },
+                            { type: 'subheading', text: "Smart Contract Code Samples (Full Solidity, Go Chaincode)" },
+                            { type: 'paragraph', text: "This section would contain full, production-ready smart contract code samples." },
+                            { type: 'subheading', text: "API Schemas (REST, GraphQL, gRPC)" },
+                            { type: 'paragraph', text: "A full OpenAPI 3.0 specification for all DLDCHAIN™ APIs would be provided here." },
+                            { type: 'subheading', text: "Data Models and Schemas for On-Chain Records" },
+                            { type: 'paragraph', text: "Detailed JSON schemas for all data structures stored on the Hyperledger Fabric ledger (e.g., PropertyAsset, TokenPool, BrokerProfile)." },
+                            { type: 'subheading', text: "Security Protocols (Encryption, Key Management, Access Control)" },
+                            { type: 'paragraph', text: "Detailed specifications of encryption algorithms (AES-256), key management procedures, and RBAC policies." },
+                            { type: 'subheading', text: "Performance Benchmarking and Scalability Projections" },
+                            { type: 'paragraph', text: "This section would provide detailed results from performance tests, including TPS, latency measurements, and scalability projections under various load scenarios." }
+                          ]
+                        }
+                    ]
                 }
-              ]
-            }
-          ]
+            ]
         }
     ],
     conclusion: {
@@ -1627,5 +1630,3 @@ export const technicalBook: TechnicalBook = {
     },
     appendices: []
 };
-
-    
