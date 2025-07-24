@@ -1003,7 +1003,7 @@ export const technicalBook: TechnicalBook = {
                                 {type: 'list', items: [
                                     "<strong>Step 4: MAKELIST Event (Candidate Listing for Liquidity):</strong> Action: The EBRAMINTED™ property is added to a MAKELIST, signaling its eligibility for liquidity. Technical Flow: EBRAM™ (or a DLD-controlled service) sends an event (MakeListed(CDID)) to the MAKE™ System's chaincode. The MAKE™ System registers this CDID as available for liquidity provision. Code Implication (MAKE™ Chaincode Event): emit MakeListed(poolId)",
                                     "<strong>Step 5: MAKETRADE Request (LPO Interest):</strong> Action: A Liquidity Pool Officer (LPO) reviews MAKELIST and signals intent to provide liquidity by submitting a MAKETRADE request. Technical Flow: LPO's MakeD Wallet™ interface sends a submitMakeTradeRequest() API call to the MAKE™ System's microservice. This is an off-chain interest signal that's logged.",
-                                    "<strong>Step 6: MAKE_ID (Liquidity Commitment & Token Registration):</strong> Action: LPO signs the MAKE™ transaction, depositing 100% of property's AED value. This commits liquidity and formally registers the token ID. Technical Flow: LPO's MakeD Wallet™ initiates a secure, multi-signature transaction. The MAKE™ System's chaincode executes makeID(poolId). This function verifies the 100% AED deposit (via oracle/integration with CBUAE/bank systems) and formally transfers custodianship of the underlying asset to the TokenPool. DXBTOKENS™ are now technically \"registered\" by MAKE™, associated with this pool, but not yet fully active for public trading.",
+                                    "<strong>Step 6: MAKE_ID (Liquidity Commitment & Token Registration):</strong> Action: LPO signs the MAKE™ transaction, depositing 100% of property's AED value. This commits liquidity and formally registers the token ID. Technical Flow: LPO performs MAKE-IN transaction. MAKE™ System confirms 100% AED deposit for the full property value. Before releasing funds to the owner, EBRAM™'s smart contract logic (specifically the executeMakeID() function) prioritizes the mortgage payout. A portion of the 100% AED (equal to the verified outstanding mortgage balance) is transferred directly to the Lender's DLD-AED wallet via a secure interbank integration. The remaining funds (60% of equity) go to the owner. DXBTOKENS™ (40% of equity) are minted and distributed.",
                                 ]},
                                 {type: 'code', text: "// Simplified Solidity for makeID (within EBRAMTokenPool as in SDK)\nfunction makeID(bytes32 poolId) external onlyEBRAM {\n    TokenPool storage pool = pools[poolId];\n    require(pool.status == Status.MakeListed, \"Invalid status: Must be MakeListed for MAKE_ID\");\n    // External oracle call/verification for 100% AED backing\n    // require(IMakeOracle(oracleAddress).verifyDeposit(poolId, pool.totalTokens * 1 AED_PRICE), \"Deposit not confirmed\");\n    pool.status = Status.MakeID;\n    emit MakeIDConfirmed(poolId);\n}"},
                                 {type: 'list', items: [
@@ -1655,14 +1655,24 @@ export const technicalBook: TechnicalBook = {
         }
     ]
 };
-const fullBookContent: ContentItem[] = technicalBook.parts.flatMap(part => 
-    part.chapters.flatMap(chapter => [
-        { type: 'heading', text: chapter.title },
-        ...chapter.introduction,
-        ...chapter.articles.flatMap(article => [
-            { type: 'subheading', text: article.title },
-            ...article.content
+const fullBookContent: ContentItem[] = [
+    ...technicalBook.introduction.content,
+    ...technicalBook.parts.flatMap(part => [
+        { type: 'heading', text: part.title },
+        ...part.chapters.flatMap(chapter => [
+            { type: 'heading', text: chapter.title },
+            ...chapter.introduction,
+            ...chapter.articles.flatMap(article => [
+                { type: 'subheading', text: article.title },
+                ...article.content
+            ])
         ])
+    ]),
+    { type: 'heading', text: technicalBook.conclusion.title },
+    ...technicalBook.conclusion.content,
+    ...technicalBook.appendices.filter(a => a.id !== 'techbook-full').flatMap(appendix => [
+        { type: 'heading', text: appendix.title },
+        ...appendix.content
     ])
-);
+];
 technicalBook.appendices.find(a => a.id === 'techbook-full')!.content = fullBookContent;
