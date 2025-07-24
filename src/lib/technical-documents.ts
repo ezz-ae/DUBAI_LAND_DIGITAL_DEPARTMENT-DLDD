@@ -1,5 +1,5 @@
 
-import type { CodeContent, ContentItem, ListContent, TextContent } from '@/lib/types';
+import type { ContentItem } from '@/lib/types';
 
 export interface BookArticle {
   id: string;
@@ -371,7 +371,9 @@ export const technicalBook: TechnicalBook = {
                 {
                     id: 'chapter-5',
                     title: "DXBTOKENS™: Property Tokenization Protocol",
-                    introduction: [{ type: 'paragraph', text: "DXBTOKENS™ represent a fundamental paradigm shift in real estate ownership and liquidity in Dubai. They are the visible, tradable UX expression of what EBRAM™ governs. These tokens digitize real estate into a fractionalized token economy where 1 square foot equals 1 token, aiming to revolutionize property ownership and investment by making previously illiquid assets highly accessible and liquid." }],
+                    introduction: [
+                        { type: 'paragraph', text: "DXBTOKENS™ represent a fundamental paradigm shift in real estate ownership and liquidity in Dubai. They are the visible, tradable UX expression of what EBRAM™ governs. These tokens digitize real estate into a fractionalized token economy where 1 square foot equals 1 token, aiming to revolutionize property ownership and investment by making previously illiquid assets highly accessible and liquid." }
+                    ],
                     articles: [
                         {
                             id: 'article-5-1',
@@ -428,13 +430,13 @@ export const technicalBook: TechnicalBook = {
                             title: "5.4. Smart Contract Logic for Token Lifecycle",
                             content: [
                                 { type: 'paragraph', text: "The lifecycle of DXBTOKENS™ is governed by intricate smart contract logic primarily residing within the EBRAM™ Chaincode and MAKE™ System Chaincode on Hyperledger Fabric." },
-                                { type: 'subheading', text: "Minting Logic:" },
+                                { type: 'subheading', text: "Minting Logic:"},
                                 { type: 'list', items: [
                                   "Triggered by EBRAMINT™ and confirmed by MAKE_ID.",
                                   "Ensures 1 sqft = 1 token conversion based on verified property size.",
                                   "Distributes tokens according to predefined allocation rules (e.g., 40% owner, 55% market, fees)."
                                 ]},
-                                { type: 'subheading', text: "Conceptual Chaincode Function (within MAKE™ System Chaincode):"},
+                                { type: 'subheading', text: "Conceptual Chaincode Function (within MAKE™ System Chaincode):" },
                                 { type: 'code', language: 'go', text: `// Simplified Go Chaincode function for token minting during MAKE_IN
 func (s *SmartContract) MintDXBTokens(ctx contractapi.TransactionContextInterface, poolId string, ownerAddress string, marketAddress string, totalSqFt uint256) error {
     // ... authorize only EBRAM™ to call this ...
@@ -532,6 +534,7 @@ func (s *SmartContract) MintDXBTokens(ctx contractapi.TransactionContextInterfac
                                 { type: 'list', items: [
                                   "<strong>Writer:</strong> No (Status-only event).",
                                   "<strong>Description:</strong> An EBRAM™-qualified property is listed as a candidate for tokenization on a MAKELIST. This is a status-only event created by EBRAM™ and approved by a DLDLOG (silent signature). It indicates a property is eligible for liquidity but not yet funded.",
+                                  "<strong>Effect on Ownership:</strong> Property remains owned by the original owner; no change in liquidity or tradeability.",
                                   "<strong>Code Implication:</strong> TokenState.MakeListed"
                                 ]},
                                 { type: 'subheading', text: "2. MAKETRADE (Event: Pool Interest Expressed)" },
@@ -543,55 +546,54 @@ func (s *SmartContract) MintDXBTokens(ctx contractapi.TransactionContextInterfac
                                 { type: 'subheading', text: "3. MAKE_ID (Event: Liquidity Commitment & Token Registration)" },
                                 { type: 'list', items: [
                                   "<strong>Writer:</strong> Yes (Writes to asset structure).",
-                                  "<strong>Description:</strong> This is a pivotal writer event. A Liquidity Pool Officer (LPO) signs the MAKE™ transaction, depositing 100% of the unit's AED value into a dedicated, unit-bound liquidity pool. This confirmed acquisition triggers the EBRAM™ Core Engine to execute the MAKE_ID event. This is the moment the property genuinely becomes an on-chain tokenized asset under MAKE™ permission rules. This is where the token ID is formally registered, and the property is converted into its on-chain tokenized form under MAKE™ permission rules.",
-                                  "<strong>Effect on Ownership:</strong> Ownership of the property is formally transferred to the TokenPool (under the LPO's custodianship). The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™.",
-                                  "<strong>Code Implication:</strong> TokenState.MakeID. This is where _mint() function logic for DXBTOKENS™ would execute, creating the tokens and assigning initial ownership/distribution."
+                                  "<strong>Description:</strong> This is the pivotal event. A Liquidity Pool Officer (LPO) signs the MAKE™ transaction, depositing 100% of the unit's AED value into a dedicated, unit-bound liquidity pool. This confirmed acquisition triggers the EBRAM™ Core Engine to execute the MAKE_ID event.",
+                                  "<strong>Effect on Ownership:</strong> Ownership of the property's underlying asset is formally transferred to the TokenPool (under the LPO's custodianship), and the DXBTOKENS™ are officially registered and minted on-chain. This is the moment the property genuinely becomes a tokenized asset under MAKE™ permission rules.",
+                                  "<strong>Code Implication:</strong> TokenState.MakeID. This is where _mint() function logic would execute, creating the DXBTOKENS™."
                                 ]},
                                 { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_ID within EBRAMTokenPool contract
-// This function would be called by EBRAM™ (onlyEBRAM modifier)
 function makeID(bytes32 poolId) external onlyEBRAM {
     TokenPool storage pool = pools[poolId];
     require(pool.status == Status.MakeListed, "Invalid status: Must be MakeListed to confirm ID");
-    // Perform 100% AED deposit verification here (off-chain oracle-confirmed or direct transfer check)
-    // Example: require(IMakeConnector(makeConnector).isFunded(poolId), "Pool not fully funded");
+    // Perform 100% AED deposit verification here (off-chain or oracle-confirmed)
+    // Example: require(IMakeConnector(makeConnector).isFunded(poolId), "Pool not funded");
+
     pool.status = Status.MakeID;
-    // Conceptual step: Ownership of the physical property asset is transferred to the pool's legal entity.
-    // DXBTOKENS™ are now considered 'registered' by MAKE™, ready for release via MAKE_IN.
+    // Transfer ownership of underlying asset to the pool contract/LPO conceptually
+    // This is handled by a separate DLD-approved chaincode/legal process
     emit MakeIDConfirmed(poolId);
 }`},
-                                { type: 'subheading', text: "4. MAKE_IN (Event: Token Enters Escrow & Activates for Trading)" },
+                                { type: 'subheading', text: "4. MAKE_IN (Event: Token Activates for Trading)" },
                                 { type: 'list', items: [
                                   "<strong>Writer:</strong> No (Status-only event).",
-                                  "<strong>Description:</strong> The token, already registered via MAKE_ID, is transferred into a market-tradeable state by being accepted into a verified MAKEPOOL™. The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™. The remaining tokens are allocated for market offering, fees, and service pools. The token ownership is formally moved to the Liquidity Pool Officer (LPO) as custodian. This is not an ownership transfer to the LPO; rather, the LPO assumes custodial responsibility for the tradable asset within the pool.",
-                                  "<strong>Effect on Ownership:</strong> The token's ownership is now \"escrowed.\" It is controlled by the MAKEPOOL Officer (as the custodian of the tradable pool), not directly by the individual owner. The individual owner holds tradable DXBTOKENS™ (fractional rights to the pool's value), but not direct property ownership or physical utility rights. The token enters the EBRAM™ Watcher Loop. There is no public sale or trading before MAKE-IN. All trading layers are recorded on top of MAKE-IN transaction.",
-                                  "<strong>Code Implication:</strong> TokenState.MakeIn. This is where _transfer() calls for DXBTOKEN™ distribution happen, moving tokens from a general pool to individual owner/market participant addresses."
+                                  "<strong>Description:</strong> The token, already registered via MAKE_ID, is activated for trading. It enters a market-tradeable state by being fully accepted into the verified MAKEPOOL™. The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™. The remaining tokens are allocated for market offering, fees, and service pools.",
+                                  "<strong>Effect on Ownership:</strong> Ownership remains with the MAKEPOOL Officer (as the custodian of the pool). The original owner holds tradable DXBTOKENS™ (fractional rights to the pool's value), but not direct property ownership.",
+                                  "<strong>Code Implication:</strong> TokenState.MakeIn. This is where _transfer() calls for DXBTOKEN™ distribution happen."
                                 ]},
                                 { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_IN within EBRAMTokenPool contract
-// This function would be called by EBRAM™ (onlyEBRAM modifier)
 function makeIn(bytes32 poolId) external onlyEBRAM {
     TokenPool storage pool = pools[poolId];
     require(pool.status == Status.MakeID, "Invalid status: Must be MakeID for MakeIn");
-    // Logic to distribute DXBTOKENS™ to original owner and other allocations
-    // Example: DXBTOKEN_Contract.transfer(originalOwnerAddress, pool.totalTokens * 40 / 100);
-    // Example: DXBTOKEN_Contract.transfer(marketPoolAddress, pool.totalTokens * 55 / 100);
+    // Logic to distribute DXBTOKENS to original owner and other allocations
+    // Example: DXBTOKEN_Contract.transfer(originalOwner, pool.totalTokens * 40 / 100);
+    // Example: DXBTOKEN_Contract.transfer(marketPool, pool.totalTokens * 55 / 100);
+
     pool.status = Status.MakeIn;
-    // Activate EBRAM™ Watcher for this pool in the broader EBRAM™ system
+    // Activate EBRAM Watcher for this pool
     emit MakeInConfirmed(poolId);
 }`},
                                 { type: 'subheading', text: "5. MAKE_OUT (Event: Temporary Exit from Liquidity Lock)" },
                                 { type: 'list', items: [
                                   "<strong>Writer:</strong> No (Status-only event, unless part of a broader EBRAM™ D-EBRAMINT™).",
-                                  "<strong>Description:</strong> This event temporarily detaches DXBTOKENS™ from their active liquidity pool contract, pausing trading for specific purposes (e.g., legal hold, owner request for direct sale outside the pool, property restructuring). It's a temporary pause or a procedural step towards D-EBRAMINT™ (De-EBRAMINT™).",
+                                  "<strong>Description:</strong> This event temporarily detaches DXBTOKENS™ from their active liquidity pool contract, pausing trading for specific purposes. It is a temporary pause or a procedural step towards D-EBRAMINT™.",
                                   "<strong>Effect on Ownership:</strong> Tokens are unbound from the active liquidity contract but retain their EBRAMINTED™ status. Ownership remains with the MAKEPOOL (custodially), but trading is halted. The tokens can be moved, but not traded on the primary market.",
-                                  "<strong>Code Implication:</strong> TokenState.MakeOut. Triggers conditional logic to freeze trading and update the token's status."
+                                  "<strong>Code Implication:</strong> TokenState.MakeOut. Triggers conditional logic to freeze trading."
                                 ]},
                                 { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_OUT within EBRAMTokenPool contract
-// This function would be called by EBRAM™ (onlyEBRAM modifier)
 function makeOut(bytes32 poolId) external onlyEBRAM {
     TokenPool storage pool = pools[poolId];
     require(pool.status == Status.MakeIn, "Invalid status for MakeOut");
     // Logic to temporarily halt trading for these tokens
-    // Example: DXBTOKEN_Contract.pauseTrading(poolId); // if token contract has this
+    // Example: DXBTOKEN_Contract.pauseTrading(poolId);
     pool.status = Status.MakeOut;
     emit MakeOutExecuted(poolId);
 }`},
@@ -600,15 +602,14 @@ function makeOut(bytes32 poolId) external onlyEBRAM {
                                   "<strong>Writer:</strong> Yes (Writes to asset structure, executes D-EBRAMINT™).",
                                   "<strong>Description:</strong> This is the ultimate finalization event for a tokenized property's lifecycle within the DLDCHAIN™. It represents the formal closure of the entire token pool inside EBRAM™ and performs a D-EBRAMINT™ (De-EBRAMINT™), ending the sovereign contract system for that tokenized property. This is triggered by a 90%+ ownership stake claim by a single entity, legal settlement, or pool expiration/timeout. It effectively \"un-tokenizes\" the property from the MAKE™ system.",
                                   "<strong>Effect on Ownership:</strong> Ownership is finally transferred from the MAKEPOOL's custodial role to the new, 100% legal owner (the one who acquired 90%+ of the tokens). The tokenized status of the property ends under the current EBRAMINT™, and the property is effectively returned to its raw legal state or re-registered under a new EBRAMINT™ if resold traditionally. The token itself is conceptually \"burned\" or retired from the active tokenization system.",
-                                  "<strong>Code Implication:</strong> TokenState.MakeDismissed. This would trigger a D-EBRAMINT™ procedure in the main EBRAM™ contract."
+                                  "<strong>Code Implication:</strong> TokenState.MakeDismissed. This would trigger a D-EBRAMINT™ procedure."
                                 ]},
                                 { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_DISMISS within EBRAMTokenPool contract
-// This function would be called by EBRAM™ (onlyEBRAM modifier)
 function makeDismiss(bytes32 poolId) external onlyEBRAM {
     TokenPool storage pool = pools[poolId];
     require(pool.status == Status.MakeOut || pool.status == Status.MakeIn, "Invalid status for MakeDismiss"); // Can dismiss from active or paused
-    // Trigger D-EBRAMINT™ procedure in main EBRAM™ contract
-    // Example: EBRAM_Main_Contract.deEbramint(pool.property, newOwnerAddress); // Transfer ownership of underlying asset
+    // Trigger D-EBRAMINT procedure in main EBRAM contract
+    // Example: EBRAM_Main_Contract.deEbramint(pool.property, pool.tokenHolders[0]);
     // Logic to perform MPT (Market Price Transaction) and finalize funds distribution
     pool.status = Status.MakeDismissed;
     // Optionally, clear pool data or mark for archival
@@ -1883,7 +1884,7 @@ contract EBRAMTokenPool {
                             id: 'article-18-6',
                             title: "18.6. Challenges and Mitigations (Security testing risks)",
                             content: [
-                                { type: 'paragraph', text: "This section discusses challenges like the evolving threat landscape, integrating security across diverse technologies, and balancing security with performance, along with mitigation strategies." }
+                                { type: 'paragraph', text: "This section discusses challenges such as the evolving threat landscape, integrating security across diverse technologies, and balancing security with performance, along with mitigation strategies." }
                             ]
                         },
                         {
@@ -1969,7 +1970,9 @@ contract EBRAMTokenPool {
                 {
                     id: 'chapter-20',
                     title: "Appendices",
-                    introduction: [{ type: 'paragraph', text: "This section provides supplementary technical details, including a comprehensive glossary of terms, specific code examples, API schemas, and performance benchmarks. These appendices serve as a technical reference for developers, auditors, and deep technical stakeholders." }],
+                    introduction: [
+                        { type: 'paragraph', text: "This section provides supplementary technical details, including a comprehensive glossary of terms, specific code examples, API schemas, and performance benchmarks. These appendices serve as a technical reference for developers, auditors, and deep technical stakeholders." }
+                    ],
                     articles: [
                         {
                           id: 'appendix-a',
@@ -2030,7 +2033,7 @@ contract EBRAMTokenPool {
         }
     ],
     conclusion: {
-        id: 'book-conclusion-main',
+        id: 'book-conclusion',
         title: "Conclusion",
         content: [
           { type: 'paragraph', text: "This concludes the DLDCHAIN™ Technical Analysis Book. It provides a comprehensive and detailed examination of the protocol's architecture, core components, technical workflows, security measures, and validation strategies." }
