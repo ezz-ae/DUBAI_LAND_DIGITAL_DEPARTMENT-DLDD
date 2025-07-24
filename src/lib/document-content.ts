@@ -212,7 +212,7 @@ export const documentContents: Record<string, string> = {
 <p>إن مشروع DLDCHAIN لا يمثل مجرد مبادرة تقنية؛ بل هو <strong>مشروع سيادي متكامل</strong> يعكس رؤية دبي الطموحة نحو التحول الرقمي الشامل وريادة المستقبل. لقد جرى بناء كل جزء من هذا النظام – من لغة "إبرام" البرمجية القانونية التي تفكر وتفهم وتُشرّع، إلى نظام DXBTOKENS للترميز القائم على القيمة السوقية، ونظام MAKE لحل تحديات السيولة <strong>بنموذجه الفريد والمضمون للأرباح</strong>، وصولًا إلى "مشروعي" الذي أعاد تعريف الجدارة والاحترافية في الوساطة العقارية – ليصبحوا معًا شهادة حية تؤكد أن الحوكمة الذكية والابتكار المستدام لا يتحققان إلا بالرؤية الواضحة والإرادة المؤسسية والتكامل التقني.</p>
 <p><strong>إن هذا المشروع ليس مجرد رؤية مستقبلية، بل هو خطة عمل واضحة تم تطوير كودها البرمجي واختباره بنجاح، وكتابة عقودها الذكية، وحصل على تقييم خارجي يؤكد جاهزية المنظومة للتحول من المفهوم إلى التطبيق الفعلي على نطاق واسع.</strong></p>
 <p>بهذا، تبرهن دبي يوميًا أن لا شيء مستحيل حين تلتقي الرؤية الصادقة بالإرادة المؤسسية والتكامل التقني. تقود دبي سيادتها الرقمية، ويصبح فيها الأصل العقاري ليس مجرد حجر أو عقد، بل كيانًا رقميًا له كرامة، وقيمة، وحقوق محمية... تمامًا كما تتطلع إليه قياداتنا الرشيدة ومجتمعنا.</p>`,
-'philosophy-en': `<h2>The Philosophy of DLDCHAIN™: A New Paradigm for Digital Governance in Real Estate</h2>
+    'philosophy-en': `<h2>The Philosophy of DLDCHAIN™: A New Paradigm for Digital Governance in Real Estate</h2>
 <p><strong>Engineering Trust, Value, and Sovereignty Through Code</strong></p>
 <h3>1. Introduction: Reimagining Real Estate Beyond Technology</h3>
 <p>DLDCHAIN™ is not merely a technological upgrade; it is the embodiment of a new philosophical framework for real estate governance in the 21st century. It transcends common digital transformation by embedding core principles of trust, transparency, and efficiency directly into its architecture and operational logic. This study explores the foundational philosophies that define DLDCHAIN™, demonstrating how it constructs a superior, self-governing real estate ecosystem, fundamentally reshaping the interaction between physical assets, legal frameworks, financial flows, and human action.</p>
@@ -685,6 +685,7 @@ export const documentContents: Record<string, string> = {
     <li><strong>Verifiable Participation:</strong> All participation and interactions (e.g., questions asked, poll votes, virtual meeting attendance) are immutably recorded on the DLDCHAIN™ (where permissible for privacy), providing verifiable proofs of engagement.</li>
 </ul>
 <h3>4. Technical Architecture: A Secure and Scalable Live Platform</h3>
+<p>Mashroi™ Digital Events is built as a highly robust, secure, and scalable module within the Mashroi™ platform, leveraging the underlying DLDCHAIN™ infrastructure.</p>
 <h4>4.1. Platform Integration</h4>
 <ul>
     <li>Built as an integral module within the Mashroi™ platform, sharing its core identity management and professional verification systems.</li>
@@ -712,6 +713,7 @@ export const documentContents: Record<string, string> = {
     <li>Off-chain analytics engines process real-time engagement data, providing AI-driven insights without impacting blockchain performance.</li>
 </ul>
 <h3>5. Business Benefits & Opportunities: Revolutionizing Engagement ROI</h3>
+<p>Mashroi™ Digital Events offers a compelling value proposition across the entire real estate value chain, revolutionizing how businesses achieve their engagement and sales objectives.</p>
 <h4>5.1. For Developers</h4>
 <ul>
     <li><strong>Reduced Event Costs:</strong> Significantly lowers expenses associated with physical event hosting (venue, logistics, travel).</li>
@@ -823,80 +825,40 @@ export const documentContents: Record<string, string> = {
     <li><strong>Escrowship ≠ Utility ≠ Rental Rights:</strong> Tokens in escrow cannot be used for physical utility (e.g., DEWA activation) or rental contracts. This prevents legal ambiguities and misuse.</li>
     <li><strong>Security Principle:</strong> This fundamental separation ensures that "MAKE™ cannot own, and EBRAM™ cannot tokenize," eliminating dual claims, misuse, and providing absolute asset integrity and legal clarity.</li>
 </ul>
-<pre><code>// DLDCHAIN™ Cryptographic Security Rule: trade = true --> owner = false
-modifier enforceNonDualRights(uint tokenId) {
-    DXBToken storage token = dxbTokens[tokenId];
-    if (token.tradeEnabled == true) {
-        require(token.owner == address(0), "Error: Tradable token cannot have an individual owner (must be escrowed).");
-    }
-    if (token.owner != address(0)) {
-        require(token.tradeEnabled == false, "Error: Owned token cannot be actively traded in pool.");
-    }
-    _;
-}
-// No Renting from Escrow Pools: Escrowship ≠ Utility ≠ Rental Rights
-function isRentable(uint256 tokenId) public view returns (bool) {
-    DXBToken memory token = dxbTokens[tokenId];
-    if (token.escrowed == true) { // If token is in escrow, it's not rentable
-        return false;
-    }
-    return true; // Else, check other EBRAM™ rules for rental eligibility
-}
-</code></pre>
+<h4>4.4. Algorithmic Market Making: EBRAM™'s AI-Driven Price Stability</h4>
+<p>EBRAM™'s AI Market-Making Logic establishes a transparent, efficient, and stable real estate market that moves beyond traditional supply-and-demand models by embedding intelligence and governance directly into its pricing mechanism.</p>
 <ul>
-    <li><strong>Unclosable Vault:</strong> The MAKE™ Pool operates like a "copy trade that never closes" for the pool creator. The pool creator is a market initiator, not a trader, owner, or closer. They cannot unilaterally withdraw property value from escrow or resell tokens directly to any wallet. The only exit gate is EBRAM™'s pool closure logic (MAKE_DISMISS) or market resale via a valid external buyer.</li>
+    <li><strong>AI-Weighted Node System:</strong> Uses AI to assign numerical "weights" to various on-chain and real-world events (e.g., EBRAMINT™ Date, Owner Verified Status, Last Trade Date, Tower Activity, Rent ROI on Similar Unit, Last AI Valuation Audit) to dynamically influence property valuations and DXBTOKEN™ prices. This ensures objective and fair pricing.</li>
+    <li><strong>Real-Time Adjustment Loop (MME):</strong> The Market Making Engine (MME) continuously monitors and adjusts prices based on AI scoring, preventing artificial manipulation.</li>
+    <li><strong>Market Logic Intelligence:</strong> AI acts as an "intelligent referee" preventing "unlogical" transactions (e.g., illogical prices, excessive commissions), ensuring market fairness.</li>
 </ul>
-<h3>6. The Liquidity Cycle: MAKE™ Event Lifecycle</h3>
-<p>The MAKE™ System orchestrates the entire liquidity lifecycle for tokenized properties, ensuring seamless transition from tokenization to market trading. This process is highly structured and governed by specific events, ensuring strict adherence to protocol rules and maintaining the "token = true = owner" principle.</p>
-<ol>
-    <li><strong>MAKELIST (Event: Token Candidate Listing):</strong> An EBRAM™-qualified property is listed as a candidate for tokenization on a MAKELIST. The property is still owned by the original owner.</li>
-    <li><strong>MAKETRADE (Event: Pool Interest Expressed):</strong> A MAKE™-compatible liquidity pool signals its intent to acquire/escrow a token from the MAKELIST. This is a non-binding request.</li>
-    <li><strong>MAKE_ID (Event: Liquidity Commitment & Token Registration):</strong> This is the pivotal writer event. An LPO signs the MAKE™ transaction, depositing 100% of the unit's AED value into a dedicated, unit-bound liquidity pool. Ownership of the property is formally transferred to the TokenPool (under the LPO's custodianship). The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™.</li>
-    <li><strong>MAKE_IN (Event: Token Enters Escrow & Activates for Trading):</strong> The token, now registered via MAKE_ID, is transferred into a market-tradeable state by being accepted into a verified MAKEPOOL™. The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™. The remaining tokens are allocated for market offering, fees, and service pools. The token ownership is formally moved to the Liquidity Pool Officer (LPO) as custodian.</li>
-    <li><strong>MAKE_OUT (Event: Temporary Exit from Liquidity Lock):</strong> This event temporarily detaches DXBTOKENS™ from their active liquidity pool contract, pausing trading for specific purposes. Ownership remains with the MAKEPOOL (custodially), but trading is halted.</li>
-    <li><strong>MAKE_DISMISS (Event: Final Exit & D-EBRAMINT™ Execution):</strong> This is the ultimate finalization event. Triggered by a 90%+ ownership stake claim by a single entity, legal settlement, or pool expiration/timeout. It effectively "un-tokenizes" the property from the MAKE™ system. Ownership is finally transferred from the MAKEPOOL's custodial role to the new, 100% legal owner (the one who acquired 90%+ of the tokens). The token itself is conceptually "burned" or retired.</li>
-</ol>
-<h3>7. Algorithmic Market Making: EBRAM™'s AI-Driven Price Logic</h3>
-<p>The DLDCHAIN™'s innovative "EBRAM™ AI Market-Making Logic" establishes a transparent, efficient, and stable real estate market that moves beyond traditional supply-and-demand models by embedding intelligence and governance directly into its pricing mechanism. EBRAM™ is the "price-behavior architect."</p>
+<h3>5. Security & Legal Fidelity: Unwavering Trust in Digital Ownership</h3>
+<p>DXBTOKENS™ are underpinned by DLDCHAIN™'s multi-layered security framework and unwavering legal fidelity, ensuring unprecedented trust and enforceability.</p>
 <ul>
-    <li><strong>EBRAM™ AI-Weighted Node System:</strong> Every 'node' in the smart contract tree (property, unit, token pool) is integrated with AI-sensed micro-events and calibrated, decision-weighted metadata. This ensures pricing is objectively derived and stays within a "No More, No Less. Guaranteed." logical band, preventing manual manipulation.</li>
-    <li><strong>Weighted Inputs:</strong> Factors like EBRAMINT™ Date, Owner Verified Status, Last Trade Date, Tower Activity (new EBRAMINT™), Rent ROI on Similar Unit, and Last AI Valuation Audit are assigned specific weights to dynamically influence token price.</li>
-    <li><strong>Real-Time Adjustment Loop (MME):</strong> The Market Making Engine (MME) continuously scans and scores nodes. If scoring differences exceed a threshold (e.g., 5%), it triggers re-valuation and new suggested pricing.</li>
-    <li><strong>Market Logic Intelligence:</strong> Acts as an "intelligent referee" that can block contracts for "unlogical prices" or excessive broker commissions, suggesting adjustments via EBRAMGPT™.</li>
-    <li><strong>Transparency & Auditability:</strong> All price determinations are traceable and explainable through an OpenAI-powered visibility layer, allowing users to request breakdowns of node score decisions for compliance or audits.</li>
+    <li><strong>Cryptographic Immutability:</strong> Every DXBTOKEN™ transaction is hashed and chained, creating permanent, tamper-proof audit trails.</li>
+    <li><strong>Sovereign Control:</strong> DLD's direct governance over the protocol guarantees the integrity and finality of all on-chain operations.</li>
+    <li><strong>Legal Enforceability:</strong> All EBRAM™ smart contracts governing DXBTOKENS™ are legally binding and enforceable under UAE law, providing judicial recourse for digital ownership rights.</li>
+    <li><strong>Digital Asset Inheritance (Lost Key Solution):</strong> The legally robust succession protocol ensures programmatic transfer of deceased's tokens to heirs, eliminating lost key issues and ensuring intergenerational asset transfer certainty.</li>
+    <li><strong>Compliance:</strong> Robust KYC/AML processes are embedded, making it programmatically impossible to transfer tokens to unverified wallets.</li>
 </ul>
-<h3>8. Legal Guarantees & Security Model: An Unbreakable Protocol</h3>
-<p>The DLDCHAIN™'s liquidity and tokenization model is built on an unprecedented security framework, ensuring legal finality and preventing fraud.</p>
+<h3>6. Market Impact & Opportunities: Unlocking New Frontiers</h3>
+<p>DXBTOKENS™ are poised to redefine the real estate market by unlocking true liquidity and attracting unprecedented capital, positioning Dubai as a global leader.</p>
 <ul>
-    <li><strong>Core Principle: TOKEN = TRUE = OWNER (Always):</strong> Ownership always remains with the address holding the token. This is a chain + legal guarantee.
-        <ul>
-            <li>Even during MAKE™ stages (escrowship), the ownership is never undefined. Before MAKE_ID: owner = original owner. After MAKE_ID: owner = pool (custodial). Post-MAKE_DISMISS: owner = final buyer.</li>
-        </ul>
-    </li>
-    <li><strong>Escrowship Doctrine: Signer ≠ Owner & Escrowship ≠ Utility ≠ Rental Rights:</strong> MAKE™ cannot own, and EBRAM™ cannot tokenize. This separation ensures:
-        <ul>
-            <li>No single wallet can abuse liquidity.</li>
-            <li>No pool participant can claim legal ownership.</li>
-            <li>On-chain trades are purely financial.</li>
-            <li>Rentals are law-governed, not token-held.</li>
-            <li>Resale fraud is impossible—the contract doesn't allow it outside of EBRAM™'s defined lifecycle.</li>
-        </ul>
-    </li>
-    <li><strong>Cryptographic Enforcement:</strong> The rule trade = true → owner = false (and vice versa) is strictly enforced in smart contract code, preventing dual rights or ambiguous ownership.</li>
-    <li><strong>Multi-Signature (Multisig) Approvals:</strong> Critical actions (like MAKE_ID, MAKE_DISMISS, and mortgage payouts) require multi-signature approval from DLD, LPO, and relevant consortium members.</li>
-    <li><strong>Air-Gapped Operation:</strong> The core MAKE™ System's financial operations are conceptually "air-gapped" from public trading layers, enhancing stability and security.</li>
-    <li><strong>AI-Audited Security:</strong> The system is continuously audited by government AI nodes for compliance and integrity, providing proactive security.</li>
+    <li><strong>Unlocking True Liquidity:</strong> DXBTOKENS™ transform illiquid physical assets into fluid, tradable digital assets, enabling faster exits and sales.</li>
+    <li><strong>Attracting Traditional Capital:</strong> The combination of DLD's sovereign guarantee, the fiat-only (DLD-AED) approach, and robust legal frameworks successfully attracts significant Foreign Direct Investment (FDI) from traditional institutional investors.</li>
+    <li><strong>Economic Growth:</strong> By reducing friction and building trust, DXBTOKENS™ drive unprecedented growth in real estate transaction volumes, foster new investment models, and create high-value jobs.</li>
+    <li><strong>Global Standard-Setting:</strong> DLDCHAIN™'s unique model for DXBTOKENS™ serves as a blueprint for other nations seeking to establish secure, legally anchored, and highly liquid tokenized real estate markets.</li>
 </ul>
-<h3>9. Conclusion: A Blueprint for Global Trust</h3>
-<p>The DLDCHAIN™'s liquidity and tokenization model, driven by the synergistic interplay of EBRAM™'s legal intelligence and the MAKE™ System's sovereign financial backbone, represents a fundamental and unprecedented leap in real estate governance. By precisely defining and enforcing the distinction between ownership and escrowship, guaranteeing 100% AED-backed liquidity, and leveraging AI for dynamic market making and fraud prevention, DLDCHAIN™ has literally engineered the first of its kind in secure, liquid, and legally robust real estate tokenization.</p>
-<p>This system creates value out of inactivity by temporarily disconnecting usage rights from tradable value, enabling pure ownership economics. It offers a blueprint for true tokenization with real-world legal enforceability and cryptographic accountability, making traditional financial ambiguities obsolete.</p>
-<p>DLDCHAIN™ doesn't just promise liquidity; it codes certainty, transforming Dubai's real estate into a globally trusted and tradable digital asset class. It is a testament to Dubai's vision: a nation that doesn't just adopt technology, but rewrites the rules of governance through code.</p>`,
+<h3>7. Conclusion: DXBTOKENS™ – The Future of Real Estate Value</h3>
+<p>DXBTOKENS™ are more than just digital representations of property; they are the embodiment of DLDCHAIN™'s groundbreaking vision for real estate in the digital age. By integrating pure value ownership, a sovereign liquidity engine (MAKE™ System), an unbreakable escrowship doctrine, and AI-driven market making—all anchored by EBRAM™'s legal intelligence and DLD's ultimate governance—DXBTOKENS™ create a class of digital assets that is unparalleled in its security, liquidity, and legal finality.</p>
+<p>This innovative approach positions Dubai as the global pioneer in transforming real estate into a truly programmable, tradable, and trustworthy asset, setting a new gold standard for value creation and accessibility in the global property market.</p>`,
     'tokenization-comparison-en': `<h2>Tokenization on DLDCHAIN™ vs. Global Tokenization: A Comparative Study</h2>
 <p><strong>Setting the Sovereign Standard for Real Estate in the Digital Age</strong></p>
 <h3>1. Introduction: Redefining Real Estate Value in a Tokenized World</h3>
 <p>Real estate tokenization, the process of issuing blockchain-based tokens that represent ownership or rights in real-world property assets, has emerged as a compelling solution to address the inherent illiquidity, opacity, and high transactional costs of traditional real estate. Globally, diverse platforms and models are attempting to revolutionize this multi-trillion-dollar market. However, many encounter significant challenges related to legal enforceability, regulatory ambiguity, and the speculative nature of underlying cryptocurrencies.</p>
 <p>DLDCHAIN™, pioneered by the Dubai Land Department (DLD), stands distinct as a revolutionary model. It transcends common global approaches by establishing a sovereign-grade, legally anchored, and AI-powered tokenization ecosystem. This study provides a comprehensive comparative analysis, highlighting DLDCHAIN™'s unique differentiators and unparalleled advantages in setting a new global standard for trusted, liquid, and secure real estate tokenization.</p>
 <h3>2. Global Landscape of Real Estate Tokenization: Challenges & Common Approaches</h3>
+<p>The global tokenized real estate market is diverse, characterized by various technological and legal approaches, but often hampered by recurring challenges that limit its mainstream adoption by traditional investors.</p>
 <h4>2.1. Common Models and Platforms</h4>
 <ul>
     <li><strong>Fractional NFTs on Public Chains:</strong> Many projects utilize Non-Fungible Tokens (NFTs) on public blockchains (e.g., Ethereum, Polygon) to represent fractional ownership. These are often tied to Special Purpose Vehicles (SPVs) that legally own the property, with the NFT representing shares in the SPV.</li>
@@ -1138,7 +1100,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
 <ul>
     <li><strong>Smart Reports:</strong> AI-driven "smart reports" provide live yields, market heatmaps, and real-time fraud flagging.</li>
     <li><strong>Open Data Platform:</strong> DLDD provides a comprehensive Public API for controlled access to non-confidential ledger data, fostering innovation in the PropTech ecosystem and creating new revenue streams from data licensing.</li>
-    <li><strong>Traceable & Explainable Output:</strong> Every output from EBRAM™ and AI-Weighted Node System is fully traceable and explainable, ensuring transparency and accountability for AI-driven decisions.</li>
+    <li><strong>Traceable & Explainable Output:</strong> Every output from EBRAM™ and the AI-Weighted Node System is fully traceable and explainable, ensuring transparency and accountability for AI-driven decisions.</li>
 </ul>
 <h3>4. Pillar 3: Technological Empowerment – AI & Blockchain Integration</h3>
 <p>DLDD's power lies in its deep and synergistic integration of cutting-edge AI with robust blockchain technology, creating a truly intelligent, adaptive, and secure operating system.</p>
@@ -1669,12 +1631,36 @@ function isRentable(uint256 tokenId) public view returns (bool) {
 <h3>6. The Liquidity Cycle: MAKE™ Event Lifecycle</h3>
 <p>The MAKE™ System orchestrates the entire liquidity lifecycle for tokenized properties, ensuring seamless transition from tokenization to market trading. This process is highly structured and governed by specific events, ensuring strict adherence to protocol rules and maintaining the "token = true = owner" principle.</p>
 <ol>
-    <li><strong>MAKELIST (Event: Token Candidate Listing):</strong> An EBRAM™-qualified property is listed as a candidate for tokenization on a MAKELIST. The property is still owned by the original owner.</li>
-    <li><strong>MAKETRADE (Event: Pool Interest Expressed):</strong> A MAKE™-compatible liquidity pool signals its intent to acquire/escrow a token from the MAKELIST. This is a non-binding request.</li>
-    <li><strong>MAKE_ID (Event: Liquidity Commitment & Token Registration):</strong> This is the pivotal writer event. An LPO signs the MAKE™ transaction, depositing 100% of the unit's AED value into a dedicated, unit-bound liquidity pool. Ownership of the property is formally transferred to the TokenPool (under the LPO's custodianship). The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™.</li>
-    <li><strong>MAKE_IN (Event: Token Enters Escrow & Activates for Trading):</strong> The token, now registered via MAKE_ID, is transferred into a market-tradeable state by being accepted into a verified MAKEPOOL™. The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™. The remaining tokens are allocated for market offering, fees, and service pools. The token ownership is formally moved to the Liquidity Pool Officer (LPO) as custodian.</li>
-    <li><strong>MAKE_OUT (Event: Temporary Exit from Liquidity Lock):</strong> This event temporarily detaches DXBTOKENS™ from their active liquidity pool contract, pausing trading for specific purposes. Ownership remains with the MAKEPOOL (custodially), but trading is halted.</li>
-    <li><strong>MAKE_DISMISS (Event: Final Exit & D-EBRAMINT™ Execution):</strong> This is the ultimate finalization event. Triggered by a 90%+ ownership stake claim by a single entity, legal settlement, or pool expiration/timeout. It effectively "un-tokenizes" the property from the MAKE™ system. Ownership is finally transferred from the MAKEPOOL's custodial role to the new, 100% legal owner (the one who acquired 90%+ of the tokens). The token itself is conceptually "burned" or retired.</li>
+    <li><strong>MAKELIST (Event: Token Candidate Listing)</strong>
+        <ul>
+            <li><strong>Description:</strong> An EBRAM™-qualified property is listed as a candidate for tokenization on a MAKELIST. The property is still owned by the original owner.</li>
+        </ul>
+    </li>
+    <li><strong>MAKETRADE (Event: Pool Interest Expressed)</strong>
+        <ul>
+            <li><strong>Description:</strong> A MAKE™-compatible liquidity pool signals its intent to acquire/escrow a token from the MAKELIST. This is a non-binding request.</li>
+        </ul>
+    </li>
+    <li><strong>MAKE_ID (Event: Liquidity Commitment & Token Registration)</strong>
+        <ul>
+            <li><strong>Description:</strong> This is the pivotal writer event. An LPO signs the MAKE™ transaction, depositing 100% of the unit's AED value into a dedicated, unit-bound liquidity pool. Ownership of the property is formally transferred to the TokenPool (under the LPO's custodianship). The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™.</li>
+        </ul>
+    </li>
+    <li><strong>MAKE_IN (Event: Token Enters Escrow & Activates for Trading)</strong>
+        <ul>
+            <li><strong>Description:</strong> The token, now registered via MAKE_ID, is transferred into a market-tradeable state by being accepted into a verified MAKEPOOL™. The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™. The remaining tokens are allocated for market offering, fees, and service pools. The token ownership is formally moved to the Liquidity Pool Officer (LPO) as custodian.</li>
+        </ul>
+    </li>
+    <li><strong>MAKE_OUT (Event: Temporary Exit from Liquidity Lock)</strong>
+        <ul>
+            <li><strong>Description:</strong> This event temporarily detaches DXBTOKENS™ from their active liquidity pool contract, pausing trading for specific purposes. Ownership remains with the MAKEPOOL (custodially), but trading is halted.</li>
+        </ul>
+    </li>
+    <li><strong>MAKE_DISMISS (Event: Final Exit & D-EBRAMINT™ Execution)</strong>
+        <ul>
+            <li><strong>Description:</strong> This is the ultimate finalization event. Triggered by a 90%+ ownership stake claim by a single entity, legal settlement, or pool expiration/timeout. It effectively "un-tokenizes" the property from the MAKE™ system. Ownership is finally transferred from the MAKEPOOL's custodial role to the new, 100% legal owner (the one who acquired 90%+ of the tokens). The token itself is conceptually "burned" or retired from the active tokenization system.</li>
+        </ul>
+    </li>
 </ol>
 <h3>7. Algorithmic Market Making: EBRAM™'s AI-Driven Price Logic</h3>
 <p>The DLDCHAIN™'s innovative "EBRAM™ AI Market-Making Logic" establishes a transparent, efficient, and stable real estate market that moves beyond traditional supply-and-demand models by embedding intelligence and governance directly into its pricing mechanism. EBRAM™ is the "price-behavior architect."</p>
@@ -1876,7 +1862,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
 <h3>7. Conclusion: DLDCHAIN™ – An Engine for Innovation and Economic Diversification</h3>
 <p>DLDCHAIN™ is poised to transform Dubai's real estate market into a global beacon of innovation, transparency, and economic vitality. By strategically creating new market opportunities for every stakeholder, from individual brokers and property owners to major developers and financial institutions, DLDCHAIN™ establishes a truly holistic ecosystem of mutual benefit. This unprecedented alignment of incentives, coupled with sovereign governance and advanced technology, will drive significant economic diversification, attract global talent and investment, and solidify Dubai's position as a world leader in the digital economy.</p>
 <p>The future of real estate is not just digital; it's smart, sovereign, and profoundly interconnected – and DLDCHAIN™ is leading the way.</p>`,
-    'business-vision-en': `<h2>DLDCHAIN™ Business & Strategic Vision Book</h2>
+    'business-vision-book-en': `<h2>DLDCHAIN™ Business & Strategic Vision Book</h2>
 <p><strong>Driving Digital Sovereignty in Real Estate</strong></p>
 <h3>Book Introduction</h3>
 <p>This DLDCHAIN™ Business & Strategic Vision Book provides a comprehensive and high-level examination of DLDCHAIN™, the groundbreaking blockchain-based real estate governance system pioneered by the Dubai Land Department (DLD). In an era defined by rapid digital transformation and the increasing global demand for transparency, efficiency, and trust in markets, DLDCHAIN™ stands as a visionary solution. It is meticulously engineered to address the inherent complexities, traditional limitations, and inefficiencies of the global real estate sector, positioning Dubai at the forefront of digital urban governance.</p>
@@ -2157,7 +2143,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
             <li><strong>Effect on Ownership:</strong> Ownership is finally transferred from the MAKEPOOL's custodial role to the new, 100% legal owner (the one who acquired 90%+ of the tokens). The tokenized status of the property ends under the current EBRAMINT™, and the property is effectively returned to its raw legal state or re-registered under a new EBRAMINT™ if resold traditionally. The token itself is conceptually "burned" or retired from the active tokenization system.</li>
         </ul>
     </li>
-</ol>
+</ul>
 <h5>5.5. Revenue Model for Liquidity Officers</h5>
 <p>Liquidity Officers, as integral financial actors within the MAKE™ System, generate returns through several mechanisms, aligning their incentives with the system's stability and efficiency.</p>
 <ul>
@@ -2527,7 +2513,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
 <h5>14.2. Reputational Impact</h5>
 <p>Beyond economic gains, DLDCHAIN™ will cement Dubai's global reputation, positioning the emirate as a definitive thought leader in digital governance.</p>
 <ul>
-    <li><strong>Global Standard-Setter:</strong> DLDCHAIN™ will position Dubai as the undisputed global standard-setter for digital governance in a major economic sector. This achievement will be recognized internationally, inspiring other jurisdictions to follow suit.</li>
+    <li><strong>Global Standard-Setter:</strong> DLDCHAIN™ will position Dubai not just as a leader or an early adopter, but as the undisputed global standard-setter for digital governance in a major economic sector. This achievement will be recognized internationally, inspiring other jurisdictions to follow suit.</li>
     <li><strong>Case Study for the World:</strong> DLDCHAIN™ would become a prominent case study taught in universities and meticulously analyzed by governments worldwide. Its success will demonstrate a replicable blueprint for sovereign digital transformation in critical industries, showcasing Dubai's foresight and execution capabilities.</li>
     <li><strong>Talent Magnet:</strong> The reputation for pioneering innovation and robust digital infrastructure will attract the world's brightest talent in technology, finance, and law to Dubai, further solidifying its standing as the world's most forward-thinking and future-ready city and a global hub for digital innovation.</li>
 </ul>
