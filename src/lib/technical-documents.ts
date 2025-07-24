@@ -1,21 +1,5 @@
 
-interface CodeContent {
-    type: 'code';
-    language: string;
-    text: string;
-}
-
-interface TextContent {
-    type: 'paragraph' | 'heading' | 'subheading';
-    text: string;
-}
-
-interface ListContent {
-    type: 'list';
-    items: string[];
-}
-
-export type ContentItem = CodeContent | TextContent | ListContent;
+import type { CodeContent, ContentItem, ListContent, TextContent } from '@/lib/types';
 
 export interface BookArticle {
   id: string;
@@ -387,9 +371,7 @@ export const technicalBook: TechnicalBook = {
                 {
                     id: 'chapter-5',
                     title: "DXBTOKENS™: Property Tokenization Protocol",
-                    introduction: [
-                        { type: 'paragraph', text: "DXBTOKENS™ represent a fundamental paradigm shift in real estate ownership and liquidity in Dubai. They are the visible, tradable UX expression of what EBRAM™ governs. These tokens digitize real estate into a fractionalized token economy where 1 square foot equals 1 token, aiming to revolutionize property ownership and investment by making previously illiquid assets highly accessible and liquid." }
-                    ],
+                    introduction: [{ type: 'paragraph', text: "DXBTOKENS™ represent a fundamental paradigm shift in real estate ownership and liquidity in Dubai. They are the visible, tradable UX expression of what EBRAM™ governs. These tokens digitize real estate into a fractionalized token economy where 1 square foot equals 1 token, aiming to revolutionize property ownership and investment by making previously illiquid assets highly accessible and liquid." }],
                     articles: [
                         {
                             id: 'article-5-1',
@@ -399,7 +381,7 @@ export const technicalBook: TechnicalBook = {
                                 { type: 'list', items: [
                                     "<strong>Asset-Backed:</strong> Each DXBTOKEN™ is cryptographically backed by a corresponding portion of a real-world property unit, meticulously vetted and verified by DLD. This direct linkage provides inherent value and trust, differentiating it from purely speculative digital assets.",
                                     "<strong>Non-Yield Focused:</strong> Unlike many traditional property tokens or REITs, DXBTOKENS™' primary value is derived from the underlying asset's appreciation, not its rental income. Rental income is considered a secondary byproduct, managed separately via an optional income pool, ensuring the token's value is insulated from tenancy fluctuations and operational complexities.",
-                                    "<strong>Fractionalized Ownership:</strong> The \"1 sqft = 1 token\" model allows for granular, fractional ownership , democratizing access to high-value real estate for a broader range of investors, including those with smaller capital allocations (e.g., as low as AED 2,000 in initial pilots).",
+                                    "<strong>Fractionalized Ownership:</strong> The \"1 sqft = 1 token\" model allows for granular, fractional ownership, democratizing access to high-value real estate for a broader range of investors, including those with smaller capital allocations (e.g., as low as AED 2,000 in initial pilots).",
                                     "<strong>Immutable Linkage:</strong> Each DXBTOKEN™ is immutably linked to its corresponding EBRAMINTED™ asset's digital identity (CDID), ensuring verifiable provenance and integrity from its inception on the DLDCHAIN™."
                                 ]}
                             ]
@@ -423,17 +405,85 @@ export const technicalBook: TechnicalBook = {
                         {
                             id: 'article-5-3',
                             title: "5.3. Technical Specifications of DXBTOKEN™ Standard",
-                            content: []
+                            content: [
+                                { type: 'paragraph', text: "The DXBTOKEN™ standard is a specialized implementation designed for real estate assets on Hyperledger Fabric, adhering to principles of fungibility (within a given property pool) and traceability." },
+                                { type: 'list', items: [
+                                    "<strong>Token Standard:</strong> While not a direct ERC-20, it conceptually aligns with fungible token standards, adapted for Fabric's chaincode environment. Each token represents a precise fractional unit (1 sqft).",
+                                    "<strong>Metadata:</strong> Each DXBTOKEN™ carries rich, immutable metadata directly linked to its CDID, including:",
+                                    "propertyCDID: Unique identifier of the underlying property.",
+                                    "unit_sqft: The exact square footage represented by the token (always 1).",
+                                    "property_type: (e.g., Residential, Commercial, Parking).",
+                                    "current_status: (e.g., Off-Plan, Ready, Mortgaged, EBRAMINTED™).",
+                                    "linked_ebram_contract: Reference to the governing EBRAM™ smart contract.",
+                                    "make_pool_id: Reference to the MAKE™ pool providing liquidity.",
+                                    "developer_id: Verified ID of the developer (for off-plan).",
+                                    "handover_date: For off-plan properties.",
+                                    "<strong>Supply Management:</strong> Total supply for a property's token pool is fixed based on its square footage. Minting occurs only upon MAKE_ID event.",
+                                    "<strong>Transferability:</strong> DXBTOKENS™ are transferable between UNIVESTOR Wallets™ within the DLDCHAIN™ marketplace, subject to compliance checks and state-based rules (e.g., not transferable if property is under legal hold)."
+                                ]}
+                            ]
                         },
                         {
                             id: 'article-5-4',
                             title: "5.4. Smart Contract Logic for Token Lifecycle",
-                            content: []
+                            content: [
+                                { type: 'paragraph', text: "The lifecycle of DXBTOKENS™ is governed by intricate smart contract logic primarily residing within the EBRAM™ Chaincode and MAKE™ System Chaincode on Hyperledger Fabric." },
+                                { type: 'subheading', text: "Minting Logic:" },
+                                { type: 'list', items: [
+                                  "Triggered by EBRAMINT™ and confirmed by MAKE_ID.",
+                                  "Ensures 1 sqft = 1 token conversion based on verified property size.",
+                                  "Distributes tokens according to predefined allocation rules (e.g., 40% owner, 55% market, fees)."
+                                ]},
+                                { type: 'subheading', text: "Conceptual Chaincode Function (within MAKE™ System Chaincode):"},
+                                { type: 'code', language: 'go', text: `// Simplified Go Chaincode function for token minting during MAKE_IN
+func (s *SmartContract) MintDXBTokens(ctx contractapi.TransactionContextInterface, poolId string, ownerAddress string, marketAddress string, totalSqFt uint256) error {
+    // ... authorize only EBRAM™ to call this ...
+    // Check if poolId is in MAKE_ID status
+    // ...
+    // Perform actual token minting
+    // Example: DXBTOKEN_Contract.Mint(poolId, totalSqFt); // Mints totalSqFt tokens for this pool
+    // Distribute minted tokens
+    // DXBTOKEN_Contract.Transfer(poolId, ownerAddress, totalSqFt * 40 / 100);
+    // DXBTOKEN_Contract.Transfer(poolId, marketAddress, totalSqFt * 55 / 100);
+    // ... distribute fees ...
+    return nil
+}`},
+                                { type: 'subheading', text: "Transfer Logic:" },
+                                { type: 'list', items: [
+                                  "Standard token transfer functions (e.g., transfer(from, to, amount)).",
+                                  "Enforces enforceNonDualRights modifier: trade = true → owner = false. If a token is being traded (in escrow), it cannot be simultaneously claimed by an individual owner for utility.",
+                                  "Integrates with KYC/AML checks via UNIVESTOR Wallet™ and CBUAE APIs."
+                                ]},
+                                { type: 'subheading', text: "Burning/Retirement Logic:" },
+                                { type: 'list', items: [
+                                  "Triggered by MAKE_DISMISS event (e.g., 90%+ stake acquisition, legal settlement).",
+                                  "Removes tokens from circulation, conceptually signaling the property's exit from the tokenized liquidity pool."
+                                ]},
+                                { type: 'subheading', text: "Escrow State Management:" },
+                                { type: 'list', items: [
+                                  "The DXBToken struct tracks owner, tradeEnabled, escrowed, and linkedPool to manage the ownership vs. escrowship states.",
+                                  "Functions like setTokenState() (callable only by EBRAM™) manage these transitions."
+                                ]},
+                                { type: 'subheading', text: "Rental Distribution Logic (Optional):" },
+                                { type: 'list', items: [
+                                  "If rentEnabled flag is true in the TokenPool struct, EBRAM™ triggers distributeRent() function.",
+                                  "This function calculates and distributes rental income proportionally to token holders, pool officer, EBRAM™, and service manager, without affecting the token's core value."
+                                ]}
+                            ]
                         },
                         {
                             id: 'article-5-5',
                             title: "5.5. Security Audits and Formal Verification",
-                            content: []
+                            content: [
+                                { type: 'paragraph', text: "The security of DXBTOKENS™ smart contracts is paramount, given their direct representation of real-world assets." },
+                                { type: 'list', items: [
+                                  "<strong>Rigorous Auditing:</strong> All DXBTOKENS™ chaincode will undergo multiple, independent security audits by specialized blockchain security firms. These audits focus on identifying vulnerabilities like re-entrancy, access control flaws, integer overflows, and logical errors.",
+                                  "<strong>Formal Verification:</strong> For critical functions (e.g., minting, burning, core transfer logic, escrow state transitions), formal verification methods will be applied. This involves mathematically proving the correctness of the smart contract code against formal specifications, ensuring the absence of specific bugs and adherence to security properties.",
+                                  "<strong>Continuous Testing:</strong> Integration into CI/CD pipelines with automated unit, integration, and system tests (including fuzz testing and symbolic execution) to continuously validate the security and functionality of the DXBTOKENS™ contracts.",
+                                  "<strong>Bug Bounty Programs:</strong> Implementation of bug bounty programs to incentivize ethical hackers to discover and report vulnerabilities, enhancing the security posture.",
+                                  "<strong>Version Control & Upgradeability:</strong> Strict version control and a robust upgrade mechanism (e.g., proxy patterns for Solidity, or chaincode upgrade procedures for Fabric) will be in place, allowing for secure updates and bug fixes without compromising the immutability of historical data."
+                                ]}
+                            ]
                         }
                     ]
                 },
@@ -497,7 +547,18 @@ export const technicalBook: TechnicalBook = {
                                   "<strong>Effect on Ownership:</strong> Ownership of the property is formally transferred to the TokenPool (under the LPO's custodianship). The original owner receives 60% of property value in AED as instant liquidity, and 40% as tradable DXBTOKENS™.",
                                   "<strong>Code Implication:</strong> TokenState.MakeID. This is where _mint() function logic for DXBTOKENS™ would execute, creating the tokens and assigning initial ownership/distribution."
                                 ]},
-                                { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_ID within EBRAMTokenPool contract\n// This function would be called by EBRAM™ (onlyEBRAM modifier)\nfunction makeID(bytes32 poolId) external onlyEBRAM {\n    TokenPool storage pool = pools[poolId];\n    require(pool.status == Status.MakeListed, "Invalid status: Must be MakeListed to confirm ID");\n    // Perform 100% AED deposit verification here (off-chain oracle-confirmed or direct transfer check)\n    // Example: require(IMakeConnector(makeConnector).isFunded(poolId), "Pool not fully funded");\n    pool.status = Status.MakeID;\n    // Conceptual step: Ownership of the physical property asset is transferred to the pool's legal entity.\n    // DXBTOKENS™ are now considered 'registered' by MAKE™, ready for release via MAKE_IN.\n    emit MakeIDConfirmed(poolId);\n}`},
+                                { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_ID within EBRAMTokenPool contract
+// This function would be called by EBRAM™ (onlyEBRAM modifier)
+function makeID(bytes32 poolId) external onlyEBRAM {
+    TokenPool storage pool = pools[poolId];
+    require(pool.status == Status.MakeListed, "Invalid status: Must be MakeListed to confirm ID");
+    // Perform 100% AED deposit verification here (off-chain oracle-confirmed or direct transfer check)
+    // Example: require(IMakeConnector(makeConnector).isFunded(poolId), "Pool not fully funded");
+    pool.status = Status.MakeID;
+    // Conceptual step: Ownership of the physical property asset is transferred to the pool's legal entity.
+    // DXBTOKENS™ are now considered 'registered' by MAKE™, ready for release via MAKE_IN.
+    emit MakeIDConfirmed(poolId);
+}`},
                                 { type: 'subheading', text: "4. MAKE_IN (Event: Token Enters Escrow & Activates for Trading)" },
                                 { type: 'list', items: [
                                   "<strong>Writer:</strong> No (Status-only event).",
@@ -505,7 +566,18 @@ export const technicalBook: TechnicalBook = {
                                   "<strong>Effect on Ownership:</strong> The token's ownership is now \"escrowed.\" It is controlled by the MAKEPOOL Officer (as the custodian of the tradable pool), not directly by the individual owner. The individual owner holds tradable DXBTOKENS™ (fractional rights to the pool's value), but not direct property ownership or physical utility rights. The token enters the EBRAM™ Watcher Loop. There is no public sale or trading before MAKE-IN. All trading layers are recorded on top of MAKE-IN transaction.",
                                   "<strong>Code Implication:</strong> TokenState.MakeIn. This is where _transfer() calls for DXBTOKEN™ distribution happen, moving tokens from a general pool to individual owner/market participant addresses."
                                 ]},
-                                { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_IN within EBRAMTokenPool contract\n// This function would be called by EBRAM™ (onlyEBRAM modifier)\nfunction makeIn(bytes32 poolId) external onlyEBRAM {\n    TokenPool storage pool = pools[poolId];\n    require(pool.status == Status.MakeID, "Invalid status: Must be MakeID for MakeIn");\n    // Logic to distribute DXBTOKENS™ to original owner and other allocations\n    // Example: DXBTOKEN_Contract.transfer(originalOwnerAddress, pool.totalTokens * 40 / 100);\n    // Example: DXBTOKEN_Contract.transfer(marketPoolAddress, pool.totalTokens * 55 / 100);\n    pool.status = Status.MakeIn;\n    // Activate EBRAM™ Watcher for this pool in the broader EBRAM™ system\n    emit MakeInConfirmed(poolId);\n}`},
+                                { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_IN within EBRAMTokenPool contract
+// This function would be called by EBRAM™ (onlyEBRAM modifier)
+function makeIn(bytes32 poolId) external onlyEBRAM {
+    TokenPool storage pool = pools[poolId];
+    require(pool.status == Status.MakeID, "Invalid status: Must be MakeID for MakeIn");
+    // Logic to distribute DXBTOKENS™ to original owner and other allocations
+    // Example: DXBTOKEN_Contract.transfer(originalOwnerAddress, pool.totalTokens * 40 / 100);
+    // Example: DXBTOKEN_Contract.transfer(marketPoolAddress, pool.totalTokens * 55 / 100);
+    pool.status = Status.MakeIn;
+    // Activate EBRAM™ Watcher for this pool in the broader EBRAM™ system
+    emit MakeInConfirmed(poolId);
+}`},
                                 { type: 'subheading', text: "5. MAKE_OUT (Event: Temporary Exit from Liquidity Lock)" },
                                 { type: 'list', items: [
                                   "<strong>Writer:</strong> No (Status-only event, unless part of a broader EBRAM™ D-EBRAMINT™).",
@@ -513,7 +585,16 @@ export const technicalBook: TechnicalBook = {
                                   "<strong>Effect on Ownership:</strong> Tokens are unbound from the active liquidity contract but retain their EBRAMINTED™ status. Ownership remains with the MAKEPOOL (custodially), but trading is halted. The tokens can be moved, but not traded on the primary market.",
                                   "<strong>Code Implication:</strong> TokenState.MakeOut. Triggers conditional logic to freeze trading and update the token's status."
                                 ]},
-                                { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_OUT within EBRAMTokenPool contract\n// This function would be called by EBRAM™ (onlyEBRAM modifier)\nfunction makeOut(bytes32 poolId) external onlyEBRAM {\n    TokenPool storage pool = pools[poolId];\n    require(pool.status == Status.MakeIn, "Invalid status for MakeOut");\n    // Logic to temporarily halt trading for these tokens\n    // Example: DXBTOKEN_Contract.pauseTrading(poolId); // if token contract has this\n    pool.status = Status.MakeOut;\n    emit MakeOutExecuted(poolId);\n}`},
+                                { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_OUT within EBRAMTokenPool contract
+// This function would be called by EBRAM™ (onlyEBRAM modifier)
+function makeOut(bytes32 poolId) external onlyEBRAM {
+    TokenPool storage pool = pools[poolId];
+    require(pool.status == Status.MakeIn, "Invalid status for MakeOut");
+    // Logic to temporarily halt trading for these tokens
+    // Example: DXBTOKEN_Contract.pauseTrading(poolId); // if token contract has this
+    pool.status = Status.MakeOut;
+    emit MakeOutExecuted(poolId);
+}`},
                                 { type: 'subheading', text: "6. MAKE_DISMISS (Event: Final Exit & D-EBRAMINT™ Execution)" },
                                 { type: 'list', items: [
                                   "<strong>Writer:</strong> Yes (Writes to asset structure, executes D-EBRAMINT™).",
@@ -521,7 +602,18 @@ export const technicalBook: TechnicalBook = {
                                   "<strong>Effect on Ownership:</strong> Ownership is finally transferred from the MAKEPOOL's custodial role to the new, 100% legal owner (the one who acquired 90%+ of the tokens). The tokenized status of the property ends under the current EBRAMINT™, and the property is effectively returned to its raw legal state or re-registered under a new EBRAMINT™ if resold traditionally. The token itself is conceptually \"burned\" or retired from the active tokenization system.",
                                   "<strong>Code Implication:</strong> TokenState.MakeDismissed. This would trigger a D-EBRAMINT™ procedure in the main EBRAM™ contract."
                                 ]},
-                                { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_DISMISS within EBRAMTokenPool contract\n// This function would be called by EBRAM™ (onlyEBRAM modifier)\nfunction makeDismiss(bytes32 poolId) external onlyEBRAM {\n    TokenPool storage pool = pools[poolId];\n    require(pool.status == Status.MakeOut || pool.status == Status.MakeIn, "Invalid status for MakeDismiss"); // Can dismiss from active or paused\n    // Trigger D-EBRAMINT™ procedure in main EBRAM™ contract\n    // Example: EBRAM_Main_Contract.deEbramint(pool.property, newOwnerAddress); // Transfer ownership of underlying asset\n    // Logic to perform MPT (Market Price Transaction) and finalize funds distribution\n    pool.status = Status.MakeDismissed;\n    // Optionally, clear pool data or mark for archival\n    emit MakeDismissed(poolId);\n}`}
+                                { type: 'code', language: 'solidity', text: `// Simplified core logic for MAKE_DISMISS within EBRAMTokenPool contract
+// This function would be called by EBRAM™ (onlyEBRAM modifier)
+function makeDismiss(bytes32 poolId) external onlyEBRAM {
+    TokenPool storage pool = pools[poolId];
+    require(pool.status == Status.MakeOut || pool.status == Status.MakeIn, "Invalid status for MakeDismiss"); // Can dismiss from active or paused
+    // Trigger D-EBRAMINT™ procedure in main EBRAM™ contract
+    // Example: EBRAM_Main_Contract.deEbramint(pool.property, newOwnerAddress); // Transfer ownership of underlying asset
+    // Logic to perform MPT (Market Price Transaction) and finalize funds distribution
+    pool.status = Status.MakeDismissed;
+    // Optionally, clear pool data or mark for archival
+    emit MakeDismissed(poolId);
+}`}
                             ]
                         },
                         {
@@ -535,7 +627,55 @@ export const technicalBook: TechnicalBook = {
                                   "<strong>Escrow Ownership (Escrowship):</strong> When tokens are within the MAKE™ System, their ownership is in an \"escrowship\" state. This means the token is held by the MAKE™ System (via its smart contracts) as a legal holder, not by a specific individual user or the Pool Officer as an owner with full, direct property rights. This escrowed state is non-usable and non-civil-active; for instance, the escrowed entity or token holder cannot apply for DEWA, create rental contracts, or physically access the property. \"Escrowship ≠ Utility ≠ Rental Rights.\"",
                                   "<strong>Security Lock (Signer ≠ Owner):</strong> This fundamental security principle is cryptographically enforced: \"Signer ≠ Owner,\" \"Signer = Trade Authority,\" and \"Signer ≠ Resale Permission\". A token cannot be both tradeable and legally owned by an individual simultaneously. If a token is in an escrowed state for trading, its ownership is temporarily \"nullified\" or held by the system's escrow logic. Only when ownership is fully restored to an individual (via EBRAM™ MAKE-OUT or D-EBRAMINT™) can the token cease being traded within the pool, and then it becomes eligible for full legal ownership rights. This prevents dual claims, unauthorized use, and maintains integrity."
                                 ]},
-                                { type: 'code', language: 'solidity', text: `// DLDCHAIN™ Cryptographic Security Rule: trade = true --> owner = false\n// Enforces that a token cannot be both tradable and have a direct legal owner simultaneously.\n// This modifier would be used in functions that alter token state based on trading or ownership.\nmodifier enforceNonDualRights(uint tokenId) {\n    // Assume dxbTokens is a mapping (uint => DXBToken) storing the state of each token\n    DXBToken storage token = dxbTokens[tokenId];\n\n    // Rule 1: If token is tradable, its owner must be the system's escrow (address(0) or a specific escrow contract)\n    if (token.tradeEnabled == true) {\n        require(token.owner == address(0), "Error: Tradable token cannot have an individual owner (must be escrowed).");\n    }\n    // Rule 2: If token has an individual owner, it cannot be tradable\n    if (token.owner != address(0)) {\n        require(token.tradeEnabled == false, "Error: Owned token cannot be actively traded in pool.");\n    }\n    _; // Continue with the function execution if rules are met\n}\n\n// Example of a simplified DXBToken struct and state transitions (conceptual)\nstruct DXBToken {\n    address owner;        // Address of the legal owner (Level 1); address(0) if in escrow/trading\n    bool tradeEnabled;    // True if in trading/escrow (Level 2); false if directly owned\n    bool escrowed;        // True if currently managed by a MAKE™ pool\n    address linkedPool;   // Address of the MAKE™ pool if escrowed\n}\n\n// Function to set token state based on ownership/escrowship (called only by EBRAM™)\nfunction setTokenState(uint tokenId, address _newOwner, bool _isTradeable, address _linkedPool) public onlyEBRAM {\n    DXBToken storage token = dxbTokens[tokenId];\n    // Apply non-dual rights enforcement logic from the modifier conceptually here\n    require((_isTradeable && _newOwner == address(0)) || (!_isTradeable && _newOwner != address(0)), "Invalid owner/tradeable state transition.");\n\n    token.owner = _newOwner;\n    token.tradeEnabled = _isTradeable;\n    token.escrowed = _isTradeable; // Escrowed implies tradeable\n    token.linkedPool = _linkedPool;\n}\n\n// Rental eligibility check: No Renting from Escrow Pools\n// "Escrowship ≠ Utility ≠ Rental Rights"\nfunction isRentable(uint256 tokenId) public view returns (bool) {\n    DXBToken memory token = dxbTokens[tokenId];\n    // Only tokens that are not escrowed (i.e., directly owned by an individual) can enable rental\n    if (token.escrowed == true) {\n        return false; // Escrowed tokens cannot enable rental utility\n    }\n    // Further checks for legal owner status via EBRAM™'s legal module (not shown here)\n    return true;\n}`}
+                                { type: 'code', language: 'solidity', text: `// DLDCHAIN™ Cryptographic Security Rule: trade = true --> owner = false
+// Enforces that a token cannot be both tradable and have a direct legal owner simultaneously.
+// This modifier would be used in functions that alter token state based on trading or ownership.
+modifier enforceNonDualRights(uint tokenId) {
+    // Assume dxbTokens is a mapping (uint => DXBToken) storing the state of each token
+    DXBToken storage token = dxbTokens[tokenId];
+
+    // Rule 1: If token is tradable, its owner must be the system's escrow (address(0) or a specific escrow contract)
+    if (token.tradeEnabled == true) {
+        require(token.owner == address(0), "Error: Tradable token cannot have an individual owner (must be escrowed).");
+    }
+    // Rule 2: If token has an individual owner, it cannot be tradable
+    if (token.owner != address(0)) {
+        require(token.tradeEnabled == false, "Error: Owned token cannot be actively traded in pool.");
+    }
+    _; // Continue with the function execution if rules are met
+}
+
+// Example of a simplified DXBToken struct and state transitions (conceptual)
+struct DXBToken {
+    address owner;        // Address of the legal owner (Level 1); address(0) if in escrow/trading
+    bool tradeEnabled;    // True if in trading/escrow (Level 2); false if directly owned
+    bool escrowed;        // True if currently managed by a MAKE™ pool
+    address linkedPool;   // Address of the MAKE™ pool if escrowed
+}
+
+// Function to set token state based on ownership/escrowship (called only by EBRAM™)
+function setTokenState(uint tokenId, address _newOwner, bool _isTradeable, address _linkedPool) public onlyEBRAM {
+    DXBToken storage token = dxbTokens[tokenId];
+    // Apply non-dual rights enforcement logic from the modifier conceptually here
+    require((_isTradeable && _newOwner == address(0)) || (!_isTradeable && _newOwner != address(0)), "Invalid owner/tradeable state transition.");
+
+    token.owner = _newOwner;
+    token.tradeEnabled = _isTradeable;
+    token.escrowed = _isTradeable; // Escrowed implies tradeable
+    token.linkedPool = _linkedPool;
+}
+
+// Rental eligibility check: No Renting from Escrow Pools
+// "Escrowship ≠ Utility ≠ Rental Rights"
+function isRentable(uint256 tokenId) public view returns (bool) {
+    DXBToken memory token = dxbTokens[tokenId];
+    // Only tokens that are not escrowed (i.e., directly owned by an individual) can enable rental
+    if (token.escrowed == true) {
+        return false; // Escrowed tokens cannot enable rental utility
+    }
+    // Further checks for legal owner status via EBRAM™'s legal module (not shown here)
+    return true;
+}`}
                             ]
                         },
                         {
@@ -827,9 +967,269 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 { type: 'paragraph', text: "DLDCHAIN™ primarily utilizes GoLang chaincode for its Hyperledger Fabric backbone. However, conceptual Solidity examples are provided to illustrate compatibility principles for potential hybrid or cross-chain integrations with EVM-compatible networks, enhancing global reach." },
                                 { type: 'subheading', text: "EBRAMTokenPool.sol (Solidity - Conceptual for Hybrid/EVM Bridge)" },
-                                { type: 'code', language: 'solidity', text: `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.19;\n\n// This contract would manage the state transitions of token pools for DXBTOKENS™\n// and conceptually interact with an external EBRAM Chaincode on Hyperledger Fabric\n// via an oracle bridge for legal finality and cross-chain operations.\n\ncontract EBRAMTokenPool {\n    // Enum to track the lifecycle status of a token pool within the MAKE™ System\n    enum Status { None, MakeListed, MakeID, MakeIn, MakeOut, MakeDismissed }\n    // Enum to define roles within the DLDCHAIN™ ecosystem for access control\n    enum Role { None, PoolOfficer, TokenHolder, EBRAM, ServiceManager }\n\n    // Struct to define the properties of a TokenPool\n    struct TokenPool {\n        address propertyCDIDRef; // Reference to the property's CDID (on Fabric)\n        address[] tokenHolders;  // Addresses of current token holders in this pool\n        uint256 totalTokens;     // Total number of DXBTOKENS™ for this property\n        uint256[4] distribution; // [OriginalOwner%, Market%, EBRAM%, Service%] e.g., [40, 40, 10, 10]\n        Status status;           // Current status of the token pool\n        address poolOfficer;     // Address of the Liquidity Pool Officer (LPO)\n        mapping(address => uint256) balances; // Balances of DXBTOKENS™ within this pool\n        bool rentEnabled;        // Flag if this pool is configured for rental income distribution\n    }\n\n    // Mapping to store TokenPool data, indexed by a unique pool ID (bytes32)\n    mapping(bytes32 => TokenPool) public pools;\n    // Mapping to store roles of participants, assigned by EBRAM™\n    mapping(address => Role) public roles;\n\n    // Events to log critical state transitions for off-chain monitoring and auditing\n    event MakeListed(bytes32 indexed poolId);\n    event MakeIDConfirmed(bytes32 indexed poolId);\n    event MakeInConfirmed(bytes32 indexed poolId);\n    event MakeOutExecuted(bytes32 indexed poolId);\n    event MakeDismissed(bytes32 indexed poolId);\n    event RentDistributed(bytes32 indexed poolId, uint256 amount, uint256 timestamp);\n\n    // Modifier to restrict functions to only be called by the EBRAM™ entity\n    modifier onlyEBRAM() {\n        require(roles[msg.sender] == Role.EBRAM, "Caller not authorized as EBRAM™");\n        _; // Continues execution of the function\n    }\n\n    // Function to assign roles to users, callable only by EBRAM™\n    function assignRole(address user, Role role) external onlyEBRAM {\n        roles[user] = role;\n    }\n\n    // Function to list a property as a candidate for tokenization (MAKELIST event)\n    // Called by EBRAM™ after initial property qualification\n    function makeList(bytes32 poolId, address propertyCDID, address poolOfficerAddress, uint256 totalPropertyTokens) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.None, "Pool already exists or has a status"); // Ensure pool doesn't exist\n\n        pool.propertyCDIDRef = propertyCDID;\n        pool.totalTokens = totalPropertyTokens;\n        pool.status = Status.MakeListed;\n        pool.poolOfficer = poolOfficerAddress;\n        pool.distribution = [40, 40, 10, 10]; // Default distribution: Original Owner, Market, EBRAM, Service\n        pool.rentEnabled = false; // Default: Rent distribution is off\n\n        emit MakeListed(poolId); // Log the event\n    }\n\n    // Function to confirm liquidity commitment and token registration (MAKE_ID event)\n    // Called by EBRAM™ after LPO's 100% AED deposit verification\n    function makeID(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeListed, "Invalid status for MAKE_ID: Must be MakeListed");\n        // Placeholder for external oracle call to verify 100% AED backing\n        // require(IMakeOracle(oracleAddress).verifyDeposit(poolId, pool.totalTokens * 1 AED_PRICE), "AED deposit not confirmed by Oracle");\n\n        pool.status = Status.MakeID;\n        emit MakeIDConfirmed(poolId);\n    }\n\n    // Function to activate token for trading and distribute initial shares (MAKE_IN event)\n    // Called by EBRAM™ after MAKE_ID confirmation\n    function makeIn(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeID, "Invalid status for MAKE_IN: Must be MakeID");\n\n        // Conceptual logic for distributing DXBTOKENS™\n        // This would involve interacting with a separate DXBTOKEN™ contract\n        // Example: DXBTOKEN_Contract.transfer(originalOwnerAddress, pool.totalTokens * pool.distribution[0] / 100);\n        // Example: DXBTOKEN_Contract.transfer(marketOfferingAddress, pool.totalTokens * pool.distribution[1] / 100);\n        // ... and other allocations for EBRAM™ and Service Pool ...\n\n        pool.status = Status.MakeIn;\n        // Activate EBRAM™ Watcher for this pool in the broader EBRAM™ system (off-chain notification)\n        emit MakeInConfirmed(poolId);\n    }\n\n    // Function to temporarily exit from liquidity lock (MAKE_OUT event)\n    // Called by EBRAM™ for specific purposes like direct sale outside pool\n    function makeOut(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn, "Invalid status for MAKE_OUT: Must be MakeIn");\n\n        // Logic to temporarily halt trading for these tokens (e.g., in DXBTOKEN™ contract)\n        // Example: DXBTOKEN_Contract.pauseTrading(poolId);\n        pool.status = Status.MakeOut;\n        emit MakeOutExecuted(poolId);\n    }\n\n    // Function for final exit and D-EBRAMINT™ execution (MAKE_DISMISS event)\n    // Called by EBRAM™ for pool closure, 90%+ stake claim, or legal settlement\n    function makeDismiss(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeOut || pool.status == Status.MakeIn, "Invalid status for MAKE_DISMISS");\n\n        // Trigger D-EBRAMINT™ procedure in main EBRAM™ contract (off-chain notification)\n        // Example: EBRAM_Main_Contract.deEbramint(pool.propertyCDIDRef, newOwnerAddress);\n        // Logic to perform MPT (Market Price Transaction) and finalize funds distribution\n\n        pool.status = Status.MakeDismissed;\n        // Optionally, clear pool data or mark for archival\n        emit MakeDismissed(poolId);\n    }\n\n    // Function to enable rental income distribution for a pool\n    function enableRentDistribution(bytes32 poolId) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn, "Pool must be in MAKE_IN status to enable rent");\n        pool.rentEnabled = true;\n    }\n\n    // Function to distribute rental income\n    // Called by EBRAM™ based on verified rental payments\n    function distributeRent(bytes32 poolId, uint256 rentAmount) external onlyEBRAM {\n        TokenPool storage pool = pools[poolId];\n        require(pool.status == Status.MakeIn && pool.rentEnabled, "Rent distribution not enabled or invalid pool state");\n\n        uint256 poolOfficerShare = rentAmount * pool.distribution[2] / 100; // 10%\n        uint256 ebramShare = rentAmount * pool.distribution[3] / 100;     // 10%\n        uint256 serviceManagerShare = rentAmount * pool.distribution[4] / 100; // 40% (assuming distribution array is [Owner, Market, PoolOfficer, EBRAM, ServiceManager])\n        uint256 tokenHoldersShare = rentAmount * pool.distribution[1] / 100; // 40%\n\n        // Simulate transfers (actual transfers would be handled by DLD-AED gateway)\n        // payable(pool.poolOfficer).transfer(poolOfficerShare);\n        // payable(EBRAM_Address).transfer(ebramShare);\n        // payable(ServiceManager_Address).transfer(serviceManagerShare);\n\n        // Distribute to token holders proportionally\n        // For simplicity, this is a conceptual loop. In reality, it would iterate through tokenHolders and transfer\n        // uint256 sharePerToken = tokenHoldersShare / pool.totalTokens;\n        // for (uint i = 0; i < pool.tokenHolders.length; i++) {\n        //     payable(pool.tokenHolders[i]).transfer(sharePerToken * pool.balances[pool.tokenHolders[i]]);\n        // }\n\n        emit RentDistributed(poolId, rentAmount, block.timestamp);\n    }\n}`},
+                                { type: 'code', language: 'solidity', text: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+// This contract would manage the state transitions of token pools for DXBTOKENS™
+// and conceptually interact with an external EBRAM Chaincode on Hyperledger Fabric
+// via an oracle bridge for legal finality and cross-chain operations.
+
+contract EBRAMTokenPool {
+    // Enum to track the lifecycle status of a token pool within the MAKE™ System
+    enum Status { None, MakeListed, MakeID, MakeIn, MakeOut, MakeDismissed }
+    // Enum to define roles within the DLDCHAIN™ ecosystem for access control
+    enum Role { None, PoolOfficer, TokenHolder, EBRAM, ServiceManager }
+
+    // Struct to define the properties of a TokenPool
+    struct TokenPool {
+        address propertyCDIDRef; // Reference to the property's CDID (on Fabric)
+        address[] tokenHolders;  // Addresses of current token holders in this pool
+        uint256 totalTokens;     // Total number of DXBTOKENS™ for this property
+        uint256[4] distribution; // [OriginalOwner%, Market%, EBRAM%, Service%] e.g., [40, 40, 10, 10]
+        Status status;           // Current status of the token pool
+        address poolOfficer;     // Address of the Liquidity Pool Officer (LPO)
+        mapping(address => uint256) balances; // Balances of DXBTOKENS™ within this pool
+        bool rentEnabled;        // Flag if this pool is configured for rental income distribution
+    }
+
+    // Mapping to store TokenPool data, indexed by a unique pool ID (bytes32)
+    mapping(bytes32 => TokenPool) public pools;
+    // Mapping to store roles of participants, assigned by EBRAM™
+    mapping(address => Role) public roles;
+
+    // Events to log critical state transitions for off-chain monitoring and auditing
+    event MakeListed(bytes32 indexed poolId);
+    event MakeIDConfirmed(bytes32 indexed poolId);
+    event MakeInConfirmed(bytes32 indexed poolId);
+    event MakeOutExecuted(bytes32 indexed poolId);
+    event MakeDismissed(bytes32 indexed poolId);
+    event RentDistributed(bytes32 indexed poolId, uint256 amount, uint256 timestamp);
+
+    // Modifier to restrict functions to only be called by the EBRAM™ entity
+    modifier onlyEBRAM() {
+        require(roles[msg.sender] == Role.EBRAM, "Caller not authorized as EBRAM™");
+        _; // Continues execution of the function
+    }
+
+    // Function to assign roles to users, callable only by EBRAM™
+    function assignRole(address user, Role role) external onlyEBRAM {
+        roles[user] = role;
+    }
+
+    // Function to list a property as a candidate for tokenization (MAKELIST event)
+    // Called by EBRAM™ after initial property qualification
+    function makeList(bytes32 poolId, address propertyCDID, address poolOfficerAddress, uint256 totalPropertyTokens) external onlyEBRAM {
+        TokenPool storage pool = pools[poolId];
+        require(pool.status == Status.None, "Pool already exists or has a status"); // Ensure pool doesn't exist
+
+        pool.propertyCDIDRef = propertyCDID;
+        pool.totalTokens = totalPropertyTokens;
+        pool.status = Status.MakeListed;
+        pool.poolOfficer = poolOfficerAddress;
+        pool.distribution = [40, 40, 10, 10]; // Default distribution: Original Owner, Market, EBRAM, Service
+        pool.rentEnabled = false; // Default: Rent distribution is off
+
+        emit MakeListed(poolId); // Log the event
+    }
+
+    // Function to confirm liquidity commitment and token registration (MAKE_ID event)
+    // Called by EBRAM™ after LPO's 100% AED deposit verification
+    function makeID(bytes32 poolId) external onlyEBRAM {
+        TokenPool storage pool = pools[poolId];
+        require(pool.status == Status.MakeListed, "Invalid status for MAKE_ID: Must be MakeListed");
+        // Placeholder for external oracle call to verify 100% AED backing
+        // require(IMakeOracle(oracleAddress).verifyDeposit(poolId, pool.totalTokens * 1 AED_PRICE), "AED deposit not confirmed by Oracle");
+
+        pool.status = Status.MakeID;
+        emit MakeIDConfirmed(poolId);
+    }
+
+    // Function to activate token for trading and distribute initial shares (MAKE_IN event)
+    // Called by EBRAM™ after MAKE_ID confirmation
+    function makeIn(bytes32 poolId) external onlyEBRAM {
+        TokenPool storage pool = pools[poolId];
+        require(pool.status == Status.MakeID, "Invalid status for MAKE_IN: Must be MakeID");
+
+        // Conceptual logic for distributing DXBTOKENS™
+        // This would involve interacting with a separate DXBTOKEN™ contract
+        // Example: DXBTOKEN_Contract.transfer(originalOwnerAddress, pool.totalTokens * pool.distribution[0] / 100);
+        // Example: DXBTOKEN_Contract.transfer(marketOfferingAddress, pool.totalTokens * pool.distribution[1] / 100);
+        // ... and other allocations for EBRAM™ and Service Pool ...
+
+        pool.status = Status.MakeIn;
+        // Activate EBRAM™ Watcher for this pool in the broader EBRAM™ system (off-chain notification)
+        emit MakeInConfirmed(poolId);
+    }
+
+    // Function to temporarily exit from liquidity lock (MAKE_OUT event)
+    // Called by EBRAM™ for specific purposes like direct sale outside pool
+    function makeOut(bytes32 poolId) external onlyEBRAM {
+        TokenPool storage pool = pools[poolId];
+        require(pool.status == Status.MakeIn, "Invalid status for MAKE_OUT: Must be MakeIn");
+        // Logic to temporarily halt trading for these tokens (e.g., in DXBTOKEN™ contract)
+        // Example: DXBTOKEN_Contract.pauseTrading(poolId);
+        pool.status = Status.MakeOut;
+        emit MakeOutExecuted(poolId);
+    }
+
+    // Function for final exit and D-EBRAMINT™ execution (MAKE_DISMISS event)
+    // Called by EBRAM™ for pool closure, 90%+ stake claim, or legal settlement
+    function makeDismiss(bytes32 poolId) external onlyEBRAM {
+        TokenPool storage pool = pools[poolId];
+        require(pool.status == Status.MakeOut || pool.status == Status.MakeIn, "Invalid status for MAKE_DISMISS");
+
+        // Trigger D-EBRAMINT™ procedure in main EBRAM™ contract (off-chain notification)
+        // Example: EBRAM_Main_Contract.deEbramint(pool.propertyCDIDRef, newOwnerAddress);
+        // Logic to perform MPT (Market Price Transaction) and finalize funds distribution
+
+        pool.status = Status.MakeDismissed;
+        // Optionally, clear pool data or mark for archival
+        emit MakeDismissed(poolId);
+    }
+
+    // Function to enable rental income distribution for a pool
+    function enableRentDistribution(bytes32 poolId) external onlyEBRAM {
+        TokenPool storage pool = pools[poolId];
+        require(pool.status == Status.MakeIn, "Pool must be in MAKE_IN status to enable rent");
+        pool.rentEnabled = true;
+    }
+
+    // Function to distribute rental income
+    // Called by EBRAM™ based on verified rental payments
+    function distributeRent(bytes32 poolId, uint256 rentAmount) external onlyEBRAM {
+        TokenPool storage pool = pools[poolId];
+        require(pool.status == Status.MakeIn && pool.rentEnabled, "Rent distribution not enabled or invalid pool state");
+
+        uint256 poolOfficerShare = rentAmount * pool.distribution[2] / 100; // 10%
+        uint256 ebramShare = rentAmount * pool.distribution[3] / 100;     // 10%
+        uint256 serviceManagerShare = rentAmount * pool.distribution[4] / 100; // 40% (assuming distribution array is [Owner, Market, PoolOfficer, EBRAM, ServiceManager])
+        uint256 tokenHoldersShare = rentAmount * pool.distribution[1] / 100; // 40%
+
+        // Simulate transfers (actual transfers would be handled by DLD-AED gateway)
+        // payable(pool.poolOfficer).transfer(poolOfficerShare);
+        // payable(EBRAM_Address).transfer(ebramShare);
+        // payable(ServiceManager_Address).transfer(serviceManagerShare);
+
+        // Distribute to token holders proportionally
+        // For simplicity, this is a conceptual loop. In reality, it would iterate through tokenHolders and transfer
+        // uint256 sharePerToken = tokenHoldersShare / pool.totalTokens;
+        // for (uint i = 0; i < pool.tokenHolders.length; i++) {
+        //     payable(pool.tokenHolders[i]).transfer(sharePerToken * pool.balances[pool.tokenHolders[i]]);
+        // }
+
+        emit RentDistributed(poolId, rentAmount, block.timestamp);
+    }
+}`},
                                 { type: 'subheading', text: "EBRAMChaincode.go (Go Chaincode - Conceptual for Hyperledger Fabric)"},
-                                { type: 'code', language: 'go', text: `package main\n\nimport (\n\t"encoding/json"\n\t"fmt"\n\t"time"\n\n\t"github.com/hyperledger/fabric-contract-api-go/contractapi"\n)\n\n// SmartContract defines the EBRAM™ Chaincode structure\ntype SmartContract struct {\n\tcontractapi.Contract\n}\n\n// PropertyAsset defines the structure for a property in the ledger\ntype PropertyAsset struct {\n\tID            string \`json:"ID"\`\n\tOwner         string \`json:"owner"\`\n\tStatus        string \`json:"status"\`\n\tCDID          string \`json:"cdid"\`\n\tMortgageDetails string \`json:"mortgageDetails,omitempty"\`\n\tLienStatus    bool   \`json:"lienStatus"\`\n}\n\n// EbramintProperty is the function to formalize property digital identity\nfunc (s *SmartContract) EbramintProperty(ctx contractapi.TransactionContextInterface, propertyID string, ownerID string, params string) error {\n\t// ... extensive validation (unoccupied, clear title, broker qualification) ...\n\n\t// Example: Check if property already exists\n\tpropertyAsBytes, err := ctx.GetStub().GetState(propertyID)\n\tif err != nil {\n\t\treturn fmt.Errorf("Failed to read from world state: %v", err)\n\t}\n\tif propertyAsBytes != nil {\n\t\treturn fmt.Errorf("Property with ID %s already exists", propertyID)\n\t}\n\n\tproperty := PropertyAsset{\n\t\tID: propertyID,\n\t\tOwner: ownerID,\n\t\tStatus: "EBRAMINTED",\n\t\tCDID: generateCDID(propertyID), // Conceptual CDID generation\n\t\tLienStatus: false,\n\t}\n\tpropertyAsBytes, _ = json.Marshal(property)\n\treturn ctx.GetStub().PutState(propertyID, propertyAsBytes)\n}\n\n// CreateMortgage registers a lien on the property\nfunc (s *SmartContract) CreateMortgage(ctx contractapi.TransactionContextInterface, propertyID string, borrowerID string, loanAmount string, interestRate string, terms string) error {\n\t// ... authorization and validation ...\n\tpropertyAsBytes, err := ctx.GetStub().GetState(propertyID)\n\tif err != nil {\n\t\treturn fmt.Errorf("Failed to read property: %v", err)\n\t}\n\tif propertyAsBytes == nil {\n\t\treturn fmt.Errorf("Property %s does not exist", propertyID)\n\t}\n\n\tproperty := PropertyAsset{}\n\tjson.Unmarshal(propertyAsBytes, &property)\n\n\tproperty.MortgageDetails = fmt.Sprintf("Loan: %s, Rate: %s, Terms: %s", loanAmount, interestRate, terms)\n\tproperty.LienStatus = true\n\tproperty.Status = "Mortgaged" // Update status in EBRAM™ registry\n\n\tupdatedPropertyAsBytes, _ := json.Marshal(property)\n\treturn ctx.GetStub().PutState(propertyID, updatedPropertyAsBytes)\n}\n\n// CloseMortgage removes a lien from the property\nfunc (s *SmartContract) CloseMortgage(ctx contractapi.TransactionContextInterface, propertyID string) error {\n\t// ... authorization and validation ...\n\tpropertyAsBytes, err := ctx.GetStub().GetState(propertyID)\n\tif err != nil {\n\t\treturn fmt.Errorf("Failed to read property: %v", err)\n\t}\n\tif propertyAsBytes == nil {\n\t\treturn fmt.Errorf("Property %s does not exist", propertyID)\n\t}\n\n\tproperty := PropertyAsset{}\n\tjson.Unmarshal(propertyAsBytes, &property)\n\n\tproperty.MortgageDetails = ""\n\tproperty.LienStatus = false\n\tproperty.Status = "Ready" // Update status in EBRAM™ registry\n\n\tupdatedPropertyAsBytes, _ := json.Marshal(property)\n\treturn ctx.GetStub().PutState(propertyID, updatedPropertyAsBytes)\n}\n\n// Conceptual function for generating a CDID\nfunc generateCDID(propertyID string) string {\n\treturn fmt.Sprintf("CDID-%s-%d", propertyID, time.Now().UnixNano())\n}\n\n// Main function to start the chaincode\nfunc main() {\n\tchaincode, err := contractapi.NewChaincode(&SmartContract{})\n\tif err != nil {\n\t\tfmt.Printf("Error creating EBRAM™ chaincode: %s", err.Error())\n\t\treturn\n\t}\n\tif err := chaincode.Start(); err != nil {\n\t\tfmt.Printf("Error starting EBRAM™ chaincode: %s", err.Error())\n\t}\n}`}
+                                { type: 'code', language: 'go', text: `package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+
+	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+)
+
+// SmartContract defines the EBRAM™ Chaincode structure
+type SmartContract struct {
+	contractapi.Contract
+}
+
+// PropertyAsset defines the structure for a property in the ledger
+type PropertyAsset struct {
+	ID            string \`json:"ID"\`
+	Owner         string \`json:"owner"\`
+	Status        string \`json:"status"\`
+	CDID          string \`json:"cdid"\`
+	MortgageDetails string \`json:"mortgageDetails,omitempty"\`
+	LienStatus    bool   \`json:"lienStatus"\`
+}
+
+// EbramintProperty is the function to formalize property digital identity
+func (s *SmartContract) EbramintProperty(ctx contractapi.TransactionContextInterface, propertyID string, ownerID string, params string) error {
+	// ... extensive validation (unoccupied, clear title, broker qualification) ...
+
+	// Example: Check if property already exists
+	propertyAsBytes, err := ctx.GetStub().GetState(propertyID)
+	if err != nil {
+		return fmt.Errorf("Failed to read from world state: %v", err)
+	}
+	if propertyAsBytes != nil {
+		return fmt.Errorf("Property with ID %s already exists", propertyID)
+	}
+
+	property := PropertyAsset{
+		ID: propertyID,
+		Owner: ownerID,
+		Status: "EBRAMINTED",
+		CDID: generateCDID(propertyID), // Conceptual CDID generation
+		LienStatus: false,
+	}
+	propertyAsBytes, _ = json.Marshal(property)
+	return ctx.GetStub().PutState(propertyID, propertyAsBytes)
+}
+
+// CreateMortgage registers a lien on the property
+func (s *SmartContract) CreateMortgage(ctx contractapi.TransactionContextInterface, propertyID string, borrowerID string, loanAmount string, interestRate string, terms string) error {
+	// ... authorization and validation ...
+	propertyAsBytes, err := ctx.GetStub().GetState(propertyID)
+	if err != nil {
+		return fmt.Errorf("Failed to read property: %v", err)
+	}
+	if propertyAsBytes == nil {
+		return fmt.Errorf("Property %s does not exist", propertyID)
+	}
+
+	property := PropertyAsset{}
+	json.Unmarshal(propertyAsBytes, &property)
+
+	property.MortgageDetails = fmt.Sprintf("Loan: %s, Rate: %s, Terms: %s", loanAmount, interestRate, terms)
+	property.LienStatus = true
+	property.Status = "Mortgaged" // Update status in EBRAM™ registry
+
+	updatedPropertyAsBytes, _ := json.Marshal(property)
+	return ctx.GetStub().PutState(propertyID, updatedPropertyAsBytes)
+}
+
+// CloseMortgage removes a lien from the property
+func (s *SmartContract) CloseMortgage(ctx contractapi.TransactionContextInterface, propertyID string) error {
+	// ... authorization and validation ...
+	propertyAsBytes, err := ctx.GetStub().GetState(propertyID)
+	if err != nil {
+		return fmt.Errorf("Failed to read property: %v", err)
+	}
+	if propertyAsBytes == nil {
+		return fmt.Errorf("Property %s does not exist", propertyID)
+	}
+
+	property := PropertyAsset{}
+	json.Unmarshal(propertyAsBytes, &property)
+
+	property.MortgageDetails = ""
+	property.LienStatus = false
+	property.Status = "Ready" // Update status in EBRAM™ registry
+
+	updatedPropertyAsBytes, _ := json.Marshal(property)
+	return ctx.GetStub().PutState(propertyID, updatedPropertyAsBytes)
+}
+
+// Conceptual function for generating a CDID
+func generateCDID(propertyID string) string {
+	return fmt.Sprintf("CDID-%s-%d", propertyID, time.Now().UnixNano())
+}
+
+// Main function to start the chaincode
+func main() {
+	chaincode, err := contractapi.NewChaincode(&SmartContract{})
+	if err != nil {
+		fmt.Printf("Error creating EBRAM™ chaincode: %s", err.Error())
+		return
+	}
+	if err := chaincode.Start(); err != nil {
+		fmt.Printf("Error starting EBRAM™ chaincode: %s", err.Error())
+	}
+}`}
                             ]
                         },
                         {
@@ -922,7 +1322,15 @@ export const technicalBook: TechnicalBook = {
                             title: "11.3. Escrow Smart Contract (Pseudocode for MAKE™ contract logic)",
                             content: [
                                 { type: 'paragraph', text: "The MAKE™ System's core escrow logic would reside within the EBRAMTokenPool smart contract (as previously defined in Solidity) and related Go chaincode. The following pseudocode illustrates key aspects of its escrow management." },
-                                { type: 'code', language: 'solidity', text: `// Simplified conceptual code for MAKE™ Escrow Logic within EBRAMTokenPool\ncontract EBRAMTokenPool {\n    // ... (previous enums, structs, mappings, events, onlyEBRAM modifier) ...\n\n    // State variable to track the actual escrow holding address\n    address public immutable MAKE_ESCROW_ADDRESS;\n\n    // ... (rest of the conceptual Solidity code)\n}`}
+                                { type: 'code', language: 'solidity', text: `// Simplified conceptual code for MAKE™ Escrow Logic within EBRAMTokenPool
+contract EBRAMTokenPool {
+    // ... (previous enums, structs, mappings, events, onlyEBRAM modifier) ...
+
+    // State variable to track the actual escrow holding address
+    address public immutable MAKE_ESCROW_ADDRESS;
+
+    // ... (rest of the conceptual Solidity code)
+}`}
                             ]
                         },
                         {
@@ -938,7 +1346,7 @@ export const technicalBook: TechnicalBook = {
                                   "<strong>Audited Reserves:</strong> The 100% AED backing for DXBTOKENS™ is continuously verified through integration with CBUAE and regulated banks.",
                                   "<strong>Non-Public Contracts:</strong> MAKE™ Smart Contracts™ are not publicly searchable on blockchain explorers.",
                                   "<strong>Sovereign Logic Freeze:</strong> In extreme scenarios, DLDCHAIN™ governance can enforce a \"sovereign logic freeze\" on MAKE™ Wallets™ or pools.",
-                                  "<strong>No Renting from Escrow Pools:</strong> The technical design strictly enforces that `Escrowship ≠ Utility ≠ Rental Rights`."
+                                  "<strong>No Renting from Escrow Pools:</strong> The technical design strictly enforces that \`Escrowship ≠ Utility ≠ Rental Rights\`."
                                 ]}
                             ]
                         },
@@ -1348,7 +1756,7 @@ export const technicalBook: TechnicalBook = {
                                 { type: 'list', items: [
                                   "<strong>Functional Correctness:</strong> 100% pass rate for critical tests.",
                                   "<strong>Transaction Throughput:</strong> Target 1,000+ TPS.",
-                                  "<strong>Latency:</strong> Average <500ms for core transactions.",
+                                  "<strong>Latency:</strong> Average &lt;500ms for core transactions.",
                                   "<strong>Data Consistency:</strong> Near real-time sync.",
                                   "<strong>Uptime:</strong> Target 99.99%.",
                                   "<strong>AI Accuracy:</strong> Defined thresholds (e.g., 95% for suggestions).",
@@ -1577,7 +1985,7 @@ export const technicalBook: TechnicalBook = {
                               "<strong>DXBTOKENS™:</strong> Fractionalized, value-centric digital assets representing verifiable shares of physical, DLD-registered properties (1 sqft = 1 token).",
                               "<strong>EBRAM™ (Emirates Blockchain Real-estate Agreement Management):</strong> The core smart contract system and legal-transactional programming language of DLDCHAIN™.",
                               "<strong>EBRAMGPT™:</strong> An AI-powered Legal Copilot that serves as the natural language interface for EBRAM™.",
-                              "<strong>EBRAMINT™:</strong> The foundational act of formally digitizing and registering a real estate property's agreement onto the DLDCHAIN™ blockchain.",
+                              "<strong>EBRAMINT™:</strong> The foundational act of formally digitizing and registering a real estate property's agreement onto the DLDCHAIN™ blockchain via the EBRAM™ smart contract system.",
                               "<strong>EBRAM ML NOTES™:</strong> A collective intelligence layer within EBRAM™ where authorized experts contribute to refine evolving real estate contract intelligence.",
                               "<strong>Escrowship:</strong> A state where DXBTOKENS™ are held within a MAKE™ Pool, enabling trading but not direct legal ownership or utility rights.",
                               "<strong>Hyperledger Fabric:</strong> The open-source, permissioned DLT platform forming the immutable core of DLDCHAIN™.",
