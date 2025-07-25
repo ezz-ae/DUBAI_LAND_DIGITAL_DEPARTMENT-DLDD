@@ -310,7 +310,7 @@ export const documentContents: Record<string, string> = {
 <p>The core applications of DLDCHAIN™ are designed to deliver tangible business value by automating complex processes, enhancing transparency, and creating new economic opportunities across the real estate lifecycle.</p>
 <h5>EBRAM™: Automating Legal Agreements & Reducing Friction</h5>
 <p>EBRAM™ (Emirates Blockchain Real-estate Agreement Management) is the "smart agreement engine" of DLDCHAIN™. It transforms legal agreements into self-executing, automated smart contracts, making the law itself "coded and automated." This fundamentally reshapes how agreements, reputation, and legal accountability function in the digital age.</p>
-<h6>The "Law Coded and Automated": Business Benefits</h6>
+<h6>. The "Law Coded and Automated": Business Benefits</h6>
 <p>EBRAM™'s dual-layer language (legal-readable logic and Python execution) ensures legal intent is precisely executed without ambiguity, delivering significant business benefits:</p>
 <ul>
     <li><strong>Reduced Legal Costs & Time:</strong> Automates routine legal processes, minimizing the need for extensive legal review and reducing associated costs and time delays.</li>
@@ -542,7 +542,7 @@ export const documentContents: Record<string, string> = {
     <li><strong>Service Pool:</strong> Absorbs price shocks, ensuring tokens don’t fall below a defined floor (e.g., AED 0.945) or exceed a ceiling (e.g., AED 1.155).</li>
     <li><strong>Regulatory Caps:</strong> RERA-compliant fees (e.g., 0.5% transaction fee) prevent excessive costs, maintaining investor trust.</li>
 </ul>
-<h5>5. MPT and Make-OUT:</h5>
+<h5>5. MPT and Payouts:</h5>
 <ul>
     <li><strong>Trigger:</strong> When an investor holds 90% of tokens (1.35M in villa simulation), the executeMPT function is triggered.</li>
     <li><strong>Process:</strong> MPT Price is set (e.g., AED 3.15M, 5% appreciation over AED 3M). Payouts are distributed: AED 1.5M to DIB (mortgage), AED 63,000 to DLD (2% MPT fee), AED 793,500 each to owner and investor.</li>
@@ -713,6 +713,7 @@ export const documentContents: Record<string, string> = {
 <h5>Global Export Framework: Dubai's Model for the World</h5>
 <p>DLDCHAIN™ is positioned not just as a domestic solution but as a "master model for global adoption," a sovereign blueprint for digital governance in real estate that Dubai intends to export worldwide.</p>
 <h6>DLDCHAIN™ as a Sovereign Model for Cities Worldwide</h6>
+<p>Dubai's strategic vision extends beyond its borders, aiming for DLDCHAIN™ to become a sovereign model for cities worldwide.</p>
 <ul>
     <li><strong>Adaptable Digital Nation-State Structure:</strong> Modular and configurable architecture, with standardized protocols, can be tailored to fit diverse legal and administrative frameworks of other cities and nations, offering a proven blueprint for digital transformation.</li>
     <li><strong>Continuous Improvement:</strong> Designed for ongoing updates and refinement, ensuring it remains cutting-edge and responsive to evolving global market needs and technological advancements, providing a perpetually optimized system for adopters.</li>
@@ -822,7 +823,7 @@ export const documentContents: Record<string, string> = {
     <li><strong>For Tenants:</strong><br/><strong>Benefits:</strong> Simplified rental processes, automated payments, transparent dispute resolution (minutes vs. days), immutable record of tenancy, enhanced trust in landlords and brokers.<br/><strong>Costs:</strong> DLD-AED wallet setup (minimal), transaction fees (minimal).</li>
     <li><strong>For Lenders:</strong><br/><strong>Benefits:</strong> Reduced fraud in mortgage origination, automated servicing, real-time visibility into mortgaged assets, new tokenized finance products, enhanced security for collateral.<br/><strong>Costs:</strong> Integration costs, compliance reporting setup.</li>
 </ul>
-<h4>Market Sizing for Tokenized Real Estate in Dubai (Detailed)</h4>
+<h4>D. Market Sizing for Tokenized Real Estate in Dubai (Detailed)</h4>
 <p>The DLDCHAIN™ project is poised to unlock a significant portion of Dubai's vast real estate market through tokenization, transforming illiquid assets into a dynamic, globally accessible asset class.</p>
 <ul>
     <li><strong>Current Dubai Real Estate Market:</strong> (e.g., USD 207 billion in 2024 - as per previous context).</li>
@@ -862,5 +863,6 @@ export const documentContents: Record<string, string> = {
 <ul>
     <li><strong>Formal Transfer of Rights:</strong> Formal transfer of all rights, recognition, and authorship to the Government of Dubai.</li>
     <li><strong>National Service:</strong> Declaration that the system was built to serve the nation, aligning with Dubai's vision for public good and economic leadership.</li>
-</ul>`
+</ul>
+`
 };
