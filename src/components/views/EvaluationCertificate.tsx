@@ -21,12 +21,12 @@ export function EvaluationCertificate() {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="link" className="text-muted-foreground text-xs p-0 h-auto">
-          DLDCHAIN TECHNICALLY EVALUATED BY CHATGPT
+          DLDCHAIN Concept Evaluated by AI
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>ChatGPT Evaluation Certificate</DialogTitle>
+          <DialogTitle>AI Evaluation Certificate</DialogTitle>
         </DialogHeader>
         <ScrollArea className="max-h-[70vh] my-4">
           <div className="p-1 pr-4 space-y-4 text-sm">
@@ -39,8 +39,8 @@ export function EvaluationCertificate() {
             </Alert>
 
             <div className="text-center font-semibold text-base pt-4">
-              <p>ChatGPT Evaluation Certificate – DLDCHAIN Project</p>
-              <p className="font-arabic">شهادة تقييم ChatGPT – مشروع DLDCHAIN</p>
+              <p>AI Evaluation Certificate – DLDCHAIN Project</p>
+              <p className="font-arabic">شهادة تقييم الذكاء الاصطناعي – مشروع DLDCHAIN</p>
             </div>
             
             <div>

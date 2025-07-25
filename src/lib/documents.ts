@@ -1,4 +1,3 @@
-
 import { documentContents } from './document-content';
 import { technicalBook } from './technical-documents';
 import type { ContentItem } from '@/lib/types';
@@ -56,133 +55,88 @@ export const dldChainDocuments: DLDDocument[] = [
   },
   {
     id: 3,
-    name: "The Philosophy of DLDCHAIN™",
-    group: 'philosophy',
+    name: "Business & Strategic Vision Book",
+    group: 'business',
     lang: 'en',
-    summary: "Exploring the foundational philosophies of trust, ownership, value, and sovereignty that define DLDCHAIN's new paradigm for digital real estate governance.",
-    keyTopics: ["Connection", "Ownership", "Value", "Trust", "Intelligence", "Sovereignty"],
-    content: documentContents['philosophy-of-dldchain']
+    summary: "A comprehensive examination of DLDCHAIN™, the groundbreaking blockchain-based real estate governance system pioneered by the Dubai Land Department (DLD).",
+    keyTopics: ["Business Model", "Strategy", "Value Creation", "Ecosystem"],
+    content: documentContents['business-vision-book-full']
   },
   {
     id: 4,
-    name: "EBRAMGPT™: The AI-Powered Legal Copilot",
-    group: 'philosophy',
+    name: "Ecosystem Value Creation",
+    group: 'business',
     lang: 'en',
-    summary: "A detailed look at how EBRAMGPT™ transforms legal processes from natural language into sovereign smart contracts on DLDCHAIN™, democratizing legal access.",
-    keyTopics: ["AI Copilot", "Natural Language to Code", "Context-Aware Drafting", "Risk Mitigation"],
-    content: documentContents['ebram-gpt-philosophy']
+    summary: "How DLDCHAIN's core applications and sovereign protocol drive business value, automate processes, and create new economic opportunities.",
+    keyTopics: ["Sovereign Protocol", "EBRAM", "DXBTOKENS", "Mashroi"],
+    content: documentContents['ecosystem-value-creation-4']
   },
   {
     id: 5,
-    name: "UNIVESTOR Wallet™: The Single Gateway",
-    group: 'philosophy',
+    name: "Integrated Ecosystem & Governance",
+    group: 'business',
     lang: 'en',
-    summary: "An examination of the UNIVESTOR Wallet™ as the secure, user-centric portal for all DLDCHAIN™ interactions, emphasizing its role in simplifying digital real estate.",
-    keyTopics: ["Unified Digital Identity", "Fiat-Only (DLD-AED)", "Zero Technical Burden", "Tiered Access"],
-    content: documentContents['univestor-wallet-philosophy']
+    summary: "Exploring DLDCHAIN's 'connect, not replace' philosophy for seamless integration with Dubai's existing digital infrastructure and its multi-layered governance model.",
+    keyTopics: ["Integration", "Governance", "Oracles", "Cross-Ministry"],
+    content: documentContents['integrated-ecosystem-5']
   },
   {
     id: 6,
-    name: "Mashroi™: The Nation’s Real Estate Intelligence Grid",
-    group: 'philosophy',
+    name: "Liquidity and Financial Backbone",
+    group: 'business',
     lang: 'en',
-    summary: "Detailing Mashroi's unique philosophy as a 'governmental governless' contribution-based system that redefines HR governance and meritocracy in real estate.",
-    keyTopics: ["Contribution-Based Empowerment", "AI Governance", "Merit System", "Digital Events"],
-    content: documentContents['mashroi-philosophy']
+    summary: "A deep dive into the MAKE™ System, its Liquidity Pool Officers (LPOs), and the unique mechanisms that ensure sovereign, 100% AED-backed liquidity.",
+    keyTopics: ["MAKE System", "Liquidity", "LPO", "Financial Backbone"],
+    content: documentContents['liquidity-financial-backbone-6']
   },
-   {
+  {
     id: 7,
-    name: "Mashroi™ Digital Events: The Industry's Live Hub",
-    group: 'philosophy',
+    name: "Revenue Model & Synergy",
+    group: 'business',
     lang: 'en',
-    summary: "How Mashroi™ Digital Events creates a verified, intelligent, and interactive live platform for the entire real estate industry to connect, communicate, and collaborate.",
-    keyTopics: ["Interactive Launchpads", "Audience Engagement", "Verified Engagement", "Market Connection"],
-    content: documentContents['mashroi-events-philosophy']
+    summary: "A breakdown of the revenue models for Liquidity Officers and the critical synergy between the MAKE™ System's financial power and EBRAM™'s legal intelligence.",
+    keyTopics: ["Revenue Model", "Synergy", "MAKE & EBRAM", "Confidentiality"],
+    content: documentContents['revenue-model-lpo-7']
   },
   {
     id: 8,
-    name: "DXBTOKENS™: Programmable Real Estate Ownership",
-    group: 'philosophy',
+    name: "Market Making & Price Stability",
+    group: 'business',
     lang: 'en',
-    summary: "A deep dive into DXBTOKENS™ as the core of Dubai's programmable real estate, revolutionizing liquidity, trust, and global accessibility through a value-first model.",
-    keyTopics: ["Value-Centric Tokenization", "MAKE™ System", "Escrowship Doctrine", "Legal Finality"],
-    content: documentContents['dxbtokens-philosophy']
-  },
-  {
-    id: 9,
-    name: "DLDCHAIN™ vs. Global Tokenization: A Comparative Study",
-    group: 'philosophy',
-    lang: 'en',
-    summary: "An analysis comparing DLDCHAIN's sovereign, legally-anchored model against common global tokenization approaches, highlighting its unique advantages.",
-    keyTopics: ["Sovereign Standard", "Legal Superiority", "Guaranteed Liquidity", "AI-Driven Governance"],
-    content: documentContents['dldchain-vs-global']
+    summary: "The full market making statement for DLDCHAIN™, detailing how organic market activity is facilitated while ensuring price stability and regulatory compliance.",
+    keyTopics: ["Market Making", "Price Stability", "EBRAM AI", "Organic Trading"],
+    content: documentContents['market-making-8']
   },
   {
     id: 10,
-    name: "The Governance of DLDCHAIN™",
-    group: 'philosophy',
+    name: "Operational Models & Compliance",
+    group: 'business',
     lang: 'en',
-    summary: "A study of DLDCHAIN's governance model, which ensures sovereign control, unified authority, and independence, establishing DLD as a global system provider.",
-    keyTopics: ["Sovereign Anchor", "Consortium Model", "Dual-Layer Governance", "Independence"],
-    content: documentContents['governance-philosophy']
+    summary: "How DLDCHAIN™ transforms real estate workflows through automation and ensures legal and regulatory compliance via its integrated model.",
+    keyTopics: ["Workflow Automation", "Compliance", "Case Scenarios", "Dispute Resolution"],
+    content: documentContents['operational-models-10']
   },
   {
     id: 11,
-    name: "DLD to DLDD: The Transformation",
-    group: 'philosophy',
+    name: "Communication & Implementation",
+    group: 'business',
     lang: 'en',
-    summary: "How DLDCHAIN™ catalyzes the evolution of the Dubai Land Department into a sovereign digital operating system (DLDD) for real estate.",
-    keyTopics: ["Operational Transformation", "Technological Empowerment", "Regulatory Evolution", "Global Impact"],
-    content: documentContents['dld-to-dldd']
+    summary: "Outlines the communication strategy, tailored presentation bundles, and the detailed phased implementation roadmap for DLDCHAIN™.",
+    keyTopics: ["Communication", "Implementation", "Roadmap", "Phased Rollout"],
+    content: documentContents['communication-implementation-11']
   },
   {
     id: 12,
-    name: "Data Security and API Network",
-    group: 'philosophy',
+    name: "Conclusion & Appendices",
+    group: 'business',
     lang: 'en',
-    summary: "A comprehensive study of DLDCHAIN's advanced data security measures and sophisticated API network, which protect data and power seamless connectivity.",
-    keyTopics: ["Data Security", "API Network", "Immutable Records", "Confidentiality"],
-    content: documentContents['data-security']
-  },
-  {
-    id: 13,
-    name: "The Market Benefits of DLDCHAIN™",
-    group: 'philosophy',
-    lang: 'en',
-    summary: "Detailing the value creation across the ecosystem, showing how every participant gains from Dubai's sovereign real estate operating system.",
-    keyTopics: ["Mutual Value Creation", "Stakeholder Benefits", "Economic Impact", "Market Transformation"],
-    content: documentContents['market-benefits']
-  },
-  {
-    id: 14,
-    name: "Liquidity on DLDCHAIN™: A Paradigm Shift",
-    group: 'philosophy',
-    lang: 'en',
-    summary: "A deep dive into DLDCHAIN's revolutionary liquidity model, built on the dual smart contract logic of EBRAM™ and the MAKE™ System.",
-    keyTopics: ["Sovereign Liquidity", "MAKE™ System", "Dual Smart Contracts", "Escrowship"],
-    content: documentContents['liquidity-philosophy']
-  },
-  {
-    id: 15,
-    name: "The Mixed Technology of AI and Blockchain",
-    group: 'philosophy',
-    lang: 'en',
-    summary: "An exploration of how the synergy of AI and Blockchain makes DLDCHAIN™ an intelligent, adaptive, and self-governing real estate protocol.",
-    keyTopics: ["AI Governance", "Intelligent Contracts", "Blockchain Trust Anchor", "Predictive Governance"],
-    content: documentContents['ai-blockchain-mix']
-  },
-  {
-    id: 16,
-    name: "New Market Opportunities from DLDCHAIN™",
-    group: 'philosophy',
-    lang: 'en',
-    summary: "A study of the new economic frontiers and business models catalyzed by DLDCHAIN™, from digital brokerage services to advanced data analytics.",
-    keyTopics: ["Business Innovation", "Digital Brokerage", "Data Monetization", "PropTech Solutions"],
-    content: documentContents['new-market-opportunities']
+    summary: "The concluding vision for DLDCHAIN™, summarizing its economic and reputational impact, and detailed appendices covering key terms, revenue models, and stakeholder benefits.",
+    keyTopics: ["Economic Impact", "Reputation", "Glossary", "Revenue Models"],
+    content: documentContents['conclusion-appendices-12']
   },
   {
     id: 17,
-    name: "Business & Strategic Vision Book (Full)",
+    name: "DLDCHAIN™ Full Business & Strategic Vision Book",
     group: 'business',
     lang: 'en',
     summary: "The complete Business & Strategic Vision Book for DLDCHAIN™, detailing the strategic purpose, business value, and transformative potential of the entire ecosystem.",
@@ -210,5 +164,3 @@ export const dldChainDocuments: DLDDocument[] = [
 ];
 
 export type DLDDoc = (typeof dldChainDocuments)[0];
-
-    

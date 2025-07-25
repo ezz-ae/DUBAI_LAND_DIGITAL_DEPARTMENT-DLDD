@@ -1,4 +1,3 @@
-
 import type { ContentItem } from '@/lib/types';
 
 export interface BookArticle {
@@ -45,7 +44,7 @@ export interface TechnicalBook {
     appendices: BookAppendix[];
 }
 
-const bookData: Omit<TechnicalBook, 'conclusion' | 'appendices'> = {
+export const technicalBook: TechnicalBook = {
     title: "DLDCHAIN Technical Analysis Book",
     subtitle: "Driving Digital Sovereignty in Real Estate",
     introduction: {
@@ -523,10 +522,7 @@ const bookData: Omit<TechnicalBook, 'conclusion' | 'appendices'> = {
                 },
             ]
         }
-    ]
-};
-export const technicalBook: TechnicalBook = {
-    ...bookData,
+    ],
     conclusion: {
         id: 'tech-conclusion',
         title: "Conclusion",
@@ -597,6 +593,7 @@ export const technicalBook: TechnicalBook = {
     ]
 };
 
+// This must be done after the full object is defined.
 const fullBookContent: ContentItem[] = [
     ...technicalBook.introduction.content,
     ...technicalBook.parts.flatMap(part => [
@@ -617,8 +614,7 @@ const fullBookContent: ContentItem[] = [
         ...appendix.content
     ])
 ];
-technicalBook.appendices.find(a => a.id === 'techbook-full')!.content = fullBookContent;
-
-    
-
-    
+const techBookEntry = technicalBook.appendices.find(a => a.id === 'techbook-full');
+if (techBookEntry) {
+    techBookEntry.content = fullBookContent;
+}
