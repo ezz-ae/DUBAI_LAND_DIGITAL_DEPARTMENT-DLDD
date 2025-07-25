@@ -4,29 +4,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Beaker, GanttChartSquare, ShieldCheck } from 'lucide-react';
-
-const ValidationSection = ({ icon, title, description, children }: { icon: React.ReactNode, title: string, description: string, children: React.ReactNode }) => (
-  <Card className="bg-card/50">
-    <CardHeader className="flex flex-row items-start gap-4">
-      <div className="bg-primary/10 text-primary p-3 rounded-lg">
-        {icon}
-      </div>
-      <div>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </div>
-    </CardHeader>
-    <CardContent>
-      {children}
-    </CardContent>
-  </Card>
-);
 
 const FinancialSummaryRow = ({ label, value, isHighlighted = false }: { label: string, value: string, isHighlighted?: boolean }) => (
-    <div className={`flex justify-between items-center py-2 ${isHighlighted ? 'font-bold text-primary' : ''}`}>
-        <span>{label}</span>
-        <span>{value}</span>
+    <div className={`flex justify-between items-center py-2 border-b last:border-b-0 ${isHighlighted ? 'font-bold text-primary bg-primary/5 p-2 rounded-md' : 'text-muted-foreground'}`}>
+        <span className={isHighlighted ? 'text-primary' : ''}>{label}</span>
+        <span className={isHighlighted ? 'text-primary' : 'text-foreground font-medium'}>{value}</span>
     </div>
 );
 
@@ -56,7 +38,7 @@ export function ProjectValidationView() {
                         <TabsTrigger value="scenario4">Investor Full Stake</TabsTrigger>
                     </TabsList>
                     
-                    <TabsContent value="scenario1" className="p-4 border rounded-lg mt-2 bg-background">
+                    <TabsContent value="scenario1" className="p-4 border rounded-lg mt-2 bg-card">
                         <h3>2. Scenario 1: Ahmed's Apartment (Secondary Sale – Ready Property)</h3>
                         <h4>Context</h4>
                         <p>Ahmed Al Zaabi owns a ready apartment in Dubai Marina. He wants to sell it quickly without a traditional, lengthy listing process. He opts for tokenization to unlock immediate liquidity and tap into a broader investor base.</p>
@@ -85,7 +67,7 @@ export function ProjectValidationView() {
                             <li><strong>Market Trading:</strong> Ahmed can sell his 330 tokens, and public investors can trade from the market pool. EBRAM™'s AI-Weighted Node System dynamically adjusts pricing.</li>
                         </ol>
                         <h4>Financial Summary for Ahmed</h4>
-                        <div className="space-y-1 mt-2 text-sm">
+                        <div className="space-y-1 mt-2 text-sm not-prose">
                             <FinancialSummaryRow label="Property Valuation (EBRAM™)" value="AED 3,200,000" />
                             <FinancialSummaryRow label="DXBTOKENS™ Minted (1 token/sqft)" value="825 tokens" />
                             <FinancialSummaryRow label="Value per Token (Initial)" value="AED 3,878.78" />
@@ -96,7 +78,7 @@ export function ProjectValidationView() {
                         </div>
                     </TabsContent>
 
-                    <TabsContent value="scenario2" className="p-4 border rounded-lg mt-2 bg-background">
+                    <TabsContent value="scenario2" className="p-4 border rounded-lg mt-2 bg-card">
                         <h3>3. Scenario 2: Mariam's Villa (Mortgaged Property Sale – Ready Property)</h3>
                         <h4>Context</h4>
                         <p>Mariam owns a villa in Arabian Ranches with an active mortgage. She wants to sell it via tokenization to efficiently settle the mortgage and unlock her equity.</p>
@@ -121,7 +103,7 @@ export function ProjectValidationView() {
                             <li><strong>Token Distribution & Trading:</strong> Mariam retains 720 DXBTOKENS™ (40% of 1800 total). 990 tokens (55%) are allocated to the market. Trading commences.</li>
                         </ol>
                         <h4>Financial Summary for Mariam</h4>
-                        <div className="space-y-1 mt-2 text-sm">
+                        <div className="space-y-1 mt-2 text-sm not-prose">
                             <FinancialSummaryRow label="Property Valuation (EBRAM™)" value="AED 5,100,000" />
                             <FinancialSummaryRow label="Outstanding Mortgage" value="AED 900,000" />
                             <FinancialSummaryRow label="Net Equity" value="AED 4,200,000" />
@@ -131,7 +113,7 @@ export function ProjectValidationView() {
                         </div>
                     </TabsContent>
 
-                    <TabsContent value="scenario3" className="p-4 border rounded-lg mt-2 bg-background">
+                    <TabsContent value="scenario3" className="p-4 border rounded-lg mt-2 bg-card">
                       <h3>4. Scenario 3: Emaar's Ultra-Luxury Villa (Off-Plan Development)</h3>
                       <h4>Context</h4>
                       <p>Emaar is launching a new ultra-luxury project downtown and wants to tokenize its signature top-floor villa to attract early institutional funding and benefit from value appreciation closer to handover.</p>
@@ -157,7 +139,7 @@ export function ProjectValidationView() {
                           <li><strong>DXBTOKEN™ Resale/Utility Activation:</strong> The completed villa tokens are now highly liquid for trade or utility activation by the 100% owner.</li>
                       </ol>
                       <h4>Financial Summary for Emaar (Initial)</h4>
-                        <div className="space-y-1 mt-2 text-sm">
+                        <div className="space-y-1 mt-2 text-sm not-prose">
                             <FinancialSummaryRow label="Property Valuation (Asking Price)" value="AED 11,000,000" />
                             <FinancialSummaryRow label="DXBTOKENS™ Minted" value="5950 tokens" />
                             <FinancialSummaryRow label="Value per Token (Initial)" value="AED 1,848.74" />
@@ -166,7 +148,7 @@ export function ProjectValidationView() {
                         </div>
                     </TabsContent>
 
-                     <TabsContent value="scenario4" className="p-4 border rounded-lg mt-2 bg-background">
+                     <TabsContent value="scenario4" className="p-4 border rounded-lg mt-2 bg-card">
                         <h3>6. Scenario 4: Investor Acquires Full Stake & Exits/Dismisses Liquidity Pool</h3>
                         <h4>Context</h4>
                         <p>An institutional investor has acquired 92% of the tokens for Ahmed's apartment (CDID-DXB-MAR-001A) and wishes to exit the tokenized liquidity pool to take full physical ownership.</p>
@@ -185,7 +167,7 @@ export function ProjectValidationView() {
                             <li><strong>D-EBRAMINT™ & Final Title Transfer:</strong> EBRAM™ performs a D-EBRAMINT™, formally ending the tokenized lifecycle. A Milka API call registers the institutional fund as the new 100% legal owner of the physical property. The DXBTOKENS™ for that CDID are retired.</li>
                         </ol>
                          <h4>Financial Summary (Conceptual)</h4>
-                        <div className="space-y-1 mt-2 text-sm">
+                        <div className="space-y-1 mt-2 text-sm not-prose">
                            <FinancialSummaryRow label="Total Pool Value at MPT" value="~AED 3.5M (if 9.3% appreciation)" />
                            <FinancialSummaryRow label="Minority Token Holders" value="Paid out at MPT value" />
                            <FinancialSummaryRow label="International Fund" value="Gains 100% physical ownership" isHighlighted={true}/>

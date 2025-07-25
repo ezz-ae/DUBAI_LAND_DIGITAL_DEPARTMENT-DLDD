@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Loader2, Send, Sparkles, Bot, User, StickyNote, MessageSquare } from 'lucide-react';
+import { Loader2, Send, Sparkles, Bot, User, StickyNote, MessageSquare, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { dldChainDocuments } from '@/lib/documents';
 import { useToast } from '@/hooks/use-toast';
@@ -229,6 +229,13 @@ export function AiConsoleView({
     const prompt = `Based on my note "${noteContent}", can you elaborate further?`;
     handleSendMessage(undefined, prompt);
   };
+
+  const handleEmailReport = () => {
+    if (!generatedReport) return;
+    const subject = `DLDCHAIN Report: ${reportType.charAt(0).toUpperCase() + reportType.slice(1)}`;
+    const body = encodeURIComponent(`Here is the generated ${reportType} report:\n\n${generatedReport}`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
   
   const isChatEmpty = messages.length <= 1;
   
@@ -346,9 +353,15 @@ export function AiConsoleView({
 
                 {generatedReport && (
                     <div className="mt-4 p-4 border rounded-lg bg-muted/50">
-                        <h3 className="font-semibold mb-2 flex items-center gap-2"><Sparkles className="h-4 w-4 text-primary" /> Generated Report</h3>
+                        <div className="flex justify-between items-center mb-2">
+                          <h3 className="font-semibold flex items-center gap-2"><Sparkles className="h-4 w-4 text-primary" /> Generated Report</h3>
+                           <Button variant="outline" size="sm" onClick={handleEmailReport}>
+                                <Mail className="mr-2 h-4 w-4" />
+                                Email Report
+                            </Button>
+                        </div>
                         <ScrollArea className="max-h-60">
-                           <p className="text-sm whitespace-pre-wrap pr-4">{generatedReport}</p>
+                           <div className="text-sm whitespace-pre-wrap pr-4 prose prose-sm dark:prose-invert max-w-none">{generatedReport}</div>
                         </ScrollArea>
                     </div>
                 )}
