@@ -31,6 +31,9 @@ import { useToast } from '@/hooks/use-toast';
 
 import type { ActiveView } from '@/app/page';
 import type { DLDDoc } from '@/lib/documents';
+import { chatWithDocumentFlow } from '@/ai/flows/chat-flow';
+import { generateReportFlow } from '@/ai/flows/report-flow';
+
 
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 export type ReportType = 'technical' | 'managerial' | 'legal' | 'financial';
@@ -100,12 +103,22 @@ export function AiConsoleView({
     setIsAnswering(true);
 
     try {
-      // AI functionality is temporarily disabled.
-      const botAnswer = "AI features are currently unavailable. Please try again later.";
-      setMessages([...newMessages, { from: 'bot', text: botAnswer, isArabic: false }]);
+      const docForAi = dldChainDocuments.find(d => d.id === 19);
+      if (!docForAi) {
+        throw new Error("AI context document not found.");
+      }
+
+      const result = await chatWithDocumentFlow({
+        question: currentMessage,
+        documentContent: docForAi.content,
+        isArabic: isArabic,
+      });
+
+      setMessages([...newMessages, { from: 'bot', text: result.answer, isArabic: isArabic }]);
     } catch (error) {
       console.error('Error asking question:', error);
-      setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error. Please try again.', isArabic: false }]);
+      const errorMessage = 'Sorry, I encountered an error. Please try again.';
+      setMessages([...newMessages, { from: 'bot', text: errorMessage, isArabic: false }]);
        toast({
         variant: "destructive",
         title: "Error",
@@ -118,17 +131,28 @@ export function AiConsoleView({
 
   const handleExplainTopic = async (topic: string) => {
     toast({ title: `Explaining: ${topic}`, description: "The AI is preparing an explanation..."});
-    const newMessages = [...messages, { from: 'user', text: `Explain this topic for me: ${topic}` }];
+    const prompt = `Explain this topic for me in detail: ${topic}`;
+    const newMessages = [...messages, { from: 'user', text: prompt }];
     setMessages(newMessages);
     setIsAnswering(true);
     
     try {
-      // AI functionality is temporarily disabled.
-      const botAnswer = "AI features are currently unavailable. Please try again later.";
-      setMessages([...newMessages, { from: 'bot', text: botAnswer, isArabic: false }]);
+      const docForAi = dldChainDocuments.find(d => d.id === 19);
+       if (!docForAi) {
+        throw new Error("AI context document not found.");
+      }
+      
+      const result = await chatWithDocumentFlow({
+        question: prompt,
+        documentContent: docForAi.content,
+        isArabic: isArabic,
+      });
+
+      setMessages([...newMessages, { from: 'bot', text: result.answer, isArabic: isArabic }]);
     } catch (error) {
       console.error('Error explaining topic:', error);
-      setMessages([...newMessages, { from: 'bot', text: 'Sorry, I encountered an error explaining that topic. Please try again.', isArabic: false }]);
+      const errorMessage = 'Sorry, I encountered an error explaining that topic. Please try again.';
+      setMessages([...newMessages, { from: 'bot', text: errorMessage, isArabic: false }]);
        toast({
         variant: "destructive",
         title: "Error",
@@ -178,16 +202,20 @@ export function AiConsoleView({
   };
   
   const handleGenerateReport = async () => {
-    const markedNotes = notes.filter(note => note.marked).map(note => `- ${note.title}: ${note.content}`);
-    if (markedNotes.length === 0) {
+    const markedNotesContent = notes.filter(note => note.marked).map(note => `- ${note.title}: ${note.content}`);
+    if (markedNotesContent.length === 0) {
       toast({ variant: "destructive", title: "No notes selected", description: "Please mark the notes you want to include in the report." });
       return;
     }
     setIsGeneratingReport(true);
     setGeneratedReport('');
     try {
-        // AI functionality is temporarily disabled.
-       setGeneratedReport("AI features are currently unavailable. Please try again later.");
+        const result = await generateReportFlow({
+            notes: markedNotesContent,
+            reportType: reportType,
+        });
+       setGeneratedReport(result.report);
+       toast({ title: "Report Generated", description: "Your AI-powered report is ready."});
     } catch (error) {
       console.error('Error generating report:', error);
       toast({ variant: "destructive", title: "Report Generation Failed", description: "Could not generate report. Please try again." });

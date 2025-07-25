@@ -8,9 +8,9 @@
  * on the DLDCHAIN platform. It leverages AI to create a realistic narrative
  * and financial breakdown for various property types (completed, mortgaged, off-plan).
  *
- * - simulateTokenization: The main flow function.
- * - SimulateTokenizationInput: The Zod schema for the flow's input.
- * - SimulateTokenizationOutput: The Zod schema for the flow's structured output.
+ * - simulateTokenizationFlow: The main flow function.
+ * - SimulateTokenizationInputSchema: The Zod schema for the flow's input.
+ * - SimulateTokenizationOutputSchema: The Zod schema for the flow's structured output.
  */
 
 import { ai } from '@/ai/genkit';

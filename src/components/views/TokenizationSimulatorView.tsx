@@ -12,15 +12,11 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, Sparkles, Building, Home, LandPlot, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import type { SimulateTokenizationOutput } from '@/ai/schemas/simulate-tokenization';
+import { SimulateTokenizationOutput, SimulateTokenizationInputSchema } from '@/ai/schemas/simulate-tokenization';
+import { simulateTokenizationFlow } from '@/ai/flows/simulate-tokenization';
 import { Separator } from '../ui/separator';
 
-const formSchema = z.object({
-  propertyType: z.enum(['apartment', 'villa', 'off-plan']),
-  appraisedValue: z.coerce.number().positive({ message: "Appraised value must be positive." }),
-  sizeSqFt: z.coerce.number().positive({ message: "Size must be positive." }),
-  mortgageBalance: z.coerce.number().min(0, "Mortgage balance cannot be negative.").default(0),
-});
+const formSchema = SimulateTokenizationInputSchema;
 
 const propertyTypeIcons = {
     apartment: <Building className="h-5 w-5" />,
@@ -47,11 +43,11 @@ export function TokenizationSimulatorView() {
     setIsLoading(true);
     setSimulationResult(null);
     try {
-        // AI functionality is temporarily disabled.
+        const result = await simulateTokenizationFlow(values);
+        setSimulationResult(result);
         toast({
-            variant: "destructive",
-            title: "Simulation Failed",
-            description: "AI features are currently unavailable. Please try again later.",
+            title: "Simulation Complete",
+            description: "The tokenization scenario has been generated.",
         });
     } catch (error) {
       console.error("Error running simulation:", error);
@@ -166,7 +162,7 @@ export function TokenizationSimulatorView() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                        {propertyTypeIcons[(simulationResult.setup.propertyType.toLowerCase() as keyof typeof propertyTypeIcons) || 'apartment']}
+                        {propertyTypeIcons[(simulationResult.setup.propertyType.toLowerCase().replace(' ', '-') as keyof typeof propertyTypeIcons) || 'apartment']}
                         {simulationResult.simulationTitle}
                     </CardTitle>
                     <CardDescription>This simulation outlines the complete tokenization process from submission to value distribution.</CardDescription>

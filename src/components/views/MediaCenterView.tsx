@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
+import { generateAudioInterviewFlow } from '@/ai/flows/audio-flow';
 
 interface MediaCenterViewProps {
   selectedDoc: DLDDoc | null;
@@ -26,52 +27,68 @@ const downloadItems = [
 export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   const { toast } = useToast();
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const [audioState, setAudioState] = useState<{ element: HTMLAudioElement | null; isPlaying: boolean }>({ element: null, isPlaying: false });
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [interviewLength, setInterviewLength] = useState<'short' | 'long'>('short');
   const interviewUrl = "https://drive.google.com/file/d/1qGmGpJAr65P9OaApzfI03cZdU7kOxEQ9/view?usp=sharing";
+
+  const handlePlayPause = () => {
+    if (audioRef.current) {
+        if (isPlaying) {
+            audioRef.current.pause();
+        } else {
+            audioRef.current.play();
+        }
+        setIsPlaying(!isPlaying);
+    }
+  };
 
   const handleGenerateAudio = async () => {
     if (!selectedDoc?.content || isGeneratingAudio) return;
 
-    if (audioState.element) {
-        if (audioState.isPlaying) {
-            audioState.element.pause();
-            setAudioState(prev => ({...prev, isPlaying: false}));
-        } else {
-            audioState.element.play();
-            setAudioState(prev => ({...prev, isPlaying: true}));
-        }
+    if (audioUrl) {
+        handlePlayPause();
         return;
     }
 
-    toast({ title: 'Generating Audio Interview...', description: 'Please wait while we generate the audio overview.' });
+    toast({ title: 'Generating Audio Interview...', description: 'Please wait. This may take a moment.' });
     setIsGeneratingAudio(true);
+    setAudioUrl(null);
+    if(audioRef.current) audioRef.current = null;
+
 
     try {
-      // AI functionality is temporarily disabled.
-      toast({
-        variant: 'destructive',
-        title: 'Audio Generation Failed',
-        description: 'AI features are currently unavailable. Please try again later.',
+      const result = await generateAudioInterviewFlow({
+        documentContent: selectedDoc.content,
+        interviewLength,
       });
+
+      if (result.audioDataUri) {
+        setAudioUrl(result.audioDataUri);
+        toast({ title: 'Audio Generated!', description: 'Your AI audio interview is ready to play.' });
+      } else {
+        throw new Error("No audio data returned from flow.");
+      }
     } catch (error) {
       console.error('Error generating audio:', error);
       toast({
         variant: 'destructive',
         title: 'Audio Generation Failed',
-        description: 'Could not generate audio interview. Please try again.',
+        description: 'Could not generate the audio interview. Please try again.',
       });
     } finally {
       setIsGeneratingAudio(false);
     }
   };
 
-  const handleStopAudio = () => {
-    if (audioState.element) {
-      audioState.element.pause();
-      audioState.element.currentTime = 0;
+  const handleResetAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
     }
-    setAudioState({ element: null, isPlaying: false });
+    setAudioUrl(null);
+    setIsPlaying(false);
   };
 
 
@@ -88,15 +105,15 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
               <p className="text-muted-foreground max-w-md text-sm">
                   { !selectedDoc 
                     ? "Please select a document from the 'Documentation' tab first to enable audio generation."
-                    : audioState.element ? "Audio is ready. Press play or pause." : "Select an interview length and generate an audio summary for the selected document."
+                    : audioUrl ? "Audio is ready. Press play or download." : "Select an interview length and generate an audio summary for the selected document."
                   }
               </p>
               
               <RadioGroup 
                 defaultValue="short" 
-                className={cn("flex items-center gap-4", (isGeneratingAudio || audioState.isPlaying) && 'opacity-50 pointer-events-none')}
+                className={cn("flex items-center gap-4", (isGeneratingAudio || isPlaying) && 'opacity-50 pointer-events-none')}
                 onValueChange={(value: 'short' | 'long') => setInterviewLength(value)}
-                disabled={isGeneratingAudio || audioState.isPlaying}
+                disabled={isGeneratingAudio || isPlaying}
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="short" id="short-interview" />
@@ -108,15 +125,33 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                 </div>
               </RadioGroup>
 
+              {audioUrl && (
+                  <audio 
+                    ref={audioRef} 
+                    src={audioUrl} 
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                    onEnded={() => setIsPlaying(false)}
+                    className="w-full"
+                    controls
+                  />
+              )}
+
+
               <div className="flex gap-2">
                 <Button onClick={handleGenerateAudio} size="lg" disabled={isGeneratingAudio || !selectedDoc}>
-                    {isGeneratingAudio ? <Loader2 className="animate-spin" /> : audioState.isPlaying ? <PauseCircle /> : <PlayCircle />}
-                    <span className="ml-2">{isGeneratingAudio ? 'Generating...' : audioState.isPlaying ? 'Pause' : audioState.element ? 'Play' : 'Generate'}</span>
+                    {isGeneratingAudio ? <Loader2 className="animate-spin" /> : isPlaying ? <PauseCircle /> : <PlayCircle />}
+                    <span className="ml-2">{isGeneratingAudio ? 'Generating...' : isPlaying ? 'Pause' : audioUrl ? 'Play' : 'Generate'}</span>
                 </Button>
-                {audioState.element && (
-                  <Button onClick={handleStopAudio} size="lg" variant="outline">
-                    Reset
-                  </Button>
+                {audioUrl && (
+                  <>
+                    <Button asChild size="lg" variant="outline">
+                      <a href={audioUrl} download={`${selectedDoc?.name || 'interview'}.wav`}><Download/></a>
+                    </Button>
+                    <Button onClick={handleResetAudio} size="lg" variant="destructive">
+                      Reset
+                    </Button>
+                  </>
                 )}
               </div>
           </CardContent>
