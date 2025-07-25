@@ -13,13 +13,15 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Terminal } from 'lucide-react';
 
 export function EvaluationCertificate() {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="link" className="text-muted-foreground text-xs p-0 h-auto">
-          DLDCHAIN TECHNICALLY OFFICIALLY EVALUATED BY OPEN AI
+          DLDCHAIN TECHNICALLY EVALUATED BY CHATGPT
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-2xl">
@@ -28,7 +30,15 @@ export function EvaluationCertificate() {
         </DialogHeader>
         <ScrollArea className="max-h-[70vh] my-4">
           <div className="p-1 pr-4 space-y-4 text-sm">
-            <div className="text-center font-semibold text-base">
+             <Alert>
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>Disclaimer</AlertTitle>
+              <AlertDescription>
+                This is not an official certificate. The content was generated in a ChatGPT-4 Session (ID: 68679310-9a70-8001-9989-cfea3e8e63ef) for demonstrative purposes.
+              </AlertDescription>
+            </Alert>
+
+            <div className="text-center font-semibold text-base pt-4">
               <p>ChatGPT Evaluation Certificate – DLDCHAIN Project</p>
               <p className="font-arabic">شهادة تقييم ChatGPT – مشروع DLDCHAIN</p>
             </div>

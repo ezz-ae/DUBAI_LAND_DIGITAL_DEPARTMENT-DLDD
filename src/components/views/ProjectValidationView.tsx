@@ -70,100 +70,88 @@ export function ProjectValidationView() {
                 <ValidationSection 
                     icon={<Beaker className="h-6 w-6" />}
                     title="Tokenization Liquidity Simulations"
-                    description="Three distinct simulations demonstrating DLDCHAIN's ability to unlock liquidity and create value in various real-world scenarios: a completed property, a mortgaged villa, and an off-plan unit."
+                    description="Four distinct simulations demonstrating DLDCHAIN's ability to unlock liquidity and create value in real-world scenarios: an individual's apartment, a mortgaged villa, an off-plan unit, and an institutional stake acquisition."
                 >
-                    <Tabs defaultValue="completed">
-                        <TabsList className="grid w-full grid-cols-3">
-                            <TabsTrigger value="completed">Completed Property</TabsTrigger>
+                    <Tabs defaultValue="apartment">
+                        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
+                            <TabsTrigger value="apartment">Ready Apartment</TabsTrigger>
                             <TabsTrigger value="mortgaged">Mortgaged Villa</TabsTrigger>
                             <TabsTrigger value="offplan">Off-Plan Unit</TabsTrigger>
+                            <TabsTrigger value="institutional">Institutional Exit</TabsTrigger>
                         </TabsList>
-                        <TabsContent value="completed" className="p-4 border rounded-lg mt-2 bg-background text-sm">
-                            <h4 className="font-semibold mb-2 text-base">Simulation 1: Standard Completed Property</h4>
-                            <p className="text-muted-foreground mb-4">This simulation demonstrates the baseline tokenization process for a debt-free, completed property. It proves how DLDCHAIN provides immediate liquidity to owners while creating accessible, high-return investment opportunities for the public.</p>
+                        
+                        <TabsContent value="apartment" className="p-4 border rounded-lg mt-2 bg-background text-sm">
+                            <h4 className="font-semibold mb-2 text-base">Scenario 1: Ahmed's Ready Apartment</h4>
+                            <p className="text-muted-foreground mb-4">An individual owner, Ahmed, tokenizes his ready apartment in Dubai Marina for a quick sale to unlock liquidity and access a broader investor base.</p>
                             
                             <h5 className="font-semibold mt-4 mb-2">Simulation Setup</h5>
                             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                                <li><strong>Property:</strong> 1-Bedroom Apartment, Downtown Dubai.</li>
-                                <li><strong>Size:</strong> 800 sq ft.</li>
-                                <li><strong>Appraised Value:</strong> AED 2,000,000 (translating to AED 2,500/sq ft).</li>
-                                <li><strong>Token Allocation (1 token = 1 sq ft):</strong> 800 DXBTOKENS. Owner retains 40% (320 tokens), public gets 55% (440 tokens), fees take 5% (40 tokens).</li>
-                                <li><strong>Owner's Goal:</strong> Achieve immediate liquidity without a lengthy traditional sale.</li>
-                                <li><strong>Investor's Goal:</strong> Gain fractional ownership in a prime asset with potential for high ROI.</li>
+                                <li><strong>Property:</strong> Apartment, 825 sqft, Dubai Marina</li>
+                                <li><strong>Appraised Value:</strong> AED 3,200,000</li>
+                                <li><strong>Token Allocation (1 token = 1 sqft):</strong> 825 DXBTOKENS.</li>
+                                <li><strong>Process:</strong> Ahmed initiates via UNIVESTOR Wallet, a Mashroi™ broker handles compliance, and the MAKE™ System provides liquidity.</li>
                             </ul>
                             
-                            <h5 className="font-semibold mt-4 mb-2">Liquidity Cycle & Value Creation</h5>
-                            <ol className="list-decimal pl-5 space-y-2 text-muted-foreground">
-                                <li><strong>Tokenization (MAKE-IN):</strong> A MAKE Officer deposits AED 2,000,000 into escrow. The owner immediately receives <strong>AED 1,200,000 (60%)</strong> in cash and retains 320 DXBTOKENS (worth AED 800,000).</li>
-                                <li><strong>Market Trading:</strong> The 440 public tokens are traded. High demand pushes the average price to AED 2,625/token (a 5% premium).</li>
-                                <li><strong>Pool Closure (MPT):</strong> After 12 months, an investor acquires 90% of the tokens (720 tokens). The property value has appreciated by 8% to AED 2,160,000 (AED 2,700/token). The MPT is triggered at this new value.</li>
-                            </ol>
-                            
-                            <h5 className="font-semibold mt-4 mb-2">Financial Outcome</h5>
+                            <h5 className="font-semibold mt-4 mb-2">Financial Outcome for Ahmed</h5>
                             <div className="space-y-1 mt-2">
-                                <OutcomeRow label="Owner's Total Value (Cash + Tokens @ MPT)" value="AED 2,064,000" isHighlighted={true} />
-                                <OutcomeRow label="Projected Investor ROI (12 months)" value="~15%" />
-                                <OutcomeRow label="Net Value Created by DLDCHAIN" value="~AED 252,000" isTotal={true} />
+                                <OutcomeRow label="Instant Liquidity (60% of Value)" value="AED 1,920,000" isHighlighted={true} />
+                                <OutcomeRow label="Retained Equity (Tradable Tokens)" value="330 DXBTOKENS" />
+                                <OutcomeRow label="Broker Commission (1%)" value="AED 32,000" />
+                                <OutcomeRow label="Total Time to Liquidity" value="< 48 hours" isTotal={true} />
                             </div>
                         </TabsContent>
+
                         <TabsContent value="mortgaged" className="p-4 border rounded-lg mt-2 bg-background text-sm">
-                             <h4 className="font-semibold mb-2 text-base">Simulation 2: Mortgaged Villa with Lien Clearance</h4>
-                             <p className="text-muted-foreground mb-4">This simulation proves DLDCHAIN’s unique capability to handle complex financial instruments by tokenizing a property with an existing mortgage, seamlessly clearing the lien, and cashing out the owner.</p>
+                             <h4 className="font-semibold mb-2 text-base">Scenario 2: Mariam's Mortgaged Villa</h4>
+                             <p className="text-muted-foreground mb-4">Mariam tokenizes her villa to efficiently settle her outstanding AED 900,000 mortgage with DIB and unlock her equity without a traditional sales process.</p>
                              
                              <h5 className="font-semibold mt-4 mb-2">Simulation Setup</h5>
                              <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                                <li><strong>Property:</strong> 3-Bedroom Villa, Jumeirah Village Circle (JVC).</li>
-                                <li><strong>Size:</strong> 2,500 sq ft.</li>
-                                <li><strong>Appraised Value:</strong> AED 3,000,000 (translating to AED 1,200/sq ft).</li>
-                                <li><strong>Mortgage Balance:</strong> AED 1,500,000 (50% LTV).</li>
-                                <li><strong>Owner Equity:</strong> AED 1,500,000.</li>
-                                <li><strong>Token Allocation (1 token = 1 sq ft):</strong> 2,500 DXBTOKENS.</li>
+                                <li><strong>Property:</strong> Villa, 1800 sqft, Arabian Ranches</li>
+                                <li><strong>Appraised Value:</strong> AED 5,100,000</li>
+                                <li><strong>Outstanding Mortgage:</strong> AED 900,000</li>
+                                <li><strong>Owner Equity:</strong> AED 4,200,000</li>
                              </ul>
 
-                            <h5 className="font-semibold mt-4 mb-2">Liquidity Cycle & Value Creation</h5>
-                            <ol className="list-decimal pl-5 space-y-2 text-muted-foreground">
-                                <li><strong>Tokenization (MAKE-IN):</strong> After lender approval, a MAKE Officer deposits AED 3,000,000. <strong>AED 1,500,000 is used to instantly clear the mortgage.</strong> The owner receives <strong>AED 900,000 (60% of equity)</strong> in cash and retains 1,000 DXBTOKENS (40% of total tokens, valued at AED 1,200,000).</li>
-                                <li><strong>Market Trading:</strong> 1,375 public tokens (55% of total) are traded.</li>
-                                <li><strong>Pool Closure & Payout (MPT):</strong> After 12 months, the property appreciates by 5% to AED 3,150,000 (AED 1,260/token). An investor triggers the MPT.</li>
-                            </ol>
-                            
-                            <h5 className="font-semibold mt-4 mb-2">Financial Outcome</h5>
+                            <h5 className="font-semibold mt-4 mb-2">Financial Outcome for Mariam</h5>
                             <div className="space-y-1 mt-2">
-                                <OutcomeRow label="Lender Payoff (Mortgage Cleared)" value="AED 1,500,000" />
-                                <OutcomeRow label="Owner's Initial Cash-Out" value="AED 900,000" />
-                                <OutcomeRow label="Owner's Final Value (from retained tokens)" value="AED 1,260,000" />
-                                <OutcomeRow label="Owner's Total Value" value="AED 2,160,000" isHighlighted={true} />
-                                <OutcomeRow label="Projected Investor ROI (12 months)" value="~12%" />
-                                <OutcomeRow label="Net Value Created by DLDCHAIN" value="~AED 480,000" isTotal={true} />
+                                <OutcomeRow label="Mortgage Payout to Lender" value="AED 900,000" />
+                                <OutcomeRow label="Instant Liquidity (60% of Equity)" value="AED 2,520,000" isHighlighted={true} />
+                                <OutcomeRow label="Retained Equity (Tradable Tokens)" value="720 DXBTOKENS" />
+                                <OutcomeRow label="Net Value Unlocked" value="AED 3,240,000+" isTotal={true} />
                             </div>
                         </TabsContent>
+
                         <TabsContent value="offplan" className="p-4 border rounded-lg mt-2 bg-background text-sm">
-                            <h4 className="font-semibold mb-2 text-base">Simulation 3: Off-Plan Unit</h4>
-                            <p className="text-muted-foreground mb-4">This simulation showcases how DLDCHAIN unlocks future value today by providing developers with upfront liquidity and offering investors early access to appreciating assets tied to construction milestones.</p>
+                            <h4 className="font-semibold mb-2 text-base">Scenario 3: Emaar's Off-Plan Villa</h4>
+                            <p className="text-muted-foreground mb-4">Emaar tokenizes a luxury off-plan villa to secure early institutional funding and benefit from value appreciation tied to construction milestones.</p>
                             
                             <h5 className="font-semibold mt-4 mb-2">Simulation Setup</h5>
                             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                                <li><strong>Property:</strong> Off-plan 1-Bedroom Apartment, Dubai Marina.</li>
-                                <li><strong>Size:</strong> 850 sq ft.</li>
-                                <li><strong>Projected Completion Value:</strong> AED 2,500,000 (translating to ~AED 2,941/sq ft).</li>
-                                <li><strong>Token Allocation (1 token = 1 sq ft):</strong> 850 DXBTOKENS.</li>
-                                <li><strong>Construction Timeline:</strong> 24 months with 4 milestone-based token releases.</li>
+                                <li><strong>Property:</strong> Ultra-Luxury Villa, 5950 sqft, Downtown</li>
+                                <li><strong>Asking Price:</strong> AED 11,000,000</li>
+                                <li><strong>Delivery:</strong> 11 months</li>
                             </ul>
 
-                            <h5 className="font-semibold mt-4 mb-2">Liquidity Cycle & Value Creation</h5>
-                            <ol className="list-decimal pl-5 space-y-2 text-muted-foreground">
-                                <li><strong>Tokenization (MAKE-IN):</strong> A MAKE Officer deposits AED 2,500,000 into escrow. The developer immediately receives <strong>AED 500,000 (20%)</strong> as upfront liquidity.</li>
-                                <li><strong>Phased Token Release:</strong> The 467 public tokens (55%) are released in 4 tranches, tied to construction milestones (Launch, Foundation, Structure, Finishing). Token prices dynamically increase as the project nears completion.</li>
-                                <li><strong>Pool Closure (MPT at Handover):</strong> At 24 months, the property value has appreciated by 16% to AED 2,900,000 (~AED 3,412/token). The MPT is triggered at handover.</li>
-                            </ol>
-                             
-                            <h5 className="font-semibold mt-4 mb-2">Financial Outcome</h5>
+                            <h5 className="font-semibold mt-4 mb-2">Financial Outcome for Emaar</h5>
                             <div className="space-y-1 mt-2">
-                                <OutcomeRow label="Developer Upfront Liquidity" value="AED 500,000" />
-                                <OutcomeRow label="Developer Total Value (Cash + Tokens)" value="~AED 1,660,000" isHighlighted={true} />
-                                <OutcomeRow label="Projected Investor ROI (24 months)" value="~40-60%" />
-                                <OutcomeRow label="Net Value Created by DLDCHAIN" value="~AED 850,000" isTotal={true} />
+                                <OutcomeRow label="Instant Capital Unlock (60% of Value)" value="AED 6,600,000" isHighlighted={true}/>
+                                <OutcomeRow label="Retained Tokens for Future Sale" value="2380 DXBTOKENS"/>
+                                <OutcomeRow label="Value Accrual" value="Price appreciates with each construction milestone, tracked by EBRAM™ AI."/>
                             </div>
+                        </TabsContent>
+
+                        <TabsContent value="institutional" className="p-4 border rounded-lg mt-2 bg-background text-sm">
+                            <h4 className="font-semibold mb-2 text-base">Scenario 4: Institutional Investor Full Stake Acquisition</h4>
+                            <p className="text-muted-foreground mb-4">An international fund acquires 92% of the tokens for Ahmed's apartment and wishes to take full physical ownership, exiting the tokenized liquidity pool.</p>
+                            
+                             <h5 className="font-semibold mt-4 mb-2">Process Flow</h5>
+                            <ol className="list-decimal pl-5 space-y-2 text-muted-foreground">
+                                <li><strong>Stake Threshold Detection:</strong> EBRAM™ Watcher Loop detects the fund's ≥90% stake and flags the pool for potential dismissal.</li>
+                                <li><strong>MAKE_DISMISS Request:</strong> The fund initiates a `MAKE_DISMISS` request via its UNIVESTOR Wallet™.</li>
+                                <li><strong>MPT & Payout:</strong> EBRAM™'s AI calculates the final Market Price Transaction (MPT). The LPO's backing funds are used to pay out any minority token holders.</li>
+                                <li><strong>D-EBRAMINT™ & Title Transfer:</strong> The property is "un-tokenized" (D-EBRAMINT™), and EBRAM™'s integration with Milka's API updates the title deed, granting the fund 100% legal ownership of the physical property.</li>
+                            </ol>
                         </TabsContent>
                     </Tabs>
                 </ValidationSection>
