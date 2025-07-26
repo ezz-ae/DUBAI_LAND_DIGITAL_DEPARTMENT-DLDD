@@ -2,7 +2,9 @@
 import { z } from 'zod';
 
 export const SimulateTokenizationInputSchema = z.object({
-  propertyType: z.enum(['apartment', 'villa', 'off-plan']).describe("Type of property (e.g., apartment, villa, off-plan)."),
+  propertyType: z.enum(['apartment', 'villa', 'land', 'commercial']).describe("Type of property."),
+  propertyStatus: z.enum(['ready', 'rented', 'off-plan']).describe("Current status of the property."),
+  ownerType: z.enum(['individual', 'developer', 'organization']).describe("The legal type of the property owner."),
   appraisedValue: z.coerce.number().positive("Appraised value must be a positive number.").describe("Total appraised value of the property in AED."),
   sizeSqFt: z.coerce.number().positive("Size must be a positive number.").describe("Size of the property in square feet."),
   mortgageBalance: z.coerce.number().min(0, "Mortgage balance cannot be negative.").optional().default(0).describe("Outstanding mortgage balance in AED, if any."),

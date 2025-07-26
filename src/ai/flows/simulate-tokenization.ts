@@ -43,6 +43,8 @@ const simulationPrompt = ai.definePrompt({
 
     **Property Details:**
     - Property Type: {{{propertyType}}}
+    - Property Status: {{{propertyStatus}}}
+    - Owner Type: {{{ownerType}}}
     - Appraised Value (AED): {{{appraisedValue}}}
     - Size (sq. ft.): {{{sizeSqFt}}}
     - Mortgage Balance (AED): {{{mortgageBalance}}}

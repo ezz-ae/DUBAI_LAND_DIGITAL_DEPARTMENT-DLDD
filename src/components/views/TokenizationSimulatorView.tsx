@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Sparkles, Building, Home, LandPlot, FlaskConical } from 'lucide-react';
+import { Loader2, Sparkles, Building, Home, LandPlot, FlaskConical, Briefcase } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { SimulateTokenizationOutput, SimulateTokenizationInputSchema } from '@/ai/schemas/simulate-tokenization';
 import { simulateTokenizationFlow } from '@/ai/flows/simulate-tokenization';
@@ -21,7 +21,8 @@ const formSchema = SimulateTokenizationInputSchema;
 const propertyTypeIcons = {
     apartment: <Building className="h-5 w-5" />,
     villa: <Home className="h-5 w-5" />,
-    'off-plan': <LandPlot className="h-5 w-5" />,
+    land: <LandPlot className="h-5 w-5" />,
+    commercial: <Briefcase className="h-5 w-5" />,
 };
 
 export function TokenizationSimulatorView() {
@@ -33,6 +34,8 @@ export function TokenizationSimulatorView() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       propertyType: 'apartment',
+      propertyStatus: 'ready',
+      ownerType: 'individual',
       appraisedValue: 1500000,
       sizeSqFt: 1000,
       mortgageBalance: 0,
@@ -76,28 +79,75 @@ export function TokenizationSimulatorView() {
               <CardContent>
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="propertyType"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Property Type</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select property type" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="apartment">Apartment</SelectItem>
-                              <SelectItem value="villa">Villa</SelectItem>
-                              <SelectItem value="off-plan">Off-Plan Unit</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="propertyType"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Property Type</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select type" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="apartment">Apartment</SelectItem>
+                                <SelectItem value="villa">Villa</SelectItem>
+                                <SelectItem value="land">Land</SelectItem>
+                                <SelectItem value="commercial">Commercial</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="propertyStatus"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Property Status</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select status" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="ready">Ready</SelectItem>
+                                <SelectItem value="rented">Rented</SelectItem>
+                                <SelectItem value="off-plan">Off-Plan</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                     <FormField
+                        control={form.control}
+                        name="ownerType"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Owner Type</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select owner type" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="individual">Individual</SelectItem>
+                                <SelectItem value="developer">Developer</SelectItem>
+                                <SelectItem value="organization">Organization</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     <FormField
                       control={form.control}
                       name="appraisedValue"
@@ -162,7 +212,7 @@ export function TokenizationSimulatorView() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                        {propertyTypeIcons[(simulationResult.setup.propertyType.toLowerCase().replace(' ', '-') as keyof typeof propertyTypeIcons) || 'apartment']}
+                        {propertyTypeIcons[(simulationResult.setup.propertyType.toLowerCase().replace(/[\s-]+/g, '') as keyof typeof propertyTypeIcons) || 'apartment']}
                         {simulationResult.simulationTitle}
                     </CardTitle>
                     <CardDescription>This simulation outlines the complete tokenization process from submission to value distribution.</CardDescription>
