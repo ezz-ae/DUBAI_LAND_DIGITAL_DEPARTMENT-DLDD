@@ -37,7 +37,7 @@ export interface TechnicalBook {
     subtitle: string;
     introduction: {
         id: string;
-        title: string;
+        title:string;
         content: ContentItem[];
     };
     parts: BookPart[];
@@ -69,7 +69,7 @@ export const technicalBook: TechnicalBook = {
     parts: [
         {
             id: 'part-1',
-            title: "Part I: Project Genesis and Core Identity",
+            title: "Part I: Project Genesis & Core Identity",
             chapters: [
                 {
                     id: 'chapter-1-1',
@@ -104,7 +104,7 @@ export const technicalBook: TechnicalBook = {
             chapters: [
                 {
                     id: 'chapter-2-1',
-                    title: "System Components",
+                    title: "System Components Deep Dive",
                     introduction: [{type: 'paragraph', text: "DLDCHAIN's identity is defined through its key layers and components, forming a comprehensive ecosystem for real estate governance."}],
                     articles: [
                         {
@@ -505,5 +505,3 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
         }
     ]
 };
-
-    
