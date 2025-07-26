@@ -1,6 +1,7 @@
+
 import { documentContents } from './document-content';
 import { technicalBook } from './technical-documents';
-import type { ContentItem } from '@/lib/types';
+import type { ContentItem } from './types';
 
 
 interface DLDDocument {
@@ -55,7 +56,7 @@ export const dldChainDocuments: DLDDocument[] = [
   },
   {
     id: 3,
-    name: "Business & Strategic Vision Book",
+    name: "Introduction: Business & Strategic Vision",
     group: 'business',
     lang: 'en',
     summary: "A comprehensive examination of DLDCHAIN™, the groundbreaking blockchain-based real estate governance system pioneered by the Dubai Land Department (DLD).",
@@ -137,20 +138,11 @@ export const dldChainDocuments: DLDDocument[] = [
   {
     id: 17,
     name: "DLDCHAIN™ Full Business & Strategic Vision Book",
-    group: 'business',
+    group: 'business-full',
     lang: 'en',
     summary: "The complete Business & Strategic Vision Book for DLDCHAIN™, detailing the strategic purpose, business value, and transformative potential of the entire ecosystem.",
     keyTopics: ["Strategic Vision", "Business Model", "Ecosystem Value", "Global Expansion"],
     content: documentContents['business-vision-book-full']
-  },
-   {
-    id: 18,
-    name: "DLDCHAIN™ Simulation: Real-World Scenarios",
-    group: 'simulations',
-    lang: 'en',
-    summary: "A detailed, step-by-step walkthrough of three distinct tokenization cases: an individual apartment, a mortgaged villa, and a luxury off-plan unit.",
-    keyTopics: ["Simulations", "Tokenization Scenarios", "Ready Property", "Mortgaged Property", "Off-Plan"],
-    content: documentContents['simulation-scenarios']
   },
   {
     id: 19,
