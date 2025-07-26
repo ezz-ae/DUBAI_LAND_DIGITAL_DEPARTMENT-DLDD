@@ -429,5 +429,3 @@ export function AiConsoleView({
     </div>
   );
 }
-
-    
