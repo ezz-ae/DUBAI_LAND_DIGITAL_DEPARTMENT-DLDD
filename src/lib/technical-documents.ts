@@ -69,31 +69,79 @@ export const technicalBook: TechnicalBook = {
     parts: [
         {
             id: 'part-1',
-            title: "Part I: Project Genesis & Core Identity",
+            title: "Part I: Foundation & National Purpose",
             chapters: [
                 {
                     id: 'chapter-1-1',
                     title: 'The Sovereign Vision',
-                    introduction: [{type: 'paragraph', text: "The core purpose of DLDCHAIN is to serve as Dubai's <b class='text-primary'>\"sovereign real estate operating system\"</b>, a \"constitutional system for real estate governance in the 21st century\". Its overarching vision is encapsulated in the subline: <span class='highlight'>\"Built by Dubai. Shared with the world.\"</span>"}],
+                    introduction: [
+                        {type: 'paragraph', text: "The core purpose of DLDCHAIN is to serve as Dubai's <b class='text-primary'>\"sovereign real estate operating system\"</b>, a \"constitutional system for real estate governance in the 21st century\". Its overarching vision is encapsulated in the subline: <span class='highlight'>\"Built by Dubai. Shared with the world.\"</span>"}
+                    ],
                     articles: [
                         {
                             id: 'article-1-1-1',
                             title: 'A Dubai-Authored Protocol',
                             content: [
-                                {type: 'paragraph', text: 'This emphasizes that it is "Not made in Silicon Valley. Not imported from tech giants. <b class="text-primary">Authored by Dubai. Operated by Dubai. For the world.</b>". The project aims to secure ownership, inspire confidence, and export sovereignty. It is designed as a "real-time transformation model, rooted in law, driven by AI, secured by sovereign authority". The project is positioned as a "master model for global adoption, owned by Dubai".'}
+                                {type: 'paragraph', text: 'This emphasizes that it is "Not made in Silicon Valley. Not imported from tech giants. <b class="text-primary">Authored by Dubai. Operated by Dubai. For the world.</b>". The project aims to secure ownership, inspire confidence, and export sovereignty. It is designed as a "real-time transformation model, rooted in law, driven by AI, secured by sovereign authority". The project is positioned as a "master model for global adoption, owned by Dubai".'},
+                                {type: 'subheading', text: "Core Tenets of the Vision"},
+                                {type: 'list', items: [
+                                    "<b>Secure Ownership:</b> Create an unbreakable, single source of truth for property ownership, eliminating ambiguity and fraud.",
+                                    "<b>Inspire Confidence:</b> Build a transparent, efficient, and legally robust market that attracts global investors and talent.",
+                                    "<b>Export Sovereignty:</b> Develop a replicable model of digital governance that can be adopted by other cities worldwide, establishing Dubai as a global leader."
+                                ]}
                             ]
                         },
                         {
                             id: 'article-1-1-2',
-                            title: 'Core Challenges Addressed',
+                            title: 'Addressing Core Market Challenges',
                             content: [
                                 {type: 'paragraph', text: "DLDCHAIN is designed to address fundamental challenges within Dubai's traditional real estate market, particularly <b class='text-primary'>\"Information Asymmetry & Data Integrity\"</b> and <b class='text-primary'>\"Transactional Friction & Opacity\"</b>."},
                                 {type: 'list', items: [
-                                    "<b>Information Asymmetry & Data Integrity:</b> By creating a transparent and immutable record of real estate transactions, DLDCHAIN ensures that all stakeholders have access to verified, real-time data, reducing discrepancies and fraud. The integration with existing DLD systems like Ejari and Milka ensures a single source of truth for property information.",
-                                    "<b>Transactional Friction & Opacity:</b> The system automates various stages of the real estate lifecycle through smart contracts, significantly reducing manual processes, delays, and hidden costs. This includes streamlining agreements, dispute resolution, and advertising control. The goal is to move towards a state where processes like Ejari can \"execute itself\" and rental disputes can be resolved in minutes, rather than going to traditional channels."
+                                    "<b>Countering Information Asymmetry:</b> By creating a transparent and immutable record of real estate transactions, DLDCHAIN ensures that all stakeholders have access to verified, real-time data, reducing discrepancies and fraud. The integration with existing DLD systems like Ejari and Milka ensures a single source of truth for property information.",
+                                    "<b>Reducing Transactional Friction:</b> The system automates various stages of the real estate lifecycle through smart contracts, significantly reducing manual processes, delays, and hidden costs. This includes streamlining agreements, dispute resolution, and advertising control. The goal is to move towards a state where processes like Ejari can \"execute itself\" and rental disputes can be resolved in minutes, rather than going to traditional channels."
                                 ]}
                             ]
                         }
+                    ]
+                },
+                {
+                    id: 'chapter-1-2',
+                    title: 'System Architecture Overview',
+                    introduction: [{type: 'paragraph', text: "DLDCHAIN is designed as a multi-layered architecture, ensuring separation of concerns, security, and scalability. This structure allows for both foundational stability and flexible application development."}],
+                    articles: [
+                         {
+                            id: 'article-1-2-1',
+                            title: 'The Foundational Layer',
+                            content: [
+                                {type: 'paragraph', text: "This layer is the bedrock of the entire system, built on <b class='text-primary'>Hyperledger Fabric</b>. It provides the core distributed ledger capabilities, including immutability, consensus, and the smart contract runtime environment. Its permissioned nature is critical for a sovereign system, ensuring that only known and vetted participants can operate nodes and validate transactions. This layer is responsible for the raw security and integrity of the ledger."}
+                            ]
+                        },
+                         {
+                            id: 'article-1-2-2',
+                            title: 'The Core Services Layer',
+                            content: [
+                                {type: 'paragraph', text: "Built atop the foundational layer, this is where the primary business logic and core components of DLDCHAIN reside. These services are the engines that drive the ecosystem's unique functionalities."},
+                                {type: 'list', items: [
+                                    "<b>Identity Service:</b> Manages digital identities for all participants (individuals, brokers, developers, government entities) via integration with UAE Pass.",
+                                    "<b>UNIVESTOR Wallet™ Service:</b> Provides the secure, unified interface for all users to interact with the system.",
+                                    "<b>EBRAM™ Smart Contract Engine:</b> The core legal-technical protocol for creating, managing, and executing real estate agreements.",
+                                    "<b>DXBTOKENS™ (Tokenization Service):</b> Manages the lifecycle of property tokens, from minting to trading and retirement.",
+                                    "<b>Mashroi™ Service:</b> The AI-driven hub for real estate professionals, managing licensing, compliance, and performance.",
+                                    "<b>MAKE™ (Escrow Service):</b> Handles the secure holding and automated release of funds and tokens during transactions."
+                                ]}
+                            ]
+                        },
+                         {
+                            id: 'article-1-2-3',
+                            title: 'The Application Layer',
+                            content: [
+                                {type: 'paragraph', text: "This is the user-facing layer where decentralized applications (dApps) live. It consumes the services provided by the Core Services Layer through secure APIs. This layer is designed for a diverse range of users and use cases."},
+                                {type: 'list', items: [
+                                    "<b>Official DLDCHAIN dApps:</b> These include the UNIVESTOR Wallet™ interface, the Mashroi™ portal for professionals, and the developer dashboards for project management.",
+                                    "<b>Third-Party dApps:</b> The architecture allows for an ecosystem of third-party applications to be built on top of DLDCHAIN. These could include advanced analytics platforms, property management tools, or innovative FinTech solutions, all consuming verified data from the DLDCHAIN APIs. This fosters a competitive and innovative market, expanding the utility of the entire ecosystem."
+                                ]}
+                            ]
+                        },
                     ]
                 }
             ]
@@ -104,59 +152,140 @@ export const technicalBook: TechnicalBook = {
             chapters: [
                 {
                     id: 'chapter-2-1',
-                    title: "System Components Deep Dive",
-                    introduction: [{type: 'paragraph', text: "DLDCHAIN's identity is defined through its key layers and components, forming a comprehensive ecosystem for real estate governance."}],
+                    title: "EBRAM™: The Smart Contract Engine",
+                    introduction: [{type: 'paragraph', text: "EBRAM™ (Electronic Blockchain Real Estate Agreement Module) is the legal and technical heart of DLDCHAIN. It is not merely a set of smart contracts, but a comprehensive protocol designed to translate complex legal real estate agreements into self-executing, automated, and legally binding digital processes."}],
                     articles: [
                         {
                             id: 'article-2-1-1',
-                            title: 'EBRAM™: The Smart Contract Engine',
+                            title: 'Core Purpose and Legal Standing',
                             content: [
-                                {type: 'paragraph', text: "A smart contract system designed to automate and execute real estate agreements. It streamlines the entire real estate transaction lifecycle, from agreements to dispute resolution and advertising control."},
-                                {type: 'list', items: [
-                                    "Key functionalities include automated residential leases, short-term rentals integrating with DET's holiday home permit system, and potentially self-executing Ejari contracts.",
-                                    "Integration with DEWA is planned to test automated utility connection approval during pilot phases.",
-                                    "EBRAM will eventually roll out as the standard process for all new residential, commercial, and retail leases registered in Ejari."
-                                ]}
+                                {type: 'paragraph', text: "EBRAM's primary function is to <b class='text-primary'>minimize ambiguity, eliminate human error, and drastically reduce the potential for disputes</b> in real estate transactions. It achieves this by creating a single, verifiable, and executable version of an agreement that is understood by both humans and machines."},
+                                {type: 'subheading', text: "Legal Validity"},
+                                {type: 'paragraph', text: "Crucially, every contract executed through EBRAM is designed to be a <span class='highlight'>legally valid and binding agreement</span>. Through deep integration with the Ministry of Justice, EBRAM smart contracts act as digital evidence that is admissible and enforceable within the UAE's judicial system. It complements, not replaces, the existing legal framework, providing a high-fidelity digital twin of legal obligations."}
                             ]
                         },
                          {
                             id: 'article-2-1-2',
-                            title: 'Mashroi™: The Professional Hub',
+                            title: 'Key Functionalities and Use Cases',
                             content: [
-                                {type: 'paragraph', text: "Positioned as a broker license and education platform. It will offer a visa-issuing solution (a 3-month renewable digital visa) and function as a full compliance and ethical tracking hub."},
-                                {type: 'paragraph', text: "It is intended to be fully integrated into DLD and RERA as a mandatory gateway, similar to Ejari. Mashroi emphasizes profit channels and simplicity for all users, aiming to eliminate confusion and fear while ensuring full legal control."}
+                                {type: 'paragraph', text: "EBRAM's modular design allows it to handle a wide array of real estate transactions:"},
+                                {type: 'list', items: [
+                                    "<b>Automated Residential & Commercial Leases:</b> This is the flagship use case. EBRAM can manage the entire lease lifecycle, including automated rent collection in DLD-AED, security deposit management, automated fee calculations (e.g., service charges), and sending notifications for renewal or termination. The goal is to make the annual Ejari registration a self-executing event.",
+                                    "<b>Short-Term Rentals (Holiday Homes):</b> By integrating with the Department of Economy and Tourism (DET), EBRAM can automate the compliance checks for holiday home permits, manage payments, and even automate the collection of the Tourism Dirham Fee, remitting it directly to the DET.",
+                                    "<b>Property Sales & Title Transfer:</b> For sales agreements, EBRAM can orchestrate the entire process, from holding the deposit in escrow via the MAKE™ system to triggering the final title transfer via the Milka API upon fulfillment of all conditions by both buyer and seller.",
+                                    "<b>Utility Integration:</b> A planned pilot with DEWA will test the automatic approval and transfer of utility connections upon the execution of a new lease or sale agreement, eliminating a significant point of friction for residents and owners."
+                                ]}
                             ]
                         },
                         {
                             id: 'article-2-1-3',
-                            title: 'MAKE™ System: The Escrow Logic',
+                            title: 'EBRAMGPT and the AI Layer',
                             content: [
-                                {type: 'paragraph', text: "Addresses advanced technicalities of escrow, providing a secure and compliant mechanism for transactions. It defines the escrow logic workflow with detailed event sequences and pseudocode for the MAKE smart contract logic."},
-                                {type: 'paragraph', text: "Focuses on technical controls and cryptographic safeguards for security and compliance, with challenges and mitigation strategies outlined for escrow-specific risks."}
+                                {type: 'paragraph', text: "EBRAM is enhanced by <b class='text-primary'>EBRAMGPT</b>, an AI-powered legal co-pilot. This system is designed to bridge the gap between human legal language and machine-executable code."},
+                                {type: 'list', items: [
+                                    "<b>Natural Language to Code:</b> Legal professionals can describe contract clauses in natural English or Arabic, and EBRAMGPT will suggest the appropriate, pre-audited EBRAM code modules to implement them.",
+                                    "<b>Risk Analysis & Clause Suggestion:</b> The AI can analyze draft agreements, flag potentially risky or non-compliant clauses, and suggest alternative, standard clauses based on a vast dataset of successful and legally-sound contracts.",
+                                    "<b>Explainability:</b> For any automated action taken by an EBRAM contract, the system can provide a clear, plain-language explanation of which specific clause in the agreement triggered the action, providing full transparency and auditability."
+                                ]}
                             ]
-                        },
-                         {
-                            id: 'article-2-1-4',
-                            title: 'DXBTOKENS™: The Asset',
+                        }
+                    ]
+                },
+                 {
+                    id: 'chapter-2-2',
+                    title: "Mashroi™: Professional & Compliance Hub",
+                    introduction: [{type: 'paragraph', text: "Mashroi™ is the mandatory gateway and intelligence grid for all real estate professionals operating in Dubai. It is a sovereign system designed to elevate professional standards, ensure compliance, and foster a merit-based ecosystem through the power of AI and blockchain."}],
+                    articles: [
+                        {
+                            id: 'article-2-2-1',
+                            title: 'Core Identity & Purpose',
                             content: [
-                                {type: 'paragraph', text: "Introduced as a revolutionary approach to real estate ownership, aiming for <b class='text-primary'>\"unprecedented liquidity\"</b>. They represent \"native ownership\" of physical, DLD-registered properties in Dubai, moving beyond traditional fractional ownership or crowdfunding."},
-                                {type: 'paragraph', text: "The bold claim is that investors can <span class='highlight'>\"sell and buy another within 5 minutes\"</span>. The system will include simulations for off-plan property tokenization, tokenizing mortgaged villas, and general property liquidity cycles. A 'Prypco Mint' pilot in May 2025 has already demonstrated successful tokenization of property title deeds in MENA, validating the concept."}
+                                {type: 'paragraph', text: "Mashroi™ is envisioned as a <span class='highlight'>\"Contribution Intelligence System\"</span>. Its purpose is to move beyond simple licensing and create a dynamic, real-time picture of the real estate market and its participants. It will be a mandatory gateway, similar to Ejari, for any professional wishing to operate in Dubai's real estate sector."},
+                                {type: 'list', items: [
+                                   "<b>Single Source of Truth for Professionals:</b> Mashroi™ creates an immutable, DLD-verified digital identity for every broker, agent, and property manager.",
+                                   "<b>Merit-Based, Not Wallet-Based:</b> The system is designed so that reputation and ranking are earned through verifiable contributions, ethical behavior, and continuous learning, not through advertising spend.",
+                                   "<b>Self-Funding Governance:</b> The platform is designed to be economically self-sustaining through a variety of compliance and value-added service fees."
+                                ]}
                             ]
                         },
                         {
-                            id: 'article-2-1-5',
-                            title: 'DLD Digital Dirham (DLD-AED)',
+                            id: 'article-2-2-2',
+                            title: 'Key Functionalities',
                             content: [
-                                {type: 'paragraph', text: "Proposed as the exclusive native currency within the DLDCHAIN ecosystem. Its strategic significance lies in mitigating risks and attracting traditional investors, particularly given the <b class='text-primary'>\"fiat-only approach\"</b> of the pilot projects. This fiat-only approach is crucial for building confidence among traditional investors."}
+                                {type: 'paragraph', text: "Mashroi™ integrates multiple layers of functionality into a single, unified platform:"},
+                                 {type: 'list', items: [
+                                    "<b>Automated Licensing & Visa Flow:</b> A key innovation is the integration with GDRFA to issue a <b class='text-primary'>3-month renewable smart visa</b> for brokers directly through the platform. Licensing, renewals, and compliance checks are automated, ensuring every active professional is always in good standing.",
+                                    "<b>AI-Powered Performance Analytics:</b> The system tracks broker performance based on objective, on-chain data: successful deal closures, positive client feedback (verified), compliance adherence, and educational milestones. This data feeds into a public-facing, trustworthy ranking system.",
+                                    "<b>Compliance & Ethical Tracking Hub:</b> Mashroi™ acts as a live compliance engine. It integrates with Trakheesi to ensure all property advertisements are linked to a verified broker and a legitimate property listing on DLDCHAIN, instantly flagging and preventing fraudulent ads.",
+                                    "<b>Smart Contract Commission Flow:</b> Broker commissions can be written directly into EBRAM™ sales or lease agreements. Upon successful completion of the contract, the commission is automatically released from the MAKE™ escrow system to the broker's UNIVESTOR Wallet™, eliminating payment disputes and delays."
+                                ]}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'chapter-2-3',
+                    title: "Tokenization & Liquidity",
+                    introduction: [{type: 'paragraph', text: "The tokenization framework, centered on <b class='text-primary'>DXBTOKENS</b> and the <b class='text-primary'>MAKE™ System</b>, is designed to unlock unprecedented liquidity in what is traditionally a highly illiquid asset class. It represents a shift from fractional ownership to direct, native digital ownership of DLD-registered property."}],
+                    articles: [
+                        {
+                            id: 'article-2-3-1',
+                            title: 'DXBTOKENS™: The Digital Asset',
+                            content: [
+                                {type: 'paragraph', text: "DXBTOKENS are not securities representing a share in a company that owns a property. They are the <span class='highlight'>direct, digital representation of legal ownership of the physical property itself</span>, with each token corresponding to a specific, measurable unit (e.g., 1 square foot). This distinction is legally and technically critical."},
+                                {type: 'list', items: [
+                                   "<b>Fiat-Only Transactions:</b> All transactions involving DXBTOKENS are conducted exclusively in the <b class='text-primary'>DLD Digital Dirham (DLD-AED)</b>. This eliminates the volatility and regulatory uncertainty of cryptocurrencies, making the system accessible and trustworthy for traditional and institutional investors.",
+                                   "<b>Unprecedented Liquidity:</b> The core value proposition is the ability to transform a multi-million dirham property into a liquid, tradable asset. The goal is to enable investors to buy or sell their stake in a property in minutes, not months.",
+                                   "<b>Types of Tokens:</b> While the primary token is an Equity Token (representing ownership), the framework allows for future use cases like Utility Tokens (for access rights to amenities) or Developer Tokens (for funding future projects)."
+                                ]}
                             ]
                         },
                         {
-                            id: 'article-2-1-6',
-                            title: 'The AI System',
+                            id: 'article-2-3-2',
+                            title: 'The MAKE™ System: Escrow & Market Logic',
                             content: [
-                                {type: 'paragraph', text: 'The DLDCHAIN incorporates a sophisticated AI system with "weighted nodes" and "market logic" referred to as "No More No Less". AI will be leveraged for crucial functions like "flagging fraud" and "generating reports," contributing to "smart reports, security, and prevention".'},
-                                {type: 'paragraph', text: 'This capability will automate "all types of market reports in all levels," providing real-time insights and market intelligence. The AI will also feature an "OpenAI-powered text-to-action landing and guidance system" and "real-time GPT integration for broker help and documentation".'}
+                                {type: 'paragraph', text: "The MAKE™ System is the sophisticated escrow engine that guarantees the integrity of the token market. It is governed by a strict, event-driven logic to ensure that every DXBTOKEN is 100% backed by either the physical asset or its equivalent value in AED."},
+                                {type: 'minorheading', text: "The Tokenization Lifecycle Events:"},
+                                 {type: 'list', items: [
+                                    "<b>1. MAKELIST:</b> An owner, via their UNIVESTOR Wallet™, lists a property for tokenization. EBRAM™ verifies all legal and property data.",
+                                    "<b>2. MAKE_ID (Liquidity Commitment):</b> A licensed Liquidity Pool Officer (LPO) commits 100% of the property's appraised value in DLD-AED to the MAKE™ escrow. This is the critical step that provides guaranteed liquidity.",
+                                    "<b>3. MAKE_IN (Token Distribution):</b> Upon successful deposit, DXBTOKENS are minted. The owner receives a portion of their equity in cash (e.g., 60%) and the rest as retained tokens (e.g., 40%). The remaining tokens are released to the public market, and a small percentage is allocated for fees. The LPO's capital is now backing the tokens on the market.",
+                                    "<b>4. MPT (Market Price Transaction):</b> The public can now trade the tokens. The price is determined by market supply and demand, influenced by EBRAM's AI-weighted node system which provides real-time valuation data.",
+                                    "<b>5. MAKE_DISMISS (Exit):</b> If a single entity acquires a super-majority (e.g., >90%) of a property's tokens, they can trigger a MAKE_DISMISS event. This process liquidates the remaining tokens, pays out any minority holders, and transfers the full, un-tokenized title deed of the physical property to the majority owner."
+                                ]}
                             ]
+                        }
+                    ]
+                },
+                {
+                    id: 'chapter-2-4',
+                    title: 'UNIVESTOR Wallet™',
+                    introduction: [{type: 'paragraph', text: "The UNIVESTOR Wallet™ is the single, unified gateway for all participants to interact with the DLDCHAIN ecosystem. It is fundamentally tied to a user's verified digital identity, embodying the principle of <span class='highlight'>\"one wallet, one human\"</span>."}],
+                    articles: [
+                        {
+                           id: 'article-2-4-1',
+                           title: 'Core Principles',
+                           content: [
+                               {type: 'paragraph', text: "The wallet's design is guided by security, simplicity, and sovereignty."},
+                               {type: 'list', items: [
+                                   "<b>Identity-Bound:</b> The wallet is inextricably linked to a user's official digital identity (via UAE Pass). This is not an anonymous crypto wallet; every transaction is attributable to a legally verified entity, which is essential for KYC/AML compliance.",
+                                   "<b>Passwordless Security:</b> Access is secured through modern authentication methods like biometric logins or multi-factor OTPs, eliminating the risks associated with passwords.",
+                                   "<b>Asset Custodianship:</b> The wallet provides users with true self-custody of their assets (DLD-AED and DXBTOKENS), meaning they have full control over their funds and property tokens, secured by cryptographic keys."
+                               ]}
+                           ]
+                        },
+                        {
+                           id: 'article-2-4-2',
+                           title: 'Tiered Access & Functionality',
+                           content: [
+                               {type: 'paragraph', text: "The wallet interface intelligently adapts to the user's role, providing specific functionalities based on their verified identity:"},
+                               {type: 'list', items: [
+                                   "<b>Individual Investor/Owner:</b> View property portfolios, initiate tokenization, trade DXBTOKENS, manage rental income, sign EBRAM contracts, and vote on property-related decisions.",
+                                   "<b>Real Estate Professional (via Mashroi™):</b> Manage client listings, oversee transactions, receive commission payments, access market analytics, and manage their compliance status.",
+                                   "<b>Developer:</b> Submit new projects for tokenization, manage off-plan sales, oversee escrow accounts, and communicate with investors.",
+                                   "<b>Government Entity:</b> Perform regulatory oversight, audit transactions, manage system parameters, and generate market-wide reports."
+                               ]}
+                           ]
                         }
                     ]
                 }
@@ -168,57 +297,65 @@ export const technicalBook: TechnicalBook = {
             chapters: [
                 {
                     id: 'chapter-3-1',
-                    title: "System & API Architecture",
-                    introduction: [{type: 'paragraph', text: "The proposed architecture of DLDCHAIN involves Foundational, Core Services, and Application Layers, designed to support key functionalities like DXBTOKENS and EBRAM."}],
+                    title: "Technology Stack",
+                    introduction: [{type: 'paragraph', text: "The DLDCHAIN technology stack is carefully selected to meet the demands of a sovereign-grade, enterprise-level system, prioritizing security, scalability, and interoperability."}],
                     articles: [
                         {
                             id: 'article-3-1-1',
-                            title: 'System Architecture Overview',
+                            title: 'Ledger: Hyperledger Fabric',
                             content: [
-                                {type: 'paragraph', text: 'The core DLDCHAIN network will be based on the <b class="text-primary">Hyperledger Fabric</b> architecture. The full documentation will include detailed system architecture, technical blueprints of EBRAM smart contracts, wallet issuance, and the property token lifecycle. It will also cover smart contract samples (pseudo code + actual structure) and escrow logic per transaction type.'}
+                                {type: 'paragraph', text: 'The core DLDCHAIN network is built on <b class="text-primary">Hyperledger Fabric</b>. This choice is deliberate and critical for the project\'s success. Unlike public blockchains like Ethereum, Fabric is a private, permissioned DLT platform, which is essential for a regulated industry like real estate.'},
+                                {type: 'list', items: [
+                                    "<b>Permissioned Network:</b> Only known, verified, and authorized entities (DLD, banks, licensed brokers) can participate as nodes. This eliminates the risk of anonymous malicious actors and ensures a high level of trust, accountability, and regulatory compliance (KYC/AML).",
+                                    "<b>Data Confidentiality:</b> Fabric's \"Channels\" and \"Private Data Collections\" are powerful features that allow for confidential transactions. For example, the specific financial details of a mortgage agreement between a bank and a property owner can be shared privately between only those two parties, while only a non-sensitive hash of the transaction is committed to the main ledger for verification by other network members.",
+                                    "<b>No Native Cryptocurrency:</b> Fabric does not require a volatile native cryptocurrency (like Ether) to pay for transactions. This aligns perfectly with DLDCHAIN’s fiat-only model using the stable DLD-AED, making the system economically predictable and accessible to traditional finance.",
+                                    "<b>Pluggable Consensus:</b> The system can use efficient, crash-fault-tolerant consensus mechanisms like Raft, which are suitable for a consortium of trusted entities and enable much higher transaction throughput than proof-of-work systems."
+                                ]}
                             ]
                         },
                         {
                             id: 'article-3-1-2',
-                            title: 'API and Platform Integrations',
+                            title: 'Smart Contracts: Chaincode',
                             content: [
-                                {type: 'paragraph', text: "DLDCHAIN will feature comprehensive API and platform integrations, including DLD internal APIs, cross-ministry logic (e.g., Justice, DET, Central Bank of the UAE), and external portal compliance layers (e.g., Bayut, Property Finder)."},
-                                {type: 'paragraph', text: "A secure, one-way oracle for reading new registration data from the live Ejari database will be built. The <b class='text-primary'>\"connect, not replace\"</b> philosophy guides this integration strategy, contributing to the overall strength and utility of the ecosystem."}
+                                {type: 'paragraph', text: "Smart contracts on Hyperledger Fabric are known as <b class='text-primary'>Chaincode</b>. DLDCHAIN will utilize a robust and widely-supported language for its chaincode, such as Go or Node.js, to implement the logic for EBRAM, MAKE, and other core services. This provides a secure and performant runtime for the system's business logic."}
+                            ]
+                        },
+                        {
+                            id: 'article-3-1-3',
+                            title: 'AI & Data Layer',
+                            content: [
+                                {type: 'paragraph', text: "The AI system for functions like EBRAMGPT, fraud flagging, and market analytics will be built using industry-standard Python libraries (e.g., TensorFlow, PyTorch, scikit-learn). This AI layer will interact with the blockchain through secure APIs, feeding insights to the smart contracts and user-facing applications without compromising the deterministic nature of the ledger itself."}
                             ]
                         }
                     ]
                 },
                 {
                     id: 'chapter-3-2',
-                    title: "Security & Auditing",
-                    introduction: [{type: 'paragraph', text: "Security is paramount in a sovereign-grade system. DLDCHAIN employs a multi-layered security framework and rigorous auditing processes."}],
+                    title: "Integration & Interoperability",
+                    introduction: [{type: 'paragraph', text: "DLDCHAIN is not designed to exist in a vacuum. Its success hinges on its ability to seamlessly and securely connect with existing government systems and the broader digital economy. The project's philosophy is to <span class='highlight'>\"connect, not replace\"</span>."}],
                     articles: [
                          {
                             id: 'article-3-2-1',
-                            title: 'Security Framework',
+                            title: 'Government System Oracles',
                             content: [
-                                {type: 'paragraph', text: "The technical deep dive specifies detailed security measures including encryption, key management, and access control. It outlines security testing components, processes (penetration testing, audits), metrics, and tools."}
+                                {type: 'paragraph', text: "Existing, trusted government systems are treated as <b class='text-primary'>\"oracles\"</b>—authoritative sources of off-chain truth. DLDCHAIN integrates with them via secure, read-only APIs:"},
+                                {type: 'list', items: [
+                                    "<b>Ejari & Milka:</b> An event in an external system (e.g., a new Ejari registration or a title deed update in Milka) acts as a trusted trigger for a smart contract on DLDCHAIN, ensuring data consistency.",
+                                    "<b>UAE Pass:</b> This is the foundational integration for identity, used for all KYC/AML and user authentication.",
+                                    "<b>Cross-Ministry APIs:</b> Secure API gateways will manage data flows with other government bodies like the Ministry of Justice (for legal enforcement), DET (for tourism and business licensing), and the CBUAE (for financial oversight)."
+                                ]}
                             ]
                         },
                         {
                             id: 'article-3-2-2',
-                            title: 'Lender Integration',
+                            title: 'Security and Auditing Framework',
                             content: [
-                                {type: 'paragraph', text: "The project includes technical perspectives on lender integration, outlining objectives, key components, workflows, and technical architecture (API specifications, data sharing). Challenges and mitigations for technical integration risks are also detailed."}
-                            ]
-                        },
-                        {
-                            id: 'article-3-2-3',
-                            title: 'Smart Contract Auditing',
-                            content: [
-                                {type: 'paragraph', text: "DLDCHAIN specifies the use of various smart contract auditing tools such as Slither, Mythril, Oyente, Securify, and Manticore, in addition to Hyperledger Explorer, to ensure robust security and functionality. The documentation details their application to DLDCHAIN and addresses auditing challenges and mitigations."}
-                            ]
-                        },
-                         {
-                            id: 'article-3-2-4',
-                            title: 'Proving Organic Nature',
-                            content: [
-                                {type: 'paragraph', text: "The technical analysis includes methodologies to prove the organic nature of DLDCHAIN through technical metrics and data analysis methods, quantifying it via algorithmic measures. Challenges in proving organic nature are also considered."}
+                                {type: 'paragraph', text: "Security is multi-layered, following a zero-trust model:"},
+                                 {type: 'list', items: [
+                                    "<b>Smart Contract Audits:</b> All chaincode will undergo rigorous automated and manual audits using tools like Slither and Mythril before deployment. Fabric's endorsement policies will be used to ensure that critical transactions (like minting DXBTOKENS) require multi-signature approval from designated entities (e.g., DLD, MAKE Officer).",
+                                    "<b>Network Security:</b> The permissioned nature of Fabric, combined with state-of-the-art encryption for data at rest and in transit (TLS 1.3), provides a robust defense against external attacks.",
+                                    "<b>Inheritability Protocol:</b> A legally robust succession protocol is built into the smart contracts. In the event of a user's death, a verified legal process can trigger the secure transfer of assets to verified heirs, solving the \"lost key\" problem that plagues many blockchain systems."
+                                ]}
                             ]
                         }
                     ]
@@ -232,32 +369,31 @@ export const technicalBook: TechnicalBook = {
                 {
                     id: 'chapter-4-1',
                     title: 'Governance & Economic Model',
-                    introduction: [{type: 'paragraph', text: "DLDCHAIN proposes a dual-layer governance structure to ensure both strategic direction and efficient network management, alongside a robust economic model."}],
+                    introduction: [{type: 'paragraph', text: "A robust governance and economic framework is essential for the long-term stability, growth, and integrity of a sovereign protocol like DLDCHAIN."}],
                     articles: [
                         {
                             id: 'article-4-1-1',
-                            title: 'Governance Structure',
+                            title: 'Dual-Layer Governance',
                             content: [
-                                {type: 'paragraph', text: "A dual-layer governance structure ensures both strategic direction and efficient network management."},
+                                {type: 'paragraph', text: "The project proposes a dual-layer governance structure to ensure both strategic alignment with Dubai's vision and efficient, secure network operations."},
                                 {type: 'list', items: [
-                                    "<b>Governing Council (Business Governance):</b> Formally established with DLD as Chair (and veto power), VARA (Virtual Assets Regulatory Authority) as Vice-Chair, and representation from CBUAE, DFF, Tier 1 Developers, Major Banks, and Top-Tier Brokerages. This council is responsible for strategic oversight and business-level decisions.",
-                                    "<b>Technical Committee (Operational Governance):</b> Works under the Governing Council to manage the operational aspects of the network. This structure ensures that the project remains aligned with national interests and is protected under sovereign authority."
+                                    "<b>Governing Council (Business & Policy Governance):</b> This is the highest authority, chaired by DLD with veto power. It includes key stakeholders like VARA, the CBUAE, the Dubai Future Foundation, and representatives from top-tier developers and banks. This council sets policy, approves major upgrades, and ensures the protocol serves the national interest.",
+                                    "<b>Technical Committee (Operational Governance):</b> Reporting to the Council, this committee is composed of technical experts from the participating node operators. It manages day-to-day network operations, software updates, security protocols, and technical onboarding of new members."
                                 ]}
                             ]
                         },
                         {
                             id: 'article-4-1-2',
-                            title: 'Economic & Revenue Models',
+                            title: 'Sustainable Economic Model',
                             content: [
-                                {type: 'paragraph', text: "DLDCHAIN is designed to generate multiple revenue channels and optimize economic benefits for various stakeholders. Potential revenue streams include:"},
+                                {type: 'paragraph', text: "DLDCHAIN is designed to be a self-sustaining ecosystem that generates revenue to fund its own operations, maintenance, and future development, reducing the burden on government budgets."},
+                                {type: 'minorheading', text: "Key Revenue Streams:"},
                                 {type: 'list', items: [
-                                    "Token Issuance Fees",
-                                    "Compliance Gate Revenues (Mashroi)",
-                                    "Broker Visa Revenue",
-                                    "Escrow Margin Revenues",
-                                    "Public API Licensing"
-                                ]},
-                                {type: 'paragraph', text: "The project envisions a \"valuation forecast for tokenizing a significant portion of Dubai’s property market,\" highlighting revenue channels for DLD, brokers, and developers. This model aims to create a \"self-operating profit matrix\" for all stakeholders."}
+                                    "<b>Token Issuance & Trading Fees:</b> A small, regulated fee on the minting of new DXBTOKENS and a micro-fee on secondary market transactions.",
+                                    "<b>Mashroi™ Compliance & Licensing Fees:</b> Fees for broker licensing, renewals, continuous education courses, and access to premium analytics tools.",
+                                    "<b>Public API Licensing:</b> Revenue from licensing access to verified, real-time, but non-sensitive market data to third-party platforms like property portals, banks, and analytics firms.",
+                                    "<b>Value-Added Service Fees:</b> Fees for specialized services like expedited dispute resolution or complex commercial contract structuring via EBRAM."
+                                ]}
                             ]
                         },
                     ]
@@ -265,30 +401,30 @@ export const technicalBook: TechnicalBook = {
                 {
                     id: 'chapter-4-2',
                     title: 'Implementation Roadmap',
-                    introduction: [{type: 'paragraph', text: "The implementation of DLDCHAIN is planned as a deliberate, four-phase approach, totaling 36+ months."}],
+                    introduction: [{type: 'paragraph', text: "The implementation of DLDCHAIN is envisioned as a deliberate, phased approach to ensure stability, security, and market adoption. The total timeline is projected at 36+ months."}],
                     articles: [
                         {
                             id: 'article-4-2-1',
                             title: 'Phase 1: Foundation (12-18 months)',
                             content: [
-                                {type: 'paragraph', text: "<b>Objective:</b> Build foundational infrastructure and establish the legal and organizational framework."},
-                                {type: 'paragraph', text: "<b>Key Activities:</b> Assemble a core project team; manage a \"sandbox\" for new use cases; develop the core Hyperledger Fabric network; establish the Governing Council and Technical Committee; build a secure, one-way oracle for Ejari data; onboard founding government partners; develop DLD-AED MVP, pilot DXBTOKENS projects, and create EBRAM and Realtor Network MVPs; draft a comprehensive regulatory framework."}
+                                {type: 'paragraph', text: "<b>Objective:</b> Build the foundational infrastructure and establish the legal and organizational framework."},
+                                {type: 'paragraph', text: "<b>Key Activities:</b> Assemble core team; develop core Hyperledger Fabric network; establish Governing Council; build secure oracle for Ejari data; onboard founding government partners; develop MVPs for DLD-AED, DXBTOKENS, EBRAM, and Mashroi™; draft comprehensive regulatory framework."}
                             ]
                         },
                         {
                             id: 'article-4-2-2',
                             title: 'Phase 2: Pilot & Expansion (18-24 months)',
                             content: [
-                                {type: 'paragraph', text: "<b>Objective:</b> Launch and test the EBRAM smart contract suite in a controlled, real-world environment."},
-                                {type: 'paragraph', text: "<b>Key Activities:</b> Develop and audit EBRAM smart contracts for residential leases; launch a pilot program for new tenancy agreements; integrate with DEWA for automated utility connections; gather feedback; launch the first DXBTOKEN; roll out the EBRAM rental system and Realtor Network; provide Data Integrity API to major portals."}
+                                {type: 'paragraph', text: "<b>Objective:</b> Launch and test the EBRAM suite in a controlled, real-world environment."},
+                                {type: 'paragraph', text: "<b>Key Activities:</b> Audit EBRAM contracts; launch pilot program for new tenancy agreements; integrate with DEWA for utility connection test; gather feedback; launch first DXBTOKEN-based projects; roll out Mashroi™ to a pilot group of brokers."}
                             ]
                         },
                         {
                             id: 'article-4-2-3',
                             title: 'Phase 3: Full Rollout & Scaling (24-36 months)',
                             content: [
-                                {type: 'paragraph', text: "<b>Objective:</b> Expand EBRAM to the entire rental market and pilot DLDCHAIN's role in capital markets. Scale the ecosystem to become the primary infrastructure for all Dubai real estate."},
-                                {type: 'paragraph', text: "<b>Key Activities:</b> Roll out the EBRAM framework as the standard process for all leases; develop EBRAM modules for short-term rentals; partner with a VARA-licensed digital asset exchange to pilot secondary trading; onboard institutional partners as nodes."}
+                                {type: 'paragraph', text: "<b>Objective:</b> Expand EBRAM to the entire rental market and pilot DLDCHAIN's role in capital markets."},
+                                {type: 'paragraph', text: "<b>Key Activities:</b> Roll out EBRAM as the standard for all new leases; develop modules for short-term rentals; partner with a VARA-licensed exchange to pilot secondary trading of DXBTOKENS; begin onboarding institutional partners as full consortium nodes."}
                             ]
                         },
                         {
@@ -296,38 +432,32 @@ export const technicalBook: TechnicalBook = {
                             title: 'Phase 4: Advanced Features (36+ months)',
                             content: [
                                 {type: 'paragraph', text: "<b>Objective:</b> Implement the most advanced features and expand platform connectivity."},
-                                {type: 'paragraph', text: "<b>Key Activities:</b> Develop and launch the on-chain dispute resolution module; finalize and implement the legal and technical framework for digital asset inheritance; explore and pilot cross-chain interoperability using frameworks like Hyperledger Cactus."}
+                                {type: 'paragraph', text: "<b>Key Activities:</b> Launch on-chain dispute resolution module; implement digital asset inheritance protocol; pilot cross-chain interoperability using frameworks like Hyperledger Cactus to connect DLDCHAIN to other global networks."}
                             ]
                         },
                     ]
                 },
                  {
                     id: 'chapter-4-3',
-                    title: 'Global Vision & Documentation',
-                    introduction: [{type: 'paragraph', text: "Dubai's strategic vision for DLDCHAIN extends beyond its borders, supported by a meticulous documentation and presentation strategy."}],
+                    title: 'Global Vision & Strategy',
+                    introduction: [{type: 'paragraph', text: "DLDCHAIN's ambition extends far beyond the borders of Dubai. The project is strategically designed to establish Dubai as the undisputed global leader in digital real estate governance and to export this innovation to the world."}],
                     articles: [
                         {
                             id: 'article-4-3-1',
-                            title: 'Global Export Framework',
+                            title: 'Hub for Global Tokenized Assets',
                             content: [
-                                {type: 'paragraph', text: "The vision is to position Dubai as a <b class='text-primary'>\"Global Tokenized Property Exchange Hub\"</b>. This involves:"},
-                                 {type: 'list', items: [
-                                    "<b>Sovereign Model for Cities Worldwide:</b> DLDCHAIN is presented as a \"master model for global adoption, owned by Dubai.\" Its sovereign attribution and national contribution reinforce its legitimacy and differentiate it from commercially owned products.",
-                                    "<b>Multi-City White-Label Strategy:</b> The intent is to develop DLDCHAIN as a replicable framework that can be white-labeled and adopted by other cities globally, effectively \"exporting sovereignty\" and Dubai's innovation in real estate governance."
-                                ]}
+                                {type: 'paragraph', text: "The primary vision is to position Dubai as the world's premier <b class='text-primary'>\"Global Tokenized Property Exchange Hub\"</b>. By creating the most trusted, liquid, and efficient market for digital real estate assets, Dubai can attract a massive influx of global capital, talent, and innovation. The sovereign-backed nature of DLDCHAIN provides a level of trust that no private-sector competitor can match, making it the \"gold standard\" for international real estate investment."}
                             ]
                         },
                         {
                             id: 'article-4-3-2',
-                            title: 'Documentation Strategy',
+                            title: 'Exporting Sovereignty: A Multi-City Strategy',
                             content: [
-                                {type: 'paragraph', text: "The DLDCHAIN project emphasizes meticulous documentation to convey its depth and strategic importance, aiming for <b class='text-primary'>\"nothing less than the Bitcoin-level documentation\"</b> for real estate blockchain governance."},
+                                {type: 'paragraph', text: "DLDCHAIN is designed as a \"master model for global adoption.\" The project includes a <span class='highlight'>Multi-City White-Label Strategy</span>, where the core framework, technology, and governance model can be licensed and adapted for use by other cities and nations around the world. This strategy would:"},
                                  {type: 'list', items: [
-                                    "<b>Full Technical & Business Documentation (100+ pages):</b> A \"comprehensive sovereign-grade blueprint\" described as \"an Ethereum Yellow Paper meets the Dubai Land Department.\"",
-                                    "<b>High-Impact Slide Deck (20 slides):</b> A visually stunning presentation with a \"clean, sovereign design\" and animated case studies.",
-                                    "<b>Executive Summary (1-Page PDF):</b> A concise, quick-read version for decision-makers.",
-                                    "<b>Verbal Pitch Framework:</b> A script for a powerful 5-minute pitch.",
-                                    "<b>Interactive Landing Page:</b> A \"motion-driven, interactive experience\" designed to function like a \"Netflix x Apple x Dubai Government innovation portal.\""
+                                    "Create a new, high-value export for Dubai: digital governance itself.",
+                                    "Establish a global network of interconnected, trusted real estate markets based on the Dubai model.",
+                                    "Solidify Dubai's legacy as a pioneer in 21st-century governance and digital transformation."
                                 ]}
                             ]
                         }
@@ -338,12 +468,12 @@ export const technicalBook: TechnicalBook = {
     ],
     conclusion: {
         id: 'tech-conclusion',
-        title: "Conclusion",
+        title: "Conclusion: A New Digital Foundation",
         content: [
-            {type: 'paragraph', text: 'DLDCHAIN is not merely a proposal; it is presented as a <b class="text-primary">"constitutional system for real estate governance in the 21st century"</b>. This "legacy system" aims to secure ownership, inspire confidence, and export sovereignty. The project represents a comprehensive and deeply integrated vision for the future of real estate, aligning with Dubai\'s national digital goals and positioning the city as a global leader in innovation.'},
-            {type: 'paragraph', text: 'The implementation of DLDCHAIN has the potential to fundamentally transform real estate practices, offering unparalleled transparency, efficiency, and liquidity through a meticulously designed technical, regulatory, and financial framework.'},
-            {type: 'minorheading', text: 'Next Step'},
-            {type: 'paragraph', text: 'To further solidify the strategic implications for senior leadership, we should prepare a detailed risk assessment and mitigation plan, addressing potential technical vulnerabilities, regulatory hurdles in global expansion, and financial market volatility. This would provide a complete picture for decision-makers.'},
+            {type: 'paragraph', text: 'DLDCHAIN is not merely an incremental improvement or a new application; it is presented as a <b class="text-primary">"constitutional system for real estate governance in the 21st century"</b>. It is a foundational, sovereign-grade infrastructure designed to be the enduring digital bedrock for one of Dubai\'s most critical economic sectors.'},
+            {type: 'paragraph', text: 'By addressing core market inefficiencies through a combination of robust blockchain technology, sophisticated AI, and deep governmental integration, DLDCHAIN has the potential to unlock unprecedented liquidity, foster trust, and create a new paradigm of efficiency. It aligns perfectly with Dubai\'s national digital strategy and its ambition to lead the world in technological innovation and governance.'},
+            {type: 'minorheading', text: 'Strategic Imperative'},
+            {type: 'paragraph', text: 'The successful implementation of this project would not only transform Dubai\'s real estate market but also create a powerful new model for digital sovereignty that can be exported globally. It is a legacy project, designed to secure ownership, inspire confidence, and project Dubai\'s vision for the future onto the world stage.'},
         ]
     },
     appendices: [
@@ -505,3 +635,5 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
         }
     ]
 };
+
+    

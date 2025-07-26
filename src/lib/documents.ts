@@ -21,7 +21,7 @@ const allTechnicalContent = technicalBook.parts.flatMap(part =>
 
 const stringifyContent = (items: ContentItem[]): string => {
   return items.map(item => {
-    if (item.type === 'paragraph' || item.type === 'heading' || item.type === 'subheading') {
+    if (item.type === 'paragraph' || item.type === 'heading' || item.type === 'subheading' || item.type === 'minorheading') {
       return item.text;
     }
     if (item.type === 'list') {
