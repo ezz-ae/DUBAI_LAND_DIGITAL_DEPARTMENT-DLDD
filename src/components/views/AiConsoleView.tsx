@@ -110,7 +110,7 @@ export function AiConsoleView({
   const emailForm = useForm<z.infer<typeof emailFormSchema>>({
       resolver: zodResolver(emailFormSchema),
       defaultValues: {
-          recipient: '',
+          recipient: 'future@dubai.ae',
           topic: 'project-overview',
           customTopic: '',
       }
