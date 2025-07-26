@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 import { BookOpen, Bot, Code, Send, Share2, Music, Menu, FlaskConical } from 'lucide-react';
 import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
 
-type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center' | 'simulator';
+type ActiveView = 'tech-docs' | 'mindmap' | 'ai-console' | 'project-validation' | 'media-center' | 'simulator';
 
 interface AppHeaderProps {
   activeView: ActiveView;
@@ -24,8 +24,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-    { view: 'documentation', icon: BookOpen, label: 'Documentation' },
-    { view: 'tech-docs', icon: Code, label: 'Technical Docs' },
+    { view: 'tech-docs', icon: BookOpen, label: 'Technical Docs' },
     { view: 'mindmap', icon: Share2, label: 'Mind Map' },
     { view: 'ai-console', icon: Bot, label: 'AI Console' },
     { view: 'project-validation', icon: Send, label: 'Project Validation' },
@@ -41,7 +40,7 @@ export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
   return (
     <header className="p-4 border-b flex items-center justify-between h-16 shrink-0 gap-4">
       <div className="flex items-center gap-4 flex-shrink-0">
-        <SidebarTrigger className={cn('md:hidden', !['documentation', 'tech-docs'].includes(activeView) && 'hidden')} />
+        <SidebarTrigger className={cn('md:hidden', !['tech-docs'].includes(activeView) && 'hidden')} />
         <h1 className="text-md font-headline font-bold whitespace-nowrap">
           <span className="hidden sm:inline">DLDCHAIN NATIVE REAL ESTATE BLOCKCHAIN</span>
           <span className="sm:hidden">DLDCHAIN</span>

@@ -4,7 +4,6 @@
 import React, { useState, useEffect } from 'react';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppHeader } from '@/components/views/Header';
-import { DocumentationView } from '@/components/views/DocumentationView';
 import { TechnicalDocsView } from '@/components/views/TechnicalDocsView';
 import { MindmapView } from '@/components/views/MindmapView';
 import { AiConsoleView } from '@/components/views/AiConsoleView';
@@ -14,10 +13,10 @@ import { TokenizationSimulatorView } from '@/components/views/TokenizationSimula
 import { dldChainDocuments } from '@/lib/documents';
 import type { DLDDoc } from '@/lib/documents';
 
-export type ActiveView = 'documentation' | 'mindmap' | 'ai-console' | 'tech-docs' | 'project-validation' | 'media-center' | 'simulator';
+export type ActiveView = 'tech-docs' | 'mindmap' | 'ai-console' | 'project-validation' | 'media-center' | 'simulator';
 
 export default function Home() {
-  const [activeView, setActiveView] = useState<ActiveView>('documentation');
+  const [activeView, setActiveView] = useState<ActiveView>('tech-docs');
   const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(null);
   
   // State to pass a topic from one view to another (e.g., Docs -> AI Console)
@@ -53,14 +52,6 @@ export default function Home() {
 
   const renderContent = () => {
     switch (activeView) {
-      case 'documentation':
-        return (
-          <DocumentationView 
-            selectedDoc={selectedDoc}
-            setSelectedDoc={setSelectedDoc}
-            onTopicClick={handleExplainTopic} 
-          />
-        );
       case 'tech-docs':
         return <TechnicalDocsView />;
       case 'mindmap':
@@ -81,7 +72,7 @@ export default function Home() {
       case 'simulator':
         return <TokenizationSimulatorView />;
       default:
-        return null;
+        return <TechnicalDocsView />;
     }
   }
 
