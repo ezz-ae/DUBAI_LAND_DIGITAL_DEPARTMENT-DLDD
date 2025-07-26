@@ -5,17 +5,18 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Sparkles, Building, Home, LandPlot, Briefcase, FileText } from 'lucide-react';
+import { Loader2, Sparkles, Building, Home, LandPlot, Briefcase, FileText, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { SimulateTokenizationOutput, SimulateTokenizationInputSchema } from '@/ai/schemas/simulate-tokenization';
 import { simulateTokenizationFlow } from '@/ai/flows/simulate-tokenization';
 import { Separator } from '../ui/separator';
 import { ScrollArea } from '../ui/scroll-area';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 
 const formSchema = SimulateTokenizationInputSchema;
 
@@ -33,26 +34,84 @@ const FinancialSummaryRow = ({ label, value, isHighlighted = false }: { label: s
     </div>
 );
 
-const SimulationScenario = ({ title, context, features, steps, summary }: { title: string, context: React.ReactNode, features: React.ReactNode, steps: React.ReactNode, summary: React.ReactNode }) => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="text-2xl font-bold font-headline">{title}</CardTitle>
-        </CardHeader>
-        <CardContent className="prose dark:prose-invert max-w-full">
-            <h4>Context</h4>
-            {context}
-            <h4 className="mt-4">DLDCHAIN™ Features Highlighted</h4>
-            {features}
-            <h4 className="mt-4">Simulation Steps & Technical Flow</h4>
-            {steps}
-            <h4 className="mt-4">Financial Summary</h4>
-            {summary}
-        </CardContent>
-    </Card>
-);
 
+const scenarios = [
+    {
+        id: 'scenario1',
+        title: "Ahmed's Apartment (Secondary Sale – Ready Property)",
+        description: "An individual owner tokenizes their ready apartment to achieve rapid liquidity without a traditional, lengthy listing process.",
+        context: <>
+            <p>Ahmed Al Zaabi owns a ready apartment in Dubai Marina. He wants to sell it quickly without a traditional, lengthy listing process. He opts for tokenization to unlock immediate liquidity and tap into a broader investor base.</p>
+            <ul className="list-disc pl-5 mt-2">
+                <li><strong>Property:</strong> Apartment, Dubai Marina</li>
+                <li><strong>Size:</strong> 825 sqft</li>
+                <li><strong>EBRAM™ Valued Price:</strong> AED 3,200,000</li>
+                <li><strong>Owner:</strong> Ahmed Al Zaabi (Individual)</li>
+                <li><strong>Objective:</strong> Quick sale via tokenization for liquidity.</li>
+            </ul>
+        </>,
+        features: <ul className="list-disc pl-5 mt-2">
+            <li>UNIVESTOR Wallet™ Submission: Owner-initiated tokenization.</li>
+            <li>Mashroi™ Broker Involvement: Required for secondary market submissions.</li>
+            <li>EBRAMINT™: Digital identity activation and smart contract finalization.</li>
+            <li>MAKE™ System: Guaranteed 100% AED-backed liquidity.</li>
+            <li>DXBTOKENS™ Distribution: Fractional ownership creation.</li>
+        </ul>,
+        steps: <ol className="list-decimal pl-5 mt-2 space-y-2">
+            <li><strong>Tokenization Request Submission:</strong> Ahmed logs into his UNIVESTOR Wallet™, selects "Submit Property for Tokenization," and chooses a Mashroi™-qualified broker. The wallet sends a `submitTokenizationRequest` API call to an EBRAM™ gateway. The broker verifies pre-requisites and uploads documents to IPFS.</li>
+            <li><strong>EBRAMINT™ Activation & Digital Identity Finalization:</strong> EBRAM™ reviews the data, verifies compliance, and executes the `ebramint()` function on Hyperledger Fabric, assigning a unique City Digital ID (CDID) and transitioning the property state to `EBRAMINTED`.</li>
+            <li><strong>MAKELIST & MAKETRADE Request:</strong> The EBRAMINTED™ property is added to a MAKELIST. A Liquidity Pool Officer (LPO) signals interest via their MAKE Portal™ with a `submitMakeTradeRequest()`.</li>
+            <li><strong>MAKE_ID Event – Liquidity Commitment & Token Registration:</strong> The LPO signs the MAKE™ transaction, depositing AED 3,200,000. The MAKE™ System's chaincode executes `makeID()`, verifying the deposit. The underlying property is now custodially transferred to the TokenPool, and 825 DXBTOKENS™ are minted.</li>
+            <li><strong>MAKE_IN – Token Escrow & Trading Activation:</strong> EBRAM™ calls `makeIn()` on the MAKE™ System. Ahmed receives AED 1,920,000 (60% cash) and 330 DXBTOKENS™ (40% equity). 453.75 tokens (55%) are allocated to the market, and 5% for fees.</li>
+            <li><strong>Market Trading:</strong> Ahmed can sell his 330 tokens, and public investors can trade from the market pool. EBRAM™'s AI-Weighted Node System dynamically adjusts pricing.</li>
+        </ol>,
+        summary: <div className="space-y-1 mt-2 text-sm">
+            <FinancialSummaryRow label="Property Valuation (EBRAM™)" value="AED 3,200,000" />
+            <FinancialSummaryRow label="DXBTOKENS™ Minted (1 token/sqft)" value="825 tokens" />
+            <FinancialSummaryRow label="Value per Token (Initial)" value="AED 3,878.78" />
+            <FinancialSummaryRow label="Instant Liquidity (60% of Valuation)" value="AED 1,920,000" isHighlighted={true} />
+            <FinancialSummaryRow label="DXBTOKENS™ Retained (40% equity)" value="330 tokens" />
+            <FinancialSummaryRow label="Broker Commission (1%)" value="AED 32,000" />
+            <FinancialSummaryRow label="Process Duration to Liquidity" value="< 48 hours" isHighlighted={true} />
+        </div>
+    },
+    {
+        id: 'scenario2',
+        title: "Mariam's Villa (Mortgaged Property)",
+        description: "An owner of a mortgaged villa uses tokenization to efficiently settle the mortgage and unlock her net equity.",
+        context: <>
+           <p>Mariam owns a villa in Arabian Ranches with an active mortgage. She wants to sell it via tokenization to efficiently settle the mortgage and unlock her equity.</p>
+           <ul className="list-disc pl-5 mt-2">
+                <li><strong>Property:</strong> Villa, Arabian Ranches</li>
+                <li><strong>Size:</strong> 1800 sqft</li>
+                <li><strong>EBRAM™ Valued Price:</strong> AED 5,100,000</li>
+                <li><strong>Outstanding Mortgage:</strong> AED 900,000</li>
+                <li><strong>Lender:</strong> Dubai Islamic Bank (DIB)</li>
+           </ul>
+        </>,
+        features: <ul className="list-disc pl-5 mt-2">
+            <li>Lender Integration Module: Seamless verification and payout.</li>
+            <li>MAKE_ID: Prioritizes mortgage payout from the 100% AED backing.</li>
+            <li>Automated Lien Release via Milka API.</li>
+        </ul>,
+        steps: <ol className="list-decimal pl-5 mt-2 space-y-2">
+            <li><strong>Owner Submission & EBRAMINT™ (Mortgage Disclosure):</strong> Mariam initiates tokenization via UNIVESTOR Wallet™, disclosing mortgage details. EBRAM™ verifies details via Lender Integration API and assigns a CDID.</li>
+            <li><strong>Lender Notification & Freeze:</strong> EBRAM™ sends a secure event notification to DIB, which acknowledges and temporarily freezes Mariam's mortgage account.</li>
+            <li><strong>MAKETRADE & MAKE_ID Event – Liquidity Commitment & Mortgage Payout:</strong> An LPO commits AED 5,100,000. EBRAM™'s logic prioritizes the payout: AED 900,000 is transferred directly to DIB's DLD-AED wallet. A Milka API call releases the lien. Mariam receives 60% of her net equity (AED 4.2M), which is AED 2,520,000.</li>
+            <li><strong>Token Distribution & Trading:</strong> Mariam retains 720 DXBTOKENS™ (40% of 1800 total). 990 tokens (55%) are allocated to the market. Trading commences.</li>
+        </ol>,
+        summary: <div className="space-y-1 mt-2 text-sm">
+            <FinancialSummaryRow label="Property Valuation (EBRAM™)" value="AED 5,100,000" />
+            <FinancialSummaryRow label="Outstanding Mortgage" value="AED 900,000" />
+            <FinancialSummaryRow label="Net Equity" value="AED 4,200,000" />
+            <FinancialSummaryRow label="Mortgage Payout to Lender" value="AED 900,000" />
+            <FinancialSummaryRow label="Instant Liquidity (60% of Equity)" value="AED 2,520,000" isHighlighted={true} />
+            <FinancialSummaryRow label="DXBTOKENS™ Retained (40% equity)" value="720 tokens" />
+        </div>
+    }
+];
 
-const ReadyScenarios = () => (
+const ReadyScenarios = ({ onScenarioSelect }: { onScenarioSelect: (scenario: any) => void }) => (
     <div className="space-y-8">
         <div className="text-center">
             <h1 className="text-4xl font-bold font-headline">DLDCHAIN™ Simulation Scenarios</h1>
@@ -62,93 +121,25 @@ const ReadyScenarios = () => (
         </div>
 
         <Separator />
-        
-        <SimulationScenario 
-            title="Scenario 1: Ahmed's Apartment (Secondary Sale – Ready Property)"
-            context={
-                <>
-                    <p>Ahmed Al Zaabi owns a ready apartment in Dubai Marina. He wants to sell it quickly without a traditional, lengthy listing process. He opts for tokenization to unlock immediate liquidity and tap into a broader investor base.</p>
-                    <ul>
-                        <li><strong>Property:</strong> Apartment, Dubai Marina</li>
-                        <li><strong>Size:</strong> 825 sqft</li>
-                        <li><strong>EBRAM™ Valued Price:</strong> AED 3,200,000</li>
-                        <li><strong>Owner:</strong> Ahmed Al Zaabi (Individual)</li>
-                        <li><strong>Objective:</strong> Quick sale via tokenization for liquidity.</li>
-                    </ul>
-                </>
-            }
-            features={
-                <ul>
-                    <li>UNIVESTOR Wallet™ Submission: Owner-initiated tokenization.</li>
-                    <li>Mashroi™ Broker Involvement: Required for secondary market submissions.</li>
-                    <li>EBRAMINT™: Digital identity activation and smart contract finalization.</li>
-                    <li>MAKE™ System: Guaranteed 100% AED-backed liquidity.</li>
-                    <li>DXBTOKENS™ Distribution: Fractional ownership creation.</li>
-                </ul>
-            }
-            steps={
-                <ol>
-                    <li><strong>Tokenization Request Submission:</strong> Ahmed logs into his UNIVESTOR Wallet™, selects "Submit Property for Tokenization," and chooses a Mashroi™-qualified broker. The wallet sends a `submitTokenizationRequest` API call to an EBRAM™ gateway. The broker verifies pre-requisites and uploads documents to IPFS.</li>
-                    <li><strong>EBRAMINT™ Activation & Digital Identity Finalization:</strong> EBRAM™ reviews the data, verifies compliance, and executes the `ebramint()` function on Hyperledger Fabric, assigning a unique City Digital ID (CDID) and transitioning the property state to `EBRAMINTED`.</li>
-                    <li><strong>MAKELIST & MAKETRADE Request:</strong> The EBRAMINTED™ property is added to a MAKELIST. A Liquidity Pool Officer (LPO) signals interest via their MAKE Portal™ with a `submitMakeTradeRequest()`.</li>
-                    <li><strong>MAKE_ID Event – Liquidity Commitment & Token Registration:</strong> The LPO signs the MAKE™ transaction, depositing AED 3,200,000. The MAKE™ System's chaincode executes `makeID()`, verifying the deposit. The underlying property is now custodially transferred to the TokenPool, and 825 DXBTOKENS™ are minted.</li>
-                    <li><strong>MAKE_IN – Token Escrow & Trading Activation:</strong> EBRAM™ calls `makeIn()` on the MAKE™ System. Ahmed receives AED 1,920,000 (60% cash) and 330 DXBTOKENS™ (40% equity). 453.75 tokens (55%) are allocated to the market, and 5% for fees.</li>
-                    <li><strong>Market Trading:</strong> Ahmed can sell his 330 tokens, and public investors can trade from the market pool. EBRAM™'s AI-Weighted Node System dynamically adjusts pricing.</li>
-                </ol>
-            }
-            summary={
-                <div className="space-y-1 mt-2 text-sm not-prose">
-                    <FinancialSummaryRow label="Property Valuation (EBRAM™)" value="AED 3,200,000" />
-                    <FinancialSummaryRow label="DXBTOKENS™ Minted (1 token/sqft)" value="825 tokens" />
-                    <FinancialSummaryRow label="Value per Token (Initial)" value="AED 3,878.78" />
-                    <FinancialSummaryRow label="Instant Liquidity (60% of Valuation)" value="AED 1,920,000" isHighlighted={true} />
-                    <FinancialSummaryRow label="DXBTOKENS™ Retained (40% equity)" value="330 tokens" />
-                    <FinancialSummaryRow label="Broker Commission (1%)" value="AED 32,000" />
-                    <FinancialSummaryRow label="Process Duration to Liquidity" value="< 48 hours" isHighlighted={true} />
-                </div>
-            }
-        />
 
-        <SimulationScenario 
-            title="Scenario 2: Mariam's Villa (Mortgaged Property)"
-            context={
-                <>
-                   <p>Mariam owns a villa in Arabian Ranches with an active mortgage. She wants to sell it via tokenization to efficiently settle the mortgage and unlock her equity.</p>
-                   <ul>
-                        <li><strong>Property:</strong> Villa, Arabian Ranches</li>
-                        <li><strong>Size:</strong> 1800 sqft</li>
-                        <li><strong>EBRAM™ Valued Price:</strong> AED 5,100,000</li>
-                        <li><strong>Outstanding Mortgage:</strong> AED 900,000</li>
-                        <li><strong>Lender:</strong> Dubai Islamic Bank (DIB)</li>
-                   </ul>
-                </>
-            }
-            features={
-                <ul>
-                    <li>Lender Integration Module: Seamless verification and payout.</li>
-                    <li>MAKE_ID: Prioritizes mortgage payout from the 100% AED backing.</li>
-                    <li>Automated Lien Release via Milka API.</li>
-                </ul>
-            }
-            steps={
-                <ol>
-                    <li><strong>Owner Submission & EBRAMINT™ (Mortgage Disclosure):</strong> Mariam initiates tokenization via UNIVESTOR Wallet™, disclosing mortgage details. EBRAM™ verifies details via Lender Integration API and assigns a CDID.</li>
-                    <li><strong>Lender Notification & Freeze:</strong> EBRAM™ sends a secure event notification to DIB, which acknowledges and temporarily freezes Mariam's mortgage account.</li>
-                    <li><strong>MAKETRADE & MAKE_ID Event – Liquidity Commitment & Mortgage Payout:</strong> An LPO commits AED 5,100,000. EBRAM™'s logic prioritizes the payout: AED 900,000 is transferred directly to DIB's DLD-AED wallet. A Milka API call releases the lien. Mariam receives 60% of her net equity (AED 4.2M), which is AED 2,520,000.</li>
-                    <li><strong>Token Distribution & Trading:</strong> Mariam retains 720 DXBTOKENS™ (40% of 1800 total). 990 tokens (55%) are allocated to the market. Trading commences.</li>
-                </ol>
-            }
-            summary={
-                 <div className="space-y-1 mt-2 text-sm not-prose">
-                    <FinancialSummaryRow label="Property Valuation (EBRAM™)" value="AED 5,100,000" />
-                    <FinancialSummaryRow label="Outstanding Mortgage" value="AED 900,000" />
-                    <FinancialSummaryRow label="Net Equity" value="AED 4,200,000" />
-                    <FinancialSummaryRow label="Mortgage Payout to Lender" value="AED 900,000" />
-                    <FinancialSummaryRow label="Instant Liquidity (60% of Equity)" value="AED 2,520,000" isHighlighted={true} />
-                    <FinancialSummaryRow label="DXBTOKENS™ Retained (40% equity)" value="720 tokens" />
-                </div>
-            }
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {scenarios.map(scenario => (
+                <Card key={scenario.id} className="flex flex-col">
+                    <CardHeader>
+                        <CardTitle>{scenario.title}</CardTitle>
+                        <CardDescription>{scenario.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
+                        {/* Can add key highlights here if needed */}
+                    </CardContent>
+                    <CardFooter>
+                         <Button variant="outline" onClick={() => onScenarioSelect(scenario)} className="w-full">
+                            View Details <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                    </CardFooter>
+                </Card>
+            ))}
+        </div>
     </div>
 );
 
@@ -157,6 +148,7 @@ export function SimulationView() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [simulationResult, setSimulationResult] = useState<SimulateTokenizationOutput | null>(null);
+  const [selectedScenario, setSelectedScenario] = useState<any | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -437,15 +429,50 @@ export function SimulationView() {
                 )}
 
                 {!simulationResult && !isLoading && (
-                    <ReadyScenarios />
+                    <ReadyScenarios onScenarioSelect={setSelectedScenario} />
                 )}
               </div>
             </ScrollArea>
           </div>
         </div>
       </div>
+      
+      {selectedScenario && (
+        <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
+            <DialogContent className="sm:max-w-4xl">
+                <DialogHeader>
+                    <DialogTitle className="text-2xl font-bold font-headline">{selectedScenario.title}</DialogTitle>
+                    <DialogDescription>
+                        A detailed breakdown of the tokenization process for this scenario.
+                    </DialogDescription>
+                </DialogHeader>
+                <ScrollArea className="max-h-[70vh] my-4">
+                    <div className="space-y-6 pr-4 prose dark:prose-invert max-w-full">
+                        <div>
+                            <h4 className="font-semibold text-lg">Context</h4>
+                            {selectedScenario.context}
+                        </div>
+                        <Separator />
+                        <div>
+                            <h4 className="font-semibold text-lg">DLDCHAIN™ Features Highlighted</h4>
+                             {selectedScenario.features}
+                        </div>
+                         <Separator />
+                        <div>
+                            <h4 className="font-semibold text-lg">Simulation Steps & Technical Flow</h4>
+                            {selectedScenario.steps}
+                        </div>
+                         <Separator />
+                        <div>
+                             <h4 className="font-semibold text-lg">Financial Summary</h4>
+                            {selectedScenario.summary}
+                        </div>
+                    </div>
+                </ScrollArea>
+            </DialogContent>
+        </Dialog>
+      )}
+
     </div>
   );
 }
-
-    
