@@ -5,6 +5,7 @@
  *
  * This file defines the 'simulateTokenization' flow, which takes property details
  * as input and generates a detailed financial simulation for its tokenization
+
  * on the DLDCHAIN platform. It leverages AI to create a realistic narrative
  * and financial breakdown for various property types (completed, mortgaged, off-plan).
  *
@@ -83,3 +84,5 @@ export const simulateTokenizationFlow = ai.defineFlow(
     return output;
   }
 );
+
+    

@@ -7,13 +7,12 @@ import { AppHeader } from '@/components/views/Header';
 import { TechnicalDocsView } from '@/components/views/TechnicalDocsView';
 import { MindmapView } from '@/components/views/MindmapView';
 import { AiConsoleView } from '@/components/views/AiConsoleView';
-import { ProjectValidationView } from '@/components/views/ProjectValidationView';
+import { SimulationView } from '@/components/views/SimulationView';
 import { MediaCenterView } from '@/components/views/MediaCenterView';
-import { TokenizationSimulatorView } from '@/components/views/TokenizationSimulatorView';
 import { dldChainDocuments } from '@/lib/documents';
 import type { DLDDoc } from '@/lib/documents';
 
-export type ActiveView = 'tech-docs' | 'mindmap' | 'ai-console' | 'project-validation' | 'media-center' | 'simulator';
+export type ActiveView = 'tech-docs' | 'mindmap' | 'ai-console' | 'simulation' | 'media-center';
 
 export default function Home() {
   const [activeView, setActiveView] = useState<ActiveView>('tech-docs');
@@ -66,12 +65,10 @@ export default function Home() {
             onViewChange={setActiveView}
           />
         );
-      case 'project-validation':
-        return <ProjectValidationView />;
+      case 'simulation':
+        return <SimulationView />;
       case 'media-center':
         return <MediaCenterView selectedDoc={selectedDoc} />;
-      case 'simulator':
-        return <TokenizationSimulatorView />;
       default:
         return <TechnicalDocsView />;
     }
@@ -88,5 +85,3 @@ export default function Home() {
     </SidebarProvider>
   )
 }
-
-    
