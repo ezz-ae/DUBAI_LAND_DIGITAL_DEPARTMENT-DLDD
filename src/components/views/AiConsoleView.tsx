@@ -28,6 +28,11 @@ import { Loader2, Send, Sparkles, Bot, User, StickyNote, MessageSquare, Mail } f
 import { cn } from '@/lib/utils';
 import { dldChainDocuments } from '@/lib/documents';
 import { useToast } from '@/hooks/use-toast';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+
 
 import type { ActiveView } from '@/app/page';
 import type { DLDDoc } from '@/lib/documents';
@@ -37,6 +42,22 @@ import { generateReportFlow } from '@/ai/flows/report-flow';
 
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 export type ReportType = 'technical' | 'managerial' | 'legal' | 'financial';
+type EmailTopic = 'project-overview' | 'technical-overview' | 'tokenization-overview' | 'ebram-language' | 'custom';
+
+const emailFormSchema = z.object({
+  recipient: z.string().email({ message: 'Please enter a valid email address.' }),
+  topic: z.custom<EmailTopic>(),
+  customTopic: z.string().optional(),
+}).refine(data => {
+    if (data.topic === 'custom') {
+        return data.customTopic && data.customTopic.trim() !== '';
+    }
+    return true;
+}, {
+    message: "Custom topic cannot be empty.",
+    path: ["customTopic"],
+});
+
 
 const quickPromptsEnglish = [
   "What is the DLDCHAIN project scope?",
@@ -85,6 +106,17 @@ export function AiConsoleView({
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
   const isArabic = selectedDoc?.lang === 'ar';
+  
+  const emailForm = useForm<z.infer<typeof emailFormSchema>>({
+      resolver: zodResolver(emailFormSchema),
+      defaultValues: {
+          recipient: '',
+          topic: 'project-overview',
+          customTopic: '',
+      }
+  });
+  const watchedTopic = emailForm.watch('topic');
+
 
   useEffect(() => {
     if (chatScrollRef.current) {
@@ -236,6 +268,35 @@ export function AiConsoleView({
     const body = encodeURIComponent(`Here is the generated ${reportType} report:\n\n${generatedReport}`);
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
+
+    const handleSendEmail = (values: z.infer<typeof emailFormSchema>) => {
+        let subject = "Information about the DLDCHAIN Project";
+        let body = "Here is the information you requested about the DLDCHAIN project:\n\n";
+
+        const topics: Record<EmailTopic, {title: string, contentDocId: number | null }> = {
+            'project-overview': { title: "Project Overview", contentDocId: 1 },
+            'technical-overview': { title: "Technical Overview", contentDocId: 19 },
+            'tokenization-overview': { title: "Tokenization Overview", contentDocId: 8 },
+            'ebram-language': { title: "EBRAM Language Overview", contentDocId: 4 },
+            'custom': { title: `Custom Topic: ${values.customTopic}`, contentDocId: null }
+        };
+
+        const selectedTopic = topics[values.topic];
+        subject = `DLDCHAIN: ${selectedTopic.title}`;
+
+        if (selectedTopic.contentDocId) {
+            const doc = dldChainDocuments.find(d => d.id === selectedTopic.contentDocId);
+            const plainTextContent = doc?.content.replace(/<[^>]*>/g, '\n').replace(/\n\n+/g, '\n\n');
+            body += `${selectedTopic.title}\n\n${plainTextContent}`;
+        } else if (values.topic === 'custom' && values.customTopic) {
+            body += `Please provide information on the following topic:\n\n${values.customTopic}`;
+        }
+
+        const mailtoLink = `mailto:${values.recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
+        toast({ title: "Email Client Opened", description: "Your email client has been opened with the pre-filled information." });
+    };
+
   
   const isChatEmpty = messages.length <= 1;
   
@@ -243,79 +304,149 @@ export function AiConsoleView({
     <div className="flex-1 overflow-hidden">
     <ScrollArea className="h-full bg-background/50">
       <div className="container mx-auto p-6 grid gap-6 max-w-7xl">
-        <Card className="ai-console-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Bot className="h-5 w-5" /> AI Console</CardTitle>
-            <CardDescription>Ask questions about any document or topic.</CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-              <ScrollArea className="h-96" ref={chatScrollRef}>
-                <div className="p-4 space-y-4">
-                {messages.map((msg: any, index) => (
-                  <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
-                    {msg.from === 'bot' && (
-                      <Avatar className="w-8 h-8 shrink-0 border">
-                        <AvatarFallback className="bg-transparent"><Bot className="w-5 h-5 text-primary"/></AvatarFallback>
-                      </Avatar>
-                    )}
-                    <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
-                      <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
-                        "max-w-prose rounded-lg px-4 py-2 text-sm",
-                        msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
-                        msg.isArabic && "font-arabic"
-                      )}>
-                        {msg.text}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <Card className="ai-console-card xl:col-span-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2"><Bot className="h-5 w-5" /> AI Console</CardTitle>
+              <CardDescription>Ask questions about any document or topic.</CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+                <ScrollArea className="h-96" ref={chatScrollRef}>
+                  <div className="p-4 space-y-4">
+                  {messages.map((msg: any, index) => (
+                    <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
+                      {msg.from === 'bot' && (
+                        <Avatar className="w-8 h-8 shrink-0 border">
+                          <AvatarFallback className="bg-transparent"><Bot className="w-5 h-5 text-primary"/></AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
+                        <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
+                          "max-w-prose rounded-lg px-4 py-2 text-sm",
+                          msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
+                          msg.isArabic && "font-arabic"
+                        )}>
+                          {msg.text}
+                        </div>
                       </div>
+                        {msg.from === 'user' && (
+                        <Avatar className="w-8 h-8 shrink-0 border">
+                            <AvatarFallback className="bg-transparent"><User className="w-5 h-5"/></AvatarFallback>
+                        </Avatar>
+                      )}
                     </div>
-                      {msg.from === 'user' && (
-                      <Avatar className="w-8 h-8 shrink-0 border">
-                          <AvatarFallback className="bg-transparent"><User className="w-5 h-5"/></AvatarFallback>
-                      </Avatar>
-                    )}
-                  </div>
-                ))}
-                  {isChatEmpty && (
-                    <div className="pt-4">
-                      <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                          {(isArabic ? quickPromptsArabic : quickPromptsEnglish).map((prompt) => (
-                            <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-start text-left h-auto py-2", isArabic && "justify-end text-right font-arabic")}>
-                              {prompt}
-                            </Button>
-                          ))}
+                  ))}
+                    {isChatEmpty && (
+                      <div className="pt-4">
+                        <p className="text-sm text-center text-muted-foreground mb-4">Or try one of these prompts:</p>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            {(isArabic ? quickPromptsArabic : quickPromptsEnglish).map((prompt) => (
+                              <Button key={prompt} variant="outline" size="sm" onClick={(e) => handleSendMessage(e, prompt)} className={cn("w-full justify-start text-left h-auto py-2", isArabic && "justify-end text-right font-arabic")}>
+                                {prompt}
+                              </Button>
+                            ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
+                  {isAnswering && (
+                      <div className="flex items-start gap-3 justify-start">
+                        <Avatar className="w-8 h-8 border">
+                          <AvatarFallback className="bg-transparent"><Bot className="w-5 h-5 text-primary"/></AvatarFallback>
+                        </Avatar>
+                        <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
+                          <Loader2 className="animate-spin h-4 w-4" />
+                        </div>
+                      </div>
                   )}
-                {isAnswering && (
-                    <div className="flex items-start gap-3 justify-start">
-                      <Avatar className="w-8 h-8 border">
-                        <AvatarFallback className="bg-transparent"><Bot className="w-5 h-5 text-primary"/></AvatarFallback>
-                      </Avatar>
-                      <div className="max-w-xs rounded-lg px-4 py-2 text-sm bg-muted flex items-center">
-                        <Loader2 className="animate-spin h-4 w-4" />
-                      </div>
-                    </div>
-                )}
-                </div>
-              </ScrollArea>
-          </CardContent>
-          <CardFooter className="border-t pt-4">
-            <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
-              <Input
-                dir={isArabic ? 'rtl' : 'ltr'}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your question..."
-                autoComplete="off"
-                disabled={isAnswering}
-                className={cn(isArabic && "font-arabic")}
-              />
-              <Button type="submit" size="icon" disabled={isAnswering || !input.trim()}>
-                <Send className="h-4 w-4" />
-              </Button>
-            </form>
-          </CardFooter>
-        </Card>
+                  </div>
+                </ScrollArea>
+            </CardContent>
+            <CardFooter className="border-t pt-4">
+              <form onSubmit={handleSendMessage} className="flex w-full items-center gap-2">
+                <Input
+                  dir={isArabic ? 'rtl' : 'ltr'}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type your question..."
+                  autoComplete="off"
+                  disabled={isAnswering}
+                  className={cn(isArabic && "font-arabic")}
+                />
+                <Button type="submit" size="icon" disabled={isAnswering || !input.trim()}>
+                  <Send className="h-4 w-4" />
+                </Button>
+              </form>
+            </CardFooter>
+          </Card>
+           <Card className="ai-console-card">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Mail className="h-5 w-5" /> Email Center</CardTitle>
+                <CardDescription>Share project information via email.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Form {...emailForm}>
+                    <form onSubmit={emailForm.handleSubmit(handleSendEmail)} className="space-y-4">
+                        <FormField
+                            control={emailForm.control}
+                            name="recipient"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Recipient Email</FormLabel>
+                                    <FormControl>
+                                        <Input type="email" placeholder="visitor@email.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={emailForm.control}
+                            name="topic"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Information Topic</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a topic" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="project-overview">Project Overview</SelectItem>
+                                            <SelectItem value="technical-overview">Technical Overview</SelectItem>
+                                            <SelectItem value="tokenization-overview">Tokenization Overview</SelectItem>
+                                            <SelectItem value="ebram-language">EBRAM Language</SelectItem>
+                                            <SelectItem value="custom">Custom Topic</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {watchedTopic === 'custom' && (
+                            <FormField
+                                control={emailForm.control}
+                                name="customTopic"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Custom Topic</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="e.g., How does Mashroi work?" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        )}
+                        <Button type="submit" className="w-full">
+                            <Mail className="mr-2 h-4 w-4" />
+                            Send Email
+                        </Button>
+                    </form>
+                </Form>
+            </CardContent>
+          </Card>
+        </div>
         
         <Card className="ai-console-card">
           <CardHeader>
