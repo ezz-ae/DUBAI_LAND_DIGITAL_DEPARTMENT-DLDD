@@ -30,10 +30,8 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
     if (!selectedItemId) return [];
     
     for (const part of technicalBook.parts) {
-      for (const chapter of part.chapters) {
-        if (chapter.id === selectedItemId || chapter.articles.some(a => a.id === selectedItemId)) {
-          return [part.id];
-        }
+      if (part.chapters.some(chapter => chapter.id === selectedItemId || chapter.articles.some(a => a.id === selectedItemId))) {
+        return [part.id];
       }
     }
     

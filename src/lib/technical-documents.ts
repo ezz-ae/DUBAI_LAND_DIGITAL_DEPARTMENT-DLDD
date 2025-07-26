@@ -65,7 +65,7 @@ export const technicalBook: TechnicalBook = {
     parts: [
         {
             id: 'part-1',
-            title: "Part I: Project Genesis & Core Identity",
+            title: "Part I: Project Genesis and Core Identity",
             chapters: [
                 {
                     id: 'chapter-1-1',
@@ -115,7 +115,7 @@ export const technicalBook: TechnicalBook = {
                                 ]}
                             ]
                         },
-                        {
+                         {
                             id: 'article-2-1-2',
                             title: 'Mashroi™: The Professional Hub',
                             content: [
@@ -198,14 +198,14 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-3-2-2',
-                            title: 'Lender Integration Security',
+                            title: 'Lender Integration',
                             content: [
                                 {type: 'paragraph', text: "The project includes technical perspectives on lender integration, outlining objectives, key components, workflows, and technical architecture (API specifications, data sharing). Challenges and mitigations for technical integration risks are also detailed."}
                             ]
                         },
                         {
                             id: 'article-3-2-3',
-                            title: 'Smart Contract Auditing Tools',
+                            title: 'Smart Contract Auditing',
                             content: [
                                 {type: 'paragraph', text: "DLDCHAIN specifies the use of various smart contract auditing tools such as Slither, Mythril, Oyente, Securify, and Manticore, in addition to Hyperledger Explorer, to ensure robust security and functionality. The documentation details their application to DLDCHAIN and addresses auditing challenges and mitigations."}
                             ]
@@ -315,7 +315,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-4-3-2',
-                            title: 'Documentation & Presentation Strategy',
+                            title: 'Documentation Strategy',
                             content: [
                                 {type: 'paragraph', text: "The DLDCHAIN project emphasizes meticulous documentation to convey its depth and strategic importance, aiming for <b class='text-primary'>\"nothing less than the Bitcoin-level documentation\"</b> for real estate blockchain governance."},
                                  {type: 'list', items: [
@@ -338,14 +338,14 @@ export const technicalBook: TechnicalBook = {
         content: [
             {type: 'paragraph', text: 'DLDCHAIN is not merely a proposal; it is presented as a <b class="text-primary">"constitutional system for real estate governance in the 21st century"</b>. This "legacy system" aims to secure ownership, inspire confidence, and export sovereignty. The project represents a comprehensive and deeply integrated vision for the future of real estate, aligning with Dubai\'s national digital goals and positioning the city as a global leader in innovation.'},
             {type: 'paragraph', text: 'The implementation of DLDCHAIN has the potential to fundamentally transform real estate practices, offering unparalleled transparency, efficiency, and liquidity through a meticulously designed technical, regulatory, and financial framework.'},
-            {type: 'subheading', text: 'Next Step'},
+            {type: 'minorheading', text: 'Next Step'},
             {type: 'paragraph', text: 'To further solidify the strategic implications for senior leadership, we should prepare a detailed risk assessment and mitigation plan, addressing potential technical vulnerabilities, regulatory hurdles in global expansion, and financial market volatility. This would provide a complete picture for decision-makers.'},
         ]
     },
     appendices: [
         {
             id: 'appendix-a',
-            title: "Appendix A: DLDCHAIN™ Smart Contract (Pseudo-Code)",
+            title: "Appendix A: Smart Contract Pseudo-Code",
             content: [
                 {type: 'paragraph', text: 'This appendix provides a high-level pseudo-code representation of the core `DLDCHAIN_TokenPool` smart contract, illustrating the key functions and logic that govern the tokenization lifecycle on Hyperledger Fabric. This Chaincode would be written in a supported language like Go, Node.js, or Java.'},
                 {type: 'code', text: `
@@ -446,20 +446,20 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
         },
         {
             id: 'appendix-b',
-            title: 'Appendix B: Governance Model Framework',
+            title: 'Appendix B: Governance Framework',
             content: [
                 {type: 'paragraph', text: 'The DLDCHAIN™ is structured as a <b class="text-primary">government-led consortium blockchain</b>, a hybrid model combining the strengths of private and public blockchains. This model ensures the necessary security, privacy, and control required for a regulated industry like real estate, while still benefiting from the decentralization and resilience of multiple trusted stakeholders.'},
-                {type: 'subheading', text: 'Consortium Membership'},
+                {type: 'minorheading', text: 'Consortium Membership'},
                  {type: 'list', items: [
                     "<strong>Core Consortium Members:</strong> The strategic nucleus includes DLD (Chair, with veto power), VARA (Vice-Chair, regulatory oversight), CBUAE (financial systems), and DFF (driving Innovation).",
                     "<strong>Strategic Stakeholder Participation:</strong> Major VARA-licensed real estate developers, top-tier financial institutions, and leading licensed real estate brokerage firms are invited to operate nodes, contributing to network security and aligning development with market needs."
                  ]},
-                 {type: 'subheading', text: 'Dual-Layer Governance Structure'},
+                 {type: 'minorheading', text: 'Dual-Layer Governance Structure'},
                  {type: 'list', items: [
                     "<strong>Business Governance (Governing Council):</strong> Responsible for overall direction, policy, budgets, and IP ownership. Ensures strategic alignment and market relevance.",
                     "<strong>Operational Governance (Technical Committee):</strong> Manages the live network, security standards, software upgrades, and technical dispute resolution. Ensures smooth and secure functioning of the infrastructure."
                  ]},
-                 {type: 'subheading', text: 'On-Chain Governance Mechanisms'},
+                 {type: 'minorheading', text: 'On-Chain Governance Mechanisms'},
                  {type: 'list', items: [
                     "<strong>Automated Membership Onboarding:</strong> Smart contracts streamline the process of admitting new consortium members based on pre-defined criteria.",
                     "<strong>Transparent Proposal System:</strong> A formal, immutable log for all governance proposals (e.g., chaincode upgrades), recording status and voting outcomes transparently.",
@@ -468,11 +468,11 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
             ]
         },
         {
-            id: 'appendix-simulations',
-            title: "Appendix C: Real-World Tokenization Scenarios",
+            id: 'appendix-c',
+            title: "Appendix C: Tokenization Scenarios",
             content: [
                 {type: 'paragraph', text: "This appendix provides a detailed, step-by-step walkthrough of distinct tokenization cases, demonstrating how DLDCHAIN™ seamlessly integrates its core components to unlock liquidity, ensure trust, and streamline transactions."},
-                {type: 'subheading', text: "Scenario 1: Individual Owner (Ready Property)"},
+                {type: 'minorheading', text: "Scenario 1: Individual Owner (Ready Property)"},
                 {type: 'paragraph', text: "<strong>Context:</strong> An individual owns a ready apartment and wants to sell it quickly without a traditional listing process to unlock immediate liquidity."},
                 {type: 'list', items: [
                     "<strong>Property:</strong> Apartment, Dubai Marina",
@@ -480,7 +480,7 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
                     "<strong>Action:</strong> Owner initiates tokenization via UNIVESTOR Wallet™, facilitated by a Mashroi™ broker.",
                     "<strong>Outcome:</strong> After MAKE_ID and MAKE_IN events, owner receives <b class='text-primary'>AED 1,920,000 (60%)</b> in instant cash and retains 40% equity as tradable DXBTOKENS™."
                 ]},
-                {type: 'subheading', text: "Scenario 2: Mortgaged Property"},
+                {type: 'minorheading', text: "Scenario 2: Mortgaged Property"},
                 {type: 'paragraph', text: "<strong>Context:</strong> An owner wants to sell a mortgaged villa, efficiently settling the mortgage and unlocking equity."},
                  {type: 'list', items: [
                     "<strong>Property:</strong> Villa, Arabian Ranches",
@@ -489,7 +489,7 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
                     "<strong>Action:</strong> Owner initiates tokenization, disclosing mortgage details. EBRAM™ verifies with the lender.",
                     "<strong>Outcome:</strong> During MAKE_ID, the LPO's committed funds first pay off the <b class='text-primary'>AED 900,000 mortgage</b>. The owner then receives 60% of their net equity (AED 4.2M), which is <b class='text-primary'>AED 2,520,000</b>."
                 ]},
-                {type: 'subheading', text: "Scenario 3: Off-Plan Development"},
+                {type: 'minorheading', text: "Scenario 3: Off-Plan Development"},
                 {type: 'paragraph', text: "<strong>Context:</strong> A developer wants to tokenize a luxury off-plan villa to attract early institutional funding."},
                 {type: 'list', items: [
                     "<strong>Property:</strong> Off-Plan Villa, Downtown",
@@ -498,41 +498,6 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
                     "<strong>Outcome:</strong> Developer receives <b class='text-primary'>AED 6,600,000 (60%)</b> for project funding and retains 40% as DXBTOKENS™. As construction milestones are verified on-chain, EBRAM™'s AI automatically adjusts the token price upwards."
                 ]},
             ]
-        },
-        {
-            id: 'techbook-full',
-            title: '[AI] Full Technical Book',
-            content: []
         }
     ]
 };
-
-// This must be done after the full object is defined.
-const fullBookContent: ContentItem[] = [
-    ...technicalBook.introduction.content,
-    ...technicalBook.parts.flatMap(part => [
-        { type: 'heading', text: part.title },
-        ...part.chapters.flatMap(chapter => [
-            { type: 'heading', text: chapter.title },
-            ...chapter.introduction,
-            ...chapter.articles.flatMap(article => [
-                { type: 'subheading', text: article.title },
-                ...article.content
-            ])
-        ])
-    ]),
-    { type: 'heading', text: technicalBook.conclusion.title },
-    ...technicalBook.conclusion.content,
-    ...technicalBook.appendices.filter(a => a.id !== 'techbook-full').flatMap(appendix => [
-        { type: 'heading', text: appendix.title },
-        ...appendix.content
-    ])
-];
-const techBookEntry = technicalBook.appendices.find(a => a.id === 'techbook-full');
-if (techBookEntry) {
-    techBookEntry.content = fullBookContent;
-}
-
-    
-
-    

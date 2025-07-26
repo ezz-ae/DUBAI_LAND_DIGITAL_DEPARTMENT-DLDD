@@ -16,14 +16,17 @@ const renderContentItem = (item: ContentItem, baseKey: string) => {
       return <p key={`${baseKey}-p`} dangerouslySetInnerHTML={{ __html: item.text }} />;
     }
     if (item.type === 'heading') {
-      return <h3 key={`${baseKey}-h3`} className="font-headline font-bold" dangerouslySetInnerHTML={{ __html: item.text }} />;
+      return <h2 key={`${baseKey}-h2`} className="font-headline text-3xl font-bold text-primary border-b-2 border-primary/50 pb-2 mb-4 scroll-mt-20" dangerouslySetInnerHTML={{ __html: item.text }} />;
     }
     if (item.type === 'subheading') {
-      return <h4 key={`${baseKey}-h4`} className="font-headline font-semibold" dangerouslySetInnerHTML={{ __html: item.text }} />;
+      return <h3 key={`${baseKey}-h3`} className="font-headline text-2xl font-bold mt-6 mb-3" dangerouslySetInnerHTML={{ __html: item.text }} />;
+    }
+     if (item.type === 'minorheading') {
+      return <h4 key={`${baseKey}-h4`} className="font-headline text-xl font-semibold mt-4 mb-2" dangerouslySetInnerHTML={{ __html: item.text }} />;
     }
     if (item.type === 'code') {
       return (
-        <pre key={`${baseKey}-pre`}>
+        <pre key={`${baseKey}-pre`} className="whitespace-pre-wrap">
           <code>{item.text}</code>
         </pre>
       );
@@ -37,8 +40,7 @@ const renderContentItem = (item: ContentItem, baseKey: string) => {
 const findItemAndSiblings = (id: string) => {
     const flatNavItems: { id: string; title: string }[] = [];
     
-    const introduction = { id: technicalBook.introduction.id, title: technicalBook.introduction.title };
-    flatNavItems.push(introduction);
+    flatNavItems.push({ id: technicalBook.introduction.id, title: technicalBook.introduction.title });
 
     for (const part of technicalBook.parts) {
       for (const chapter of part.chapters) {
@@ -49,11 +51,12 @@ const findItemAndSiblings = (id: string) => {
       }
     }
     
-    flatNavItems.push({ id: technicalBook.conclusion.id, title: technicalBook.conclusion.title });
-
     for (const appendix of technicalBook.appendices) {
       flatNavItems.push({ id: appendix.id, title: appendix.title });
     }
+    
+    flatNavItems.push({ id: technicalBook.conclusion.id, title: technicalBook.conclusion.title });
+
 
     const currentIndex = flatNavItems.findIndex(item => item.id === id);
     if (currentIndex === -1) return { current: null, prev: null, next: null };
@@ -92,9 +95,8 @@ const findItem = (id: string) => {
         }
     }
 
-    for (const appendix of technicalBook.appendices) {
-        if (appendix.id === id) return { ...appendix, type: 'appendix' };
-    }
+    const appendix = technicalBook.appendices.find(a => a.id === id);
+    if (appendix) return { ...appendix, type: 'appendix' };
 
     return null;
 }
@@ -179,5 +181,3 @@ export function TechnicalDocsView() {
     </div>
   );
 }
-
-    
