@@ -53,6 +53,10 @@ export const technicalBook: TechnicalBook = {
         title: "Introduction: A Sovereign Digital Vision",
         content: [
             {
+                type: 'heading',
+                text: "A Constitutional Upgrade for Real Estate"
+            },
+            {
                 type: 'paragraph',
                 text: "DLDCHAIN is proposed as Dubai's sovereign real estate operating system, a digital infrastructure project intended as a <b class='text-primary'>\"constitutional upgrade\"</b> to how real estate is recorded, verified, transacted, and trusted within Dubai. It is envisioned as a \"world-class level government plan with full governmental integration\" and a \"national protocol\"."
             },
@@ -501,3 +505,5 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
         }
     ]
 };
+
+    
