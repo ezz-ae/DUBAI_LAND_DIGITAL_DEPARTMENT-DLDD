@@ -25,8 +25,9 @@ export default function Home() {
 
 
   useEffect(() => {
+    // Set a default document for context in other views if needed
     if (dldChainDocuments.length > 0) {
-      const defaultDoc = dldChainDocuments.find(d => d.id === 1) || dldChainDocuments[0];
+      const defaultDoc = dldChainDocuments.find(d => d.id === 19) || dldChainDocuments[0];
       setSelectedDoc(defaultDoc);
     }
   }, []);
@@ -87,3 +88,5 @@ export default function Home() {
     </SidebarProvider>
   )
 }
+
+    

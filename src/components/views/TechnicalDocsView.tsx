@@ -29,7 +29,7 @@ const renderContentItem = (item: ContentItem, baseKey: string) => {
       );
     }
     if (item.type === 'list') {
-      return <ul key={`${baseKey}-ul`} className="list-disc space-y-2">{item.items.map((li, i) => <li key={`${baseKey}-li-${i}`} dangerouslySetInnerHTML={{ __html: li }} />)}</ul>;
+      return <ul key={`${baseKey}-ul`} className="list-disc space-y-2 pl-5">{item.items.map((li, i) => <li key={`${baseKey}-li-${i}`} dangerouslySetInnerHTML={{ __html: li }} />)}</ul>;
     }
     return null;
 }
@@ -49,6 +49,8 @@ const findItemAndSiblings = (id: string) => {
       }
     }
     
+    flatNavItems.push({ id: technicalBook.conclusion.id, title: technicalBook.conclusion.title });
+
     for (const appendix of technicalBook.appendices) {
       flatNavItems.push({ id: appendix.id, title: appendix.title });
     }
@@ -70,6 +72,15 @@ const findItem = (id: string) => {
             title: technicalBook.introduction.title,
             content: technicalBook.introduction.content,
             type: 'introduction'
+        };
+    }
+    
+    if (id === technicalBook.conclusion.id) {
+        return {
+            id: technicalBook.conclusion.id,
+            title: technicalBook.conclusion.title,
+            content: technicalBook.conclusion.content,
+            type: 'conclusion'
         };
     }
 
@@ -115,7 +126,7 @@ export function TechnicalDocsView() {
         allContent.push(...current.introduction.map((item, index) => renderContentItem(item, `${current.id}-intro-${index}`)));
         current.articles.forEach(article => {
             allContent.push(<Separator key={`${article.id}-separator`} className="my-8" />);
-            allContent.push(<div key={`${article.id}-content-wrapper`}>{renderContentItem({ type: 'heading', text: article.title }, `${article.id}-heading`)}</div>);
+            allContent.push(<div key={`${article.id}-content-wrapper`}><h2 id={article.id} className="font-headline text-3xl font-bold text-primary border-b-2 border-primary/50 pb-2 mb-4 scroll-mt-20">{article.title}</h2></div>);
             allContent.push(...article.content.map((item, index) => renderContentItem(item, `${article.id}-content-${index}`)));
         });
     } else if ('content' in current && Array.isArray(current.content)) {
@@ -124,7 +135,7 @@ export function TechnicalDocsView() {
     }
 
     return (
-        <div id={current.id} className="py-4">
+        <div id={current.id}>
             <h1 className="font-headline text-4xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{title}</h1>
             {allContent}
         </div>
@@ -168,3 +179,5 @@ export function TechnicalDocsView() {
     </div>
   );
 }
+
+    

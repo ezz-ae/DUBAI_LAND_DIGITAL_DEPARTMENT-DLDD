@@ -25,6 +25,25 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
     onLinkClick(id);
   };
 
+  // Function to determine the default open accordions based on the selected item
+  const getDefaultAccordionValues = () => {
+    if (!selectedItemId) return [];
+    
+    for (const part of technicalBook.parts) {
+      for (const chapter of part.chapters) {
+        if (chapter.id === selectedItemId || chapter.articles.some(a => a.id === selectedItemId)) {
+          return [part.id];
+        }
+      }
+    }
+    
+    if (technicalBook.appendices.some(a => a.id === selectedItemId)) {
+        return ['appendices'];
+    }
+
+    return [];
+  }
+
   return (
     <Sidebar>
       <SidebarHeader className="p-2 border-b h-14 flex items-center">
@@ -32,10 +51,10 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
       </SidebarHeader>
       <SidebarContent className="flex-1 p-0">
         <SidebarMenu className="list-none p-2">
-            <Accordion type="single" className="w-full" collapsible>
+            <Accordion type="multiple" className="w-full" key={selectedItemId} defaultValue={getDefaultAccordionValues()}>
               <a href="#book-introduction" onClick={(e) => handleLinkClick(e, 'book-introduction')} 
                  className={cn("font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors block px-3", selectedItemId === 'book-introduction' && 'text-primary')}>
-                  Book Introduction
+                  Introduction
               </a>
               {technicalBook.parts.map((part) => (
                   <AccordionItem value={part.id} key={part.id}>
@@ -84,6 +103,11 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
                   </ul>
                 </AccordionContent>
               </AccordionItem>
+              
+               <a href="#tech-conclusion" onClick={(e) => handleLinkClick(e, 'tech-conclusion')} 
+                 className={cn("font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors block px-3 mt-2", selectedItemId === 'tech-conclusion' && 'text-primary')}>
+                  Conclusion
+              </a>
 
             </Accordion>
         </SidebarMenu>
@@ -91,3 +115,5 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
     </Sidebar>
   );
 }
+
+    
