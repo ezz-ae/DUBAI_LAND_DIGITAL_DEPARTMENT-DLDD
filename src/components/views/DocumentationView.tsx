@@ -26,13 +26,16 @@ interface DocumentationViewProps {
 
 const documentGroups = dldChainDocuments.reduce((acc, doc) => {
   if (doc.lang === 'en') {
-    if (!acc[doc.group]) {
-      acc[doc.group] = [];
+    const group = acc.find(g => g.id === doc.group);
+    if (group) {
+      group.docs.push(doc);
+    } else {
+      acc.push({ id: doc.group, title: doc.group.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), docs: [doc] });
     }
-    acc[doc.group].push(doc);
   }
   return acc;
-}, {} as Record<string, DLDDoc[]>);
+}, [] as { id: string; title: string; docs: DLDDoc[] });
+
 
 const groupTitles: Record<string, string> = {
   'vision': "Project Vision",
@@ -54,14 +57,13 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }:
     const targetLang = isArabic ? 'en' : 'ar';
     
     let targetDoc;
-    if (isArabic) {
-        // Find the English doc that has the same group and is the counterpart of the current Arabic doc
-        const englishDocs = docGroup.filter(d => d.lang === 'en');
-        // This logic is a bit naive, it will find the first english doc in the same group.
-        // A better approach would be a direct mapping if available.
-        targetDoc = englishDocs[0];
-    } else {
-        targetDoc = docGroup.find(d => d.lang === 'ar' && d.group === selectedDoc.group);
+    // A more robust way to find the counterpart would be to have a direct mapping if available.
+    // This logic assumes a parallel structure between languages which might not always hold.
+    targetDoc = dldChainDocuments.find(d => d.name === selectedDoc.name && d.lang === targetLang);
+
+    if (!targetDoc) {
+      // Fallback for documents that might not have a direct name match
+      targetDoc = dldChainDocuments.find(d => d.group === selectedDoc.group && d.lang === targetLang);
     }
     
     if (targetDoc) {
@@ -79,36 +81,38 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }:
           <SidebarGroupLabel className="px-2 font-semibold text-foreground text-base">Project Documents</SidebarGroupLabel>
         </SidebarHeader>
         <SidebarContent className="flex-1 p-0">
-          <SidebarMenu className="list-none p-2">
-            <Accordion type="multiple" className="w-full" defaultValue={['vision', 'business']}>
-              {Object.entries(documentGroups).map(([groupKey, docs]) => {
-                if (docs.length === 0 || groupKey === 'ai') return null; // Hide AI group
-                return (
-                  <AccordionItem value={groupKey} key={groupKey}>
-                    <AccordionTrigger className="text-sm font-semibold hover:no-underline px-3 py-2 text-primary/80 hover:text-primary">
-                      {groupTitles[groupKey] || groupKey}
-                    </AccordionTrigger>
-                    <AccordionContent className="pb-1 pl-2">
-                      <ul className="list-none p-0">
-                        {docs.map((doc) => (
-                           <SidebarMenuItem key={doc.id}>
-                              <SidebarMenuButton
-                                onClick={() => setSelectedDoc(doc)}
-                                isActive={selectedDoc?.id === doc.id}
-                                tooltip={doc.name}
-                                className="w-full justify-start text-muted-foreground"
-                              >
-                                <span className="truncate">{doc.name}</span>
-                              </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                )
-              })}
-            </Accordion>
-          </SidebarMenu>
+          <ScrollArea className="h-full">
+            <SidebarMenu className="list-none p-2">
+              <Accordion type="multiple" className="w-full" defaultValue={['vision', 'business']}>
+                {documentGroups.map((group) => {
+                  if (group.docs.length === 0 || group.id === 'ai') return null; // Hide AI group
+                  return (
+                    <AccordionItem value={group.id} key={group.id}>
+                      <AccordionTrigger className="text-sm font-semibold hover:no-underline px-3 py-2 text-primary/80 hover:text-primary">
+                        {groupTitles[group.id] || group.title}
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-1 pl-2">
+                        <ul className="list-none p-0">
+                          {group.docs.map((doc) => (
+                             <SidebarMenuItem key={doc.id}>
+                                <SidebarMenuButton
+                                  onClick={() => setSelectedDoc(doc)}
+                                  isActive={selectedDoc?.id === doc.id}
+                                  tooltip={doc.name}
+                                  className="w-full justify-start text-muted-foreground"
+                                >
+                                  <span className="truncate">{doc.name}</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  )
+                })}
+              </Accordion>
+            </SidebarMenu>
+          </ScrollArea>
         </SidebarContent>
         <SidebarFooter className="p-2 border-t flex items-center justify-center">
           <Button variant="ghost" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} size="icon" className="w-full justify-center">
