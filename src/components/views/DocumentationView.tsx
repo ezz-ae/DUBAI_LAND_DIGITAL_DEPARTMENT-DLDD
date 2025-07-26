@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Sidebar, SidebarContent, SidebarHeader, SidebarFooter, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel } from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel, SidebarFooter } from '@/components/ui/sidebar';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Moon, Sun, Languages } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { dldChainDocuments } from '@/lib/documents';
@@ -23,6 +24,23 @@ interface DocumentationViewProps {
   onTopicClick: (topic: string) => void;
 }
 
+const documentGroups = dldChainDocuments.reduce((acc, doc) => {
+  if (doc.lang === 'en') {
+    if (!acc[doc.group]) {
+      acc[doc.group] = [];
+    }
+    acc[doc.group].push(doc);
+  }
+  return acc;
+}, {} as Record<string, DLDDoc[]>);
+
+const groupTitles: Record<string, string> = {
+  'vision': "Project Vision",
+  'business': "Business & Strategic Vision Book",
+  'business-full': "Full Business Book",
+  'ai': "AI Context Documents"
+}
+
 export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }: DocumentationViewProps) {
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
@@ -34,14 +52,25 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }:
     if (!selectedDoc) return;
     const docGroup = dldChainDocuments.filter(d => d.group === selectedDoc.group);
     const targetLang = isArabic ? 'en' : 'ar';
-    const targetDoc = docGroup.find(d => d.lang === targetLang);
+    
+    let targetDoc;
+    if (isArabic) {
+        // Find the English doc that has the same group and is the counterpart of the current Arabic doc
+        const englishDocs = docGroup.filter(d => d.lang === 'en');
+        // This logic is a bit naive, it will find the first english doc in the same group.
+        // A better approach would be a direct mapping if available.
+        targetDoc = englishDocs[0];
+    } else {
+        targetDoc = docGroup.find(d => d.lang === 'ar' && d.group === selectedDoc.group);
+    }
     
     if (targetDoc) {
       setSelectedDoc(targetDoc);
     } else {
-      toast({ variant: 'destructive', title: 'Translation not found' });
+      toast({ variant: 'destructive', title: 'Translation not available for this document.' });
     }
   };
+
 
   return (
     <div className="flex flex-1 overflow-hidden">
@@ -49,22 +78,36 @@ export function DocumentationView({ selectedDoc, setSelectedDoc, onTopicClick }:
         <SidebarHeader className="p-2 border-b h-14 flex items-center">
           <SidebarGroupLabel className="px-2 font-semibold text-foreground text-base">Project Documents</SidebarGroupLabel>
         </SidebarHeader>
-        <SidebarContent className="flex-1 p-2">
-          <SidebarMenu className="list-none p-0">
-            {dldChainDocuments.length > 0 ? dldChainDocuments.map((doc) => (
-              <SidebarMenuItem key={doc.id}>
-                <SidebarMenuButton
-                  onClick={() => setSelectedDoc(doc)}
-                  isActive={selectedDoc?.id === doc.id}
-                  tooltip={doc.name}
-                  className="w-full justify-start"
-                >
-                  <span className={cn("truncate", doc.lang === 'ar' && 'font-arabic')}>{doc.name}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )) : (
-              <div className="p-2 text-sm text-muted-foreground">No documents loaded.</div>
-            )}
+        <SidebarContent className="flex-1 p-0">
+          <SidebarMenu className="list-none p-2">
+            <Accordion type="multiple" className="w-full" defaultValue={['vision', 'business']}>
+              {Object.entries(documentGroups).map(([groupKey, docs]) => {
+                if (docs.length === 0 || groupKey === 'ai') return null; // Hide AI group
+                return (
+                  <AccordionItem value={groupKey} key={groupKey}>
+                    <AccordionTrigger className="text-sm font-semibold hover:no-underline px-3 py-2 text-primary/80 hover:text-primary">
+                      {groupTitles[groupKey] || groupKey}
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-1 pl-2">
+                      <ul className="list-none p-0">
+                        {docs.map((doc) => (
+                           <SidebarMenuItem key={doc.id}>
+                              <SidebarMenuButton
+                                onClick={() => setSelectedDoc(doc)}
+                                isActive={selectedDoc?.id === doc.id}
+                                tooltip={doc.name}
+                                className="w-full justify-start text-muted-foreground"
+                              >
+                                <span className="truncate">{doc.name}</span>
+                              </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                )
+              })}
+            </Accordion>
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter className="p-2 border-t flex items-center justify-center">
