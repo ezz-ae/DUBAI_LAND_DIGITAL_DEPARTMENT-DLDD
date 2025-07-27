@@ -153,7 +153,7 @@ export const technicalBook: TechnicalBook = {
                 {
                     id: 'chapter-2-1',
                     title: "EBRAM™: The Intelligent Contract Engine",
-                    introduction: [],
+                    introduction: [{type: 'paragraph', text: 'The Law, Coded and Automated, for Dubai\'s Real Estate Future'}],
                     articles: [
                         {
                             id: 'article-2-1-1',
@@ -169,7 +169,6 @@ export const technicalBook: TechnicalBook = {
                             content: [
                                 {type: 'paragraph', text: 'EBRAM™ distinguishes itself not merely as a smart contract template but as a comprehensive, domain-specific programmable language for real estate governance. This innovative dual-layer design allows for a direct, codified representation of legal intent and property rules on the blockchain, bridging the gap between legal professionals and technical implementation. It creates a comprehensive smart governance system by clearly distinguishing between a legal-readable logic layer and a computational execution layer. This ensures that legal experts can define terms in a familiar format, while the system executes them with machine precision, guaranteeing fidelity to legal intent.'},
                                 {type: 'subheading', text: 'EBRAM™ Design Principles'},
-                                {type: 'paragraph', text: 'The design of EBRAM™ is rooted in principles that prioritize legal fidelity, automation, transparency, and adaptability:'},
                                 {type: 'list', items: [
                                     "<b>Legal-First Approach:</b> Ensuring that the codified logic accurately reflects and enforces UAE property law.",
                                     "<b>Automated Execution:</b> Minimizing human intervention in contract lifecycle management.",
@@ -183,7 +182,7 @@ export const technicalBook: TechnicalBook = {
                                    "<b>Core Constructs:</b> Logic (e.g., if... then...), Roles (e.g., who... what...), and Rights (e.g., can... until... unless...).",
                                    "<b>Operators:</b> if, then, else, and unless.",
                                    "<b>Property Bindings:</b> Interactions with specific property/contract data (e.g., <code>rental.status</code>, <code>contract.state</code>).",
-                                   "<b>Triggers:</b> Events or time-based initiations (e.g., <code>if lease.startDate + 3 days && noKeyPickup then auto-cancel</code>)."
+                                   "<b>Triggers:</b> Events or time-based initiations (e.g., if lease.startDate + 3 days && noKeyPickup then auto-cancel)."
                                 ]},
                                  {type: 'paragraph', text: "<b class='text-primary'>Python Layer (Computational execution):</b> This layer is the underlying code that executes the logic defined in the EBRAM™ layer on the blockchain. It serves as an intermediate Domain Specific Language (DSL), translating the human-readable legal logic into executable commands for the Hyperledger Fabric network. This separation ensures that legal clarity is maintained while technical execution is precise and efficient."}
                             ]
@@ -202,7 +201,6 @@ export const technicalBook: TechnicalBook = {
                                     "<b>Tokenization Gateway:</b> EBRAMINT™ is the distinct process that makes a property eligible for tokenization into DXBTOKENS™. It requires 100% verified ownership and zero utility binding (unoccupied status)."
                                 ]},
                                 {type: 'subheading', text: "Automated Agreement Lifecycle Management"},
-                                {type: 'paragraph', text: "EBRAM™ manages the entire lifecycle of diverse real estate agreements with precision and automation."},
                                 {type: 'list', items: [
                                     "<b>Rental Management:</b> Automates rent payments (DLD-AED), security deposit escrow, renewal/expiry logic, and maintenance requests. Directly integrates with Ejari, transforming it into an active, self-executing oracle.",
                                     "<b>Property Sales & Title Transfers:</b> Manages off-plan milestone payments and facilitates instant legal transfer of title deeds for resale, tied to KYC/AML compliance.",
@@ -210,7 +208,6 @@ export const technicalBook: TechnicalBook = {
                                     "<b>Cross-Sector Agreements:</b> Extends to loan agreements, subscriptions, employment contracts, and peer-to-peer services, demonstrating broad applicability."
                                 ]},
                                 {type: 'subheading', text: "On-Chain Dispute Resolution"},
-                                {type: 'paragraph', text: "EBRAM™ introduces a revolutionary preliminary layer of on-chain dispute resolution, designed to complement, rather than replace, the traditional judicial system."},
                                 {type: 'list', items: [
                                     "<b>Complementing RDC:</b> Acts as a first line of defense for common, data-driven disagreements (e.g., security deposits, late payments), significantly reducing the caseload of the Rental Dispute Settlement Centre (RDC).",
                                     "<b>Automated Workflow:</b> Funds are frozen, evidence is uploaded to decentralized storage, and disputes are presented to RERA-approved online arbitrators or an AI-driven mediation engine. The smart contract automatically executes the final decision.",
@@ -220,6 +217,38 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-1-4',
+                            title: 'AI Capabilities: The "Brain Notes" of EBRAM™',
+                            content: [
+                                {type: 'paragraph', text: 'EBRAM™ is designed as a "smart, sovereign, self-learning ecosystem." Beyond static code, it features inherent intelligence through various AI components, transforming it into an intelligent legal engine that listens, understands, writes, and explains. This integration of AI elevates EBRAM™ from a mere smart contract platform to a dynamic, adaptive governance system.'},
+                                {type: 'subheading', text: "EBRAMGPT™ (Generative Pre-trained Transformer AI Legal Copilot)"},
+                                {type: 'paragraph', text: 'This is the "exclusive interface between humans and the machine logic of real estate law," embodying the "single text-to-agreement smart way."'},
+                                {type: 'list', items: [
+                                    "<b>Bi-directional Language Conversion:</b> Seamlessly translates natural language (Arabic, English, etc.) into valid EBRAM™ smart clauses and Python code, and vice-versa.",
+                                    "<b>Context-Aware Drafting:</b> Understands user roles and transaction types, incorporating deep knowledge of Dubai's legal rules to ensure compliant and accurate drafting.",
+                                    "<b>AI Clause Suggestions & Risk Warnings:</b> Proactively enhances contract drafting by recommending missing protections and flagging potential regulatory violations.",
+                                    "<b>Information Retrieval & Transparency:</b> Serves as an \"EBRAMDATA Interpreter,\" providing access to on-chain history of user behavior, property risk, and token logic.",
+                                    "<b>AI-Coordinated Group Negotiations:</b> Facilitates multi-party sessions for collaborative contract drafting, linking discussions to property metadata for context memory. Supports \"Clause Voting Logic\" for fractional token co-owners.",
+                                    "<b>Risk Rating & Behavioral Logic System:</b> Dynamically scores actors based on on-chain history, adjusting contract terms and providing historical disclosure notices."
+                                ]},
+                                {type: 'subheading', text: "EBRAM ML NOTES™ (Collective Intelligence Layer)"},
+                                {type: 'paragraph', text: 'A limited-access, review-based contribution system that allows authorized users (experts) to submit, annotate, and refine evolving real estate contract intelligence. It transforms EBRAM™ into a "living legal organism."'},
+                                {type: 'list', items: [
+                                    "<b>Shared Memory System:</b> Contract logic learns, adjusts, and evolves. Experts submit smart observations, precedents, and rules, which EBRAMGPT™ reads from and contributes to.",
+                                    "<b>Human-in-the-Loop Validation:</b> Human experts review AI-suggested logic improvements, fraud patterns, or new clause types before approval and integration into the core logic."
+                                ]},
+                                 {type: 'subheading', text: "EBRAM™ AI-Weighted Node System: The Sentient Economic Layer"},
+                                {type: 'paragraph', text: 'This sophisticated mechanism extends contractual logic, making every node in the smart contract tree support AI-sensed micro-events layered with calibrated, decision-weighted metadata. It acts as a "sentient economic layer" and an "intelligent referee."'},
+                                {type: 'list', items: [
+                                    "<b>Core Principle:</b> Each event is a contract-layered node with a weighted logic vector, dynamically influencing price, listing priority, and risk. A weighted logic vector is a multi-dimensional data structure where each dimension represents a specific attribute or event (e.g., property attributes, market conditions), assigned a numerical \"weight\" indicating its influence on an outcome (e.g., price, risk score).",
+                                    "<b>Examples of Weighted Logic (Influencing DXBTOKEN™ Price):</b> EBRAMINT™ Date (12%), Owner Verified (10%), Last Trade Date (8%), Tower Activity (15%), Rent ROI on Similar Unit (5%), Last Valuation Audit (15%).",
+                                    "<b>Real-Time Adjustment Loop:</b> A continuous loop (e.g., every 24 hours) where the Market Making Engine (MME) scores nodes. If differences exceed 5%, it triggers re-valuation, Mashroi™ learning updates, and new suggested pricing.",
+                                    "<b>\"No More, No Less. Guaranteed.\" Enforcement:</b> Ensures deterministic and auditable outcomes. Tight variance bounds prevent extreme price fluctuations. Traceable and explainable output via an OpenAI-powered visibility layer.",
+                                    "<b>Market Logic Intelligence:</b> Acts as an \"intelligent referee\" before agreement finalization, preventing \"unlogical terms/price/commission.\""
+                                ]},
+                            ]
+                        },
+                        {
+                            id: 'article-2-1-5',
                             title: 'Integration & Synergy: The EBRAM™ Nexus',
                             content: [
                                 {type: 'paragraph', text: "EBRAM™ is seamlessly integrated as the core smart contract engine, acting as the primary executor of legal and transactional logic on the sovereign ledger, connecting all DLDCHAIN™ components and external government systems."},
@@ -231,7 +260,6 @@ export const technicalBook: TechnicalBook = {
                                     "<b>Mashroi™:</b> EBRAM™ provides legal knowledge for Mashroi™'s education platform and utilizes Mashroi™'s verified broker status for compliant tokenization submissions."
                                 ]},
                                 {type: 'subheading', text: "Integration with Governmental Systems (Smart Verification Oracles)"},
-                                {type: 'paragraph', text: "EBRAM™ transforms existing DLD systems into \"Smart Verification Oracles,\" enhancing data integrity and automating compliance across the public sector."},
                                 {type: 'list', items: [
                                     "<b>Ejari:</b> Consumes Ejari data (read-only) as the \"genesis event\" for automated rental smart contracts.",
                                     "<b>Milka:</b> Integrates for real-time validation of title deeds and developer identities.",
@@ -244,7 +272,7 @@ export const technicalBook: TechnicalBook = {
                             ]
                         },
                         {
-                            id: 'article-2-1-5',
+                            id: 'article-2-1-6',
                             title: 'Benefits & Value Proposition: A World Without Ambiguity',
                             content: [
                                  {type: 'paragraph', text: "The automation and intelligence provided by EBRAM™ offer significant and transformative benefits for all stakeholders, emphasizing simplicity, peace of mind, and total control with no technical burden."},
@@ -262,7 +290,7 @@ export const technicalBook: TechnicalBook = {
                             ]
                         },
                         {
-                            id: 'article-2-1-6',
+                            id: 'article-2-1-7',
                             title: 'Security & Legal Fidelity: The Unbreakable Protocol',
                             content: [
                                  {type: 'paragraph', text: "EBRAM™ is designed with paramount security and legal fidelity, ensuring the integrity and enforceability of all on-chain agreements."},
@@ -277,7 +305,7 @@ export const technicalBook: TechnicalBook = {
                             ]
                         },
                         {
-                            id: 'article-2-1-7',
+                            id: 'article-2-1-8',
                             title: 'Future Vision: A Living Legal Protocol',
                             content: [
                                  {type: 'paragraph', text: "EBRAM™ is integral to the DLDCHAIN™'s strategic roadmap, designed for continuous evolution, adaptation, and global applicability."},
@@ -291,7 +319,7 @@ export const technicalBook: TechnicalBook = {
                 },
                 {
                     id: 'chapter-2-2',
-                    title: "EBRAMGPT™: The AI-Powered Legal Copilot",
+                    title: "EBRAMGPT™: The AI Legal Copilot",
                     introduction: [{type: 'paragraph', text: "From Natural Language to Sovereign Smart Contracts on DLDCHAIN™"}],
                     articles: [
                         {
@@ -329,7 +357,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-4',
-                            title: 'Key Functionalities: Comprehensive Legal Assistance on Demand',
+                            title: 'Key Functionalities: Comprehensive Legal Assistance',
                             content: [
                                 {type: 'paragraph', text: 'EBRAMGPT™ offers a comprehensive suite of functionalities that empower users throughout the real estate legal lifecycle, from initial drafting to ongoing management and even dispute resolution.'},
                                 {type: 'subheading', text: 'Bi-directional Language Conversion'},
@@ -384,7 +412,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-6',
-                            title: 'Integration within DLDCHAIN™: The Central Nervous System of Intelligence',
+                            title: 'Integration within DLDCHAIN™',
                             content: [
                                 {type: 'paragraph', text: 'EBRAMGPT™ serves as the intelligent user-facing layer that seamlessly connects stakeholders directly to the core functionalities of DLDCHAIN™. It acts as a bridge between complex blockchain operations and intuitive user experiences.'},
                                 {type: 'list', items: [
@@ -396,7 +424,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-7',
-                            title: 'Benefits & Value Proposition: Unlocking Legal Clarity and Trust',
+                            title: 'Benefits & Value Proposition',
                             content: [
                                 {type: 'paragraph', text: 'EBRAMGPT™ delivers transformative benefits by making legal processes accessible, efficient, and intelligent for all DLDCHAIN™ participants.'},
                                 {type: 'list', items: [
@@ -425,32 +453,81 @@ export const technicalBook: TechnicalBook = {
                 },
                 {
                     id: 'chapter-2-3',
-                    title: "Mashroi™: Professional & Compliance Hub",
-                    introduction: [{type: 'paragraph', text: "Mashroi™ is the mandatory gateway and intelligence grid for all real estate professionals operating in Dubai. It is a sovereign system designed to elevate professional standards, ensure compliance, and foster a merit-based ecosystem through the power of AI and blockchain."}],
+                    title: 'Mashroi™: The Intelligence Grid',
+                    introduction: [{type: 'paragraph', text: "A New Paradigm for HR Governance in Real Estate"}],
                     articles: [
                         {
                             id: 'article-2-3-1',
-                            title: 'Core Identity & Purpose',
+                            title: 'Introduction & Core Functionality',
                             content: [
-                                {type: 'paragraph', text: "Mashroi™ is envisioned as a <span class='highlight'>\"Contribution Intelligence System\"</span>. Its purpose is to move beyond simple licensing and create a dynamic, real-time picture of the real estate market and its participants. It will be a mandatory gateway, similar to Ejari, for any professional wishing to operate in Dubai's real estate sector."},
+                                {type: 'paragraph', text: 'Mashroi™ is positioned as a pivotal, innovative component within Dubai\'s DLDCHAIN™ ecosystem, serving as "The Nation’s Real Estate Intelligence Grid." It is fundamentally designed as a "Hyper Intelligence bridging and Contribution based empowerment System," representing "the first ever governmental governless Contribution based empowerment and rewarding system." Its core philosophy dictates that it is "not designed to give people what they want, but what they deserve, hyper intelligence machine learning experience empowers user based on consistency and reward by achievements." Mashroi™ is not merely an application, but rather "the real estate merit system real estate industry never had, built not to serve opinions — but to reward contributions."'},
+                                {type: 'minorheading', text: 'Core Functionality'},
                                 {type: 'list', items: [
-                                   "<b>Single Source of Truth for Professionals:</b> Mashroi™ creates an immutable, DLD-verified digital identity for every broker, agent, and property manager.",
-                                   "<b>Merit-Based, Not Wallet-Based:</b> The system is designed so that reputation and ranking are earned through verifiable contributions, ethical behavior, and continuous learning, not through advertising spend.",
-                                   "<b>Self-Funding Governance:</b> The platform is designed to be economically self-sustaining through a variety of compliance and value-added service fees."
+                                    "<b>Broker Licensing and Education Platform:</b> Serves as the official governmental platform for individuals to register as brokers, gain knowledge through accredited courses, and obtain official licenses. Includes AI assistants for personalized learning support.",
+                                    "<b>Smart Visa Issuance and Management:</b> Offers a \"3-month renewable digital visa\" for qualified real estate professionals, directly addressing informal employment and integrating with GDRFA.",
+                                    "<b>Compliance and Ethical Tracking Hub:</b> Implements \"Automated Fines\" and uses AI \"watchers\" to monitor for fraud and misinformation.",
+                                    "<b>Performance and Career Development:</b> Rewards real contributions, not just titles, connecting human effort to real estate in a smart and fair way based on verifiable performance.",
+                                    "<b>Interactive Connection System:</b> Features a private \"Handshake Feed\" for professionals to network and collaborate.",
+                                    "<b>Mashroi™ Digital Events:</b> A groundbreaking interactive platform that transforms how the industry connects, communicates, and collaborates."
                                 ]}
                             ]
                         },
                         {
                             id: 'article-2-3-2',
-                            title: 'Key Functionalities',
+                            title: 'Mashroi™ Digital Events: The Live Connection Hub',
                             content: [
-                                {type: 'paragraph', text: "Mashroi™ integrates multiple layers of functionality into a single, unified platform:"},
-                                 {type: 'list', items: [
-                                    "<b>Automated Licensing & Visa Flow:</b> A key innovation is the integration with GDRFA to issue a <b class='text-primary'>3-month renewable smart visa</b> for brokers directly through the platform. Licensing, renewals, and compliance checks are automated, ensuring every active professional is always in good standing.",
-                                    "<b>AI-Powered Performance Analytics:</b> The system tracks broker performance based on objective, on-chain data: successful deal closures, positive client feedback (verified), compliance adherence, and educational milestones. This data feeds into a public-facing, trustworthy ranking system.",
-                                    "<b>Compliance & Ethical Tracking Hub:</b> Mashroi™ acts as a live compliance engine. It integrates with Trakheesi to ensure all property advertisements are linked to a verified broker and a legitimate property listing on DLDCHAIN, instantly flagging and preventing fraudulent ads.",
-                                    "<b>Smart Contract Commission Flow:</b> Broker commissions can be written directly into EBRAM™ sales or lease agreements. Upon successful completion of the contract, the commission is automatically released from the MAKE™ escrow system to the broker's UNIVESTOR Wallet™, eliminating payment disputes and delays."
+                                {type: 'paragraph', text: 'Mashroi™ Digital Events introduces a groundbreaking interactive platform within the Mashroi™ ecosystem that fundamentally transforms how the real estate industry connects. It moves beyond static webinars towards an immersive, verified, and intelligent live experience for project launches, policy announcements, and professional networking.'},
+                                {type: 'minorheading', text: 'Key Features'},
+                                {type: 'list', items: [
+                                    "<b>Interactive Launchpads:</b> Developers host virtual, immersive launches for new projects with 3D walkthroughs and live Q&A.",
+                                    "<b>Advanced Audience Engagement:</b> Real-time Q&A, polls, robust live chat, and virtual breakout rooms for networking.",
+                                    "<b>Seamless Media Integration:</b> Provides secure channels for media invites, exclusive press kits, and direct interviews.",
+                                    "<b>AI-Driven Insights:</b> Leverages Mashroi's deep AI for audience segmentation, real-time engagement analytics, and sentiment analysis."
+                                ]},
+                                {type: 'minorheading', text: 'Business Benefits'},
+                                {type: 'list', items: [
+                                    "<b>For Developers:</b> Reduced event costs, wider reach to qualified investors, and accelerated sales cycles.",
+                                    "<b>For Brokers:</b> Direct access to new opportunities, networking with leaders, and enhanced professional credibility.",
+                                    "<b>For DLD:</b> Enhanced transparency, a direct communication channel for policies, and rich data insights for market management."
                                 ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-3-3',
+                            title: 'Technical Architecture & Strategic Integration',
+                            content: [
+                                {type: 'paragraph', text: 'Mashroi™\'s architecture is fundamentally AI-driven, designed for continuous learning, adaptation, and deep integration across governmental systems, making it a truly "smart, sovereign, self-learning ecosystem."'},
+                                {type: 'minorheading', text: 'Technical Components'},
+                                {type: 'list', items: [
+                                    "<b>AI Algorithms:</b> Utilizes sophisticated machine learning models for risk identification, talent gap prediction, and personalized learning paths for brokers.",
+                                    "<b>Digital Visa System:</b> Detailed architecture for the 3-month renewable digital visa, including its interaction with GDRFA APIs and cryptographic proofs for ID verification.",
+                                    "<b>Compliance Rule Engine:</b> Specifications for the rule engine that automates compliance checks, fine issuance, and ethical tracking, driven by AI monitoring."
+                                ]},
+                                {type: 'minorheading', text: 'Strategic Positioning'},
+                                {type: 'list', items: [
+                                    "<b>Mandatory Gateway:</b> Fully integrated into DLD and RERA as a mandatory gateway, similar to Ejari, ensuring all real estate activities are channeled through a compliant framework.",
+                                    "<b>AI Synergy:</b> Provides critical data to EBRAM™'s AI-Weighted Node System for market logic intelligence and risk assessments (e.g., broker reliability impacting property valuation).",
+                                    "<b>Profit Channels:</b> Generates attributable revenue streams through compliance gates, visa fees, API licensing, and digital event monetization, ensuring DLDCHAIN™'s sustainability."
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-3-4',
+                            title: 'Security & Challenges',
+                            content: [
+                                 {type: 'paragraph', text: 'Mashroi™ ensures high levels of security and compliance through embedded mechanisms, contributing significantly to the overall integrity and trustworthiness of the DLDCHAIN™ ecosystem.'},
+                                 {type: 'minorheading', text: 'Security Measures'},
+                                 {type: 'list', items: [
+                                    "<b>Verifiable Credentials:</b> Professional credentials (licenses, certifications) are tied to verified digital identities on DLDCHAIN™, providing immutable proof of qualification.",
+                                    "<b>Automated Enforcement:</b> AI-driven enforcement of compliance rules and automated fines ensures consistent application of regulations.",
+                                    "<b>Audit Trails:</b> All professional activities, compliance checks, and disciplinary actions are recorded on-chain, providing immutable audit trails."
+                                 ]},
+                                 {type: 'minorheading', text: 'Challenges and Mitigations'},
+                                 {type: 'list', items: [
+                                    "<b>User Adoption:</b> Overcome resistance from traditional brokers through gamified training, incentives, and mandating Mashroi™ use for all DLD-related activities.",
+                                    "<b>Data Accuracy for AI Scoring:</b> Ensure data quality through multi-source verification and regular AI model audits for bias. Implement human-in-the-loop review for critical AI decisions.",
+                                    "<b>Inter-Agency Coordination:</b> Develop robust, standardized APIs and establish strong MOUs with clear SLAs for seamless data exchange with GDRFA and other bodies."
+                                 ]}
                             ]
                         }
                     ]
@@ -867,3 +944,5 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
         }
     ]
 };
+
+    
