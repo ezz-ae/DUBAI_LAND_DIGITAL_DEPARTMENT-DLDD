@@ -319,7 +319,7 @@ export const technicalBook: TechnicalBook = {
                 },
                 {
                     id: 'chapter-2-2',
-                    title: "EBRAMGPT™: The AI Legal Copilot",
+                    title: "EBRAMGPT™: The AI-Powered Legal Copilot",
                     introduction: [{type: 'paragraph', text: "From Natural Language to Sovereign Smart Contracts on DLDCHAIN™"}],
                     articles: [
                         {
@@ -357,7 +357,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-4',
-                            title: 'Key Functionalities: Comprehensive Legal Assistance',
+                            title: 'Key Functionalities: Comprehensive Legal Assistance on Demand',
                             content: [
                                 {type: 'paragraph', text: 'EBRAMGPT™ offers a comprehensive suite of functionalities that empower users throughout the real estate legal lifecycle, from initial drafting to ongoing management and even dispute resolution.'},
                                 {type: 'subheading', text: 'Bi-directional Language Conversion'},
@@ -398,7 +398,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-5',
-                            title: 'Technical Implementation (Placeholder)',
+                            title: 'Technical Implementation (Placeholder for future expansion)',
                             content: [
                                 {type: 'paragraph', text: 'This section would delve into the detailed technical architecture of EBRAMGPT™, including:'},
                                 {type: 'list', items: [
@@ -412,7 +412,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-6',
-                            title: 'Integration within DLDCHAIN™',
+                            title: 'Integration within DLDCHAIN™: The Central Nervous System of Intelligence',
                             content: [
                                 {type: 'paragraph', text: 'EBRAMGPT™ serves as the intelligent user-facing layer that seamlessly connects stakeholders directly to the core functionalities of DLDCHAIN™. It acts as a bridge between complex blockchain operations and intuitive user experiences.'},
                                 {type: 'list', items: [
@@ -424,7 +424,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-7',
-                            title: 'Benefits & Value Proposition',
+                            title: 'Benefits & Value Proposition: Unlocking Legal Clarity and Trust',
                             content: [
                                 {type: 'paragraph', text: 'EBRAMGPT™ delivers transformative benefits by making legal processes accessible, efficient, and intelligent for all DLDCHAIN™ participants.'},
                                 {type: 'list', items: [
@@ -453,81 +453,154 @@ export const technicalBook: TechnicalBook = {
                 },
                 {
                     id: 'chapter-2-3',
-                    title: 'Mashroi™: The Intelligence Grid',
+                    title: "Mashroi™: The Nation’s Real Estate Intelligence Grid",
                     introduction: [{type: 'paragraph', text: "A New Paradigm for HR Governance in Real Estate"}],
                     articles: [
                         {
                             id: 'article-2-3-1',
-                            title: 'Introduction & Core Functionality',
+                            title: 'Introduction: The First Governmental Governless Contribution-Based System',
                             content: [
-                                {type: 'paragraph', text: 'Mashroi™ is positioned as a pivotal, innovative component within Dubai\'s DLDCHAIN™ ecosystem, serving as "The Nation’s Real Estate Intelligence Grid." It is fundamentally designed as a "Hyper Intelligence bridging and Contribution based empowerment System," representing "the first ever governmental governless Contribution based empowerment and rewarding system." Its core philosophy dictates that it is "not designed to give people what they want, but what they deserve, hyper intelligence machine learning experience empowers user based on consistency and reward by achievements." Mashroi™ is not merely an application, but rather "the real estate merit system real estate industry never had, built not to serve opinions — but to reward contributions."'},
-                                {type: 'minorheading', text: 'Core Functionality'},
-                                {type: 'list', items: [
-                                    "<b>Broker Licensing and Education Platform:</b> Serves as the official governmental platform for individuals to register as brokers, gain knowledge through accredited courses, and obtain official licenses. Includes AI assistants for personalized learning support.",
-                                    "<b>Smart Visa Issuance and Management:</b> Offers a \"3-month renewable digital visa\" for qualified real estate professionals, directly addressing informal employment and integrating with GDRFA.",
-                                    "<b>Compliance and Ethical Tracking Hub:</b> Implements \"Automated Fines\" and uses AI \"watchers\" to monitor for fraud and misinformation.",
-                                    "<b>Performance and Career Development:</b> Rewards real contributions, not just titles, connecting human effort to real estate in a smart and fair way based on verifiable performance.",
-                                    "<b>Interactive Connection System:</b> Features a private \"Handshake Feed\" for professionals to network and collaborate.",
-                                    "<b>Mashroi™ Digital Events:</b> A groundbreaking interactive platform that transforms how the industry connects, communicates, and collaborates."
-                                ]}
+                                {type: 'paragraph', text: 'Mashroi™ is positioned as a pivotal, innovative component within Dubai\'s DLDCHAIN™ ecosystem, serving as "The Nation’s Real Estate Intelligence Grid." It is fundamentally designed as a "Hyper Intelligence bridging and Contribution based empowerment System," representing "the first ever governmental governless Contribution based empowerment and rewarding system." Its core philosophy dictates that it is "not designed to give people what they want, but what they deserve, hyper intelligence machine learning experience empowers user based on consistency and reward by achievements." Mashroi™ is not merely an application, but rather "the real estate merit system real estate industry never had, built not to serve opinions — but to reward contributions." Indeed, it is described as "a newest and bigest AI real estate network that smarter than ever," actively fostering industry connections and collaborations through innovative digital experiences like its Digital Events platform.'},
+                                {type: 'paragraph', text: 'Mashroi™ is an original national innovation authored by the creator of DLDCHAIN™, offered "without ownership claims" to become an integral part of Dubai’s official real estate infrastructure. This system replaces outdated models prevalent in the real estate sector, such as offline licensing, unverified brokerage practices, informal hiring, and talent migration gaps. By doing so, it transforms the real estate landscape into a "smart, sovereign, self-learning ecosystem" that is run by AI, audited by Dubai, and accessible to all. It operates purely on live interactions, ensuring data is always current and accurate.'}
                             ]
                         },
                         {
                             id: 'article-2-3-2',
-                            title: 'Mashroi™ Digital Events: The Live Connection Hub',
+                            title: 'Core Functionality: A Comprehensive Hub for Real Estate Professionals',
                             content: [
-                                {type: 'paragraph', text: 'Mashroi™ Digital Events introduces a groundbreaking interactive platform within the Mashroi™ ecosystem that fundamentally transforms how the real estate industry connects. It moves beyond static webinars towards an immersive, verified, and intelligent live experience for project launches, policy announcements, and professional networking.'},
-                                {type: 'minorheading', text: 'Key Features'},
+                                {type: 'paragraph', text: 'Mashroi™ is conceived as a comprehensive hub to control, arrange, and manage real estate professionals in Dubai. It fundamentally redefines the relationship between talent, regulation, and market activity, moving beyond traditional HR to a merit-based, hyper-intelligent system.'},
+                                {type: 'subheading', text: 'Broker Licensing and Education Platform'},
                                 {type: 'list', items: [
-                                    "<b>Interactive Launchpads:</b> Developers host virtual, immersive launches for new projects with 3D walkthroughs and live Q&A.",
-                                    "<b>Advanced Audience Engagement:</b> Real-time Q&A, polls, robust live chat, and virtual breakout rooms for networking.",
-                                    "<b>Seamless Media Integration:</b> Provides secure channels for media invites, exclusive press kits, and direct interviews.",
-                                    "<b>AI-Driven Insights:</b> Leverages Mashroi's deep AI for audience segmentation, real-time engagement analytics, and sentiment analysis."
+                                    '<b>Official Platform:</b> Serves as the official governmental platform for individuals to register as brokers, gain knowledge through accredited courses, and obtain official licenses. This centralizes and legitimizes the licensing process.',
+                                    '<b>"School of Real Estate Blockchain":</b> Provides gamified smart learning paths, ensuring professionals are educated on DLDCHAIN™ protocols, smart contracts, and AI-driven processes. This fosters continuous learning and adaptation to new technologies.',
+                                    '<b>AI Assistants and Performance Analysis:</b> Includes AI assistants for personalized learning support and "my sales call evaluation and deep analysis," providing targeted feedback and suggesting best learning topics based on individual performance.',
+                                    '<b>Tiered Licensing:</b> Defines clear tiers for licensing and education, aligning with professional capabilities and contributions, allowing for career progression and recognition.'
                                 ]},
-                                {type: 'minorheading', text: 'Business Benefits'},
+                                {type: 'subheading', text: 'Smart Visa Issuance and Management'},
                                 {type: 'list', items: [
-                                    "<b>For Developers:</b> Reduced event costs, wider reach to qualified investors, and accelerated sales cycles.",
-                                    "<b>For Brokers:</b> Direct access to new opportunities, networking with leaders, and enhanced professional credibility.",
-                                    "<b>For DLD:</b> Enhanced transparency, a direct communication channel for policies, and rich data insights for market management."
+                                    '<b>Direct Visa-Issuing Solution:</b> Offers a "3-month renewable digital visa" for qualified real estate professionals, directly addressing the issue of brokerage companies hiring without proper visa sponsorship and eliminating informal employment.',
+                                    '<b>Platform-Based Renewal:</b> Visas are renewable directly from the Mashroi™ platform, which can trigger smart exams or compliance checks for renewal, streamlining bureaucratic processes.',
+                                    '<b>Integration with GDRFA:</b> Seamlessly integrates with the General Directorate of Residency and Foreigners Affairs (GDRFA) for broker ID verification and residency status checks, ensuring compliance with immigration laws.'
+                                ]},
+                                {type: 'subheading', text: 'Compliance and Ethical Tracking Hub'},
+                                {type: 'list', items: [
+                                    '<b>Automated Fines:</b> Implements "Automated Fines" via DLD payment rails for non-compliance or ethical breaches, ensuring consistent and immediate enforcement.',
+                                    '<b>Proactive Monitoring:</b> "Mashroi™ watchers and secret eyes" leverage AI to monitor social media, cold calls, and unverified information, proactively flagging potential fraud or misinformation before it impacts the market.',
+                                    '<b>API Call Monitoring:</b> All API calls made by professionals are monitored for abuse or suspicious activity, ensuring data integrity and ethical conduct across all digital interactions.',
+                                    '<b>Mandatory Gateway:</b> Fully integrated into DLD and RERA as a mandatory gateway, similar to Ejari, ensuring all real estate activities are channeled through a compliant framework.'
+                                ]},
+                                {type: 'subheading', text: 'Performance and Career Development: The "Real Estate Merit System"'},
+                                {type: 'list', items: [
+                                    '<b>Contribution-Based Empowerment:</b> Rewards real workers and contributions, not just title holders, connecting human effort to real estate in a smart and fair way, based on verifiable performance.',
+                                    '<b>"The more you learn, the more the city learns about you":</b> A philosophy emphasizing continuous learning and verified performance.',
+                                    '<b>Legally Binding Governance:</b> Performance metrics and ethical conduct are tied to legally binding governance within the DLDCHAIN™ ecosystem.',
+                                    '<b>Career Progression Programs:</b> Includes "Reep - Real Estate Entrepreneurship Program" and "Learn & Earn" initiatives, fostering professional growth and talent retention.',
+                                    '<b>Freelancer Management:</b> Mashroi™ manages freelancers until they are linked to an organization. High-performing freelancers can be hired by companies, but hiring will be rejected if the company is not qualified, ensuring quality in recruitment.',
+                                    '<b>Team Formation and Hiring Suggestions:</b> Acts as a governor, pricing individuals with "zero intent," and working with companies for better team formation, including learning plans and hiring suggestions for new brokers.',
+                                    '<b>Eliminating Market Cheating:</b> Commissions and salaries are determined by the system based on simulated rates, beta trials, market maker judgments, and EBRAMGPT™ node testing before official launch, aiming to eliminate unethical practices and ensure fair compensation.'
+                                ]},
+                                {type: 'subheading', text: 'Interactive Connection System (Social-Logic Layer)'},
+                                {type: 'list', items: [
+                                    '<b>Community Engagement:</b> Features "Agree/Disagree" options on learning modules, fostering peer interaction and collective intelligence within the professional community.',
+                                    '<b>"Handshake Feed":</b> A private connection system for professionals to network and collaborate, building a trusted professional network.',
+                                    '<b>"Searchable Network":</b> Professionals can be searched based on skills, knowledge, and verified performance, facilitating talent discovery and collaboration.'
+                                ]},
+                                {type: 'subheading', text: 'User Experience'},
+                                {type: 'list', items: [
+                                    '<b>Simplicity and Accessibility:</b> Designed with "no interface burden," "zero tech literacy," and "zero learning curve," ensuring ease of adoption for all professionals, regardless of their technical background.',
+                                    '<b>Multilingual Support:</b> Supports multilingual availability for global accessibility and emotional resonance, ensuring broad appeal.'
                                 ]}
                             ]
                         },
                         {
                             id: 'article-2-3-3',
-                            title: 'Technical Architecture & Strategic Integration',
+                            title: 'Mashroi™ Digital Events: The Industry\'s Live Connection Hub',
                             content: [
-                                {type: 'paragraph', text: 'Mashroi™\'s architecture is fundamentally AI-driven, designed for continuous learning, adaptation, and deep integration across governmental systems, making it a truly "smart, sovereign, self-learning ecosystem."'},
-                                {type: 'minorheading', text: 'Technical Components'},
+                                {type: 'paragraph', text: 'Mashroi™ Digital Events introduces a groundbreaking interactive platform within the Mashroi™ ecosystem that fundamentally transforms how the real estate industry connects, communicates, and collaborates. It creates a truly immersive, verified, and intelligent live experience, acting as an easy way for all industry professionals to completely connect in one place and one time.'},
+                                {type: 'subheading', text: 'Core Purpose & Vision'},
                                 {type: 'list', items: [
-                                    "<b>AI Algorithms:</b> Utilizes sophisticated machine learning models for risk identification, talent gap prediction, and personalized learning paths for brokers.",
-                                    "<b>Digital Visa System:</b> Detailed architecture for the 3-month renewable digital visa, including its interaction with GDRFA APIs and cryptographic proofs for ID verification.",
-                                    "<b>Compliance Rule Engine:</b> Specifications for the rule engine that automates compliance checks, fine issuance, and ethical tracking, driven by AI monitoring."
+                                    '<b>Connecting the Ecosystem:</b> It directly links developers, brokers, investors, media, government officials, and other industry professionals in real-time, fostering unprecedented collaboration and transparency.',
+                                    '<b>Beyond Physical Events:</b> It transcends the limitations of traditional, location-bound physical events by offering scalable, accessible, and data-rich virtual experiences. This democratizes participation and expands reach.',
+                                    '<b>Centralized Industry Hub:</b> Positioned as the authoritative platform for all major real estate industry launches, announcements, policy discussions, and professional interviews. This establishes a single source of truth for industry news and insights.',
+                                    '<b>Enhanced Engagement:</b> Designed for high interactivity, ensuring participants are not just passive viewers but active contributors to discussions and decisions.'
                                 ]},
-                                {type: 'minorheading', text: 'Strategic Positioning'},
+                                {type: 'subheading', text: 'Key Functionalities & Features'},
                                 {type: 'list', items: [
-                                    "<b>Mandatory Gateway:</b> Fully integrated into DLD and RERA as a mandatory gateway, similar to Ejari, ensuring all real estate activities are channeled through a compliant framework.",
-                                    "<b>AI Synergy:</b> Provides critical data to EBRAM™'s AI-Weighted Node System for market logic intelligence and risk assessments (e.g., broker reliability impacting property valuation).",
-                                    "<b>Profit Channels:</b> Generates attributable revenue streams through compliance gates, visa fees, API licensing, and digital event monetization, ensuring DLDCHAIN™'s sustainability."
+                                    '<b>Interactive Launchpads:</b> Developers host virtual, immersive launches for new projects with 3D walkthroughs and live Q&A.',
+                                    '<b>Advanced Audience Engagement Tools:</b> Real-time Q&A, polls, robust live chat, and virtual breakout rooms for networking.',
+                                    '<b>Seamless Media Integration:</b> Provides secure channels for media invites, exclusive press kits, and direct interviews.',
+                                    '<b>Enhanced Market Connection & Lead Generation:</b> Facilitates direct access to Mashroi™-qualified professionals, enhancing lead generation.',
+                                    '<b>AI-Driven Insights & Analytics:</b> Leverages Mashroi\'s deep AI for audience segmentation, real-time engagement analytics, and sentiment analysis.'
                                 ]}
                             ]
                         },
                         {
                             id: 'article-2-3-4',
-                            title: 'Security & Challenges',
+                            title: 'Technical Architecture & Strategic Integration',
                             content: [
-                                 {type: 'paragraph', text: 'Mashroi™ ensures high levels of security and compliance through embedded mechanisms, contributing significantly to the overall integrity and trustworthiness of the DLDCHAIN™ ecosystem.'},
-                                 {type: 'minorheading', text: 'Security Measures'},
-                                 {type: 'list', items: [
-                                    "<b>Verifiable Credentials:</b> Professional credentials (licenses, certifications) are tied to verified digital identities on DLDCHAIN™, providing immutable proof of qualification.",
-                                    "<b>Automated Enforcement:</b> AI-driven enforcement of compliance rules and automated fines ensures consistent application of regulations.",
-                                    "<b>Audit Trails:</b> All professional activities, compliance checks, and disciplinary actions are recorded on-chain, providing immutable audit trails."
-                                 ]},
-                                 {type: 'minorheading', text: 'Challenges and Mitigations'},
-                                 {type: 'list', items: [
-                                    "<b>User Adoption:</b> Overcome resistance from traditional brokers through gamified training, incentives, and mandating Mashroi™ use for all DLD-related activities.",
-                                    "<b>Data Accuracy for AI Scoring:</b> Ensure data quality through multi-source verification and regular AI model audits for bias. Implement human-in-the-loop review for critical AI decisions.",
-                                    "<b>Inter-Agency Coordination:</b> Develop robust, standardized APIs and establish strong MOUs with clear SLAs for seamless data exchange with GDRFA and other bodies."
-                                 ]}
+                                {type: 'paragraph', text: 'Mashroi™\'s architecture is fundamentally AI-driven, designed for continuous learning, adaptation, and deep integration across governmental systems, making it a truly "smart, sovereign, self-learning ecosystem."'},
+                                {type: 'subheading', text: 'AI Algorithms'},
+                                {type: 'list', items: [
+                                    "<b>Risk Identification:</b> Algorithms for identifying compliance risks, unethical behavior patterns, and potential fraud among professionals.",
+                                    "<b>Talent Gap Prediction:</b> Models for predicting future talent needs in the real estate market and suggesting targeted education programs.",
+                                    "<b>Personalization:</b> AI models for personalizing learning paths, recommending relevant courses, and tailoring performance feedback for individual brokers.",
+                                    "<b>Automated Evaluation:</b> AI systems for \"sales call evaluation\" and their integration with communication platforms, providing objective performance insights."
+                                ]},
+                                {type: 'subheading', text: 'Data Schemas & Digital Visa System'},
+                                {type: 'list', items: [
+                                    "<b>Data Models:</b> Comprehensive data models for storing and managing broker profiles, licensing history, performance metrics, and compliance records within DLDCHAIN™.",
+                                    "<b>Visa Implementation:</b> Detailed architecture for the 3-month renewable digital visa, including its interaction with GDRFA APIs and cryptographic proofs for ID verification."
+                                ]},
+                                {type: 'subheading', text: 'Compliance, Privacy & Events Architecture'},
+                                {type: 'list', items: [
+                                    "<b>Compliance Rule Engine:</b> Specifications for the rule engine that automates compliance checks, fine issuance, and ethical tracking, driven by AI monitoring (\"Mashroi™ watchers and secret eyes\").",
+                                    "<b>Data Privacy:</b> Strict protocols for data privacy within Mashroi™, ensuring compliance with UAE Data Protection Law and ethical AI deployment.",
+                                    "<b>Digital Events Tech:</b> The technical architecture for Digital Events includes robust streaming protocols (WebRTC, HLS/DASH), real-time communication (WebSockets), identity-based access control, high scalability via cloud-native design, and an analytics backend using DLDCHAIN™ for immutable logging."
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-3-5',
+                            title: 'Integration, Positioning & Revenue',
+                            content: [
+                                {type: 'subheading', text: 'Integration with DLDCHAIN™ Ecosystem'},
+                                {type: 'list', items: [
+                                    "<b>Mandatory Gateway:</b> Fully integrated into DLD and RERA as a mandatory gateway, ensuring all real estate activities are channeled through a compliant framework.",
+                                    "<b>Data Flow:</b> Facilitates seamless data flow for broker licensing, smart visa issuance, and continuous ethical tracking within the broader DLDCHAIN™ data fabric.",
+                                    "<b>AI Synergy:</b> Provides critical data to EBRAM™'s AI-Weighted Node System for market logic intelligence and risk assessments (e.g., broker reliability impacting property valuation)."
+                                ]},
+                                {type: 'subheading', text: 'Strategic Positioning: A Sovereign, Self-Learning Ecosystem'},
+                                {type: 'list', items: [
+                                    "<b>Original National Innovation:</b> Authored as an original national innovation without ownership claims, designed to become an integral part of Dubai’s official real estate infrastructure.",
+                                    "<b>Governmental Governless System:</b> Positioned as the \"first ever governmental governless Contribution based empowerment and rewarding system,\" signifying a shift towards automated, merit-based governance.",
+                                    "<b>AI-Driven Ecosystem:</b> Functions as a \"smart, sovereign, self-learning ecosystem\" that is run by AI, audited by Dubai, and accessible to all."
+                                ]},
+                                {type: 'subheading', text: 'Profit Channels'},
+                                {type: 'list', items: [
+                                    "<b>Compliance Gate Revenues:</b> Generated from all regulatory interactions, including fines and licensing fees.",
+                                    "<b>Broker Visa Revenue:</b> From the issuance and renewals of the 3-month renewable smart visas.",
+                                    "<b>Public API Licensing:</b> Licensing access to Mashroi™'s regulated data and functionalities.",
+                                    "<b>Digital Events Monetization:</b> Revenue from premium event hosting tiers, sponsorships, and lead generation fees."
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-3-6',
+                            title: 'Security, Compliance & Challenges',
+                            content: [
+                                {type: 'subheading', text: 'Security & Compliance: Building Professional Trust'},
+                                {type: 'list', items: [
+                                    '<b>Verifiable Credentials:</b> Professional credentials (licenses, certifications, performance records) are tied to verified digital identities on DLDCHAIN™, enhancing trust and reducing fraudulent claims.',
+                                    '<b>Automated Enforcement:</b> AI-driven enforcement of compliance rules and automated fines ensures consistent application of regulations, reducing manual oversight.',
+                                    '<b>Audit Trails:</b> All professional activities, compliance checks, and disciplinary actions are recorded on-chain, providing immutable audit trails.'
+                                ]},
+                                {type: 'subheading', text: 'Challenges and Mitigations (Technical/Operational)'},
+                                {type: 'list', items: [
+                                    '<b>User Adoption and Behavioral Change:</b> Overcome resistance from traditional brokers through gamified training, incentives, and mandating Mashroi™ use for all DLD-related activities.',
+                                    '<b>Data Accuracy for AI Scoring:</b> Ensure data quality through multi-source verification and regular AI model audits for bias. Implement human-in-the-loop review for critical AI decisions.',
+                                    '<b>Inter-Agency Coordination for Visa/Licensing:</b> Develop robust, standardized APIs and establish strong inter-agency MOUs with clear SLAs for data exchange.',
+                                    '<b>Preventing Circumvention:</b> Strict enforcement by DLD and RERA. Developers and property portals mandated to verify Mashroi™ credentials.'
+                                ]}
                             ]
                         }
                     ]
@@ -944,5 +1017,3 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
         }
     ]
 };
-
-    
