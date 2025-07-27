@@ -958,8 +958,8 @@ export const technicalBook: TechnicalBook = {
                 },
                 {
                     id: 'chapter-2-5',
-                    title: "Liquidity on DLDCHAIN™: A Paradigm Shift in Real Estate Finance",
-                    introduction: [{type: 'paragraph', text: 'The Sovereign Architecture of Immutability, Accessibility, and Trust.'}],
+                    title: "Liquidity on DLDCHAIN™: The Sovereign Architecture of Trust",
+                    introduction: [{type: 'paragraph', text: 'A Paradigm Shift in Real Estate Finance'}],
                     articles: [
                         {
                             id: 'article-2-5-1',
@@ -1305,7 +1305,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
             chapters: [
                 {
                     id: 'chapter-4-1',
-                    title: 'The Governance of DLDCHAIN™',
+                    title: 'The Governance of DLDCHAIN™: Sovereign Control, Unified Authority, and Global Leadership',
                     introduction: [{type: 'paragraph', text: "A Protocol Built on Trust, Independence, and Collective Foresight"}],
                     articles: [
                         {
@@ -1323,7 +1323,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                                 {type: 'subheading', text: 'From Regulator to Operator: Active Governance of the Digital Rails'},
                                 {type: 'list', items: [
                                     "<b>Paradigm Shift:</b> DLD evolves from merely regulating existing digital platforms to actively controlling and operating the underlying digital infrastructure of the entire real estate market. This ensures that national interests, data integrity, and system stability are paramount, safeguarding the industry from external influences and speculative interests.",
-                                    "<b>Chain Governor Role:</b> DLDD directly serves as the Chain Governor. This includes creating and verifying immutable digital identities for every property (EBRAMINT™), overseeing all on-chain contracts and registrations, and issuing/managing the UAE Digital Dirham (DLD-AED).",
+                                    "<b>Chain Governor Role:</b> DLDD directly serves as the Chain Governor. This includes creating and verifying immutable digital identities for every property through the EBRAMINT™ process, establishing the definitive source of urban truth.",
                                     "<b>Ultimate Authority:</b> DLDD holds the veto power and the highest voting weight within the DLDCHAIN™ Governing Council. This ensures that strategic decisions consistently align with Dubai’s vision and national objectives."
                                 ]},
                                 {type: 'subheading', text: 'Government-Backed Fintech Constitution: The Unbreakable Legal Framework'},
@@ -1507,7 +1507,13 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                             content: [
                                 {type: 'paragraph', text: 'Traditional real estate markets, despite their immense value, often struggle with inefficiencies, opacity, and fragmented value capture. Gains are often concentrated, and operational friction can diminish overall market health. DLDCHAIN™ represents a fundamental shift from this paradigm, establishing a truly integrated, transparent, and mutually beneficial ecosystem where every part of the market earns, directly or indirectly, from its operation.'},
                                 {type: 'subheading', text: 'Core Principle: Mutual Value Creation'},
-                                {type: 'paragraph', text: 'By seamlessly integrating legal, financial, and operational layers, DLDCHAIN™ transforms individual processes into a cohesive ecosystem where efficiencies gained in one area translate into benefits across others. This ensures that value is not merely transferred but amplified and distributed across the entire real estate value chain.'}
+                                {type: 'paragraph', text: 'By seamlessly integrating legal, financial, and operational layers, DLDCHAIN™ transforms individual processes into a cohesive ecosystem where efficiencies gained in one area translate into benefits across others. This interconnectedness ensures:'},
+                                {type: 'list', items: [
+                                    "<b>Transparency Fuels Trust:</b> Real-time, immutable records foster unprecedented trust, attracting more participants and capital.",
+                                    "<b>Automation Drives Efficiency:</b> Reduced manual overhead and accelerated transactions free up resources and time for all.",
+                                    "<b>Liquidity Unlocks Capital:</b> Fractional ownership and guaranteed liquidity transform dormant assets into dynamic investment opportunities.",
+                                    "<b>AI Enhances Fairness:</b> Algorithmic pricing and compliance ensure predictable and just outcomes, minimizing disputes and manipulation."
+                                ]}
                             ]
                         },
                         {
