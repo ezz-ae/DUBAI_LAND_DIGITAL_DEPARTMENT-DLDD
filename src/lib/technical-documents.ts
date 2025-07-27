@@ -734,7 +734,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-3-2',
-                            title: 'Core Functionality: A Comprehensive Hub for Professionals',
+                            title: 'Core Functionality: A Comprehensive Hub for Real Estate Professionals',
                             content: [
                                 {type: 'paragraph', text: 'Mashroi™ is conceived as a comprehensive hub to control, arrange, and manage real estate professionals in Dubai. It fundamentally redefines the relationship between talent, regulation, and market activity, moving beyond traditional HR to a merit-based, hyper-intelligent system.'},
                                 {type: 'minorheading', text: 'Broker Licensing and Education Platform'},
@@ -903,6 +903,23 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-4-4',
+                            title: 'Liquidity & Trading Mechanisms: The MAKE™ System',
+                             content: [
+                                {type: 'paragraph', text: 'The MAKE™ System is DLDCHAIN™\'s sovereign financial layer, designed to govern liquidity. It functions as an internal, non-public, and strictly permissioned liquidity infrastructure, ensuring that every DXBTOKEN™ is 100% AED-backed.'},
+                                {type: 'minorheading', text: 'MAKE™ Event Lifecycle'},
+                                {type: 'list', items: [
+                                   '<b>MAKELIST & MAKETRADE:</b> Property is listed as a candidate. An LPO signals interest.',
+                                   '<b>MAKE_ID (Writer Event):</b> LPO deposits 100% AED. EBRAM™ executes MAKE_ID, formally registering the token ID.',
+                                   '<b>MAKE_IN (Trading Activation):</b> Tokens activate for trading. Original owner receives 60% AED cash and 40% DXBTOKENS™.',
+                                   '<b>MAKE_OUT (Temporary Exit):</b> Temporarily detaches DXBTOKENS™ from the liquidity pool.',
+                                   '<b>MAKE_DISMISS (Final Exit):</b> Triggered by 90%+ ownership claim. It "un-tokenizes" the property.'
+                                ]},
+                                {type: 'minorheading', text: 'Escrowship Doctrine'},
+                                {type: 'paragraph', text: 'A unique, cryptographically enforced security lock: Owner ≠ Trader. If a token is in an escrowed state (trade=true), its owner=false for direct legal utility.'}
+                            ]
+                        },
+                        {
+                            id: 'article-2-4-5',
                             title: 'Security & Legal Fidelity',
                             content: [
                                  {type: 'paragraph', text: 'DXBTOKENS™ are underpinned by DLDCHAIN™\'s multi-layered security framework and unwavering legal fidelity, ensuring unprecedented trust and enforceability.'},
@@ -916,7 +933,7 @@ export const technicalBook: TechnicalBook = {
                             ]
                         },
                          {
-                            id: 'article-2-4-5',
+                            id: 'article-2-4-6',
                             title: 'Market Impact & Opportunities',
                             content: [
                                  {type: 'paragraph', text: 'DXBTOKENS™ are poised to redefine the real estate market by unlocking true liquidity and attracting unprecedented capital, positioning Dubai as a global leader.'},
@@ -1435,158 +1452,159 @@ export const technicalBook: TechnicalBook = {
     appendices: [
         {
             id: 'appendix-a',
-            title: "Appendix A: Smart Contract Pseudo-Code",
+            title: "Appendix A: Glossary of Key Business & Strategic Terms and Acronyms",
             content: [
-                {type: 'paragraph', text: 'This appendix provides a high-level pseudo-code representation of the core `DLDCHAIN_TokenPool` smart contract, illustrating the key functions and logic that govern the tokenization lifecycle on Hyperledger Fabric. This Chaincode would be written in a supported language like Go, Node.js, or Java.'},
-                {type: 'code', text: `
-// DLDCHAIN_TokenPool Chaincode (Hyperledger Fabric)
-
-// PoolState defines the structure for each tokenized property pool
-type PoolState struct {
-    DocType             string              \`json:"docType"\` // "PoolState"
-    PoolID              string              \`json:"poolId"\`
-    PropertyCDID        string              \`json:"propertyCDID"\`
-    OwnerWalletID       string              \`json:"ownerWalletId"\`
-    LPOTokenWalletID    string              \`json:"lpoTokenWalletId"\`
-    TotalValueAED       uint64              \`json:"totalValueAED"\`
-    TotalTokens         uint64              \`json:"totalTokens"\`
-    Status              string              \`json:"status"\` // "MakeListed", "MakeID", "MakeIn", "MakeOut", "MakeDismissed"
-    TokenBalances       map[string]uint64   \`json:"tokenBalances"\` // mapping walletID to balance
-}
-
-// --- CORE LIFECYCLE FUNCTIONS (INVOKABLE ONLY BY EBRAM CONTRACT) ---
-
-// makeID: LPO commits funds, DXBTOKENS are minted and registered.
-// This function is triggered by the EBRAM contract after validating the LPO's off-chain fund deposit.
-func (s *SmartContract) MakeID(ctx contractapi.TransactionContextInterface, poolId string, lpoWalletId string, value uint64, ownerWalletId string, propertyCDID string, sizeSqFt uint64) error {
-    
-    // Authorization Check: Must be called by the EBRAM Chaincode
-    // ... logic to verify caller's identity ...
-
-    // Create the new pool state
-    pool := PoolState{
-        DocType:          "PoolState",
-        PoolID:           poolId,
-        PropertyCDID:     propertyCDID,
-        OwnerWalletID:    ownerWalletId,
-        LPOTokenWalletID: lpoWalletId,
-        TotalValueAED:    value,
-        TotalTokens:      sizeSqFt, // 1 token per sq ft
-        Status:           "MakeID",
-        TokenBalances:    make(map[string]uint64),
-    }
-
-    // Initialize the total token supply in the LPO's wallet (custodial)
-    pool.TokenBalances[lpoWalletId] = pool.TotalTokens;
-
-    // Persist the new pool state to the world state
-    poolJSON, _ := json.Marshal(pool)
-    return ctx.GetStub().PutState(poolId, poolJSON)
-}
-
-// makeIn: Distribute tokens from LPO custodial wallet and activate pool for trading.
-func (s *SmartContract) MakeIn(ctx contractapi.TransactionContextInterface, poolId string) error {
-    
-    // Authorization Check: Must be called by the EBRAM Chaincode
-    // ...
-
-    pool, err := s.getPoolState(ctx, poolId)
-    if err != nil { return err }
-    if pool.Status != "MakeID" { return fmt.Errorf("pool not in MAKE_ID status") }
-
-    // Calculate token distribution
-    ownerTokens := (pool.TotalTokens * 40) / 100
-    marketTokens := (pool.TotalTokens * 55) / 100
-    feeTokens := pool.TotalTokens - ownerTokens - marketTokens // Remaining 5%
-
-    // Transfer tokens from LPO custodial wallet
-    pool.TokenBalances[pool.LPOTokenWalletID] -= (ownerTokens + marketTokens + feeTokens)
-    pool.TokenBalances[pool.OwnerWalletID] += ownerTokens
-    pool.TokenBalances["MARKET_POOL_WALLET"] += marketTokens
-    pool.TokenBalances["FEE_WALLET"] += feeTokens
-
-    // EBRAM handles the 60% cash payout to owner off-chain or via another integrated system
-
-    pool.Status = "MakeIn"
-    poolJSON, _ := json.Marshal(pool)
-    return ctx.GetStub().PutState(poolId, poolJSON)
-}
-
-// makeDismiss: Final exit from the pool, "un-tokenizes" the asset.
-func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface, poolId string) error {
-    
-    // Authorization Check: Must be called by the EBRAM Chaincode
-    // ...
-
-    pool, err := s.getPoolState(ctx, poolId)
-    if err != nil { return err }
-
-    // EBRAM performs MPT calculation and final fund distribution off-chain
-
-    // Burn/retire all tokens associated with this pool
-    pool.TotalTokens = 0
-    pool.TokenBalances = make(map[string]uint64) // Clear all balances
-    pool.Status = "MakeDismissed"
-
-    poolJSON, _ := json.Marshal(pool)
-    return ctx.GetStub().PutState(poolId, poolJSON)
-}
-`}
+                {type: 'paragraph', text: "<b>AI-Weighted Node System:</b> An EBRAM™ component that uses AI to dynamically influence property valuations, pricing, and risk scores based on various real-world and on-chain events, ensuring fair market value."},
+                {type: 'paragraph', text: "<b>CDID (City Digital ID):</b> A unique, immutable digital identifier assigned to every real estate asset in Dubai within the DLDCHAIN™ system, serving as its foundational digital identity."},
+                {type: 'paragraph', text: "<b>D-EBRAMINT™ (De-EBRAMINT™):</b> The finalization event that formally closes a token pool within the EBRAM™ system and \"un-tokenizes\" a property, ending its active tokenization lifecycle."},
+                {type: 'paragraph', text: "<b>DLD-AED (Dubai Land Department Digital Dirham):</b> The DLD-issued stablecoin, pegged 1:1 to the UAE Dirham, serving as the exclusive medium of exchange for all transactions within the DLDCHAIN™ ecosystem."},
+                {type: 'paragraph', text: "<b>DXBTOKENS™:</b> Fractionalized, value-centric digital assets representing verifiable shares of physical, DLD-registered properties (1 sqft = 1 token). Their value is unlinked from rental income, focusing on capital appreciation."},
+                {type: 'paragraph', text: "<b>EBRAM™ (Emirates Blockchain Real-estate Agreement Management):</b> The core smart contract system and legal-transactional programming language of DLDCHAIN™, designed to automate, verify, and enforce real estate agreements (\"the law, coded and automated\")."},
+                {type: 'paragraph', text: "<b>EBRAMGPT™:</b> An AI-powered Legal Copilot that serves as the natural language interface for EBRAM™, democratizing legal drafting and providing insights."},
+                {type: 'paragraph', text: "<b>EBRAMINT™:</b> The foundational act of formally digitizing and registering a property's agreement onto the DLDCHAIN™ blockchain via EBRAM™, creating its immutable digital identity."},
+                {type: 'paragraph', text: "<b>EBRAM ML NOTES™:</b> A collective intelligence layer within EBRAM™ where authorized experts contribute to refine evolving real estate contract intelligence, enabling continuous learning and adaptation of legal logic."},
+                {type: 'paragraph', text: "<b>Escrowship:</b> A temporary state where DXBTOKENS™ are held within a MAKE™ Pool, enabling trading but not direct legal ownership or utility rights (e.g., cannot apply for DEWA). The MAKE™ Pool Officer acts as the legal holder/custodian in this state."},
+                {type: 'paragraph', text: "<b>Hyperledger Fabric:</b> The enterprise-grade, permissioned blockchain platform forming the immutable core of DLDCHAIN™, chosen for its security, privacy, and scalability in regulated environments."},
+                {type: 'paragraph', text: "<b>Liquidity Pool Officer (LPO):</b> A verified MAKE™ signer, typically a regulated financial institution, responsible for underwriting and maintaining liquidity within MAKE™ Pools."},
+                {type: 'paragraph', text: "<b>MAKE™ System:</b> DLDCHAIN™'s sovereign financial layer, an internal, non-public liquidity infrastructure that ensures every DXBTOKEN™ is 100% AED-backed, providing certainty in the market."},
+                {type: 'paragraph', text: "<b>MAKE™ Event:</b> A key transaction within the MAKE™ System lifecycle (e.g., MAKELIST, MAKETRADE, MAKE_ID, MAKE_IN, MAKE_OUT, MAKE_DISMISS) that governs liquidity."},
+                {type: 'paragraph', text: "<b>Mashroi™:</b> The AI-powered Real Estate Professional Hub, managing broker licensing, education, compliance, and smart visa issuance, fostering a merit-based professional ecosystem."},
+                {type: 'paragraph', text: "<b>MPT (Market Price Transaction):</b> The final settlement price for a token pool, calculated by EBRAM™'s AI-Weighted Node System, triggered during a MAKE_DISMISS event."},
+                {type: 'paragraph', text: "<b>UNIVESTOR Wallet™:</b> The singular, secure, government-issued digital identity and access point for all DLDCHAIN™ interactions, simplifying user experience with \"zero technical knowledge.\""}
             ]
         },
         {
             id: 'appendix-b',
-            title: 'Appendix B: Governance Framework',
+            title: 'Appendix B: Detailed Revenue Model Breakdown and Projections',
             content: [
-                {type: 'paragraph', text: 'The DLDCHAIN™ is structured as a <b class="text-primary">government-led consortium blockchain</b>, a hybrid model combining the strengths of private and public blockchains. This model ensures the necessary security, privacy, and control required for a regulated industry like real estate, while still benefiting from the decentralization and resilience of multiple trusted stakeholders.'},
-                {type: 'minorheading', text: 'Consortium Membership'},
-                 {type: 'list', items: [
-                    "<strong>Core Consortium Members:</strong> The strategic nucleus includes DLD (Chair, with veto power), VARA (Vice-Chair, regulatory oversight), CBUAE (financial systems), and DFF (driving Innovation).",
-                    "<strong>Strategic Stakeholder Participation:</strong> Major VARA-licensed real estate developers, top-tier financial institutions, and leading licensed real estate brokerage firms are invited to operate nodes, contributing to network security and aligning development with market needs."
-                 ]},
-                 {type: 'minorheading', text: 'Dual-Layer Governance Structure'},
-                 {type: 'list', items: [
-                    "<strong>Business Governance (Governing Council):</strong> Responsible for overall direction, policy, budgets, and IP ownership. Ensures strategic alignment and market relevance.",
-                    "<strong>Operational Governance (Technical Committee):</strong> Manages the live network, security standards, software upgrades, and technical dispute resolution. Ensures smooth and secure functioning of the infrastructure."
-                 ]},
-                 {type: 'minorheading', text: 'On-Chain Governance Mechanisms'},
-                 {type: 'list', items: [
-                    "<strong>Automated Membership Onboarding:</strong> Smart contracts streamline the process of admitting new consortium members based on pre-defined criteria.",
-                    "<strong>Transparent Proposal System:</strong> A formal, immutable log for all governance proposals (e.g., chaincode upgrades), recording status and voting outcomes transparently.",
-                    "<strong>Automated Fee Management:</strong> Smart contracts collect minuscule fees on transactions and distribute funds to a treasury wallet controlled by the Governing Council, ensuring transparent revenue collection."
-                 ]}
+                {type: 'paragraph', text: "This appendix provides a granular breakdown of DLDCHAIN™'s projected revenue streams, demonstrating its financial sustainability and value generation for the Dubai Land Department and other stakeholders."},
+                {type: 'list', items: [
+                    "<b>Transaction Fees:</b> A small percentage fee levied on various on-chain transactions (e.g., property transfers, token trades, smart contract executions).<br><em>Projection:</em> Based on projected transaction volumes (e.g., 1,000+ TPS, scaling to millions of transactions annually), these fees will form a significant and consistent revenue stream.",
+                    "<b>Token Issuance Fees:</b> Fees collected from developers and owners for the EBRAMINT™ process and the initial minting of DXBTOKENS™.<br><em>Projection:</em> Directly tied to the volume of new properties tokenized on the platform, especially from large-scale developer projects.",
+                    "<b>Compliance Gate Revenues (via Mashroi™):</b> Revenues generated from mandatory broker licensing, renewals, and compliance checks through the Mashroi™ platform, including automated fines for non-compliance.<br><em>Projection:</em> Linked to the growth of the professional real estate workforce and enforcement of ethical standards.",
+                    "<b>Broker Visa Revenue (via Mashroi™):</b> Revenue from the issuance and renewal of 3-month digital visas for real estate professionals.<br><em>Projection:</em> Directly tied to the number of international real estate professionals operating in Dubai.",
+                    "<b>Escrow Margin Revenues:</b> Small margins earned on funds held in secure on-chain escrow accounts managed by the MAKE™ System.<br><em>Projection:</em> Directly proportional to the volume and value of transactions utilizing DLDCHAIN™'s escrow services.",
+                    "<b>Public API Licensing:</b> Fees for controlled, permissioned access to DLDCHAIN™'s non-confidential market data via the Open Data Platform API.<br><em>Projection:</em> A growing revenue stream as PropTech startups, financial institutions, and data analytics firms leverage DLDCHAIN™'s verified real-time data.",
+                    "<b>Governance Wallet Allocations:</b> A portion of transaction fees or specific protocol fees allocated directly to the DLDCHAIN™ governance wallet for platform maintenance, security, and future development.",
+                    "<b>Global Licensing Royalties:</b> Revenue generated from licensing the DLDCHAIN™ protocol as a white-label solution to other cities and nations.<br><em>Projection:</em> Significant long-term revenue potential as DLDCHAIN™ becomes a global standard for sovereign digital real estate."
+                ]}
             ]
         },
         {
             id: 'appendix-c',
-            title: "Appendix C: Tokenization Scenarios",
+            title: "Appendix C: Cost-Benefit Analysis for Stakeholders",
             content: [
-                {type: 'paragraph', text: "This appendix provides a detailed, step-by-step walkthrough of distinct tokenization cases, demonstrating how DLDCHAIN™ seamlessly integrates its core components to unlock liquidity, ensure trust, and streamline transactions."},
-                {type: 'minorheading', text: "Scenario 1: Individual Owner (Ready Property)"},
-                {type: 'paragraph', text: "<strong>Context:</strong> An individual owns a ready apartment and wants to sell it quickly without a traditional listing process to unlock immediate liquidity."},
+                {type: 'paragraph', text: "This appendix provides a detailed cost-benefit analysis for key stakeholders, highlighting the tangible value DLDCHAIN™ delivers."},
+                {type: 'subheading', text: "For Dubai Land Department (DLD):"},
                 {type: 'list', items: [
-                    "<strong>Property:</strong> Apartment, Dubai Marina",
-                    "<strong>EBRAM™ Valued Price:</strong> AED 3,200,000",
-                    "<strong>Action:</strong> Owner initiates tokenization via UNIVESTOR Wallet™, facilitated by a Mashroi™ broker.",
-                    "<strong>Outcome:</strong> After MAKE_ID and MAKE_IN events, owner receives <b class='text-primary'>AED 1,920,000 (60%)</b> in instant cash and retains 40% equity as tradable DXBTOKENS™."
+                    "<b>Benefits:</b> Enhanced regulatory control, new revenue streams, reduced operational costs (e.g., manual processing, dispute management), global leadership, improved market integrity.",
+                    "<b>Costs:</b> Initial development and infrastructure investment, ongoing maintenance, talent acquisition."
                 ]},
-                {type: 'minorheading', text: "Scenario 2: Mortgaged Property"},
-                {type: 'paragraph', text: "<strong>Context:</strong> An owner wants to sell a mortgaged villa, efficiently settling the mortgage and unlocking equity."},
-                 {type: 'list', items: [
-                    "<strong>Property:</strong> Villa, Arabian Ranches",
-                    "<strong>EBRAM™ Valued Price:</strong> AED 5,100,000",
-                    "<strong>Outstanding Mortgage:</strong> AED 900,000",
-                    "<strong>Action:</strong> Owner initiates tokenization, disclosing mortgage details. EBRAM™ verifies with the lender.",
-                    "<strong>Outcome:</strong> During MAKE_ID, the LPO's committed funds first pay off the <b class='text-primary'>AED 900,000 mortgage</b>. The owner then receives 60% of their net equity (AED 4.2M), which is <b class='text-primary'>AED 2,520,000</b>."
-                ]},
-                {type: 'minorheading', text: "Scenario 3: Off-Plan Development"},
-                {type: 'paragraph', text: "<strong>Context:</strong> A developer wants to tokenize a luxury off-plan villa to attract early institutional funding."},
+                {type: 'subheading', text: "For Developers:"},
                 {type: 'list', items: [
-                    "<strong>Property:</strong> Off-Plan Villa, Downtown",
-                    "<strong>Asking Price:</strong> AED 11,000,000",
-                    "<strong>Action:</strong> Developer submits project via their Developer Wallet. LPO commits funds.",
-                    "<strong>Outcome:</strong> Developer receives <b class='text-primary'>AED 6,600,000 (60%)</b> for project funding and retains 40% as DXBTOKENS™. As construction milestones are verified on-chain, EBRAM™'s AI automatically adjusts the token price upwards."
+                    "<b>Benefits:</b> Accelerated sales cycles, early capital unlock for off-plan projects, enhanced investor trust, reduced administrative burden, access to a broader investor base.",
+                    "<b>Costs:</b> Tokenization fees, compliance adherence, integration costs."
                 ]},
+                {type: 'subheading', text: "For Brokers (via Mashroi™):"},
+                {type: 'list', items: [
+                    "<b>Benefits:</b> Streamlined licensing, transparent and automated commission payouts, new lead generation tools, enhanced professional credibility and visibility, access to verified property data.",
+                    "<b>Costs:</b> Mashroi™ platform fees, continuous professional development requirements."
+                ]},
+                {type: 'subheading', text: "For Investors:"},
+                {type: 'list', items: [
+                    "<b>Benefits:</b> Instant liquidity for real estate holdings, fractional ownership access, enhanced transparency and security, fiat-only transactions (DLD-AED) eliminating crypto volatility, legal certainty for digital assets (e.g., digital inheritance), access to verified market data.",
+                    "<b>Costs:</b> Transaction fees, tokenization fees (if initiating), potential market spreads."
+                ]},
+                {type: 'subheading', text: "For Tenants:"},
+                {type: 'list', items: [
+                    "<b>Benefits:</b> Simplified rental processes, automated payments, transparent dispute resolution (minutes vs. days), immutable record of tenancy, enhanced trust in landlords and brokers.",
+                    "<b>Costs:</b> DLD-AED wallet setup (minimal), transaction fees (minimal)."
+                ]},
+                {type: 'subheading', text: "For Lenders:"},
+                {type: 'list', items: [
+                    "<b>Benefits:</b> Reduced fraud in mortgage origination, automated servicing, real-time visibility into mortgaged assets, new tokenized finance products, enhanced security for collateral.",
+                    "<b>Costs:</b> Integration costs, compliance reporting setup."
+                ]}
+            ]
+        },
+        {
+            id: 'appendix-d',
+            title: "Appendix D: Market Sizing for Tokenized Real Estate in Dubai (Detailed)",
+            content: [
+                {type: 'paragraph', text: "The DLDCHAIN™ project is poised to unlock a significant portion of Dubai's vast real estate market through tokenization, transforming illiquid assets into a dynamic, globally accessible asset class."},
+                {type: 'list', items: [
+                    "<b>Current Dubai Real Estate Market:</b> (e.g., USD 207 billion in 2024 - as per previous context).",
+                    "<b>Projected Tokenized Market by 2033:</b> Up to 7% of Dubai's total real estate market, equating to a staggering value of AED 60 billion (USD 16 billion)."
+                ]},
+                {type: 'minorheading', text: "Drivers of Market Sizing:"},
+                {type: 'list', items: [
+                    "<b>Enhanced Liquidity:</b> Transforming illiquid physical assets into fractionalized, tradable DXBTOKENS™ drastically increases transaction velocity and attracts investors seeking easier entry/exit.",
+                    "<b>Increased Accessibility:</b> The \"1 sqft = 1 token\" fractional ownership model lowers entry barriers (e.g., minimum investment of AED 2,000 in initial pilots), democratizing access for global retail and institutional investors.",
+                    "<b>Unprecedented Trust & Security:</b> The government-backed nature, immutable blockchain records, and fiat-only (DLD-AED) currency instill unparalleled confidence, crucial for attracting traditional, risk-averse investors.",
+                    "<b>Regulatory Clarity:</b> Dubai's proactive and clear regulatory framework (VARA's classification of RWA tokens as ARVAs) provides legal certainty for issuance and secondary trading, a major competitive advantage.",
+                    "<b>Expansion of Tokenizable Assets:</b> DLDCHAIN™'s philosophy extends beyond rental-income focused properties, enabling the tokenization of empty units, off-plan inventory, and specialized assets like parking spaces, significantly broadening the supply of tokenizable assets."
+                ]}
+            ]
+        },
+        {
+            id: 'appendix-e',
+            title: "Appendix E: Investment Attraction Strategies and Capital Flow Projections (Detailed)",
+            content: [
+                {type: 'paragraph', text: "DLDCHAIN™'s design incorporates strategic elements specifically engineered to attract significant capital flows, both domestically and internationally, positioning Dubai as the premier global hub for tokenized real estate investment."},
+                {type: 'list', items: [
+                    "<b>Targeting Traditional Investors:</b> The explicit \"fiat-only approach\" (DLD-AED) is a cornerstone strategy to appeal directly to traditional investors and financial institutions who are wary of cryptocurrency volatility. This de-risked environment, combined with the underlying real estate asset, provides a familiar and secure investment proposition.",
+                    "<b>Solving for Generational Wealth Transfer:</b> The integration of a legally robust digital asset inheritance protocol, acting as a \"digital executor,\" directly addresses one of the most significant long-term challenges in the digital asset industry: succession planning. This feature provides investors with absolute certainty that their tokenized real estate assets are as secure and inheritable as physical properties. This unique solution is a powerful magnet for long-term, generational capital seeking unparalleled safety and legal certainty.",
+                    "<b>Global Hub for Tokenized Property Exchange:</b> Dubai's ambition to become a \"global tokenized property exchange hub\" will drive significant international capital inflows. By offering a \"gold standard\" issuance chain (DLDCHAIN™) and a regulated secondary market (VARA-licensed exchanges), Dubai will attract projects and investors from across the globe, seeking a trusted and liquid marketplace for real estate assets.",
+                    "<b>Demonstrated Demand:</b> Initial tokenization pilots have already shown overwhelming latent demand. For instance, a second tokenized project was fully funded in a record-breaking one minute and 58 seconds, attracting 149 investors from 35 different nationalities, and generating a waiting list of over 10,700 investors. This proven demand signals a strong appetite for regulated, accessible digital real estate ownership solutions, indicating substantial potential for capital inflows as DLDCHAIN™ scales.",
+                    "<b>Institutional Participation (MAKE™ System):</b> The MAKE™ System, with its Liquidity Pool Officers (LPOs) being regulated financial institutions (banks, escrow offices), ensures deep institutional liquidity. These LPOs actively underwrite tokenized assets, providing the necessary capital backing and confidence for large-scale institutional investment. Their role in owning EBRAMINTED™ property (for liquidity purposes) further solidifies the institutional foundation for capital flows.",
+                    "<b>Transparent and Auditable Capital Flows:</b> Every transaction on DLDCHAIN™, facilitated by DLD-AED, is transparently recorded and auditable by regulatory bodies like the CBUAE. This level of financial transparency reinforces investor confidence and ensures compliance with global AML/CFT standards, making Dubai an attractive destination for legitimate capital."
+                ]}
+            ]
+        },
+        {
+            id: 'appendix-f',
+            title: "Appendix F: Communication and Outreach Strategy Details",
+            content: [
+                {type: 'paragraph', text: "This appendix elaborates on the communication and outreach strategies designed to effectively convey DLDCHAIN™'s vision and value to diverse audiences."},
+                {type: 'list', items: [
+                    "<b>Interactive Landing Page:</b> A \"Netflix x Apple x Dubai Government innovation portal\" aesthetic, motion-driven, designed for maximum impression, engagement, and conversion. It prioritizes a seamless user experience with \"one brilliant insight, one choice\" at a time, animated case studies, smart scenarios previews, and hover-reveal navigation.",
+                    "<b>Multilingual Accessibility:</b> All deliverables (PDFs, interactive site, voiceovers) in English and Arabic (RTL formatting, culturally adapted terminology). Prominent language toggle and auto-contextual switching on the interactive site. Professional voiceovers enhance emotional resonance.",
+                    "<b>Executive Outreach:</b> \"Email Me a Summary\" option for instant personalized PDF briefings, full presentation bundles, and secure viewing links, with anonymized analytics for DLD."
+                ]},
+                {type: 'minorheading', text: "Presentation Bundles:"},
+                {type: 'list', items: [
+                    "<b>Full DLDCHAIN™ Technical & Business Documentation (100+ pages):</b> \"Bitcoin-level documentation.\"",
+                    "<b>High-Impact Slide Deck (20 slides):</b> Visually stunning Keynote/PPT with animated scenarios.",
+                    "<b>Executive Summary (1-Page PDF):</b> Concise overview for quick handovers.",
+                    "<b>Verbal Pitch Framework (5-minute script):</b> Powerful script for internal champions.",
+                    "<b>Final Deployment Pack:</b> Comprehensive bundle including Arabic PDF, interactive landing demo, presentation deck, voiceover script, and teaser email template."
+                ]}
+            ]
+        },
+        {
+            id: 'appendix-g',
+            title: "Appendix G: Implementation Plan (Business View)",
+            content: [
+                {type: 'paragraph', text: "This appendix provides a high-level business view of the implementation roadmap, focusing on strategic milestones and business outcomes."},
+                {type: 'list', items: [
+                    "<b>Phased Approach:</b> A deliberate, four-phase implementation over 36+ months ensures a smooth and successful transition, managing complexity while delivering incremental business value.",
+                    "<b>Phase 1 (12-18 months): Foundation & Governance:</b> Establish core infrastructure, legal, and organizational frameworks. <em>Business Outcome:</em> Secure, compliant, fiat-only environment, attracting traditional investors.",
+                    "<b>Phase 2 (18-24 months): EBRAM™ Pilot:</b> Launch and test EBRAM™ smart contracts for residential leases in a controlled environment. <em>Business Outcome:</em> Validation of streamlined rental processes, quantifiable efficiency gains, enhanced global appeal.",
+                    "<b>Phase 3 (24-36 months): Full Rollout & Secondary Market Integration:</b> Expand EBRAM™ to all leases and pilot DXBTOKEN™ trading. <em>Business Outcome:</em> Comprehensive data integrity, unprecedented liquidity, new class of global investors.",
+                    "<b>Phase 4 (36+ months): Advanced Features & Ecosystem Expansion:</b> Deploy on-chain dispute resolution, digital asset inheritance, and cross-chain interoperability. <em>Business Outcome:</em> Full realization of DLDCHAIN™'s potential, global hub status, continuous innovation.",
+                    "<b>Resource Allocation (Business Perspective):</b> High-level overview of required human capital (e.g., project management, business analysts, legal experts, marketing teams) and financial investment for each phase.",
+                    "<b>Risk Management (Business Perspective):</b> Identification of key business risks (e.g., stakeholder adoption, regulatory resistance, market acceptance) and high-level mitigation strategies."
+                ]}
+            ]
+        },
+        {
+            id: 'appendix-h',
+            title: "Appendix H: Attribution and Intent",
+            content: [
+                {type: 'list', items: [
+                    "<b>Formal Transfer of Rights:</b> Formal transfer of all rights, recognition, and authorship to the Government of Dubai.",
+                    "<b>National Service:</b> Declaration that the system was built to serve the nation, aligning with Dubai's vision for public good and economic leadership."
+                ]}
             ]
         }
     ]
