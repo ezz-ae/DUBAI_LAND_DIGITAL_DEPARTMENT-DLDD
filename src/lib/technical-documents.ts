@@ -153,7 +153,7 @@ export const technicalBook: TechnicalBook = {
                 {
                     id: 'chapter-2-1',
                     title: "EBRAM™: The Intelligent Contract Engine",
-                    introduction: [{type: 'paragraph', text: 'The Law, Coded and Automated, for Dubai\'s Real Estate Future'}],
+                    introduction: [{type: 'paragraph', text: "The Law, Coded and Automated, for Dubai's Real Estate Future"}],
                     articles: [
                         {
                             id: 'article-2-1-1',
@@ -398,7 +398,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-5',
-                            title: 'Technical Implementation (Placeholder for future expansion)',
+                            title: 'Technical Implementation (Placeholder)',
                             content: [
                                 {type: 'paragraph', text: 'This section would delve into the detailed technical architecture of EBRAMGPT™, including:'},
                                 {type: 'list', items: [
@@ -412,7 +412,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-6',
-                            title: 'Integration within DLDCHAIN™: The Central Nervous System of Intelligence',
+                            title: 'Integration within DLDCHAIN™',
                             content: [
                                 {type: 'paragraph', text: 'EBRAMGPT™ serves as the intelligent user-facing layer that seamlessly connects stakeholders directly to the core functionalities of DLDCHAIN™. It acts as a bridge between complex blockchain operations and intuitive user experiences.'},
                                 {type: 'list', items: [
@@ -424,7 +424,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-2-7',
-                            title: 'Benefits & Value Proposition: Unlocking Legal Clarity and Trust',
+                            title: 'Benefits & Value Proposition',
                             content: [
                                 {type: 'paragraph', text: 'EBRAMGPT™ delivers transformative benefits by making legal processes accessible, efficient, and intelligent for all DLDCHAIN™ participants.'},
                                 {type: 'list', items: [
@@ -466,70 +466,59 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-2-3-2',
-                            title: 'Core Functionality: A Comprehensive Hub for Real Estate Professionals',
+                            title: 'Core Functionality: A Comprehensive Hub for Professionals',
                             content: [
                                 {type: 'paragraph', text: 'Mashroi™ is conceived as a comprehensive hub to control, arrange, and manage real estate professionals in Dubai. It fundamentally redefines the relationship between talent, regulation, and market activity, moving beyond traditional HR to a merit-based, hyper-intelligent system.'},
-                                {type: 'subheading', text: 'Broker Licensing and Education Platform'},
+                                {type: 'minorheading', text: 'Broker Licensing and Education Platform'},
                                 {type: 'list', items: [
-                                    '<b>Official Platform:</b> Serves as the official governmental platform for individuals to register as brokers, gain knowledge through accredited courses, and obtain official licenses. This centralizes and legitimizes the licensing process.',
-                                    '<b>"School of Real Estate Blockchain":</b> Provides gamified smart learning paths, ensuring professionals are educated on DLDCHAIN™ protocols, smart contracts, and AI-driven processes. This fosters continuous learning and adaptation to new technologies.',
-                                    '<b>AI Assistants and Performance Analysis:</b> Includes AI assistants for personalized learning support and "my sales call evaluation and deep analysis," providing targeted feedback and suggesting best learning topics based on individual performance.',
-                                    '<b>Tiered Licensing:</b> Defines clear tiers for licensing and education, aligning with professional capabilities and contributions, allowing for career progression and recognition.'
+                                    '<b>Official Platform:</b> Serves as the official governmental platform for individuals to register as brokers, gain knowledge through accredited courses, and obtain official licenses.',
+                                    '<b>"School of Real Estate Blockchain":</b> Provides gamified smart learning paths, ensuring professionals are educated on DLDCHAIN™ protocols.',
+                                    '<b>AI Assistants and Performance Analysis:</b> Includes AI assistants for personalized learning support and performance analysis.',
+                                    '<b>Tiered Licensing:</b> Defines clear tiers for licensing and education, aligning with professional capabilities and contributions.'
                                 ]},
-                                {type: 'subheading', text: 'Smart Visa Issuance and Management'},
+                                {type: 'minorheading', text: 'Smart Visa Issuance and Management'},
                                 {type: 'list', items: [
-                                    '<b>Direct Visa-Issuing Solution:</b> Offers a "3-month renewable digital visa" for qualified real estate professionals, directly addressing the issue of brokerage companies hiring without proper visa sponsorship and eliminating informal employment.',
-                                    '<b>Platform-Based Renewal:</b> Visas are renewable directly from the Mashroi™ platform, which can trigger smart exams or compliance checks for renewal, streamlining bureaucratic processes.',
-                                    '<b>Integration with GDRFA:</b> Seamlessly integrates with the General Directorate of Residency and Foreigners Affairs (GDRFA) for broker ID verification and residency status checks, ensuring compliance with immigration laws.'
+                                    '<b>Direct Visa-Issuing Solution:</b> Offers a "3-month renewable digital visa" for qualified professionals.',
+                                    '<b>Platform-Based Renewal:</b> Visas are renewable directly from the Mashroi™ platform.',
+                                    '<b>Integration with GDRFA:</b> Seamlessly integrates with the General Directorate of Residency and Foreigners Affairs.'
                                 ]},
-                                {type: 'subheading', text: 'Compliance and Ethical Tracking Hub'},
+                                {type: 'minorheading', text: 'Compliance and Ethical Tracking Hub'},
                                 {type: 'list', items: [
-                                    '<b>Automated Fines:</b> Implements "Automated Fines" via DLD payment rails for non-compliance or ethical breaches, ensuring consistent and immediate enforcement.',
-                                    '<b>Proactive Monitoring:</b> "Mashroi™ watchers and secret eyes" leverage AI to monitor social media, cold calls, and unverified information, proactively flagging potential fraud or misinformation before it impacts the market.',
-                                    '<b>API Call Monitoring:</b> All API calls made by professionals are monitored for abuse or suspicious activity, ensuring data integrity and ethical conduct across all digital interactions.',
-                                    '<b>Mandatory Gateway:</b> Fully integrated into DLD and RERA as a mandatory gateway, similar to Ejari, ensuring all real estate activities are channeled through a compliant framework.'
+                                    '<b>Automated Fines:</b> Implements "Automated Fines" via DLD payment rails for non-compliance.',
+                                    '<b>Proactive Monitoring:</b> "Mashroi™ watchers and secret eyes" leverage AI to monitor and flag potential fraud or misinformation.',
+                                    '<b>Mandatory Gateway:</b> Fully integrated into DLD and RERA as a mandatory gateway for all real estate activities.'
                                 ]},
-                                {type: 'subheading', text: 'Performance and Career Development: The "Real Estate Merit System"'},
+                                {type: 'minorheading', text: 'Performance and Career Development'},
                                 {type: 'list', items: [
-                                    '<b>Contribution-Based Empowerment:</b> Rewards real workers and contributions, not just title holders, connecting human effort to real estate in a smart and fair way, based on verifiable performance.',
-                                    '<b>"The more you learn, the more the city learns about you":</b> A philosophy emphasizing continuous learning and verified performance.',
-                                    '<b>Legally Binding Governance:</b> Performance metrics and ethical conduct are tied to legally binding governance within the DLDCHAIN™ ecosystem.',
-                                    '<b>Career Progression Programs:</b> Includes "Reep - Real Estate Entrepreneurship Program" and "Learn & Earn" initiatives, fostering professional growth and talent retention.',
-                                    '<b>Freelancer Management:</b> Mashroi™ manages freelancers until they are linked to an organization. High-performing freelancers can be hired by companies, but hiring will be rejected if the company is not qualified, ensuring quality in recruitment.',
-                                    '<b>Team Formation and Hiring Suggestions:</b> Acts as a governor, pricing individuals with "zero intent," and working with companies for better team formation, including learning plans and hiring suggestions for new brokers.',
-                                    '<b>Eliminating Market Cheating:</b> Commissions and salaries are determined by the system based on simulated rates, beta trials, market maker judgments, and EBRAMGPT™ node testing before official launch, aiming to eliminate unethical practices and ensure fair compensation.'
+                                    '<b>Contribution-Based Empowerment:</b> Rewards real workers and contributions, not just title holders.',
+                                    '<b>"The more you learn, the more the city learns about you":</b> A philosophy emphasizing continuous learning.',
+                                    '<b>Career Progression Programs:</b> Includes "Reep - Real Estate Entrepreneurship Program" and "Learn & Earn" initiatives.',
+                                    '<b>Freelancer Management:</b> Manages freelancers until they are linked to an organization.',
+                                    '<b>Team Formation and Hiring Suggestions:</b> Acts as a governor for better team formation and hiring.'
                                 ]},
-                                {type: 'subheading', text: 'Interactive Connection System (Social-Logic Layer)'},
+                                 {type: 'minorheading', text: 'Interactive Connection System'},
                                 {type: 'list', items: [
-                                    '<b>Community Engagement:</b> Features "Agree/Disagree" options on learning modules, fostering peer interaction and collective intelligence within the professional community.',
-                                    '<b>"Handshake Feed":</b> A private connection system for professionals to network and collaborate, building a trusted professional network.',
-                                    '<b>"Searchable Network":</b> Professionals can be searched based on skills, knowledge, and verified performance, facilitating talent discovery and collaboration.'
+                                   '<b>Community Engagement:</b> Features "Agree/Disagree" options on learning modules, fostering peer interaction.',
+                                   '<b>"Handshake Feed":</b> A private connection system for professionals to network and collaborate.',
+                                   '<b>"Searchable Network":</b> Professionals can be searched based on skills, knowledge, and verified performance.'
                                 ]},
-                                {type: 'subheading', text: 'User Experience'},
-                                {type: 'list', items: [
-                                    '<b>Simplicity and Accessibility:</b> Designed with "no interface burden," "zero tech literacy," and "zero learning curve," ensuring ease of adoption for all professionals, regardless of their technical background.',
-                                    '<b>Multilingual Support:</b> Supports multilingual availability for global accessibility and emotional resonance, ensuring broad appeal.'
-                                ]}
                             ]
                         },
-                        {
+                         {
                             id: 'article-2-3-3',
                             title: 'Mashroi™ Digital Events: The Industry\'s Live Connection Hub',
                             content: [
                                 {type: 'paragraph', text: 'Mashroi™ Digital Events introduces a groundbreaking interactive platform within the Mashroi™ ecosystem that fundamentally transforms how the real estate industry connects, communicates, and collaborates. It creates a truly immersive, verified, and intelligent live experience, acting as an easy way for all industry professionals to completely connect in one place and one time.'},
-                                {type: 'subheading', text: 'Core Purpose & Vision'},
+                                {type: 'minorheading', text: 'Core Purpose & Vision'},
                                 {type: 'list', items: [
-                                    '<b>Connecting the Ecosystem:</b> It directly links developers, brokers, investors, media, government officials, and other industry professionals in real-time, fostering unprecedented collaboration and transparency.',
-                                    '<b>Beyond Physical Events:</b> It transcends the limitations of traditional, location-bound physical events by offering scalable, accessible, and data-rich virtual experiences. This democratizes participation and expands reach.',
-                                    '<b>Centralized Industry Hub:</b> Positioned as the authoritative platform for all major real estate industry launches, announcements, policy discussions, and professional interviews. This establishes a single source of truth for industry news and insights.',
-                                    '<b>Enhanced Engagement:</b> Designed for high interactivity, ensuring participants are not just passive viewers but active contributors to discussions and decisions.'
+                                    '<b>Connecting the Ecosystem:</b> Directly links developers, brokers, investors, media, and government officials in real-time.',
+                                    '<b>Centralized Industry Hub:</b> Positioned as the authoritative platform for all major industry launches, announcements, and policy discussions.',
                                 ]},
-                                {type: 'subheading', text: 'Key Functionalities & Features'},
+                                {type: 'minorheading', text: 'Key Functionalities & Features'},
                                 {type: 'list', items: [
                                     '<b>Interactive Launchpads:</b> Developers host virtual, immersive launches for new projects with 3D walkthroughs and live Q&A.',
                                     '<b>Advanced Audience Engagement Tools:</b> Real-time Q&A, polls, robust live chat, and virtual breakout rooms for networking.',
                                     '<b>Seamless Media Integration:</b> Provides secure channels for media invites, exclusive press kits, and direct interviews.',
-                                    '<b>Enhanced Market Connection & Lead Generation:</b> Facilitates direct access to Mashroi™-qualified professionals, enhancing lead generation.',
                                     '<b>AI-Driven Insights & Analytics:</b> Leverages Mashroi\'s deep AI for audience segmentation, real-time engagement analytics, and sentiment analysis.'
                                 ]}
                             ]
@@ -539,67 +528,51 @@ export const technicalBook: TechnicalBook = {
                             title: 'Technical Architecture & Strategic Integration',
                             content: [
                                 {type: 'paragraph', text: 'Mashroi™\'s architecture is fundamentally AI-driven, designed for continuous learning, adaptation, and deep integration across governmental systems, making it a truly "smart, sovereign, self-learning ecosystem."'},
-                                {type: 'subheading', text: 'AI Algorithms'},
+                                {type: 'minorheading', text: 'AI Algorithms'},
                                 {type: 'list', items: [
-                                    "<b>Risk Identification:</b> Algorithms for identifying compliance risks, unethical behavior patterns, and potential fraud among professionals.",
-                                    "<b>Talent Gap Prediction:</b> Models for predicting future talent needs in the real estate market and suggesting targeted education programs.",
-                                    "<b>Personalization:</b> AI models for personalizing learning paths, recommending relevant courses, and tailoring performance feedback for individual brokers.",
-                                    "<b>Automated Evaluation:</b> AI systems for \"sales call evaluation\" and their integration with communication platforms, providing objective performance insights."
+                                    "<b>Risk Identification:</b> Algorithms for identifying compliance risks, unethical behavior patterns, and potential fraud.",
+                                    "<b>Talent Gap Prediction:</b> Models for predicting future talent needs and suggesting targeted education programs.",
+                                    "<b>Personalization:</b> AI models for personalizing learning paths and recommending courses.",
+                                    "<b>Automated Evaluation:</b> AI systems for \"sales call evaluation\" and performance insights."
                                 ]},
-                                {type: 'subheading', text: 'Data Schemas & Digital Visa System'},
+                                {type: 'minorheading', text: 'Data Schemas & Systems'},
+                                 {type: 'list', items: [
+                                   "<b>Data Schemas:</b> Comprehensive data models for storing and managing broker profiles, licensing history, and performance metrics.",
+                                   "<b>Digital Visa System Implementation:</b> Detailed architecture for the 3-month renewable digital visa, including its interaction with GDRFA APIs.",
+                                   "<b>Compliance Rule Engine:</b> Specifications for the rule engine that automates compliance checks, fine issuance, and ethical tracking."
+                                 ]},
+                                {type: 'minorheading', text: 'Integration & Positioning'},
                                 {type: 'list', items: [
-                                    "<b>Data Models:</b> Comprehensive data models for storing and managing broker profiles, licensing history, performance metrics, and compliance records within DLDCHAIN™.",
-                                    "<b>Visa Implementation:</b> Detailed architecture for the 3-month renewable digital visa, including its interaction with GDRFA APIs and cryptographic proofs for ID verification."
+                                   "<b>Mandatory Gateway:</b> Fully integrated into DLD and RERA as a mandatory gateway.",
+                                   "<b>AI Synergy:</b> Provides critical data to EBRAM™'s AI-Weighted Node System for market logic intelligence and risk assessments.",
+                                   "<b>Original National Innovation:</b> Authored as an original national innovation without ownership claims.",
+                                   "<b>Governmental Governless System:</b> Positioned as the \"first ever governmental governless Contribution based empowerment and rewarding system.\""
                                 ]},
-                                {type: 'subheading', text: 'Compliance, Privacy & Events Architecture'},
+                                {type: 'minorheading', text: 'Profit Channels'},
                                 {type: 'list', items: [
-                                    "<b>Compliance Rule Engine:</b> Specifications for the rule engine that automates compliance checks, fine issuance, and ethical tracking, driven by AI monitoring (\"Mashroi™ watchers and secret eyes\").",
-                                    "<b>Data Privacy:</b> Strict protocols for data privacy within Mashroi™, ensuring compliance with UAE Data Protection Law and ethical AI deployment.",
-                                    "<b>Digital Events Tech:</b> The technical architecture for Digital Events includes robust streaming protocols (WebRTC, HLS/DASH), real-time communication (WebSockets), identity-based access control, high scalability via cloud-native design, and an analytics backend using DLDCHAIN™ for immutable logging."
-                                ]}
+                                   "<b>Compliance Gate Revenues:</b> Generated from fines and licensing fees.",
+                                   "<b>Broker Visa Revenue:</b> From the issuance and renewals of the 3-month renewable smart visas.",
+                                   "<b>Public API Licensing:</b> Licensing access to Mashroi™'s regulated data and functionalities.",
+                                   "<b>Digital Events Monetization:</b> Revenue from premium event hosting tiers, sponsorships, and lead generation fees."
+                                ]},
                             ]
                         },
                         {
                             id: 'article-2-3-5',
-                            title: 'Integration, Positioning & Revenue',
-                            content: [
-                                {type: 'subheading', text: 'Integration with DLDCHAIN™ Ecosystem'},
-                                {type: 'list', items: [
-                                    "<b>Mandatory Gateway:</b> Fully integrated into DLD and RERA as a mandatory gateway, ensuring all real estate activities are channeled through a compliant framework.",
-                                    "<b>Data Flow:</b> Facilitates seamless data flow for broker licensing, smart visa issuance, and continuous ethical tracking within the broader DLDCHAIN™ data fabric.",
-                                    "<b>AI Synergy:</b> Provides critical data to EBRAM™'s AI-Weighted Node System for market logic intelligence and risk assessments (e.g., broker reliability impacting property valuation)."
-                                ]},
-                                {type: 'subheading', text: 'Strategic Positioning: A Sovereign, Self-Learning Ecosystem'},
-                                {type: 'list', items: [
-                                    "<b>Original National Innovation:</b> Authored as an original national innovation without ownership claims, designed to become an integral part of Dubai’s official real estate infrastructure.",
-                                    "<b>Governmental Governless System:</b> Positioned as the \"first ever governmental governless Contribution based empowerment and rewarding system,\" signifying a shift towards automated, merit-based governance.",
-                                    "<b>AI-Driven Ecosystem:</b> Functions as a \"smart, sovereign, self-learning ecosystem\" that is run by AI, audited by Dubai, and accessible to all."
-                                ]},
-                                {type: 'subheading', text: 'Profit Channels'},
-                                {type: 'list', items: [
-                                    "<b>Compliance Gate Revenues:</b> Generated from all regulatory interactions, including fines and licensing fees.",
-                                    "<b>Broker Visa Revenue:</b> From the issuance and renewals of the 3-month renewable smart visas.",
-                                    "<b>Public API Licensing:</b> Licensing access to Mashroi™'s regulated data and functionalities.",
-                                    "<b>Digital Events Monetization:</b> Revenue from premium event hosting tiers, sponsorships, and lead generation fees."
-                                ]}
-                            ]
-                        },
-                        {
-                            id: 'article-2-3-6',
                             title: 'Security, Compliance & Challenges',
                             content: [
-                                {type: 'subheading', text: 'Security & Compliance: Building Professional Trust'},
+                                {type: 'minorheading', text: 'Security & Compliance'},
                                 {type: 'list', items: [
-                                    '<b>Verifiable Credentials:</b> Professional credentials (licenses, certifications, performance records) are tied to verified digital identities on DLDCHAIN™, enhancing trust and reducing fraudulent claims.',
-                                    '<b>Automated Enforcement:</b> AI-driven enforcement of compliance rules and automated fines ensures consistent application of regulations, reducing manual oversight.',
-                                    '<b>Audit Trails:</b> All professional activities, compliance checks, and disciplinary actions are recorded on-chain, providing immutable audit trails.'
+                                    '<b>Verifiable Credentials:</b> Professional credentials are tied to verified digital identities on DLDCHAIN™.',
+                                    '<b>Automated Enforcement:</b> AI-driven enforcement of compliance rules and automated fines ensures consistency.',
+                                    '<b>Audit Trails:</b> All professional activities are recorded on-chain, providing immutable audit trails.'
                                 ]},
-                                {type: 'subheading', text: 'Challenges and Mitigations (Technical/Operational)'},
+                                {type: 'minorheading', text: 'Challenges and Mitigations'},
                                 {type: 'list', items: [
-                                    '<b>User Adoption and Behavioral Change:</b> Overcome resistance from traditional brokers through gamified training, incentives, and mandating Mashroi™ use for all DLD-related activities.',
-                                    '<b>Data Accuracy for AI Scoring:</b> Ensure data quality through multi-source verification and regular AI model audits for bias. Implement human-in-the-loop review for critical AI decisions.',
-                                    '<b>Inter-Agency Coordination for Visa/Licensing:</b> Develop robust, standardized APIs and establish strong inter-agency MOUs with clear SLAs for data exchange.',
-                                    '<b>Preventing Circumvention:</b> Strict enforcement by DLD and RERA. Developers and property portals mandated to verify Mashroi™ credentials.'
+                                    '<b>User Adoption and Behavioral Change:</b> Mitigation through gamified training, incentives, and mandating Mashroi™ use.',
+                                    '<b>Data Accuracy for AI Scoring:</b> Mitigation through multi-source verification and regular AI model audits for bias.',
+                                    '<b>Inter-Agency Coordination for Visa/Licensing:</b> Mitigation by developing robust, standardized APIs and establishing strong inter-agency MOUs.',
+                                    '<b>Preventing Circumvention:</b> Mitigation by strict enforcement by DLD and RERA and mandating verification by developers and property portals.'
                                 ]}
                             ]
                         }
@@ -607,45 +580,169 @@ export const technicalBook: TechnicalBook = {
                 },
                 {
                     id: 'chapter-2-4',
-                    title: "Tokenization & Liquidity",
-                    introduction: [{type: 'paragraph', text: "The tokenization framework, centered on <b class='text-primary'>DXBTOKENS</b> and the <b class='text-primary'>MAKE™ System</b>, is designed to unlock unprecedented liquidity in what is traditionally a highly illiquid asset class. It represents a shift from fractional ownership to direct, native digital ownership of DLD-registered property."}],
+                    title: "DXBTOKENS™: The Core of Programmable Real Estate",
+                    introduction: [{type: 'paragraph', text: 'Revolutionizing Real Estate Liquidity, Trust, and Global Accessibility.'}],
                     articles: [
                         {
                             id: 'article-2-4-1',
-                            title: 'DXBTOKENS™: The Digital Asset',
+                            title: 'Introduction: The New Standard for Real Estate Assets',
                             content: [
-                                {type: 'paragraph', text: "DXBTOKENS are not securities representing a share in a company that owns a property. They are the <span class='highlight'>direct, digital representation of legal ownership of the physical property itself</span>, with each token corresponding to a specific, measurable unit (e.g., 1 square foot). This distinction is legally and technically critical."},
-                                {type: 'list', items: [
-                                   "<b>Fiat-Only Transactions:</b> All transactions involving DXBTOKENS are conducted exclusively in the <b class='text-primary'>DLD Digital Dirham (DLD-AED)</b>. This eliminates the volatility and regulatory uncertainty of cryptocurrencies, making the system accessible and trustworthy for traditional and institutional investors.",
-                                   "<b>Unprecedented Liquidity:</b> The core value proposition is the ability to transform a multi-million dirham property into a liquid, tradable asset. The goal is to enable investors to buy or sell their stake in a property in minutes, not months.",
-                                   "<b>Types of Tokens:</b> While the primary token is an Equity Token (representing ownership), the framework allows for future use cases like Utility Tokens (for access rights to amenities) or Developer Tokens (for funding future projects)."
-                                ]}
+                                {type: 'paragraph', text: 'DXBTOKENS™ represent a fundamental paradigm shift in how real estate ownership and investment are conceived and executed in Dubai. As the visible, tradable expression of what the EBRAM™ smart contract system governs, DXBTOKENS™ digitize real estate into a fractionalized token economy where 1 square foot equals 1 token. This innovative approach is meticulously designed to revolutionize property ownership and investment by transforming traditionally illiquid assets into highly accessible and liquid digital instruments. At its heart, DXBTOKENS™ embodies the philosophy of "pure value, unlinked from rent," establishing a new standard for stability, trust, and global investor confidence.'},
                             ]
                         },
                         {
                             id: 'article-2-4-2',
-                            title: 'The MAKE™ System: Escrow & Market Logic',
+                            title: 'Technical Definition & Core Principles',
                             content: [
-                                {type: 'paragraph', text: "The MAKE™ System is the sophisticated escrow engine that guarantees the integrity of the token market. It is governed by a strict, event-driven logic to ensure that every DXBTOKEN is 100% backed by either the physical asset or its equivalent value in AED."},
-                                {type: 'minorheading', text: "The Tokenization Lifecycle Events:"},
+                                {type: 'paragraph', text: 'DXBTOKENS™ are native, verifiable shares of physical, DLD-registered properties. They are meticulously designed as pure value units of real estate ownership, with their value primarily derived from the underlying asset\'s appreciation, thereby decoupling them from rental streams or traditional ROI promises and ensuring inherent stability.'},
+                                {type: 'minorheading', text: 'Asset-Backed and Fractionalized Ownership'},
+                                {type: 'list', items: [
+                                    '<b>Direct Asset Backing:</b> Each DXBTOKEN™ is cryptographically backed by a corresponding precise portion (1 square foot) of a real-world property unit, providing inherent, tangible value.',
+                                    '<b>Granular Fractionalization:</b> The "1 sqft = 1 token" model enables unprecedented granular fractional ownership, lowering the barrier to entry for global investors.',
+                                ]},
+                                {type: 'minorheading', text: 'Non-Yield Focused: Value-Centric vs. Rental Income'},
+                                {type: 'list', items: [
+                                    '<b>Decoupling from Tenancy Risk:</b> The primary value of a DXBTOKEN™ is derived solely from the underlying asset\'s appreciation, insulating the token\'s core value from the fluctuating risks and operational complexities associated with tenancy.',
+                                    '<b>Broadened Tokenization Scope:</b> This value-centric philosophy enables the full-scale tokenization of assets previously challenging to liquefy, such as empty units, off-plan inventory, and specialized assets.',
+                                ]},
+                                 {type: 'minorheading', text: 'Immutable Linkage and Core Legal Principle'},
+                                {type: 'list', items: [
+                                   '<b>Immutable Linkage:</b> Each DXBTOKEN™ is immutably linked to its corresponding EBRAMINTED™ asset\'s digital identity (CDID).',
+                                   '<b>"Token = True = Owner" Philosophy:</b> This is a fundamental legal and system truth asserting that legal ownership always resides with the entity (wallet address) holding the token.',
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-4-3',
+                            title: 'Tokenization Process: Minting and Lifecycle Management',
+                            content: [
+                                {type: 'paragraph', text: 'The tokenization process for DXBTOKENS™ is a rigorous, transparent, and exclusively controlled lifecycle managed by DLDCHAIN™, ensuring compliance and absolute trust from inception to market.'},
+                                {type: 'list', items: [
+                                   '<b>Asset Planning & Project Vetting:</b> The process begins with meticulous off-chain legal and financial structuring. Only "mega-projects with unique concepts and sound financials, from DLD-approved developers," are eligible.',
+                                   '<b>DLDCHAIN™ as Sole Minting Authority:</b> Upon official DLD approval, DLDCHAIN™ mints the tokens, ensuring centralized control and regulatory compliance. The initial price is transparently calculated based on the DLD-verified valuation.',
+                                   '<b>EBRAMINT™ Activation:</b> The EBRAMINT™ process formally finalizes and publishes the property\'s smart contract onto the blockchain, legally binding the digital token to its physical asset. Properties must be unoccupied to ensure a clean asset for tokenization.',
+                                   '<b>Categories of Tokenization:</b> DLDCHAIN™ supports streamlined pathways for both Developer-Initiated and Individual Owner tokenization.',
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-4-4',
+                            title: 'Security & Legal Fidelity',
+                            content: [
+                                 {type: 'paragraph', text: 'DXBTOKENS™ are underpinned by DLDCHAIN™\'s multi-layered security framework and unwavering legal fidelity, ensuring unprecedented trust and enforceability.'},
                                  {type: 'list', items: [
-                                    "<b>1. MAKELIST:</b> An owner, via their UNIVESTOR Wallet™, lists a property for tokenization. EBRAM™ verifies all legal and property data.",
-                                    "<b>2. MAKE_ID (Liquidity Commitment):</b> A licensed Liquidity Pool Officer (LPO) commits 100% of the property's appraised value in DLD-AED to the MAKE™ escrow. This is the critical step that provides guaranteed liquidity.",
-                                    "<b>3. MAKE_IN (Token Distribution):</b> Upon successful deposit, DXBTOKENS are minted. The owner receives a portion of their equity in cash (e.g., 60%) and the rest as retained tokens (e.g., 40%). The remaining tokens are released to the public market, and a small percentage is allocated for fees. The LPO's capital is now backing the tokens on the market.",
-                                    "<b>4. MPT (Market Price Transaction):</b> The public can now trade the tokens. The price is determined by market supply and demand, influenced by EBRAM's AI-weighted node system which provides real-time valuation data.",
-                                    "<b>5. MAKE_DISMISS (Exit):</b> If a single entity acquires a super-majority (e.g., >90%) of a property's tokens, they can trigger a MAKE_DISMISS event. This process liquidates the remaining tokens, pays out any minority holders, and transfers the full, un-tokenized title deed of the physical property to the majority owner."
+                                    "<b>Cryptographic Immutability:</b> Every DXBTOKEN™ transaction is hashed and chained, creating permanent, tamper-proof audit trails.",
+                                    "<b>Sovereign Control:</b> DLD's direct governance over the protocol guarantees the integrity and finality of all on-chain operations.",
+                                    "<b>Legal Enforceability:</b> All EBRAM™ smart contracts governing DXBTOKENS™ are legally binding and enforceable under UAE law.",
+                                    "<b>Digital Asset Inheritance (Lost Key Solution):</b> The legally robust succession protocol ensures programmatic transfer of a deceased's tokens to heirs.",
+                                    "<b>Compliance:</b> Robust KYC/AML processes are embedded, making it programmatically impossible to transfer tokens to unverified wallets."
+                                 ]}
+                            ]
+                        },
+                         {
+                            id: 'article-2-4-5',
+                            title: 'Market Impact & Opportunities',
+                            content: [
+                                 {type: 'paragraph', text: 'DXBTOKENS™ are poised to redefine the real estate market by unlocking true liquidity and attracting unprecedented capital, positioning Dubai as a global leader.'},
+                                 {type: 'list', items: [
+                                    "<b>Unlocking True Liquidity:</b> DXBTOKENS™ transform illiquid physical assets into fluid, tradable digital assets, enabling faster exits and sales.",
+                                    "<b>Attracting Traditional Capital:</b> The combination of DLD's sovereign guarantee, the fiat-only (DLD-AED) approach, and robust legal frameworks attracts significant Foreign Direct Investment (FDI).",
+                                    "<b>Economic Growth:</b> DXBTOKENS™ drive unprecedented growth in real estate transaction volumes, foster new investment models, and create high-value jobs.",
+                                    "<b>Global Standard-Setting:</b> DLDCHAIN™'s unique model for DXBTOKENS™ serves as a blueprint for other nations seeking to establish secure, legally anchored, and highly liquid tokenized real estate markets."
+                                 ]}
+                            ]
+                        },
+                    ]
+                },
+                {
+                    id: 'chapter-2-5',
+                    title: "Liquidity on DLDCHAIN™ & The MAKE™ System",
+                    introduction: [{type: 'paragraph', text: 'The Sovereign Architecture of Immutability, Accessibility, and Trust.'}],
+                    articles: [
+                        {
+                            id: 'article-2-5-1',
+                            title: 'Introduction: Unlocking the Illiquid Giant',
+                            content: [
+                                {type: 'paragraph', text: 'Traditional real estate has long been characterized by its inherent illiquidity. DLDCHAIN™ fundamentally redefines this paradigm. Its liquidity model is not an iteration; it is a revolution. It is a meticulously engineered, sovereign-grade ecosystem that transforms real estate from an illiquid asset into a highly tradable, secure, and legally enforceable digital instrument.'}
+                            ]
+                        },
+                        {
+                            id: 'article-2-5-2',
+                            title: 'The MAKE™ System: The Sovereign Liquidity Engine',
+                            content: [
+                                {type: 'paragraph', text: 'The MAKE™ System is DLDCHAIN™\'s sovereign financial layer, designed as an internal liquidity infrastructure rather than a public market. Its core principle is "No liquidity = no token," meaning every DXBTOKEN™ issued is 100% backed by liquidity confirmed through MAKE™.'},
+                                {type: 'minorheading', text: 'Liquidity Officers (LPOs): Guardians of Market Stability'},
+                                {type: 'list', items: [
+                                   '<b>Identity of LPOs:</b> UAE Central Bank-approved banks, licensed escrow offices, DLD-owned financial branches, and other trusted institutions.',
+                                   '<b>MakeD Wallets™:</b> LPOs operate through specialized smart wallets with tiered authority and access only to the DLDMake platform, ensuring controlled access to sensitive liquidity operations.',
+                                   '<b>Role and Responsibilities:</b> LPOs underwrite, maintain, and report the liquidity of all tokenized real estate assets, executing and validating token pool creation.',
+                                   '<b>Custodians, Not Owners:</b> LPOs act as "permissioned signers" or custodians. They manage liquidity but cannot exercise direct ownership rights.'
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-5-3',
+                            title: 'The Dual Smart Contract Paradigm & Escrowship Doctrine',
+                            content: [
+                                {type: 'paragraph', text: 'DLDCHAIN™\'s security and integrity are locked by a revolutionary separation of concerns between EBRAM™ and MAKE™: <b class="text-primary">"MAKE™ cannot own, and EBRAM™ cannot tokenize."</b>'},
+                                {type: 'minorheading', text: 'Functional Separation'},
+                                {type: 'list', items: [
+                                   '<b>EBRAM™ (The Legal Assessor & Watcher):</b> Defines rights, legal states, and acts as the final arbiter of ownership transitions.',
+                                   '<b>MAKE™ (The Tokenization Registrar & Liquidity Signer):</b> Is the financial engine. It registers the act of tokenization, provides the 100% AED backing, and enables trading.',
+                                ]},
+                                {type: 'minorheading', text: 'Escrowship: The Unbreakable Security Lock'},
+                                {type: 'paragraph', text: 'DLDCHAIN™ enforces a vital distinction: Owner ≠ Trader and Escrowship ≠ Utility. This guarantees the ultimate security of your investment.'},
+                                {type: 'list', items: [
+                                    '<b>Core Principle:</b> TOKEN = TRUE = OWNER (Always). Ownership always resides with the address holding the token.',
+                                    '<b>No Dual Rights:</b> The system strictly enforces trade = true → owner = false. A token cannot be simultaneously tradeable and directly owned with full utility rights.',
+                                    '<b>Code Implication (Conceptual):</b> The smart contracts include modifiers like `enforceNonDualRights` and functions like `isRentable` to cryptographically enforce this separation.',
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-5-4',
+                            title: 'The Liquidity Cycle: MAKE™ Event Lifecycle',
+                            content: [
+                                {type: 'paragraph', text: 'The MAKE™ System orchestrates the entire liquidity lifecycle through precise, cryptographically secured events, always under EBRAM™\'s overarching legal authority.'},
+                                {type: 'list', items: [
+                                    '<b>1. MAKELIST (Event: Token Candidate Listing):</b> An EBRAM™-qualified property is listed as a candidate for tokenization. This is a status-only event.',
+                                    '<b>2. MAKETRADE (Event: Pool Interest Expressed):</b> A MAKE™-compatible liquidity pool signals its intent to acquire/escrow a token. This is a non-binding request.',
+                                    '<b>3. MAKE_ID (Event: Liquidity Commitment & Token Registration):</b> This is the pivotal writer event. An LPO deposits 100% of the unit\'s AED value. The property genuinely becomes an on-chain tokenized asset.',
+                                    '<b>4. MAKE_IN (Event: Token Enters Escrow & Activates for Trading):</b> The token ownership is formally moved to the LPO as custodian. The original owner receives 60% cash and 40% tradable DXBTOKENS™.',
+                                    '<b>5. MAKE_OUT (Event: Temporary Exit from Liquidity Lock):</b> This event temporarily detaches DXBTOKENS™ from their active liquidity pool contract, pausing trading for specific purposes.',
+                                    '<b>6. MAKE_DISMISS (Event: Final Exit & D-EBRAMINT™ Execution):</b> The ultimate finalization event. It "un-tokenizes" the property from the MAKE™ system, triggered by a 90%+ ownership claim.'
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-5-5',
+                            title: 'Algorithmic Market Making & Legal Guarantees',
+                            content: [
+                                {type: 'minorheading', text: 'EBRAM™\'s AI-Driven Price Logic'},
+                                {type: 'paragraph', text: 'The DLDCHAIN™\'s innovative "EBRAM™ AI Market-Making Logic" establishes a transparent, efficient, and stable real estate market that moves beyond traditional supply-and-demand models.'},
+                                {type: 'list', items: [
+                                   '<b>AI-Weighted Node System:</b> Uses AI to assign numerical "weights" to various on-chain and real-world events to dynamically influence property valuations.',
+                                   '<b>Real-Time Adjustment Loop (MME):</b> The Market Making Engine continuously scans and scores nodes, triggering re-valuation if scoring differences exceed a threshold.',
+                                   '<b>Market Logic Intelligence:</b> Acts as an "intelligent referee" that can block contracts for "unlogical prices" or excessive broker commissions.'
+                                ]},
+                                {type: 'minorheading', text: 'An Unbreakable Protocol'},
+                                {type: 'list', items: [
+                                   '<b>Core Principle:</b> TOKEN = TRUE = OWNER (Always).',
+                                   '<b>Escrowship Doctrine:</b> Signer ≠ Owner & Escrowship ≠ Utility ≠ Rental Rights.',
+                                   '<b>Multi-Signature Approvals:</b> Critical actions require multi-signature approval from DLD, LPO, and relevant members.',
+                                   '<b>AI-Audited Security:</b> The system is continuously audited by government AI nodes for compliance and integrity.'
                                 ]}
                             ]
                         }
                     ]
                 },
                 {
-                    id: 'chapter-2-5',
+                    id: 'chapter-2-6',
                     title: 'UNIVESTOR Wallet™',
                     introduction: [{type: 'paragraph', text: "The UNIVESTOR Wallet™ is the single, unified gateway for all participants to interact with the DLDCHAIN ecosystem. It is fundamentally tied to a user's verified digital identity, embodying the principle of <span class='highlight'>\"one wallet, one human\"</span>."}],
                     articles: [
                         {
-                           id: 'article-2-5-1',
+                           id: 'article-2-6-1',
                            title: 'Core Principles',
                            content: [
                                {type: 'paragraph', text: "The wallet's design is guided by security, simplicity, and sovereignty."},
@@ -657,7 +754,7 @@ export const technicalBook: TechnicalBook = {
                            ]
                         },
                         {
-                           id: 'article-2-5-2',
+                           id: 'article-2-6-2',
                            title: 'Tiered Access & Functionality',
                            content: [
                                {type: 'paragraph', text: "The wallet interface intelligently adapts to the user's role, providing specific functionalities based on their verified identity:"},
