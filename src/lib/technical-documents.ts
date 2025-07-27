@@ -152,41 +152,168 @@ export const technicalBook: TechnicalBook = {
             chapters: [
                 {
                     id: 'chapter-2-1',
-                    title: "EBRAM™: The Smart Contract Engine",
-                    introduction: [{type: 'paragraph', text: "EBRAM™ (Electronic Blockchain Real Estate Agreement Module) is the legal and technical heart of DLDCHAIN. It is not merely a set of smart contracts, but a comprehensive protocol designed to translate complex legal real estate agreements into self-executing, automated, and legally binding digital processes."}],
+                    title: "EBRAM™: The Intelligent Contract Engine",
+                    introduction: [
+                        {type: 'heading', text: "1. Introduction: The One-for-All Smart Contract System"},
+                        {type: 'paragraph', text: "EBRAM™ (إبرام), derived from the Arabic word meaning \"agreement,\" and also standing for \"Emirates Blockchain Real-estate Agreement Management,\" is the unified smart contract layer and core application within the DLDCHAIN™ protocol. It is designed as a revolutionary smart contract system that fundamentally reshapes how agreements, reputation, and legal accountability function in the digital age. EBRAM™ is envisioned as the <span class='highlight'>\"smart contract of the chain\"</span> and the <span class='highlight'>\"smart agreement engine\"</span> of DLDCHAIN™, serving as the very consciousness of Dubai's real estate. It acts as the digital nervous system for all real estate transactions, ensuring precision and legal certainty in every interaction."},
+                        {type: 'paragraph', text: "More than just a smart contract system, EBRAM™ is conceptualized as a <b class='text-primary'>\"legal-transactional language\"</b> and a <b class='text-primary'>\"domain-specific programmable language for real estate governance.\"</b> It is designed to be \"the law, coded and automated,\" functioning as a \"global language of agreement\" that fosters trust and transparency. Inspired by Prophet Ibrahim, it represents a bridge between faith in tradition and trust in technology, ensuring that legal intent is precisely executed without ambiguity. Its primary role is to serve as a \"global infrastructure for binding agreements, offering a seamless, legally valid, and transparent way to create, sign, verify, and monitor transactions and promises across all sectors.\" This vision extends to making legal agreements as fluid and reliable as software, capable of self-execution and real-time adaptation."}
+                    ],
                     articles: [
                         {
                             id: 'article-2-1-1',
-                            title: 'Core Purpose and Legal Standing',
+                            title: '2. Core Architecture',
                             content: [
-                                {type: 'paragraph', text: "EBRAM's primary function is to <b class='text-primary'>minimize ambiguity, eliminate human error, and drastically reduce the potential for disputes</b> in real estate transactions. It achieves this by creating a single, verifiable, and executable version of an agreement that is understood by both humans and machines."},
-                                {type: 'subheading', text: "Legal Validity"},
-                                {type: 'paragraph', text: "Crucially, every contract executed through EBRAM is designed to be a <span class='highlight'>legally valid and binding agreement</span>. Through deep integration with the Ministry of Justice, EBRAM smart contracts act as digital evidence that is admissible and enforceable within the UAE's judicial system. It complements, not replaces, the existing legal framework, providing a high-fidelity digital twin of legal obligations."}
+                                {type: 'paragraph', text: "EBRAM™ distinguishes itself not merely as a smart contract template but as a comprehensive, domain-specific programmable language for real estate governance. This innovative dual-layer design allows for a direct, codified representation of legal intent and property rules on the blockchain, bridging the gap between legal professionals and technical implementation. It creates a comprehensive smart governance system by clearly distinguishing between a legal-readable logic layer and a computational execution layer. This ensures that legal experts can define terms in a familiar format, while the system executes them with machine precision, guaranteeing fidelity to legal intent."},
+                                {type: 'subheading', text: "2.1. EBRAM™ Design Principles"},
+                                {type: 'paragraph', text: "The design of EBRAM™ is rooted in principles that prioritize legal fidelity, automation, transparency, and adaptability:"},
+                                {type: 'list', items: [
+                                    "<b>Legal-First Approach:</b> Ensuring that the codified logic accurately reflects and enforces UAE property law.",
+                                    "<b>Automated Execution:</b> Minimizing human intervention in contract lifecycle management.",
+                                    "<b>Transparency and Auditability:</b> Providing immutable, verifiable records of all contractual events.",
+                                    "<b>Adaptability:</b> Designing the system to evolve with changing legal precedents and market dynamics.",
+                                    "<b>User-Centricity:</b> Making complex legal processes accessible and intuitive for all stakeholders."
+                                ]},
+                                {type: 'subheading', text: "2.2. Dual Language Infrastructure: EBRAM™ Layer + Python Layer"},
+                                {type: 'paragraph', text: "<b class='text-primary'>EBRAM™ Layer (Legal-readable logic):</b> This layer represents the legal clauses and conditions in a structured, human-readable format that closely mirrors traditional legal language. It is designed for clarity and precision for legal professionals, enabling them to define contractual logic using intuitive constructs. This ensures legal enforceability and understanding, making the underlying code accessible to legal review."},
+                                {type: 'list', items: [
+                                   "<b>Core Constructs:</b> Logic (e.g., if... then...), Roles (e.g., who... what...), and Rights (e.g., can... until... unless...).",
+                                   "<b>Operators:</b> if, then, else, and unless.",
+                                   "<b>Property Bindings:</b> Interactions with specific property/contract data (e.g., <code>rental.status</code>, <code>contract.state</code>).",
+                                   "<b>Triggers:</b> Events or time-based initiations (e.g., <code>if lease.startDate + 3 days && noKeyPickup then auto-cancel</code>)."
+                                ]},
+                                 {type: 'paragraph', text: "<b class='text-primary'>Python Layer (Computational execution):</b> This layer is the underlying code that executes the logic defined in the EBRAM™ layer on the blockchain. It serves as an intermediate Domain Specific Language (DSL), translating the human-readable legal logic into executable commands for the Hyperledger Fabric network. This separation ensures that legal clarity is maintained while technical execution is precise and efficient."}
                             ]
                         },
                          {
                             id: 'article-2-1-2',
-                            title: 'Key Functionalities and Use Cases',
+                            title: '3. Key Functionalities',
                             content: [
-                                {type: 'paragraph', text: "EBRAM's modular design allows it to handle a wide array of real estate transactions:"},
+                                {type: 'paragraph', text: "EBRAM™ automates and enforces various types of agreements across the real estate market, drastically reducing administrative overhead and accelerating transaction cycles."},
+                                {type: 'subheading', text: "3.1. EBRAMINT™: Digital Identity – The Revelation of the City's Assets"},
+                                {type: 'paragraph', text: '<blockquote>"The property doesn’t become tokenized. It’s already known. Already mapped. Already judged. In this city — every unit, every parking slot, every corner of the skyline — has a footprint. We’re not discovering assets. We’re revealing them."</blockquote>'},
+                                {type: 'paragraph', text: "EBRAMINT™ is the foundational act of formally digitizing and registering a real estate property's agreement onto the DLDCHAIN™ blockchain via the EBRAM™ smart contract system. This process ensures immutability, transparency, and a clear, verifiable record, while also defining the basis for property tokenization. Once completed, the property is recognized as an <span class='highlight'>\"EBRAMINTED™ asset,\"</span> carrying its legal status, ownership, and transaction history immutably recorded on the chain."},
                                 {type: 'list', items: [
-                                    "<b>Automated Residential & Commercial Leases:</b> This is the flagship use case. EBRAM can manage the entire lease lifecycle, including automated rent collection in DLD-AED, security deposit management, automated fee calculations (e.g., service charges), and sending notifications for renewal or termination. The goal is to make the annual Ejari registration a self-executing event.",
-                                    "<b>Short-Term Rentals (Holiday Homes):</b> By integrating with the Department of Economy and Tourism (DET), EBRAM can automate the compliance checks for holiday home permits, manage payments, and even automate the collection of the Tourism Dirham Fee, remitting it directly to the DET.",
-                                    "<b>Property Sales & Title Transfer:</b> For sales agreements, EBRAM can orchestrate the entire process, from holding the deposit in escrow via the MAKE™ system to triggering the final title transfer via the Milka API upon fulfillment of all conditions by both buyer and seller.",
-                                    "<b>Utility Integration:</b> A planned pilot with DEWA will test the automatic approval and transfer of utility connections upon the execution of a new lease or sale agreement, eliminating a significant point of friction for residents and owners."
+                                    "<b>Mandatory Digital Identity (CDID):</b> Every property in Dubai receives a unique City Digital ID (CDID), forming a hierarchical \"EBRAM™ Smart Contract Tree\" that defines its digital identity.",
+                                    "<b>Immutable Digital Identity:</b> Once EBRAMINTED™, the property's digital record is fixed and uneditable, serving as its permanent digital identity on DLDCHAIN™.",
+                                    "<b>Tokenization Gateway:</b> EBRAMINT™ is the distinct process that makes a property eligible for tokenization into DXBTOKENS™. It requires 100% verified ownership and zero utility binding (unoccupied status)."
+                                ]},
+                                {type: 'subheading', text: "3.2. Automated Agreement Lifecycle Management"},
+                                {type: 'paragraph', text: "EBRAM™ manages the entire lifecycle of diverse real estate agreements with precision and automation."},
+                                {type: 'list', items: [
+                                    "<b>Rental Management:</b> Automates rent payments (DLD-AED), security deposit escrow, renewal/expiry logic, and maintenance requests. Directly integrates with Ejari, transforming it into an active, self-executing oracle.",
+                                    "<b>Property Sales & Title Transfers:</b> Manages off-plan milestone payments and facilitates instant legal transfer of title deeds for resale, tied to KYC/AML compliance.",
+                                    "<b>Digital Asset Inheritance:</b> Integrates a legally robust succession protocol, acting as a \"digital executor\" to programmatically transfer assets to legal heirs upon verified death, leveraging legal precedents like the DIFC Digital Assets Will.",
+                                    "<b>Cross-Sector Agreements:</b> Extends to loan agreements, subscriptions, employment contracts, and peer-to-peer services, demonstrating broad applicability."
+                                ]},
+                                {type: 'subheading', text: "3.3. On-Chain Dispute Resolution"},
+                                {type: 'paragraph', text: "EBRAM™ introduces a revolutionary preliminary layer of on-chain dispute resolution, designed to complement, rather than replace, the traditional judicial system."},
+                                {type: 'list', items: [
+                                    "<b>Complementing RDC:</b> Acts as a first line of defense for common, data-driven disagreements (e.g., security deposits, late payments), significantly reducing the caseload of the Rental Dispute Settlement Centre (RDC).",
+                                    "<b>Automated Workflow:</b> Funds are frozen, evidence is uploaded to decentralized storage, and disputes are presented to RERA-approved online arbitrators or an AI-driven mediation engine. The smart contract automatically executes the final decision.",
+                                    "<b>PhD Level Detail (Conceptual):</b> Smart Contract Design for Dispute Resolution Module, Integration with Arbitration Platforms, Legal Framework for Digital Asset Inheritance, Security Considerations for Privileged Administrative Actions."
                                 ]}
                             ]
                         },
                         {
                             id: 'article-2-1-3',
-                            title: 'EBRAMGPT and the AI Layer',
+                            title: '4. AI Capabilities',
                             content: [
-                                {type: 'paragraph', text: "EBRAM is enhanced by <b class='text-primary'>EBRAMGPT</b>, an AI-powered legal co-pilot. This system is designed to bridge the gap between human legal language and machine-executable code."},
+                                {type: 'paragraph', text: "EBRAM™ is designed as a <span class='highlight'>\"smart, sovereign, self-learning ecosystem.\"</span> Beyond static code, it features inherent intelligence through various AI components, transforming it into an intelligent legal engine that listens, understands, writes, and explains. This integration of AI elevates EBRAM™ from a mere smart contract platform to a dynamic, adaptive governance system."},
+                                {type: 'subheading', text: "4.1. EBRAMGPT™ (Generative Pre-trained Transformer AI Legal Copilot)"},
+                                {type: 'paragraph', text: "This is the \"exclusive interface between humans and the machine logic of real estate law,\" embodying the \"single text-to-agreement smart way.\""},
                                 {type: 'list', items: [
-                                    "<b>Natural Language to Code:</b> Legal professionals can describe contract clauses in natural English or Arabic, and EBRAMGPT will suggest the appropriate, pre-audited EBRAM code modules to implement them.",
-                                    "<b>Risk Analysis & Clause Suggestion:</b> The AI can analyze draft agreements, flag potentially risky or non-compliant clauses, and suggest alternative, standard clauses based on a vast dataset of successful and legally-sound contracts.",
-                                    "<b>Explainability:</b> For any automated action taken by an EBRAM contract, the system can provide a clear, plain-language explanation of which specific clause in the agreement triggered the action, providing full transparency and auditability."
+                                    "<b>Bi-directional Language Conversion:</b> Seamlessly translates natural language (Arabic, English, etc.) into valid EBRAM™ smart clauses and Python code, and vice-versa.",
+                                    "<b>Context-Aware Drafting:</b> Understands user roles and transaction types, incorporating deep knowledge of Dubai's legal rules to ensure compliant and accurate drafting.",
+                                    "<b>AI Clause Suggestions & Risk Warnings:</b> Proactively enhances contract drafting by recommending missing protections and flagging potential regulatory violations.",
+                                    "<b>Information Retrieval & Transparency:</b> Serves as an \"EBRAMDATA Interpreter,\" providing access to on-chain history of user behavior, property risk, and token logic.",
+                                    "<b>AI-Coordinated Group Negotiations:</b> Facilitates multi-party sessions for collaborative contract drafting, linking discussions to property metadata for context memory. Supports \"Clause Voting Logic\" for fractional token co-owners.",
+                                    "<b>Risk Rating & Behavioral Logic System:</b> Dynamically scores actors based on on-chain history, adjusting contract terms and providing historical disclosure notices."
+                                ]},
+                                {type: 'subheading', text: "4.2. EBRAM ML NOTES™ (Collective Intelligence Layer)"},
+                                {type: 'paragraph', text: "A limited-access, review-based contribution system that allows authorized users (experts) to submit, annotate, and refine evolving real estate contract intelligence. It transforms EBRAM™ into a <span class='highlight'>\"living legal organism.\"</span>"},
+                                {type: 'list', items: [
+                                    "<b>Shared Memory System:</b> Contract logic learns, adjusts, and evolves. Experts submit smart observations, precedents, and rules, which EBRAMGPT™ reads from and contributes to.",
+                                    "<b>Human-in-the-Loop Validation:</b> Human experts review AI-suggested logic improvements, fraud patterns, or new clause types before approval and integration into the core logic."
+                                ]},
+                                {type: 'subheading', text: "4.3. EBRAM™ AI-Weighted Node System: The Sentient Economic Layer"},
+                                {type: 'paragraph', text: "This sophisticated mechanism extends contractual logic, making every node in the smart contract tree support AI-sensed micro-events layered with calibrated, decision-weighted metadata. It acts as a <span class='highlight'>\"sentient economic layer\"</span> and an <span class='highlight'>\"intelligent referee.\"</span>"},
+                                {type: 'list', items: [
+                                    "<b>Core Principle:</b> Each event is a contract-layered node with a weighted logic vector, dynamically influencing price, listing priority, and risk.",
+                                    "<b>A weighted logic vector is a multi-dimensional data structure where each dimension represents a specific attribute or event (e.g., property attributes, market conditions), assigned a numerical \"weight\" indicating its influence on outcome (e.g., price, risk score).",
+                                    "<b>Examples of Weighted Logic (Influencing DXBTOKEN™ Price):</b> EBRAMINT™ Date (12%), Owner Verified (10%), Last Trade Date (8%), Tower Activity (15%), Rent ROI on Similar Unit (5%), Last Valuation Audit (15%).",
+                                    "<b>Real-Time Adjustment Loop:</b> A continuous loop (e.g., every 24 hours) where the Market Making Engine (MME) scores nodes. If differences exceed 5%, it triggers re-valuation, Mashroi™ learning updates, and new suggested pricing.",
+                                    "<b>\"No More, No Less. Guaranteed.\" Enforcement:</b> Ensures deterministic and auditable outcomes. Tight variance bounds prevent extreme price fluctuations. Traceable and explainable output via an OpenAI-powered visibility layer.",
+                                    "<b>Market Logic Intelligence:</b> Acts as an \"intelligent referee\" before agreement finalization, preventing \"unlogical terms/price/commission.\""
                                 ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-1-4',
+                            title: '5. Integration & Synergy',
+                            content: [
+                                {type: 'paragraph', text: "EBRAM™ is seamlessly integrated as the core smart contract engine, acting as the primary executor of legal and transactional logic on the sovereign ledger, connecting all DLDCHAIN™ components and external government systems."},
+                                {type: 'subheading', text: "5.1. Integration with DLDCHAIN™ Core Components"},
+                                {type: 'list', items: [
+                                    "<b>UNIVESTOR Wallet™:</b> EBRAMGPT™ is accessible via the wallet, facilitating contract lifecycle automation and data-driven insights. The wallet is the central interface for all EBRAM™ interactions.",
+                                    "<b>DXBTOKENS™:</b> EBRAMINT™ activates DXBTOKENS™, governing their creation, lifecycle, and trading rules, acting as the binding legal layer for these digital assets.",
+                                    "<b>MAKE™ System:</b> EBRAM™ ensures legal qualification of properties before they enter the MAKE™ System's liquidity pools. EBRAM™'s logic (e.g., in MAKE_ID, MAKE_DISMISS) orchestrates the cash fund creation, escrowship, and atomic swaps for guaranteed value. EBRAM™ is the ultimate authority for MAKE™ Event™ state transitions.",
+                                    "<b>Mashroi™:</b> EBRAM™ provides legal knowledge for Mashroi™'s education platform and utilizes Mashroi™'s verified broker status for compliant tokenization submissions."
+                                ]},
+                                {type: 'subheading', text: "5.2. Integration with Governmental Systems (Smart Verification Oracles)"},
+                                {type: 'paragraph', text: "EBRAM™ transforms existing DLD systems into \"Smart Verification Oracles,\" enhancing data integrity and automating compliance across the public sector."},
+                                {type: 'list', items: [
+                                    "<b>Ejari:</b> Consumes Ejari data (read-only) as the \"genesis event\" for automated rental smart contracts.",
+                                    "<b>Milka:</b> Integrates for real-time validation of title deeds and developer identities.",
+                                    "<b>Trakheesi:</b> Enhances regulatory oversight of advertising by verifying listings against on-chain property data.",
+                                    "<b>Ministry of Justice (MoJ):</b> Supports smart contract notarization APIs and judicial enforcement, bridging digital and traditional legal realms.",
+                                    "<b>Department of Economy & Tourism (DET):</b> Integrates for short-term rental permits and Tourism Dirham Fee collection.",
+                                    "<b>UAE Central Bank (CBUAE):</b> Aligns with financial stability and AML/CFT policies.",
+                                    "<b>DEWA/Empower:</b> Integrates for automated utility connection signals linked to tenancy changes."
+                                ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-1-5',
+                            title: '6. Benefits & Vision',
+                            content: [
+                                 {type: 'paragraph', text: "The automation and intelligence provided by EBRAM™ offer significant and transformative benefits for all stakeholders, emphasizing simplicity, peace of mind, and total control with no technical burden."},
+                                 {type: 'list', items: [
+                                    "<b>Efficiency:</b> Drastically reduces administrative overhead, paperwork, and associated costs by automating complex processes.",
+                                    "<b>Accuracy:</b> Minimizes human error in data entry, payment processing, and compliance checks, ensuring reliable transactions.",
+                                    "<b>Dispute Resolution:</b> Provides transparent and auditable records, facilitating quicker and lower-cost resolution for common disputes, reducing burden on traditional courts.",
+                                    "<b>Transparency & Trust:</b> Immutable records foster unprecedented trust. EBRAM™ aims for \"a world without lawyers, notaries, or ambiguity\" for common digital agreements.",
+                                    "<b>Self-Executing Agreements:</b> Transforms static contracts into dynamic, intelligent, and self-enforcing digital agreements.",
+                                    "<b>Mass Market Adoption:</b> Eliminates legal complexities, enabling wider participation in the digital real estate economy.",
+                                    "<b>Regulatory Harmony:</b> DLD gains real-time, granular visibility into contract execution, ensuring unparalleled regulatory oversight.",
+                                    "<b>Cross-Border Trust:</b> Facilitates international investment by providing legally certain, on-chain agreements.",
+                                    "<b>Versatility:</b> Adaptable to various real estate segments and extends to other contractual relationships."
+                                 ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-1-6',
+                            title: '7. Security & Legal Fidelity',
+                            content: [
+                                 {type: 'paragraph', text: "EBRAM™ is designed with paramount security and legal fidelity, ensuring the integrity and enforceability of all on-chain agreements."},
+                                 {type: 'list', items: [
+                                    "<b>Immutable Records:</b> Cryptographically secured, timestamped records prevent tampering.",
+                                    "<b>Legal Finality:</b> Smart contracts are \"unbreakable, undeletable, and uneditable,\" mirroring court judgments.",
+                                    "<b>Programmatic Compliance:</b> Automated enforcement of DLD/RERA regulations directly in code.",
+                                    "<b>Role-Based Access Control:</b> Strict permissions for critical actions.",
+                                    "<b>AI for Risk Mitigation:</b> EBRAMGPT™ flags risks; AI-Weighted Node System stops \"unlogical\" agreements.",
+                                    "<b>Escrowship Doctrine:</b> \"Signer ≠ Owner\" and \"Escrowship ≠ Utility ≠ Rental Rights.\" This fundamental separation, where MAKE™ cannot own and EBRAM™ cannot tokenize, creates an unbreakable security model."
+                                 ]}
+                            ]
+                        },
+                        {
+                            id: 'article-2-1-7',
+                            title: '8. Future Vision',
+                            content: [
+                                 {type: 'paragraph', text: "EBRAM™ is integral to the DLDCHAIN™'s strategic roadmap, designed for continuous evolution, adaptation, and global applicability."},
+                                 {type: 'list', items: [
+                                    "<b>EBRAM™ DAO (Decentralized Autonomous Organization):</b> Envisioned as a future decentralized governance council evolving templates and policies, fostering collective intelligence.",
+                                    "<b>Country Integration:</b> Modular design to onboard local jurisdictions globally, facilitating \"International Agreements\" with multi-language, AI-translated legal binding across borders, positioning Dubai as a global standard-setter."
+                                 ]}
                             ]
                         }
                     ]
