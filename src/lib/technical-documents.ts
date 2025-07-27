@@ -504,7 +504,7 @@ export const technicalBook: TechnicalBook = {
                                 ]},
                             ]
                         },
-                         {
+                        {
                             id: 'article-2-3-3',
                             title: 'Mashroi™ Digital Events: The Industry\'s Live Connection Hub',
                             content: [
@@ -738,33 +738,85 @@ export const technicalBook: TechnicalBook = {
                 },
                 {
                     id: 'chapter-2-6',
-                    title: 'UNIVESTOR Wallet™',
-                    introduction: [{type: 'paragraph', text: "The UNIVESTOR Wallet™ is the single, unified gateway for all participants to interact with the DLDCHAIN ecosystem. It is fundamentally tied to a user's verified digital identity, embodying the principle of <span class='highlight'>\"one wallet, one human\"</span>."}],
+                    title: "UNIVESTOR Wallet™: The Single Gateway to DLDCHAIN™",
+                    introduction: [{type: 'paragraph', text: "Seamless Access, Uncompromising Security, and Intelligent Financial Management"}],
                     articles: [
                         {
-                           id: 'article-2-6-1',
-                           title: 'Core Principles',
-                           content: [
-                               {type: 'paragraph', text: "The wallet's design is guided by security, simplicity, and sovereignty."},
-                               {type: 'list', items: [
-                                   "<b>Identity-Bound:</b> The wallet is inextricably linked to a user's official digital identity (via UAE Pass). This is not an anonymous crypto wallet; every transaction is attributable to a legally verified entity, which is essential for KYC/AML compliance.",
-                                   "<b>Passwordless Security:</b> Access is secured through modern authentication methods like biometric logins or multi-factor OTPs, eliminating the risks associated with passwords.",
-                                   "<b>Asset Custodianship:</b> The wallet provides users with true self-custody of their assets (DLD-AED and DXBTOKENS), meaning they have full control over their funds and property tokens, secured by cryptographic keys."
-                               ]}
-                           ]
+                            id: 'article-2-6-1',
+                            title: 'Introduction & Core Philosophy',
+                            content: [
+                                {type: 'paragraph', text: 'The UNIVESTOR Wallet™ is DLDCHAIN™\'s revolutionary answer to user experience challenges in blockchain. It is the singular, secure, government-issued digital identity and access point for all interactions within the DLDCHAIN™ ecosystem. Designed to be the "main and only login way," it streamlines the user journey, ensuring unparalleled security and compliance while abstracting away blockchain complexities. Its core philosophy is to provide a frictionless, intuitive, and accessible experience, even for users with "zero technical knowledge."'},
+                                {type: 'subheading', text: 'Single Gateway to the Ecosystem'},
+                                {type: 'paragraph', text: 'The wallet serves as the sole entry point for all DLDCHAIN™ services, eliminating the need for multiple logins or fragmented digital identities. This simplifies the user experience and provides a centralized control point for DLD to manage access and enforce compliance.'},
+                                {type: 'subheading', text: 'Unified Digital Identity'},
+                                {type: 'paragraph', text: 'Strictly adhering to the "One Wallet, One Human" principle, it integrates robust identity verification via national systems like UAE Pass, creating a trusted and legally recognized digital identity layer for all interactions.'},
+                                {type: 'subheading', text: 'Fiat-Only Currency (DLD-AED)'},
+                                {type: 'paragraph', text: 'The wallet operates exclusively with the DLD Digital Dirham (DLD-AED), a stablecoin pegged 1:1 to the UAE Dirham. This eliminates crypto volatility and ensures monetary stability. The wallet integrates secure bridging technology to convert foreign currencies or digital assets into DLD-AED instantly and cost-effectively.'},
+                                {type: 'subheading', text: 'Zero Technical Burden'},
+                                {type: 'paragraph', text: 'The wallet’s intuitive design abstracts away blockchain complexities, acting as an intelligent co-pilot that guides users, making advanced technology accessible to everyone.'}
+                            ]
                         },
                         {
-                           id: 'article-2-6-2',
-                           title: 'Tiered Access & Functionality',
-                           content: [
-                               {type: 'paragraph', text: "The wallet interface intelligently adapts to the user's role, providing specific functionalities based on their verified identity:"},
-                               {type: 'list', items: [
-                                   "<b>Individual Investor/Owner:</b> View property portfolios, initiate tokenization, trade DXBTOKENS, manage rental income, sign EBRAM contracts, and vote on property-related decisions.",
-                                   "<b>Real Estate Professional (via Mashroi™):</b> Manage client listings, oversee transactions, receive commission payments, access market analytics, and manage their compliance status.",
-                                   "<b>Developer:</b> Submit new projects for tokenization, manage off-plan sales, oversee escrow accounts, and communicate with investors.",
-                                   "<b>Government Entity:</b> Perform regulatory oversight, audit transactions, manage system parameters, and generate market-wide reports."
-                               ]}
-                           ]
+                            id: 'article-2-6-2',
+                            title: 'Technical Architecture & Security',
+                            content: [
+                                {type: 'paragraph', text: 'The UNIVESTOR Wallet™ is built on a robust technical architecture that prioritizes security, privacy, and performance.'},
+                                {type: 'subheading', text: 'Client-Side & Backend Gateway'},
+                                {type: 'paragraph', text: 'A responsive mobile and web frontend provides the UI, while a secure API gateway connects the wallet to DLDCHAIN™ services, handling authentication and data transformation.'},
+                                {type: 'subheading', text: 'Seamless Login & Beyond-Ethereum Security'},
+                                {type: 'list', items: [
+                                    "<b>Password-Free Access:</b> The system operates with \"no any passwords,\" using dynamic One-Time Passwords (OTP) and smart cookies for secure access from any authorized device.",
+                                    "<b>Advanced Cryptography:</b> The wallet's cryptography is built on a special key range system with total randomization, architecturally distinct from and \"beyond Ethereum security.\"",
+                                    "<b>Multi-Factor Authentication (MFA):</b> Advanced MFA options like biometrics or hardware tokens provide layered protection for sensitive transactions."
+                                ]},
+                                {type: 'subheading', text: 'Data Privacy & Confidentiality'},
+                                {type: 'paragraph', text: 'User data is handled with privacy by design, adhering to UAE Data Protection Law and using Hyperledger Fabric\'s private data collections to ensure confidentiality for sensitive transactions.'}
+                            ]
+                        },
+                        {
+                            id: 'article-2-6-3',
+                            title: 'Key Functionalities & Features',
+                            content: [
+                                {type: 'paragraph', text: 'The UNIVESTOR Wallet™ offers a comprehensive suite of features tailored to the diverse needs of all real estate actors.'},
+                                {type: 'subheading', text: 'Tiered Access & Personalized Experience'},
+                                {type: 'paragraph', text: 'Wallet functionalities are dynamically tiered based on the user\'s verified KYC level and role (e.g., Retail Investor, Developer, Broker). The interface intuitively adjusts to reveal only relevant features, ensuring a personalized and efficient experience. All wallets are initially approved and tiered by AI, with a crucial human review for the first transaction.'},
+                                {type: 'subheading', text: 'Automated Transaction Management'},
+                                {type: 'list', items: [
+                                    "<b>Automated Payments:</b> Manages scheduled rent payments, secure escrow for deposits, and instant commission payouts to brokers.",
+                                    "<b>Fee Collection:</b> Handles automated collection of Tourism Dirham Fees for short-term rentals.",
+                                    "<b>Instant Transfers:</b> Enables near-zero fee transfers using DLD-AED for all property-related transactions."
+                                ]},
+                                {type: 'subheading', text: 'Asset Management & Portfolio View'},
+                                {type: 'list', items: [
+                                    "<b>DXBTOKENS™ Holdings:</b> Clear visualization of owned fractional shares, their market value, and property details.",
+                                    "<b>Property Status Tracking:</b> Real-time status updates for EBRAMINTED™ properties linked to their unique City Digital IDs (CDIDs).",
+                                    "<b>EBRAM™ Node Health Bar:</b> An optional tool providing insights into a property's \"digital health\" and factors affecting its value.",
+                                    "<b>Transaction History:</b> A complete, immutable log of all past transactions and contract events."
+                                ]},
+                                {type: 'subheading', text: 'Integration Points'},
+                                {type: 'paragraph', text: 'The wallet serves as the primary user interface for interacting with other core DLDCHAIN™ applications, including EBRAMGPT™, the Mashroi™ platform, and the DXBTOKENS™ marketplace.'}
+                            ]
+                        },
+                        {
+                            id: 'article-2-6-4',
+                            title: 'Benefits, Challenges, and Conclusion',
+                            content: [
+                                {type: 'subheading', text: 'Value Proposition'},
+                                {type: 'list', items: [
+                                    "<b>For Users:</b> Unprecedented convenience, direct financial control, and enhanced trust through a secure, government-issued digital identity.",
+                                    "<b>For Professionals:</b> Streamlined operations, direct client engagement, and improved compliance.",
+                                    "<b>For Government:</b> Centralized user management, real-time regulatory oversight, and reduced fraud."
+                                ]},
+                                {type: 'subheading', text: 'Challenges and Mitigations'},
+                                {type: 'list', items: [
+                                    "<b>User Adoption:</b> Mitigated through extensive training, intuitive UI/UX, and phased rollouts.",
+                                    "<b>Security Threats:</b> Mitigated by continuous security audits, advanced cryptography, and user education.",
+                                    "<b>Interoperability:</b> Addressed through cross-platform development and rigorous compatibility testing.",
+                                    "<b>Data Privacy:</b> Addressed by strict adherence to data protection laws and privacy-enhancing technologies."
+                                ]},
+                                {type: 'subheading', text: 'Conclusion'},
+                                {type: 'paragraph', text: 'The UNIVESTOR Wallet™ is the strategic embodiment of DLDCHAIN™\'s vision for a frictionless, secure, and intelligent real estate ecosystem. It is the key that unlocks the true potential of "City as Code," making real estate accessible, manageable, and profitable for all.'}
+                            ]
                         }
                     ]
                 }
@@ -1114,3 +1166,5 @@ func (s *SmartContract) MakeDismiss(ctx contractapi.TransactionContextInterface,
         }
     ]
 };
+
+    
