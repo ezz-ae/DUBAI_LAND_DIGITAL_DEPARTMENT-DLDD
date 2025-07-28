@@ -4,10 +4,10 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Building, Home, LandPlot, Briefcase } from 'lucide-react';
+import { ArrowRight, Building, Home, LandPlot, Briefcase, X } from 'lucide-react';
 import { Separator } from '../ui/separator';
 import { ScrollArea } from '../ui/scroll-area';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 
 const propertyTypeIcons = {
@@ -244,14 +244,15 @@ export function SimulationView() {
       
       {selectedScenario && (
         <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
-            <DialogContent className="sm:max-w-4xl flex flex-col p-0">
-                <DialogHeader className="p-6 pb-4 flex-shrink-0 border-b">
+            <DialogContent className="sm:max-w-4xl p-0 grid grid-rows-[auto_1fr_auto] max-h-[90vh]">
+                <DialogHeader className="p-6 pb-4 border-b">
                     <DialogTitle className="text-2xl font-bold font-headline">{selectedScenario.title}</DialogTitle>
                     <DialogDescription>
                         A detailed breakdown of the tokenization process for this scenario.
                     </DialogDescription>
                 </DialogHeader>
-                <ScrollArea className="max-h-[65vh]">
+                
+                <ScrollArea className="overflow-y-auto">
                     <div className="prose dark:prose-invert max-w-full p-6">
                         <div>
                             <h4 className="font-semibold text-lg">Context</h4>
@@ -270,15 +271,10 @@ export function SimulationView() {
                          <Separator className="my-4" />
                         <div>
                              <h4 className="font-semibold text-lg">Financial Summary</h4>
-                            {selectedScenario.summary}
+                            {selectedSce-nario.summary}
                         </div>
                     </div>
                 </ScrollArea>
-                <DialogFooter className="p-6 pt-4 border-t flex-shrink-0">
-                    <DialogClose asChild>
-                       <Button type="button" variant="secondary">Close</Button>
-                    </DialogClose>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
       )}
@@ -286,5 +282,3 @@ export function SimulationView() {
     </div>
   );
 }
-
-    
