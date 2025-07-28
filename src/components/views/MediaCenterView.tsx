@@ -19,8 +19,7 @@ interface MediaCenterViewProps {
 
 const downloadItems = [
     { title: "DLDCHAIN Project Overview", description: "A high-level summary of the project's vision, goals, and core components.", file: "/report/overview" },
-    { title: "DLDCHAIN Technical Analysis", description: "A comprehensive overview of the technical architecture, core components, and security protocols.", file: "/report/technical-analysis" },
-    { title: "Generated Reports", description: "Access AI-generated reports created from your notes in the AI Console.", file: "#", disabled: true },
+    { title: "DLDCHAIN Technical Analysis", description: "A comprehensive overview of the technical architecture, core components, and security protocols.", file: "/report/technical" },
 ]
 
 export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {

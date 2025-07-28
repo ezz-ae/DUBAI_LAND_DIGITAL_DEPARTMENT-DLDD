@@ -225,7 +225,7 @@ export const technicalBook: TechnicalBook = {
                                 {type: 'paragraph', text: "The philosophy of DLDCHAIN™ is an intricate tapestry woven from legal precision, financial innovation, artificial intelligence, and sovereign governance. By meticulously crafting a system that connects rather than replaces, clarifies ownership through escrowship, values intrinsic worth over speculative yield, builds trust through cryptography, empowers with AI intelligence, rewards merit, champions national sovereignty, and ensures universal financial accessibility, DLDCHAIN™ sets an unparalleled standard."},
                                 {type: 'paragraph', text: "It is a testament to Dubai's vision: not merely to adopt technology, but to fundamentally redefine the rules of real estate governance through code, creating a future where every transaction is a testament to transparency, efficiency, and immutable truth."}
                             ]
-                        },
+                        }
                     ]
                 },
                 {
@@ -265,7 +265,7 @@ export const technicalBook: TechnicalBook = {
                                     "<b>Third-Party dApps:</b> The architecture allows for an ecosystem of third-party applications to be built on top of DLDCHAIN. These could include advanced analytics platforms, property management tools, or innovative FinTech solutions, all consuming verified data from the DLDCHAIN APIs. This fosters a competitive and innovative market, expanding the utility of the entire ecosystem."
                                 ]}
                             ]
-                        },
+                        }
                     ]
                 },
                 {
@@ -1056,7 +1056,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                                     '<b>3. MAKE_ID (Event: Liquidity Commitment & Token Registration):</b> This is the pivotal writer event. An LPO deposits 100% of the unit\'s AED value.',
                                     '<b>4. MAKE_IN (Event: Token Enters Escrow & Activates for Trading):</b> The token ownership is formally moved to the LPO as custodian. The original owner receives 60% cash and 40% tradable DXBTOKENS™.',
                                     '<b>5. MAKE_OUT (Event: Temporary Exit from Liquidity Lock):</b> This event temporarily detaches DXBTOKENS™ from their active liquidity pool contract, pausing trading for specific purposes.',
-                                    '<b>6. MAKE_DISMISS (Event: Final Exit & D-EBRAMINT™ Execution):</b> The ultimate finalization event. It "un-tokenizes" the property from the MAKE™ system.'
+                                    '<b>6. MAKE_DISMISS (Event: Final Exit & D-EBRAMINT™ Execution):</b> The ultimate finalization event. It "un-tokenizes" the property.'
                                 ]}
                             ]
                         },
@@ -1929,12 +1929,3 @@ function isRentable(uint256 tokenId) public view returns (bool) {
         }
     ]
 };
-
-    
-
-    
-
-
-    
-
-    
