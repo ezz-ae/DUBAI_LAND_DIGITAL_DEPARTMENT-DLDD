@@ -10,13 +10,14 @@ import { SimulationView } from '@/components/views/SimulationView';
 import { MediaCenterView } from '@/components/views/MediaCenterView';
 import { dldChainDocuments } from '@/lib/documents';
 import type { DLDDoc } from '@/lib/documents';
+import { technicalBook } from '@/lib/technical-documents';
 
 export type ActiveView = 'tech-docs' | 'mindmap' | 'simulation' | 'media-center';
 
 export default function Home() {
   const [activeView, setActiveView] = useState<ActiveView>('tech-docs');
   const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(null);
-  const [initialDocId, setInitialDocId] = useState<string | undefined>(undefined);
+  const [initialDocId, setInitialDocId] = useState<string | undefined>(technicalBook.overview.id);
 
   useEffect(() => {
     // Set a default document for context in other views if needed

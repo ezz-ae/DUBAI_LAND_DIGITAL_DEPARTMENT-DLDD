@@ -41,7 +41,9 @@ export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
   return (
     <header className="p-4 border-b flex items-center justify-between h-16 shrink-0 gap-4">
       <div className="flex items-center gap-2 flex-shrink-0">
-        {isMobile && activeView === 'tech-docs' ? <SidebarTrigger /> : <div className="w-8 md:hidden"/>}
+        <div className="md:hidden w-8">
+          {isMobile && activeView === 'tech-docs' && <SidebarTrigger />}
+        </div>
         <h1 className="text-md font-headline font-bold whitespace-nowrap">
           <span className="hidden sm:inline">DLDCHAIN NATIVE REAL ESTATE BLOCKCHAIN</span>
           <span className="sm:hidden">DLDCHAIN</span>

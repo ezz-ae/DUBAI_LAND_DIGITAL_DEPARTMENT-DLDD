@@ -240,7 +240,7 @@ export function SimulationView() {
       
       {selectedScenario && (
         <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
-            <DialogContent className="sm:max-w-4xl h-full flex flex-col sm:h-auto">
+            <DialogContent className="sm:max-w-4xl h-full sm:h-auto flex flex-col">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-bold font-headline">{selectedScenario.title}</DialogTitle>
                     <DialogDescription>
