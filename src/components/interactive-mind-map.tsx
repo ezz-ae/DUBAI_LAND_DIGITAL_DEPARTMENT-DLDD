@@ -15,7 +15,6 @@ interface MindMapNodeData {
 interface MindMapNodeProps {
   node: MindMapNodeData;
   level: number;
-  onNodeDoubleClick: (nodeId: string) => void;
   isExpanded: boolean;
   toggleExpand: (nodeId: string) => void;
   position: { x: number; y: number };
@@ -50,7 +49,7 @@ const Line = ({ from, to }: { from: {x:number, y:number}, to: {x:number, y:numbe
 };
 
 
-const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClick, isExpanded, toggleExpand, position, parentPosition }) => {
+const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, isExpanded, toggleExpand, position, parentPosition }) => {
   const hasChildren = node.children && node.children.length > 0;
 
   const handleSingleClick = (e: React.MouseEvent) => {
@@ -58,10 +57,6 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
     if(hasChildren) {
       toggleExpand(node.id);
     }
-  };
-  
-  const handleDoubleClick = () => {
-    onNodeDoubleClick(node.id);
   };
   
   const levelClass = LEVEL_CLASSES[level] || { bg: 'bg-mindmap-node-bg', text: 'text-foreground' };
@@ -79,7 +74,6 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
         }}
         className="absolute group"
         onClick={handleSingleClick}
-        onDoubleClick={handleDoubleClick}
       >
         <div
           className={cn(
@@ -171,7 +165,7 @@ const findNode = (root: MindMapNodeData, id: string): MindMapNodeData | null => 
 }
 
 
-export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (nodeId: string) => void }> = ({ onNodeDoubleClick }) => {
+export const InteractiveMindMap: React.FC<{}> = () => {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set(['root']));
   const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
   const lastExpandedNodeId = useRef<string | null>(null);
@@ -253,7 +247,6 @@ export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (nodeId: string) 
         key={node.id}
         node={node}
         level={nodePos.level}
-        onNodeDoubleClick={onNodeDoubleClick}
         isExpanded={expandedNodes.has(node.id)}
         toggleExpand={toggleExpand}
         position={{...nodePos, y: nodePos.y - NODE_HEIGHT / 2}}

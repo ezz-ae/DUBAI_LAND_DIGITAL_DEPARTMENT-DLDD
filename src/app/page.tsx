@@ -26,17 +26,12 @@ export default function Home() {
     }
   }, []);
 
-  const handleNodeDoubleClick = (nodeId: string) => {
-    setInitialDocId(nodeId);
-    setActiveView('tech-docs');
-  };
-
   const renderContent = () => {
     switch (activeView) {
       case 'tech-docs':
         return <TechnicalDocsView initialDocId={initialDocId} />;
       case 'mindmap':
-        return <MindmapView onNodeDoubleClick={handleNodeDoubleClick} />;
+        return <MindmapView />;
       case 'simulation':
         return <SimulationView />;
       case 'media-center':
