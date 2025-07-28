@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A Genkit flow for answering questions about a document.
@@ -13,6 +14,8 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
+import { googleAI } from '@genkit-ai/googleai';
+
 
 export const ChatWithDocumentInputSchema = z.object({
   question: z.string().describe("The user's question."),
@@ -31,6 +34,7 @@ const chatPrompt = ai.definePrompt({
     name: 'chatPrompt',
     input: { schema: ChatWithDocumentInputSchema },
     output: { schema: ChatWithDocumentOutputSchema },
+    model: googleAI.model('gemini-1.5-flash'),
     prompt: `You are an expert AI assistant for the DLDCHAIN project, a sovereign blockchain ecosystem for Dubai's real estate sector.
 
     Your task is to answer the user's question based *only* on the provided document content. Do not use any external knowledge. If the answer is not in the document, state that the information is not available in the provided context.
