@@ -219,7 +219,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                   />
                               </CardHeader>
                               <CardContent className="p-4 pt-0">
-                                <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
+                                <p className="text-sm text-muted-foreground line-clamp-3 break-words">{note.content}</p>
                               </CardContent>
                             </Card>
                           ))}
