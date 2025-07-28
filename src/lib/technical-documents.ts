@@ -35,6 +35,11 @@ export interface BookConclusion {
 export interface TechnicalBook {
     title: string;
     subtitle: string;
+    overview: {
+        id: string;
+        title: string;
+        content: ContentItem[];
+    };
     introduction: {
         id: string;
         title:string;
@@ -48,9 +53,116 @@ export interface TechnicalBook {
 export const technicalBook: TechnicalBook = {
     title: "DLDCHAIN Technical Analysis Book",
     subtitle: "Driving Digital Sovereignty in Real Estate",
+    overview: {
+        id: 'book-overview',
+        title: "Project Overview: A Sovereign Digital Vision",
+        content: [
+            {
+                type: 'heading',
+                text: "Executive Summary"
+            },
+            {
+                type: 'paragraph',
+                text: "DLDCHAIN is a proposed sovereign-grade real estate governance infrastructure, transforming Dubai's property market into a secure, efficient, and globally exportable system. It deeply integrates blockchain technology, AI reporting, and comprehensive governmental compliance, positioning the Dubai Land Department (DLD) and Real Estate Regulatory Authority (RERA) at the forefront of achieving national digital goals aligned with UAE Vision 2031. This system is unequivocally \"Authored by Dubai. Operated by Dubai. For the world,\" aiming to become a \"legacy system—not a product\" that \"secures ownership,\" \"inspires confidence,\" and \"exports sovereignty.\""
+            },
+            {
+                type: 'subheading',
+                text: "I. Core System Design & Purpose"
+            },
+            {
+                type: 'paragraph',
+                text: "DLDCHAIN is a \"smart blockchain\" and a \"foundational digital utility\" that moves \"beyond simply recording data\" to enable \"real-time intelligence, automated decision-making, predictive insights, and proactive governance.\" It is a \"purpose-built, government-led, permissioned blockchain\" tailored for the complexities of property transactions in Dubai."
+            },
+            {
+                type: 'minorheading',
+                text: '1. Sovereign Ledger & Direct DLD Control'
+            },
+            {
+                type: 'paragraph',
+                text: 'DLDCHAIN operates as a "Sovereign Ledger," directly governed by the Dubai Land Department (DLD). This means the DLD "becomes the network," setting rules, controlling access, managing the ledger, and guaranteeing its stability and integrity. This transforms DLD from merely regulating private digital platforms to becoming the foundational operator of the digital market itself, mitigating platform risks and eliminating long-term dependencies.'
+            },
+            {
+                type: 'minorheading',
+                text: '2. Hyperledger Fabric: Government-Grade Foundation'
+            },
+             {
+                type: 'list',
+                items: [
+                    "<b>Permissioned Network:</b> All participants are \"known, identified, and authenticated,\" ensuring accountability and strict regulatory compliance (KYC/AML).",
+                    "<b>Modular and Configurable Architecture:</b> Allows for precise tailoring to DLD's requirements and adaptability to evolving market needs.",
+                    "<b>No Native Speculative Cryptocurrency:</b> DLDCHAIN explicitly adopts a \"fiat-only approach\" using the DLD Digital Dirham, aiming to \"isolate Real World Asset (RWA) tokenization from market volatility and regulatory ambiguity,\" thereby fostering \"an environment of exceptionally high confidence\" for traditional investors.",
+                    "<b>Channels and Private Data Collections:</b> Enables horizontal scalability for different real estate segments or jurisdictions, and ensures data confidentiality for sensitive information while maintaining auditability."
+                ]
+            },
+            {
+                type: 'minorheading',
+                text: '3. Comprehensive AI Integration: Intelligent Governance'
+            },
+            {
+                type: 'paragraph',
+                text: 'AI is a core tool for enhancing market governance and transparency within DLDCHAIN, fostering trust, clarity, and efficiency.'
+            },
+            {
+                type: 'list',
+                items: [
+                    "<b>EBRAM™ AI-Weighted Node System:</b> Acts as a \"sentient economic layer\" and \"intelligent referee,\" using AI to assign \"weights\" to real-world and on-chain events to dynamically influence property valuations and DXBTOKEN™ prices.",
+                    "<b>EBRAMGPT™ (AI Legal Copilot):</b> The \"exclusive interface between humans and the machine logic of real estate law,\" translating natural language into EBRAM smart clauses and Python code.",
+                    "<b>Mashroi™ AI Engine:</b> Functions as a \"machine-driven professional governance system\" with \"governless intelligence,\" constantly learning from \"live interactions\" to manage broker standing and compliance.",
+                    "<b>Automated Market Reports & Data Analysis:</b> Provides live dashboards and smart reports to empower proactive governance and data-driven policy making."
+                ]
+            },
+            {
+                type: 'subheading',
+                text: "II. Key Components"
+            },
+            {
+                type: 'list',
+                items: [
+                    "<b>EBRAM™ (Emirates Blockchain Real-estate Agreement Management):</b> The central \"smart contract system\" and \"legal-transactional language\" of DLDCHAIN, envisioned as \"the law, coded and automated.\"",
+                    "<b>DXBTOKENS™:</b> Represent \"native ownership\" of physical properties, moving \"beyond traditional fund sharing or crowdfunding by offering verifiable digital shares.\"",
+                    "<b>DLD Digital Dirham (DLD-AED):</b> The exclusive, DLD-issued stablecoin, fully pegged 1:1 to the UAE Dirham, isolating the system from crypto volatility.",
+                    "<b>Mashroi™:</b> A mandatory \"real estate professional hub\" and \"school of real estate blockchain\" that transforms the brokerage ecosystem through AI-driven governance.",
+                    "<b>MAKE™ System:</b> DLDCHAIN's \"sovereign financial layer,\" an internal liquidity infrastructure ensuring every DXBTOKEN™ is 100% AED-backed.",
+                    "<b>UNIVESTOR Wallet™:</b> The \"singular, secure, government-issued digital identity and access point for all interactions,\" designed for users with \"zero technical burden.\""
+                ]
+            },
+            {
+                type: 'subheading',
+                text: "III. Comprehensive Integration & Governance"
+            },
+            {
+                type: 'paragraph',
+                text: 'DLDCHAIN is designed for deep integration across governmental and market stakeholders, following a "connect, not replace" philosophy, turning existing systems like Ejari and Milka into "Smart Verification Oracles." It operates under a government-led consortium model.'
+            },
+            {
+                type: 'subheading',
+                text: "IV. Benefits & Global Ambition"
+            },
+            {
+                type: 'paragraph',
+                text: 'DLDCHAIN addresses market challenges like information asymmetry and lack of liquidity. It generates new revenue streams through fees (not taxes) and aims to tokenize up to 7% of Dubai\'s real estate market by 2033 (AED 60 billion). The vision is to export this "Sovereign Model for Cities Worldwide" through a "Multi-City White-Label Strategy."'
+            },
+            {
+                type: 'subheading',
+                text: "V. Key Milestones & Roadmap"
+            },
+            {
+                type: 'paragraph',
+                text: 'Building on successful 2025 milestones, the roadmap includes a phased 36+ month rollout focusing on development, pilot programs for EBRAM, and full market integration.'
+            },
+            {
+                type: 'subheading',
+                text: "VI. Security, Compliance & Dispute Resolution"
+            },
+            {
+                type: 'paragraph',
+                text: 'The system prioritizes "deep security," with features like automated compliance, on-chain dispute resolution for common issues, and a legally robust Digital Asset Inheritance ("Lost Key Solution") protocol to ensure legal finality and protect investors.'
+            }
+        ]
+    },
     introduction: {
         id: 'book-introduction',
-        title: "Introduction: A Sovereign Digital Vision",
+        title: "Introduction: A Deeper Dive",
         content: [
             {
                 type: 'heading',
@@ -146,7 +258,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-1-2-4',
-                            title: 'Pillar 3: The Philosophy of Value – "Pure Value, Unlinked from Rent"',
+                            title: 'Pillar 4: The Philosophy of Value – "Pure Value, Unlinked from Rent"',
                             content: [
                                 {type: 'paragraph', text: "DLDCHAIN™ fundamentally redefines how value is perceived and transacted in real estate, moving away from a primary reliance on rental income to a focus on intrinsic asset worth and appreciation."},
                                 {type: 'list', items: [
@@ -159,7 +271,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-1-2-5',
-                            title: 'Pillar 4: The Philosophy of Trust – "Cryptographic Ownership & Immutable Truth"',
+                            title: 'Pillar 5: The Philosophy of Trust – "Cryptographic Ownership & Immutable Truth"',
                             content: [
                                 {type: 'paragraph', text: "At the core of DLDCHAIN™ lies an unshakeable commitment to trust, built upon the immutable foundations of blockchain cryptography and DLD's sovereign authority."},
                                 {type: 'list', items: [
@@ -172,7 +284,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-1-2-6',
-                            title: 'Pillar 5: The Philosophy of Intelligence – "Natural Language to Code" & AI Governance',
+                            title: 'Pillar 6: The Philosophy of Intelligence – "Natural Language to Code" & AI Governance',
                             content: [
                                 {type: 'paragraph', text: "DLDCHAIN™ integrates cutting-edge Artificial Intelligence not as a supplement, but as a core governing intelligence, enhancing legal processes, economic oversight, and system adaptability."},
                                 {type: 'list', items: [
@@ -184,7 +296,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-1-2-7',
-                            title: 'Pillar 6: The Philosophy of Merit & Empowerment – Mashroi™\'s Core ("Give What They Deserve")',
+                            title: 'Pillar 7: The Philosophy of Merit & Empowerment – Mashroi™\'s Core ("Give What They Deserve")',
                             content: [
                                 {type: 'paragraph', text: "Mashroi™ embodies a unique philosophical approach to workforce governance, emphasizing meritocracy, continuous development, and ethical conduct within the real estate sector."},
                                 {type: 'list', items: [
@@ -196,7 +308,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-1-2-8',
-                            title: 'Pillar 7: The Philosophy of Sovereignty – "Authored by Dubai. Operated by Dubai. For the World."',
+                            title: 'Pillar 8: The Philosophy of Sovereignty – "Authored by Dubai. Operated by Dubai. For the World."',
                             content: [
                                 {type: 'paragraph', text: "The overarching philosophy of DLDCHAIN™ is rooted in Dubai's unwavering commitment to digital sovereignty, positioning the Emirate as a global leader in defining the future of digital governance."},
                                 {type: 'list', items: [
@@ -208,7 +320,7 @@ export const technicalBook: TechnicalBook = {
                         },
                         {
                             id: 'article-1-2-9',
-                            title: 'Pillar 8: The Philosophy of Universal Accessibility – "Global Currency, Local Value"',
+                            title: 'Pillar 9: The Philosophy of Universal Accessibility – "Global Currency, Local Value"',
                             content: [
                                 {type: 'paragraph', text: "DLDCHAIN™'s philosophy extends to global financial inclusivity, ensuring that its sovereign ecosystem remains accessible to investors worldwide, regardless of their native currency."},
                                 {type: 'list', items: [
@@ -1931,3 +2043,5 @@ function isRentable(uint256 tokenId) public view returns (bool) {
 };
 
     
+
+  

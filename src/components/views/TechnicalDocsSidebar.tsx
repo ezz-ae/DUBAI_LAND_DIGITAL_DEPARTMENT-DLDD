@@ -50,6 +50,10 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
       <SidebarContent className="flex-1 p-0">
         <SidebarMenu className="list-none p-2">
             <Accordion type="multiple" className="w-full" key={selectedItemId} defaultValue={getDefaultAccordionValues()}>
+              <a href="#book-overview" onClick={(e) => handleLinkClick(e, 'book-overview')} 
+                 className={cn("font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors block px-3", selectedItemId === 'book-overview' && 'text-primary')}>
+                  Project Overview
+              </a>
               <a href="#book-introduction" onClick={(e) => handleLinkClick(e, 'book-introduction')} 
                  className={cn("font-semibold py-1.5 text-sm w-full text-left hover:text-primary transition-colors block px-3", selectedItemId === 'book-introduction' && 'text-primary')}>
                   Introduction
@@ -115,3 +119,5 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
 }
 
     
+
+  

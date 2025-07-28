@@ -44,6 +44,7 @@ const renderContentItem = (item: ContentItem, baseKey: string) => {
 const findItemAndSiblings = (id: string) => {
     const flatNavItems: { id: string; title: string }[] = [];
     
+    flatNavItems.push({ id: technicalBook.overview.id, title: technicalBook.overview.title });
     flatNavItems.push({ id: technicalBook.introduction.id, title: technicalBook.introduction.title });
 
     for (const part of technicalBook.parts) {
@@ -73,6 +74,15 @@ const findItemAndSiblings = (id: string) => {
 }
 
 const findItem = (id: string) => {
+    if (id === technicalBook.overview.id) {
+        return {
+            id: technicalBook.overview.id,
+            title: technicalBook.overview.title,
+            content: technicalBook.overview.content,
+            type: 'overview'
+        };
+    }
+
     if (id === technicalBook.introduction.id) {
         return {
             id: technicalBook.introduction.id,
@@ -108,7 +118,7 @@ const findItem = (id: string) => {
 
 export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
   const contentWrapperRef = useRef<HTMLDivElement>(null);
-  const [selectedItemId, setSelectedItemId] = useState<string>(initialDocId || technicalBook.introduction.id);
+  const [selectedItemId, setSelectedItemId] = useState<string>(initialDocId || technicalBook.overview.id);
 
   const { current, prev, next } = findItemAndSiblings(selectedItemId);
 
@@ -132,7 +142,7 @@ export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
             // Fallback for chapter views or if element not found, scroll to top of content
             contentWrapperRef.current?.parentElement?.scrollTo({ top: 0, behavior: 'smooth' });
         }
-    }, 0);
+    }, 100); // A small delay to ensure rendering is complete
   }, [selectedItemId]);
 
   const renderContent = () => {
@@ -199,3 +209,5 @@ export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
     </div>
   );
 }
+
+  
