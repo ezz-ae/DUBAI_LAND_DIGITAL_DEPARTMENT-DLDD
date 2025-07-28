@@ -10,6 +10,8 @@ import { TechnicalDocsSidebar } from './TechnicalDocsSidebar';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+
 
 interface TechnicalDocsViewProps {
   initialDocId?: string;
@@ -119,6 +121,7 @@ const findItem = (id: string) => {
 export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
   const contentWrapperRef = useRef<HTMLDivElement>(null);
   const [selectedItemId, setSelectedItemId] = useState<string>(initialDocId || technicalBook.overview.id);
+  const isMobile = useIsMobile();
 
   const { current, prev, next } = findItemAndSiblings(selectedItemId);
 
@@ -175,13 +178,13 @@ export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
   const renderNavigationFooter = () => {
     return (
         <div className="flex justify-between items-center mt-8 pt-6 border-t">
-            <Button variant="outline" onClick={() => handleLinkClick(prev!.id)} disabled={!prev} className="truncate max-w-[45%]">
-                <ArrowLeft className="mr-2 h-4 w-4 shrink-0" />
-                <span className="truncate">Previous: {prev?.title}</span>
+            <Button variant="outline" onClick={() => handleLinkClick(prev!.id)} disabled={!prev}>
+                <ArrowLeft className="h-4 w-4 shrink-0 md:mr-2" />
+                {!isMobile && <span className="truncate">Previous: {prev?.title}</span>}
             </Button>
-            <Button variant="outline" onClick={() => handleLinkClick(next!.id)} disabled={!next} className="truncate max-w-[45%]">
-                <span className="truncate">Next: {next?.title}</span>
-                <ArrowRight className="ml-2 h-4 w-4 shrink-0" />
+            <Button variant="outline" onClick={() => handleLinkClick(next!.id)} disabled={!next}>
+                 {!isMobile && <span className="truncate">Next: {next?.title}</span>}
+                <ArrowRight className="h-4 w-4 shrink-0 md:ml-2" />
             </Button>
         </div>
     )
@@ -209,5 +212,3 @@ export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
     </div>
   );
 }
-
-  

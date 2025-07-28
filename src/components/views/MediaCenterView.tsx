@@ -37,7 +37,7 @@ type EmailTopic = 'project-overview' | 'technical-analysis' | 'tokenization-over
 
 const emailFormSchema = z.object({
   recipient: z.string().email({ message: 'Please enter a valid email address.' }),
-  topic: z.custom<EmailTopic>(),
+  topic: z.enum(['project-overview', 'technical-analysis', 'tokenization-overview', 'ebram-language']),
 });
 
 const downloadItems = [
@@ -135,7 +135,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   };
 
   return (
-    <div className="flex-1 p-6 bg-background/50">
+    <div className="flex-1 p-4 md:p-6 bg-background/50">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <div className="lg:col-span-2 flex flex-col gap-6">
@@ -154,7 +154,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                   <FormItem>
                                       <FormLabel>Recipient Email</FormLabel>
                                       <FormControl>
-                                          <Input type="email" {...field} />
+                                          <Input {...field} />
                                       </FormControl>
                                       <FormMessage />
                                   </FormItem>
@@ -235,7 +235,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                   </div>
             </CardContent>
               <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-                <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none"><PlusCircle className="mr-2 h-4 w-4"/> Add Note</Button>
+                <Button onClick={() => setShowAddNoteDialog(true)} className="w-full sm:flex-1"><PlusCircle className="mr-2 h-4 w-4"/> Add Note</Button>
             </CardFooter>
           </Card>
         </div>
