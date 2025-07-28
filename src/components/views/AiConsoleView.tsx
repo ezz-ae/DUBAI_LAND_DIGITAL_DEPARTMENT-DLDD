@@ -138,7 +138,7 @@ export function AiConsoleView({
     setIsAnswering(true);
 
     try {
-      const docForAi = dldChainDocuments.find(d => d.id === 19);
+      const docForAi = dldChainDocuments.find(d => d.id === 1); // Use Project Overview (ID 1)
       if (!docForAi) {
         throw new Error("AI context document not found.");
       }
@@ -172,7 +172,7 @@ export function AiConsoleView({
     setIsAnswering(true);
     
     try {
-      const docForAi = dldChainDocuments.find(d => d.id === 19);
+      const docForAi = dldChainDocuments.find(d => d.id === 1); // Use Project Overview (ID 1)
        if (!docForAi) {
         throw new Error("AI context document not found.");
       }
