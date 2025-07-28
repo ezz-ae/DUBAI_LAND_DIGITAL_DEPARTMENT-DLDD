@@ -15,7 +15,7 @@ interface MindMapNodeData {
 interface MindMapNodeProps {
   node: MindMapNodeData;
   level: number;
-  onNodeDoubleClick: (topic: string) => void;
+  onNodeDoubleClick: (nodeId: string) => void;
   isExpanded: boolean;
   toggleExpand: (nodeId: string) => void;
   position: { x: number; y: number };
@@ -61,7 +61,7 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ node, level, onNodeDoubleClic
   };
   
   const handleDoubleClick = () => {
-    onNodeDoubleClick(node.name);
+    onNodeDoubleClick(node.id);
   };
   
   const levelClass = LEVEL_CLASSES[level] || { bg: 'bg-mindmap-node-bg', text: 'text-foreground' };
@@ -171,7 +171,7 @@ const findNode = (root: MindMapNodeData, id: string): MindMapNodeData | null => 
 }
 
 
-export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (topic: string) => void }> = ({ onNodeDoubleClick }) => {
+export const InteractiveMindMap: React.FC<{ onNodeDoubleClick: (nodeId: string) => void }> = ({ onNodeDoubleClick }) => {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set(['root']));
   const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
   const lastExpandedNodeId = useRef<string | null>(null);

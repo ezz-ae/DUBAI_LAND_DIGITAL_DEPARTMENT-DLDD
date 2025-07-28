@@ -16,6 +16,7 @@ export type ActiveView = 'tech-docs' | 'mindmap' | 'simulation' | 'media-center'
 export default function Home() {
   const [activeView, setActiveView] = useState<ActiveView>('tech-docs');
   const [selectedDoc, setSelectedDoc] = useState<DLDDoc | null>(null);
+  const [initialDocId, setInitialDocId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     // Set a default document for context in other views if needed
@@ -25,19 +26,17 @@ export default function Home() {
     }
   }, []);
 
-  const handleDiscussTopic = (topic: string) => {
-    // This function can be repurposed or removed if no longer needed.
-    // For now, it will switch to the media center.
-    console.log("Discussing topic:", topic);
-    setActiveView('media-center');
-  }
+  const handleNodeDoubleClick = (nodeId: string) => {
+    setInitialDocId(nodeId);
+    setActiveView('tech-docs');
+  };
 
   const renderContent = () => {
     switch (activeView) {
       case 'tech-docs':
-        return <TechnicalDocsView />;
+        return <TechnicalDocsView initialDocId={initialDocId} />;
       case 'mindmap':
-        return <MindmapView onNodeDoubleClick={handleDiscussTopic} />;
+        return <MindmapView onNodeDoubleClick={handleNodeDoubleClick} />;
       case 'simulation':
         return <SimulationView />;
       case 'media-center':

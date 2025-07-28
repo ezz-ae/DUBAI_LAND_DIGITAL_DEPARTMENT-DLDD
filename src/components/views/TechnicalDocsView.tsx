@@ -11,6 +11,10 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
+interface TechnicalDocsViewProps {
+  initialDocId?: string;
+}
+
 const renderContentItem = (item: ContentItem, baseKey: string) => {
     if (item.type === 'paragraph') {
       return <p key={`${baseKey}-p`} dangerouslySetInnerHTML={{ __html: item.text }} />;
@@ -102,9 +106,9 @@ const findItem = (id: string) => {
 }
 
 
-export function TechnicalDocsView() {
+export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [selectedItemId, setSelectedItemId] = useState<string>(technicalBook.introduction.id);
+  const [selectedItemId, setSelectedItemId] = useState<string>(initialDocId || technicalBook.introduction.id);
 
   const { current, prev, next } = findItemAndSiblings(selectedItemId);
 
@@ -112,6 +116,12 @@ export function TechnicalDocsView() {
     setSelectedItemId(id);
   };
   
+  useEffect(() => {
+    if(initialDocId) {
+      setSelectedItemId(initialDocId);
+    }
+  }, [initialDocId]);
+
   useEffect(() => {
     const container = scrollRef.current?.querySelector('div[data-radix-scroll-area-viewport]');
     container?.scrollTo({ top: 0, behavior: 'smooth' });

@@ -240,7 +240,7 @@ export const mindMapData = {
       ],
     },
     {
-      id: 'mashroi-professional-hub',
+      id: 'chapter-2-3',
       name: 'Mashroi: AI-Powered Real Estate Professional Hub',
       children: [
         {
@@ -276,6 +276,7 @@ export const mindMapData = {
                 { id: 'ethical-hub', name: 'Compliance & Ethical Tracking Hub', children: [] },
                 { id: 'commission-flow', name: 'Smart Contract Commission Flow', children: [] },
                 { id: 'group-negotiations', name: 'AI-Coordinated Group Negotiations', children: [] },
+                { id: 'article-2-3-3', name: 'Mashroi Live Events', children: [] },
             ]
         },
         {

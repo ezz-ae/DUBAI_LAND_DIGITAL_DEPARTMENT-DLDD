@@ -1,9 +1,10 @@
+
 'use client';
 
 import { InteractiveMindMap } from '@/components/interactive-mind-map';
 
 interface MindmapViewProps {
-  onNodeDoubleClick: (topic: string) => void;
+  onNodeDoubleClick: (nodeId: string) => void;
 }
 
 export function MindmapView({ onNodeDoubleClick }: MindmapViewProps) {
