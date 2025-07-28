@@ -123,13 +123,16 @@ export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
   }, [initialDocId]);
 
   useEffect(() => {
-    const element = contentWrapperRef.current?.querySelector(`#${selectedItemId}`);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-        // Fallback for chapter views or if element not found, scroll to top of content
-        contentWrapperRef.current?.parentElement?.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // Defer the scroll action to ensure the DOM has updated.
+    setTimeout(() => {
+        const element = document.getElementById(selectedItemId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            // Fallback for chapter views or if element not found, scroll to top of content
+            contentWrapperRef.current?.parentElement?.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, 0);
   }, [selectedItemId]);
 
   const renderContent = () => {
