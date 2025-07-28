@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { BookOpen, Share2, Music, Menu, FlaskConical } from 'lucide-react';
 import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ProjectPilotLogo } from '../logo';
 
 type ActiveView = 'tech-docs' | 'mindmap' | 'simulation' | 'media-center';
 
@@ -39,8 +40,8 @@ export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
 
   return (
     <header className="p-4 border-b flex items-center justify-between h-16 shrink-0 gap-4">
-      <div className="flex items-center gap-4 flex-shrink-0">
-        {isMobile && activeView === 'tech-docs' && <SidebarTrigger />}
+      <div className="flex items-center gap-2 flex-shrink-0">
+        {isMobile && activeView === 'tech-docs' ? <SidebarTrigger /> : <div className="w-8 md:hidden"/>}
         <h1 className="text-md font-headline font-bold whitespace-nowrap">
           <span className="hidden sm:inline">DLDCHAIN NATIVE REAL ESTATE BLOCKCHAIN</span>
           <span className="sm:hidden">DLDCHAIN</span>

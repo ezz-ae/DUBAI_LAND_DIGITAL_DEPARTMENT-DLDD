@@ -247,7 +247,7 @@ export function SimulationView() {
                         A detailed breakdown of the tokenization process for this scenario.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex-1 overflow-hidden">
+                <div className="flex-1 overflow-hidden my-4">
                   <ScrollArea className="h-full pr-6">
                       <div className="space-y-6 prose dark:prose-invert max-w-full">
                           <div>
@@ -274,7 +274,8 @@ export function SimulationView() {
                 </div>
                  <DialogFooter className={cn(
                     'mt-auto flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
-                    'sm:static sticky bottom-0 bg-background py-4 border-t'
+                    'sm:static sm:bg-transparent sm:py-0 sm:border-t-0',
+                    'sticky bottom-0 bg-background py-4 border-t'
                   )}>
                     <DialogClose asChild>
                         <Button type="button" className="w-full sm:w-auto">Close</Button>
@@ -287,5 +288,3 @@ export function SimulationView() {
     </div>
   );
 }
-
-    

@@ -33,11 +33,13 @@ interface MediaCenterViewProps {
   selectedDoc: DLDDoc | null;
 }
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
-type EmailTopic = 'project-overview' | 'technical-analysis' | 'tokenization-overview' | 'ebram-language';
+
+const emailTopics = ['project-overview', 'technical-analysis', 'tokenization-overview', 'ebram-language'] as const;
+type EmailTopic = typeof emailTopics[number];
 
 const emailFormSchema = z.object({
   recipient: z.string().email({ message: 'Please enter a valid email address.' }),
-  topic: z.enum(['project-overview', 'technical-analysis', 'tokenization-overview', 'ebram-language']),
+  topic: z.enum(emailTopics),
 });
 
 const downloadItems = [
@@ -122,13 +124,12 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
       const selectedTopic = topics[values.topic];
       subject = `DLDCHAIN: ${selectedTopic.title}`;
 
-      if (selectedTopic.contentDocId) {
-          const doc = dldChainDocuments.find(d => d.id === selectedTopic.contentDocId);
-          // A simple conversion to plain text. More sophisticated parsing could be added.
-          const plainTextContent = doc?.content.replace(/<[^>]*>/g, '\n').replace(/\n\n+/g, '\n\n').trim();
+      const doc = dldChainDocuments.find(d => d.id === selectedTopic.contentDocId);
+      if (doc) {
+          const plainTextContent = doc.content.replace(/<[^>]*>/g, '\n').replace(/\n\n+/g, '\n\n').trim();
           body += `${selectedTopic.title}\n\n${plainTextContent}`;
       }
-
+      
       const mailtoLink = `mailto:${values.recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       window.location.href = mailtoLink;
       toast({ title: "Email Client Opened", description: "Your email client has been opened with the pre-filled information." });
@@ -215,7 +216,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                 />
                             </CardHeader>
                             <CardContent className="p-4 pt-0">
-                               <p className="text-sm text-muted-foreground break-words" style={{
+                               <p className="text-sm text-muted-foreground break-words text-base md:text-sm" style={{
                                   display: '-webkit-box',
                                   WebkitBoxOrient: 'vertical',
                                   WebkitLineClamp: 3,
@@ -235,7 +236,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                   </div>
             </CardContent>
               <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-                <Button onClick={() => setShowAddNoteDialog(true)} className="w-full sm:flex-1"><PlusCircle className="mr-2 h-4 w-4"/> Add Note</Button>
+                <Button onClick={() => setShowAddNoteDialog(true)} className="w-full sm:w-auto sm:flex-1"><PlusCircle className="mr-2 h-4 w-4"/> Add Note</Button>
             </CardFooter>
           </Card>
         </div>
