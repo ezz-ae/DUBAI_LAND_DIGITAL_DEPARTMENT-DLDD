@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { BookOpen, Bot, Send, Share2, Music, Menu, FlaskConical } from 'lucide-react';
+import { BookOpen, Share2, Music, Menu, FlaskConical } from 'lucide-react';
 import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
 
-type ActiveView = 'tech-docs' | 'mindmap' | 'ai-console' | 'simulation' | 'media-center';
+type ActiveView = 'tech-docs' | 'mindmap' | 'simulation' | 'media-center';
 
 interface AppHeaderProps {
   activeView: ActiveView;
@@ -26,7 +26,6 @@ interface NavItem {
 const navItems: NavItem[] = [
     { view: 'tech-docs', icon: BookOpen, label: 'Technical Docs' },
     { view: 'mindmap', icon: Share2, label: 'Mind Map' },
-    { view: 'ai-console', icon: Bot, label: 'AI Console' },
     { view: 'simulation', icon: FlaskConical, label: 'Simulation' },
     { view: 'media-center', icon: Music, label: 'Media Center' },
 ];

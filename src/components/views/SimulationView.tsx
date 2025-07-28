@@ -2,23 +2,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Sparkles, Building, Home, LandPlot, Briefcase, FileText, ArrowRight } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { SimulateTokenizationOutput, SimulateTokenizationInputSchema } from '@/ai/schemas/simulate-tokenization';
-import { simulateTokenizationFlow } from '@/ai/flows/simulate-tokenization';
+import { ArrowRight, Building, Home, LandPlot, Briefcase } from 'lucide-react';
 import { Separator } from '../ui/separator';
 import { ScrollArea } from '../ui/scroll-area';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-
-const formSchema = SimulateTokenizationInputSchema;
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 
 const propertyTypeIcons = {
     apartment: <Building className="h-5 w-5" />,
@@ -39,6 +28,7 @@ const scenarios = [
     {
         id: 'scenario1',
         title: "Secondary Market Tokenization",
+        icon: 'apartment',
         description: "An individual owner tokenizes their ready apartment to achieve rapid liquidity without a traditional, lengthy listing process.",
         context: <>
             <p>Ahmed Al Zaabi owns a ready apartment in Dubai Marina. He wants to sell it quickly without a traditional, lengthy listing process. He opts for tokenization to unlock immediate liquidity and tap into a broader investor base.</p>
@@ -78,6 +68,7 @@ const scenarios = [
     {
         id: 'scenario2',
         title: "Mortgaged Property Tokenization",
+        icon: 'villa',
         description: "An owner of a mortgaged villa uses tokenization to efficiently settle the mortgage and unlock her net equity.",
         context: <>
            <p>Mariam owns a villa in Arabian Ranches with an active mortgage. She wants to sell it via tokenization to efficiently settle the mortgage and unlock her equity.</p>
@@ -112,6 +103,7 @@ const scenarios = [
     {
         id: 'scenario3',
         title: "Off-Plan Property Tokenization",
+        icon: 'commercial',
         description: "A developer tokenizes an off-plan project to secure early funding and offer investors early access to a prime asset.",
         context: <>
            <p>A leading developer is launching a luxury tower in Downtown Dubai. To secure funding for the final construction phase and create early market buzz, they decide to tokenize a selection of off-plan units.</p>
@@ -147,6 +139,7 @@ const scenarios = [
     {
         id: 'scenario4',
         title: "Pool Closure & Asset De-Tokenization",
+        icon: 'land',
         description: "An institutional investor acquires all tokens for a property and de-tokenizes it to take full, traditional ownership.",
         context: <>
            <p>An international investment fund wants to acquire a fully-tokenized commercial building. Instead of a complex M&A process, they strategically purchase all available DXBTOKENS™ on the open market to gain 100% ownership.</p>
@@ -196,11 +189,14 @@ const ReadyScenarios = ({ onScenarioSelect }: { onScenarioSelect: (scenario: any
             {scenarios.map(scenario => (
                 <Card key={scenario.id} className="flex flex-col">
                     <CardHeader>
-                        <CardTitle>{scenario.title}</CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                           {propertyTypeIcons[scenario.icon as keyof typeof propertyTypeIcons] || <Building className="h-5 w-5" />}
+                           {scenario.title}
+                        </CardTitle>
                         <CardDescription>{scenario.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-grow">
-                        {/* Can add key highlights here if needed */}
+                        
                     </CardContent>
                     <CardFooter>
                          <Button variant="outline" onClick={() => onScenarioSelect(scenario)} className="w-full">
@@ -215,297 +211,15 @@ const ReadyScenarios = ({ onScenarioSelect }: { onScenarioSelect: (scenario: any
 
 
 export function SimulationView() {
-  const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
-  const [simulationResult, setSimulationResult] = useState<SimulateTokenizationOutput | null>(null);
   const [selectedScenario, setSelectedScenario] = useState<any | null>(null);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      propertyType: 'apartment',
-      propertyStatus: 'ready',
-      ownerType: 'individual',
-      appraisedValue: 1500000,
-      sizeSqFt: 1000,
-      mortgageBalance: 0,
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    setSimulationResult(null);
-    try {
-        const result = await simulateTokenizationFlow(values);
-        setSimulationResult(result);
-        toast({
-            title: "Simulation Complete",
-            description: "The tokenization scenario has been generated.",
-        });
-    } catch (error) {
-      console.error("Error running simulation:", error);
-      toast({
-        variant: "destructive",
-        title: "Simulation Failed",
-        description: "Could not generate the simulation. Please try again.",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   return (
     <div className="flex-1 overflow-hidden bg-background/50">
-      <div className="container mx-auto p-4 md:p-8 h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full">
-          
-          <div className="lg:col-span-1 h-full flex flex-col">
-            <Card className="flex-grow flex flex-col">
-              <CardHeader>
-                <CardTitle>Interactive Simulator</CardTitle>
-                <CardDescription>Enter property details to generate a custom tokenization scenario.</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow overflow-auto">
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="propertyType"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Property Type</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select type" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="apartment">Apartment</SelectItem>
-                                <SelectItem value="villa">Villa</SelectItem>
-                                <SelectItem value="land">Land</SelectItem>
-                                <SelectItem value="commercial">Commercial</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="propertyStatus"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Property Status</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select status" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="ready">Ready</SelectItem>
-                                <SelectItem value="rented">Rented</SelectItem>
-                                <SelectItem value="off-plan">Off-Plan</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                     <FormField
-                        control={form.control}
-                        name="ownerType"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Owner Type</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select owner type" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="individual">Individual</SelectItem>
-                                <SelectItem value="developer">Developer</SelectItem>
-                                <SelectItem value="organization">Organization</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    <FormField
-                      control={form.control}
-                      name="appraisedValue"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Appraised Value (AED)</FormLabel>
-                          <FormControl>
-                            <Input type="number" placeholder="e.g., 2000000" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="sizeSqFt"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Size (sq. ft.)</FormLabel>
-                          <FormControl>
-                            <Input type="number" placeholder="e.g., 1200" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                     <FormField
-                      control={form.control}
-                      name="mortgageBalance"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Mortgage Balance (AED)</FormLabel>
-                          <FormControl>
-                            <Input type="number" placeholder="Enter 0 if none" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" className="w-full" disabled={isLoading}>
-                      {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                      Run Simulation
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="lg:col-span-2 h-full">
-            <ScrollArea className="h-full pr-4 -mr-4">
-              <div className="space-y-6">
-                {isLoading && (
-                    <div className="flex flex-col items-center justify-center h-full min-h-[500px] text-center p-8 bg-card rounded-lg border">
-                        <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-                        <h3 className="text-xl font-semibold">Generating Simulation...</h3>
-                        <p className="text-muted-foreground">The AI is processing the tokenization lifecycle. Please wait.</p>
-                    </div>
-                )}
-                
-                {simulationResult && !isLoading && (
-                  <div className="space-y-8">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-3">
-                            {propertyTypeIcons[(simulationResult.setup.propertyType.toLowerCase().replace(/[\s-]+/g, '') as keyof typeof propertyTypeIcons) || 'apartment']}
-                            {simulationResult.simulationTitle}
-                        </CardTitle>
-                        <CardDescription>This simulation outlines the complete tokenization process from submission to value distribution.</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <h3 className="font-semibold text-lg mb-4">Simulation Setup</h3>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                            <div className="bg-muted/50 p-3 rounded-md">
-                                <dt className="font-medium text-muted-foreground">Appraised Value</dt>
-                                <dd className="font-semibold text-primary text-base">{simulationResult.setup.appraisedValue}</dd>
-                            </div>
-                            <div className="bg-muted/50 p-3 rounded-md">
-                                <dt className="font-medium text-muted-foreground">Size</dt>
-                                <dd className="font-semibold text-primary text-base">{simulationResult.setup.sizeSqFt}</dd>
-                            </div>
-                            <div className="bg-muted/50 p-3 rounded-md">
-                                <dt className="font-medium text-muted-foreground">Total Tokens</dt>
-                                <dd className="font-semibold text-primary text-base">{simulationResult.setup.totalTokens}</dd>
-                            </div>
-                            <div className="bg-muted/50 p-3 rounded-md">
-                                <dt className="font-medium text-muted-foreground">Value per Token</dt>
-                                <dd className="font-semibold text-primary text-base">{simulationResult.setup.pricePerSqFt}</dd>
-                            </div>
-                            <div className="bg-muted/50 p-3 rounded-md">
-                                <dt className="font-medium text-muted-foreground">Mortgage Balance</dt>
-                                <dd className="font-semibold text-base">{simulationResult.setup.mortgageBalance}</dd>
-                            </div>
-                            <div className="bg-muted/50 p-3 rounded-md">
-                                <dt className="font-medium text-muted-foreground">Owner's Equity</dt>
-                                <dd className="font-semibold text-base">{simulationResult.setup.ownerEquity}</dd>
-                            </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Liquidity & Tokenization Cycle</CardTitle>
-                            <CardDescription>Step-by-step breakdown of the EBRAM and MAKE system processes.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="relative pl-6">
-                                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2"></div>
-                                {simulationResult.liquidityCycle.map((item, index) => (
-                                    <div key={index} className="relative mb-8">
-                                        <div className="absolute left-0 top-1.5 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground -translate-x-1/2">
-                                            <span className="text-xs font-bold">{item.step}</span>
-                                        </div>
-                                        <div className="ml-8">
-                                            <h4 className="font-semibold">{item.title}</h4>
-                                            <p className="text-sm text-muted-foreground">{item.description}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
-                    
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Financial Outcome & Value Creation</CardTitle>
-                            <CardDescription>Projected financial results for all stakeholders after a 1-year period with 8% market appreciation.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-3 text-sm">
-                          <div className="flex justify-between items-center p-3 bg-muted/50 rounded-md">
-                              <span className="font-medium">Owner's Initial Cash-Out</span>
-                              <span className="font-bold text-lg">{simulationResult.financialOutcome.ownerInitialCashOut}</span>
-                          </div>
-                          <div className="flex justify-between items-center p-3">
-                              <span className="text-muted-foreground">Owner's Retained Tokens Value (at MPT)</span>
-                              <span className="font-semibold">{simulationResult.financialOutcome.ownerRetainedTokensValue}</span>
-                          </div>
-                          <div className="flex justify-between items-center p-3 bg-primary/10 rounded-md">
-                              <strong className="text-primary">Owner's Total Realized Value</strong>
-                              <strong className="text-primary text-lg">{simulationResult.financialOutcome.ownerTotalValue}</strong>
-                          </div>
-                          <Separator className="my-4" />
-                          <div className="flex justify-between items-center p-3">
-                              <span className="text-muted-foreground">Liquidity Provider (MAKE) Profit</span>
-                              <span className="font-semibold">{simulationResult.financialOutcome.liquidityProviderProfit}</span>
-                          </div>
-                          <div className="flex justify-between items-center p-3">
-                              <span className="text-muted-foreground">Market Investor Potential ROI</span>
-                              <span className="font-semibold text-green-600">{simulationResult.financialOutcome.marketInvestorPotentialROI}</span>
-                          </div>
-                          <div className="flex justify-between items-center p-3 bg-muted/50 rounded-md mt-4">
-                              <strong className="text-lg">Total Value Created by DLDCHAIN</strong>
-                              <strong className="text-lg text-green-600">{simulationResult.financialOutcome.totalValueCreated}</strong>
-                          </div>
-                        </CardContent>
-                    </Card>
-
-                  </div>
-                )}
-
-                {!simulationResult && !isLoading && (
-                    <ReadyScenarios onScenarioSelect={setSelectedScenario} />
-                )}
-              </div>
-            </ScrollArea>
-          </div>
+      <ScrollArea className="h-full">
+        <div className="container mx-auto p-4 md:p-8 h-full">
+          <ReadyScenarios onScenarioSelect={setSelectedScenario} />
         </div>
-      </div>
+      </ScrollArea>
       
       {selectedScenario && (
         <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
@@ -539,6 +253,11 @@ export function SimulationView() {
                         </div>
                     </div>
                 </ScrollArea>
+                 <DialogFooter>
+                    <DialogClose asChild>
+                        <Button type="button">Close</Button>
+                    </DialogClose>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
       )}
