@@ -48,7 +48,7 @@ const downloadItems = [
 
 export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   const { toast } = useToast();
-  const interviewUrl = "https://drive.google.com/uc?export=download&id=13ASKprPbFMRkPSy0147J0UG45B0clspW";
+  const interviewUrl = "https://firebasestorage.googleapis.com/v0/b/dldchain.firebasestorage.app/o/DLDCHAIN%20AUDIO%20OVERVIEW.wav?alt=media&token=19d7c6c6-7af3-4a97-b69d-b9749bcd4d40";
 
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNoteTitle, setNewNoteTitle] = useState('');
@@ -182,7 +182,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                     Hear directly from the visionaries behind the project.
                 </p>
                 <audio controls className="w-full">
-                  <source src={interviewUrl} type="audio/mpeg" />
+                  <source src={interviewUrl} type="audio/wav" />
                   Your browser does not support the audio element. Please use the download link.
                 </audio>
                  <Button asChild variant="outline" size="sm" className="mt-2">
