@@ -65,7 +65,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   });
 
   const handleAddNote = () => {
-    if (!newNoteTitle.trim() || !newNoteContent.trim() || !selectedDoc) {
+    if (!newNoteTitle.trim() || !newNoteContent.trim()) {
       toast({ variant: 'destructive', title: 'Error', description: 'Title and content are required.' });
       return;
     }
@@ -117,58 +117,100 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
     <div className="flex-1 p-6 bg-background/50">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <Card className="ai-console-card lg:col-span-2">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Mail className="h-5 w-5" /> Email Center</CardTitle>
-                <CardDescription>Share project information via email.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Form {...emailForm}>
-                    <form onSubmit={emailForm.handleSubmit(handleSendEmail)} className="space-y-4">
-                        <FormField
-                            control={emailForm.control}
-                            name="recipient"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Recipient Email</FormLabel>
-                                    <FormControl>
-                                        <Input type="email" placeholder="visitor@email.com" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={emailForm.control}
-                            name="topic"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Information Topic</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <div className="lg:col-span-2 flex flex-col gap-6">
+            <Card className="ai-console-card">
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><Mail className="h-5 w-5" /> Email Center</CardTitle>
+                    <CardDescription>Share project information via email.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Form {...emailForm}>
+                        <form onSubmit={emailForm.handleSubmit(handleSendEmail)} className="space-y-4">
+                            <FormField
+                                control={emailForm.control}
+                                name="recipient"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Recipient Email</FormLabel>
                                         <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select a topic" />
-                                            </SelectTrigger>
+                                            <Input type="email" placeholder="visitor@email.com" {...field} />
                                         </FormControl>
-                                        <SelectContent>
-                                            <SelectItem value="project-overview">Project Overview</SelectItem>
-                                            <SelectItem value="technical-analysis">Technical Analysis</SelectItem>
-                                            <SelectItem value="tokenization-overview">Tokenization Overview</SelectItem>
-                                            <SelectItem value="ebram-language">EBRAM Language</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button type="submit" className="w-full">
-                            <Mail className="mr-2 h-4 w-4" />
-                            Send Email
-                        </Button>
-                    </form>
-                </Form>
-            </CardContent>
-        </Card>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={emailForm.control}
+                                name="topic"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Information Topic</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a topic" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="project-overview">Project Overview</SelectItem>
+                                                <SelectItem value="technical-analysis">Technical Analysis</SelectItem>
+                                                <SelectItem value="tokenization-overview">Tokenization Overview</SelectItem>
+                                                <SelectItem value="ebram-language">EBRAM Language</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" className="w-full">
+                                <Mail className="mr-2 h-4 w-4" />
+                                Send Email
+                            </Button>
+                        </form>
+                    </Form>
+                </CardContent>
+            </Card>
+
+            <Card className="ai-console-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2"><StickyNote className="h-5 w-5" /> Notes</CardTitle>
+                <CardDescription>Create notes from documents to generate your own reports and summaries.</CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                    <div className="p-4">
+                    <ScrollArea className="h-72">
+                      {notes.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pr-4">
+                          {notes.map(note => (
+                            <Card key={note.id} className="cursor-pointer hover:border-primary bg-card/50 transition-colors" onClick={() => setSelectedNote(note)}>
+                              <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
+                                <div>
+                                  <CardTitle className="text-base truncate">{note.title}</CardTitle>
+                                  <CardDescription className="text-xs truncate pt-1">Source: {note.source}</CardDescription>
+                                </div>
+                                <Checkbox
+                                    checked={note.marked}
+                                    onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
+                                    className="ml-2"
+                                  />
+                              </CardHeader>
+                              <CardContent className="p-4 pt-0">
+                                <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center text-muted-foreground py-8">No notes yet. Click "Add Note" to get started.</div>
+                      )}
+                    </ScrollArea>
+                    </div>
+              </CardContent>
+                <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+                  <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none"><PlusCircle className="mr-2 h-4 w-4"/> Add Note</Button>
+              </CardFooter>
+            </Card>
+        </div>
         
         <div className="space-y-6">
           <Card className="ai-console-card">
@@ -223,48 +265,6 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
               </CardContent>
           </Card>
         </div>
-
-
-        <Card className="ai-console-card lg:col-span-3">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2"><StickyNote className="h-5 w-5" /> Notes</CardTitle>
-            <CardDescription>Create notes from documents to generate your own reports and summaries.</CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-                <div className="p-4">
-                <ScrollArea className="h-72">
-                  {notes.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pr-4">
-                      {notes.map(note => (
-                        <Card key={note.id} className="cursor-pointer hover:border-primary bg-card/50 transition-colors" onClick={() => setSelectedNote(note)}>
-                          <CardHeader className="p-4 flex flex-row items-start justify-between space-y-0">
-                            <div>
-                              <CardTitle className="text-base truncate">{note.title}</CardTitle>
-                              <CardDescription className="text-xs truncate pt-1">Source: {note.source}</CardDescription>
-                            </div>
-                            <Checkbox
-                                checked={note.marked}
-                                onClick={(e) => { e.stopPropagation(); handleToggleNoteMark(note.id); }}
-                                className="ml-2"
-                              />
-                          </CardHeader>
-                          <CardContent className="p-4 pt-0">
-                            <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-center text-muted-foreground py-8">No notes yet. Click "Add Note" to get started.</div>
-                  )}
-                </ScrollArea>
-                </div>
-          </CardContent>
-            <CardFooter className="border-t p-4 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-              <Button onClick={() => setShowAddNoteDialog(true)} className="flex-1 sm:flex-none"><PlusCircle className="mr-2 h-4 w-4"/> Add Note</Button>
-          </CardFooter>
-        </Card>
-
       </div>
 
       <Dialog open={showAddNoteDialog} onOpenChange={setShowAddNoteDialog}>
@@ -306,3 +306,5 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
     </div>
   );
 }
+
+    
