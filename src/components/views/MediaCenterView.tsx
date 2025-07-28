@@ -35,31 +35,6 @@ interface MediaCenterViewProps {
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 type EmailTopic = 'project-overview' | 'technical-analysis' | 'tokenization-overview' | 'ebram-language';
 
-const defaultNotes: Note[] = [
-    {
-        id: 1,
-        title: 'AI as an "Intelligent Referee"',
-        content: "The EBRAM™ AI-Weighted Node System acts as a 'sentient economic layer' and an 'intelligent referee.' It uses AI to assign calibrated 'weights' to real-world and on-chain events (e.g., EBRAMINT™ Date, Owner Verified status, Last Valuation Audit) to dynamically and objectively influence property valuations and DXBTOKEN™ prices. The system can even block 'unlogical' transactions before they are finalized.",
-        source: "Technical Docs: EBRAM™",
-        marked: true,
-    },
-    {
-        id: 2,
-        title: 'Guaranteed Liquidity: "No Liquidity = No Token"',
-        content: "The MAKE™ System is DLDCHAIN's sovereign financial layer. Its core principle is 'No liquidity = no token,' meaning every DXBTOKEN™ issued is 100% backed by an equivalent value in AED, confirmed on-chain by a regulated Liquidity Pool Officer (LPO) before the token is ever minted. This eliminates counterparty risk and guarantees market stability.",
-        source: "Technical Docs: MAKE™ System",
-        marked: false,
-    },
-    {
-        id: 3,
-        title: 'Unambiguous Ownership: "Token = True = Owner"',
-        content: "This is a fundamental legal and system truth at all stages of the asset lifecycle. It asserts that legal ownership always resides with the entity (wallet address) holding the DXBTOKEN™. There is no hidden claim or external custody that divorces the token from its underlying asset rights. This is cryptographically enforced by the 'Escrowship Doctrine,' where a trading token cannot simultaneously be used for utility (e.g., renting).",
-        source: "Technical Docs: DXBTOKENS™",
-        marked: false,
-    }
-];
-
-
 const emailFormSchema = z.object({
   recipient: z.string().email({ message: 'Please enter a valid email address.' }),
   topic: z.custom<EmailTopic>(),
@@ -74,7 +49,29 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   const { toast } = useToast();
   const interviewUrl = "https://firebasestorage.googleapis.com/v0/b/dldchain.firebasestorage.app/o/DLDCHAIN%20AUDIO%20OVERVIEW.wav?alt=media&token=19d7c6c6-7af3-4a97-b69d-b9749bcd4d40";
 
-  const [notes, setNotes] = useState<Note[]>(defaultNotes);
+  const [notes, setNotes] = useState<Note[]>([
+    {
+      id: 1,
+      title: 'AI as an "Intelligent Referee"',
+      content: 'The EBRAM™ AI-Weighted Node System acts as a "sentient economic layer." It prevents "unlogical" transactions and triggers automated re-valuation if a score difference exceeds a threshold, ensuring fair market dynamics.',
+      source: 'Technical Analysis',
+      marked: true,
+    },
+    {
+      id: 2,
+      title: '"No Liquidity = No Token"',
+      content: 'A core principle of the MAKE™ System. Every DXBTOKEN™ is 100% AED-backed before it even exists. This sovereign, internal liquidity backbone guarantees stability and eliminates speculative risk, attracting traditional capital.',
+      source: 'Technical Analysis',
+      marked: false,
+    },
+    {
+      id: 3,
+      title: '"Token = True = Owner"',
+      content: 'This philosophy ensures unambiguous digital ownership. Unlike other models, DLDCHAIN™ guarantees that holding the DXBTOKEN™ is holding the legal right, with no hidden claims. It separates tradability from utility through the "Escrowship" doctrine.',
+      source: 'DLDCHAIN Vision',
+      marked: false,
+    }
+  ]);
   const [newNoteTitle, setNewNoteTitle] = useState('');
   const [newNoteContent, setNewNoteContent] = useState('');
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
@@ -219,7 +216,14 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                   />
                               </CardHeader>
                               <CardContent className="p-4 pt-0">
-                                <p className="text-sm text-muted-foreground line-clamp-3 break-words">{note.content}</p>
+                                <p className="text-sm text-muted-foreground break-words" style={{
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 3,
+                                    WebkitBoxOrient: 'vertical',
+                                    overflow: 'hidden',
+                                  }}>
+                                    {note.content}
+                                </p>
                               </CardContent>
                             </Card>
                           ))}
