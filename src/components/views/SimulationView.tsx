@@ -250,35 +250,40 @@ export function SimulationView() {
                     <DialogDescription>
                         A detailed breakdown of the tokenization process for this scenario.
                     </DialogDescription>
-                    <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-                        <X className="h-4 w-4" />
-                        <span className="sr-only">Close</span>
+                    <DialogClose asChild>
+                      <Button variant="ghost" size="icon" className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+                          <X className="h-4 w-4" />
+                          <span className="sr-only">Close</span>
+                      </Button>
                     </DialogClose>
                 </DialogHeader>
                 
-                <ScrollArea className="overflow-y-auto">
-                    <div className="prose dark:prose-invert max-w-full p-6">
-                        <div>
-                            <h4 className="font-semibold text-lg">Context</h4>
-                            {selectedScenario.context}
-                        </div>
-                        <Separator className="my-4" />
-                        <div>
-                            <h4 className="font-semibold text-lg">DLDCHAIN™ Features Highlighted</h4>
-                             {selectedScenario.features}
-                        </div>
-                         <Separator className="my-4" />
-                        <div>
-                            <h4 className="font-semibold text-lg">Simulation Steps & Technical Flow</h4>
-                            {selectedScenario.steps}
-                        </div>
-                         <Separator className="my-4" />
-                        <div>
-                             <h4 className="font-semibold text-lg">Financial Summary</h4>
-                            {selectedScenario.summary}
-                        </div>
-                    </div>
-                </ScrollArea>
+                <div className="relative overflow-hidden">
+                  <ScrollArea className="h-full">
+                      <div className="prose dark:prose-invert max-w-full p-6">
+                          <div>
+                              <h4 className="font-semibold text-lg">Context</h4>
+                              {selectedScenario.context}
+                          </div>
+                          <Separator className="my-4" />
+                          <div>
+                              <h4 className="font-semibold text-lg">DLDCHAIN™ Features Highlighted</h4>
+                              {selectedScenario.features}
+                          </div>
+                          <Separator className="my-4" />
+                          <div>
+                              <h4 className="font-semibold text-lg">Simulation Steps & Technical Flow</h4>
+                              {selectedScenario.steps}
+                          </div>
+                          <Separator className="my-4" />
+                          <div>
+                              <h4 className="font-semibold text-lg">Financial Summary</h4>
+                              {selectedScenario.summary}
+                          </div>
+                      </div>
+                  </ScrollArea>
+                </div>
+
             </DialogContent>
         </Dialog>
       )}
@@ -286,3 +291,5 @@ export function SimulationView() {
     </div>
   );
 }
+
+    
