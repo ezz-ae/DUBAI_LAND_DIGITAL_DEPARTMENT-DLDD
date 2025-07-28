@@ -50,7 +50,7 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
       <SidebarHeader className="p-2 border-b h-14 flex items-center shrink-0">
          <h2 className="px-2 font-semibold text-foreground text-base">Table of Contents</h2>
       </SidebarHeader>
-      <SidebarContent className="flex-1 p-0">
+      <SidebarContent className="p-0">
         <ScrollArea className="h-full">
             <div className="list-none p-2">
                 <Accordion type="multiple" className="w-full" key={selectedItemId} defaultValue={getDefaultAccordionValues()}>

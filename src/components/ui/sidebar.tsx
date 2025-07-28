@@ -180,7 +180,7 @@ const Sidebar = React.forwardRef<
           <SheetContent
             side={side}
             className={cn(
-              "w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground",
+              "flex flex-col w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground",
               className
             )}
              style={
