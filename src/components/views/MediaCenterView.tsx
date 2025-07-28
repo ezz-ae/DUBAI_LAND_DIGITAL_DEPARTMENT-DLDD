@@ -186,10 +186,10 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                     <h4 className="font-semibold">{item.title}</h4>
                                     <p className="text-sm text-muted-foreground">{item.description}</p>
                                 </div>
-                                <Button asChild variant="outline" size="sm" disabled={item.disabled} className="shrink-0">
-                                    <a href={item.disabled ? undefined : item.file} target={item.disabled ? undefined : "_blank"} rel="noopener noreferrer">
+                                <Button asChild variant="outline" size="sm" className="shrink-0">
+                                    <a href={item.file} target="_blank" rel="noopener noreferrer">
                                         <Download className="h-4 w-4 mr-2" />
-                                        {item.disabled ? 'Coming Soon' : 'View & Print'}
+                                        View & Print
                                     </a>
                                 </Button>
                             </li>
@@ -204,3 +204,5 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
     </div>
   );
 }
+
+    

@@ -293,8 +293,8 @@ export const technicalBook: TechnicalBook = {
                                 ]},
                                 {type: 'subheading', text: "Government-Backed Fintech Constitution: Legal & Operational Authority"},
                                 {type: 'list', items: [
-                                    "<b>Law Coded and Automated:</b> DLDD, through EBRAM™, establishes a new paradigm where legal principles are \"coded and automated,\" ensuring consistent, transparent, and irrefutable enforcement of real estate laws and contracts directly on-chain.",
-                                    "<b>Unbreakable Authority:</b> DLDD's sovereign control ensures that all on-chain smart contracts are \"unbreakable, undeletable, and uneditable,\" providing absolute legal finality and preventing any external manipulation of property records."
+                                    '<b>Law Coded and Automated:</b> DLDD, through EBRAM™, establishes a new paradigm where legal principles are "coded and automated," ensuring consistent, transparent, and irrefutable enforcement of real estate laws and contracts directly on-chain.',
+                                    '<b>Unbreakable Authority:</b> DLDD\'s sovereign control ensures that all on-chain smart contracts are "unbreakable, undeletable, and uneditable," providing absolute legal finality and preventing any external manipulation of property records.'
                                 ]}
                             ]
                         },
@@ -1929,3 +1929,5 @@ function isRentable(uint256 tokenId) public view returns (bool) {
         }
     ]
 };
+
+    
