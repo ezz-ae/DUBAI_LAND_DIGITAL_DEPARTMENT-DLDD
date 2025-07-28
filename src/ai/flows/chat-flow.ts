@@ -34,7 +34,7 @@ const chatPrompt = ai.definePrompt({
     name: 'chatPrompt',
     input: { schema: ChatWithDocumentInputSchema },
     output: { schema: ChatWithDocumentOutputSchema },
-    model: googleAI.model('gemini-1.5-flash'),
+    model: googleAI.model('gemini-1.5-pro-latest'),
     prompt: `You are an expert AI assistant for the DLDCHAIN project, a sovereign blockchain ecosystem for Dubai's real estate sector.
 
     Your task is to answer the user's question based *only* on the provided document content. Do not use any external knowledge. If the answer is not in the document, state that the information is not available in the provided context.
