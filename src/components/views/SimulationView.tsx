@@ -16,10 +16,10 @@ const propertyTypeIcons = {
     commercial: <Briefcase className="h-5 w-5" />,
 };
 
-const FinancialSummaryRow = ({ label, value, isHighlighted = false }: { label: string, value: string, isHighlighted?: boolean }) => (
+const FinancialSummaryRow = ({ label, value, isHighlighted = false, isMuted = false }: { label: string, value: string, isHighlighted?: boolean, isMuted?: boolean }) => (
     <div className={`flex justify-between items-center py-2 border-b last:border-b-0 ${isHighlighted ? 'font-bold text-primary bg-primary/5 p-2 rounded-md' : 'text-muted-foreground'}`}>
-        <span className={isHighlighted ? 'text-primary' : ''}>{label}</span>
-        <span className={isHighlighted ? 'text-primary' : 'text-foreground font-medium'}>{value}</span>
+        <span className={`${isHighlighted ? 'text-primary' : ''} ${isMuted ? 'text-xs' : ''}`}>{label}</span>
+        <span className={`${isHighlighted ? 'text-primary' : 'text-foreground font-medium'} ${isMuted ? 'text-xs' : ''}`}>{value}</span>
     </div>
 );
 
@@ -59,10 +59,15 @@ const scenarios = [
             <FinancialSummaryRow label="Property Valuation (EBRAM™)" value="AED 3,200,000" />
             <FinancialSummaryRow label="DXBTOKENS™ Minted (1 token/sqft)" value="825 tokens" />
             <FinancialSummaryRow label="Value per Token (Initial)" value="AED 3,878.78" />
-            <FinancialSummaryRow label="Instant Liquidity (60% of Valuation)" value="AED 1,920,000" isHighlighted={true} />
-            <FinancialSummaryRow label="DXBTOKENS™ Retained (40% equity)" value="330 tokens" />
-            <FinancialSummaryRow label="Broker Commission (1%)" value="AED 32,000" />
-            <FinancialSummaryRow label="Process Duration to Liquidity" value="< 48 hours" isHighlighted={true} />
+            <Separator className="my-2" />
+            <FinancialSummaryRow label="Owner Instant Liquidity (60% Cash)" value="AED 1,920,000" isHighlighted={true} />
+            <FinancialSummaryRow label="Owner Retained Equity (40% Tokens)" value="330 DXBTOKENS™" isHighlighted={true} />
+            <FinancialSummaryRow label="Owner Total Position" value="~AED 3,200,000" />
+            <Separator className="my-2" />
+            <FinancialSummaryRow label="LPO Revenue (1% of Valuation)" value="AED 32,000" isMuted={true} />
+            <FinancialSummaryRow label="EBRAM™ Governance Revenue (2%)" value="AED 64,000" isMuted={true} />
+            <FinancialSummaryRow label="Service Staking Pool (2%)" value="AED 64,000" isMuted={true} />
+            <FinancialSummaryRow label="Broker Commission (1%)" value="AED 32,000" isMuted={true} />
         </div>
     },
     {
@@ -95,9 +100,14 @@ const scenarios = [
             <FinancialSummaryRow label="Property Valuation (EBRAM™)" value="AED 5,100,000" />
             <FinancialSummaryRow label="Outstanding Mortgage" value="AED 900,000" />
             <FinancialSummaryRow label="Net Equity" value="AED 4,200,000" />
-            <FinancialSummaryRow label="Mortgage Payout to Lender" value="AED 900,000" />
-            <FinancialSummaryRow label="Instant Liquidity (60% of Equity)" value="AED 2,520,000" isHighlighted={true} />
-            <FinancialSummaryRow label="DXBTOKENS™ Retained (40% equity)" value="720 tokens" />
+            <Separator className="my-2" />
+            <FinancialSummaryRow label="Lender Payout (On MAKE_ID)" value="AED 900,000" />
+            <FinancialSummaryRow label="Owner Instant Liquidity (60% of Equity)" value="AED 2,520,000" isHighlighted={true} />
+            <FinancialSummaryRow label="Owner Retained Equity (40% of Equity)" value="720 DXBTOKENS™" isHighlighted={true}/>
+            <FinancialSummaryRow label="Owner Total Position" value="~AED 4,200,000" />
+             <Separator className="my-2" />
+            <FinancialSummaryRow label="LPO Revenue (1% of Net Equity)" value="AED 42,000" isMuted={true}/>
+            <FinancialSummaryRow label="EBRAM™ Governance Revenue (2% of Net Equity)" value="AED 84,000" isMuted={true}/>
         </div>
     },
     {
@@ -129,11 +139,14 @@ const scenarios = [
         </ol>,
         summary: <div className="space-y-1 mt-2 text-sm">
             <FinancialSummaryRow label="Initial Off-Plan Price" value="AED 4,500,000" />
-            <FinancialSummaryRow label="Developer Instant Funding (60%)" value="AED 2,700,000" isHighlighted={true} />
-            <FinancialSummaryRow label="DXBTOKENS™ Retained (40%)" value="600 tokens" />
-            <FinancialSummaryRow label="Tokens for Public Sale (55%)" value="825 tokens" />
             <FinancialSummaryRow label="Projected Value at Completion" value="AED 5,500,000 (Est.)" />
-            <FinancialSummaryRow label="Early Investor ROI at Completion" value="~22%" isHighlighted={true} />
+            <Separator className="my-2" />
+            <FinancialSummaryRow label="Developer Instant Funding (60%)" value="AED 2,700,000" isHighlighted={true} />
+            <FinancialSummaryRow label="Developer Retained Equity (40%)" value="600 DXBTOKENS™" />
+            <FinancialSummaryRow label="Early Investor Potential ROI" value="~22% (at completion)" isHighlighted={true} />
+            <Separator className="my-2" />
+            <FinancialSummaryRow label="LPO Revenue (1% of Valuation)" value="AED 45,000" isMuted={true}/>
+            <FinancialSummaryRow label="EBRAM™ Governance Revenue (2%)" value="AED 90,000" isMuted={true}/>
         </div>
     },
     {
@@ -166,10 +179,13 @@ const scenarios = [
         </ol>,
         summary: <div className="space-y-1 mt-2 text-sm">
             <FinancialSummaryRow label="Total Tokens Acquired" value="50,000" />
-            <FinancialSummaryRow label="Asset Class" value="Tokenized Commercial Real Estate" />
-            <FinancialSummaryRow label="Action" value="De-Tokenization (MAKE_DISMISS)" isHighlighted={true}/>
             <FinancialSummaryRow label="Final Asset State" value="Traditional Title Deed" />
-            <FinancialSummaryRow label="Key Benefit" value="Liquid, transparent acquisition of an entire illiquid asset." isHighlighted={true} />
+            <Separator className="my-2" />
+            <FinancialSummaryRow label="Action" value="De-Tokenization (MAKE_DISMISS)" isHighlighted={true}/>
+            <FinancialSummaryRow label="Key Benefit" value="Liquid, transparent acquisition of an illiquid asset." isHighlighted={true} />
+             <Separator className="my-2" />
+            <FinancialSummaryRow label="LPO Revenue (Final Pool Closure)" value="Fee on final settlement" isMuted={true} />
+            <FinancialSummaryRow label="EBRAM™ Governance Revenue" value="Fee on D-EBRAMINT™ event" isMuted={true} />
         </div>
     }
 ];
