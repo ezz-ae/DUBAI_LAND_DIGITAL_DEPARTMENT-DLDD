@@ -240,16 +240,16 @@ export function SimulationView() {
       
       {selectedScenario && (
         <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
-            <DialogContent className="sm:max-w-4xl h-full sm:h-auto flex flex-col">
-                <DialogHeader>
+            <DialogContent className="sm:max-w-4xl max-h-[90vh] flex flex-col">
+                <DialogHeader className="flex-shrink-0">
                     <DialogTitle className="text-2xl font-bold font-headline">{selectedScenario.title}</DialogTitle>
                     <DialogDescription>
                         A detailed breakdown of the tokenization process for this scenario.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex-1 overflow-hidden my-4">
+                <div className="flex-1 min-h-0 my-4">
                   <ScrollArea className="h-full pr-6">
-                      <div className="space-y-6 prose dark:prose-invert max-w-full">
+                      <div className="prose dark:prose-invert max-w-full">
                           <div>
                               <h4 className="font-semibold text-lg">Context</h4>
                               {selectedScenario.context}
@@ -272,11 +272,7 @@ export function SimulationView() {
                       </div>
                   </ScrollArea>
                 </div>
-                 <DialogFooter className={cn(
-                    'mt-auto flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
-                    'sm:static sm:bg-transparent sm:py-0 sm:border-t-0',
-                    'sticky bottom-0 bg-background py-4 border-t'
-                  )}>
+                 <DialogFooter className="flex-shrink-0">
                     <DialogClose asChild>
                         <Button type="button" className="w-full sm:w-auto">Close</Button>
                     </DialogClose>
@@ -288,3 +284,5 @@ export function SimulationView() {
     </div>
   );
 }
+
+    
