@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/co
 import { cn } from '@/lib/utils';
 import { BookOpen, Share2, Music, Menu, FlaskConical } from 'lucide-react';
 import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type ActiveView = 'tech-docs' | 'mindmap' | 'simulation' | 'media-center';
 
@@ -34,11 +35,12 @@ const navItems: NavItem[] = [
 export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
   const [hoveredView, setHoveredView] = useState<ActiveView | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   return (
     <header className="p-4 border-b flex items-center justify-between h-16 shrink-0 gap-4">
       <div className="flex items-center gap-4 flex-shrink-0">
-        <SidebarTrigger className={cn('hidden', activeView === 'tech-docs' && 'md:hidden')} />
+        {isMobile && activeView === 'tech-docs' && <SidebarTrigger />}
         <h1 className="text-md font-headline font-bold whitespace-nowrap">
           <span className="hidden sm:inline">DLDCHAIN NATIVE REAL ESTATE BLOCKCHAIN</span>
           <span className="sm:hidden">DLDCHAIN</span>
