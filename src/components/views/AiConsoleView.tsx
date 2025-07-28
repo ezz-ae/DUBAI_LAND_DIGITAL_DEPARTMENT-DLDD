@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Loader2, Send, Sparkles, Bot, User, StickyNote, MessageSquare, Mail } from 'lucide-react';
+import { Loader2, Send, Sparkles, Bot, User, StickyNote, MessageSquare, Mail, PlusCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { dldChainDocuments } from '@/lib/documents';
 import { useToast } from '@/hooks/use-toast';
@@ -38,6 +38,7 @@ import type { ActiveView } from '@/app/page';
 import type { DLDDoc } from '@/lib/documents';
 import { chatWithDocumentFlow } from '@/ai/flows/chat-flow';
 import { generateReportFlow } from '@/ai/flows/report-flow';
+import { generateNoteTitleFlow } from '@/ai/flows/summarize-note-flow';
 
 
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
@@ -100,6 +101,8 @@ export function AiConsoleView({
   const [newNoteTitle, setNewNoteTitle] = useState('');
   const [newNoteContent, setNewNoteContent] = useState('');
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
+  const [isSavingNote, setIsSavingNote] = useState(false);
+
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [generatedReport, setGeneratedReport] = useState('');
   const [reportType, setReportType] = useState<ReportType>('technical');
@@ -209,6 +212,21 @@ export function AiConsoleView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialTopicToDiscuss]);
 
+  const openAddNoteDialog = async (content: string) => {
+    setNewNoteContent(content);
+    setShowAddNoteDialog(true);
+    setIsSavingNote(true);
+    try {
+      const result = await generateNoteTitleFlow({ noteContent: content });
+      setNewNoteTitle(result.title);
+    } catch (error) {
+      console.error('Error generating note title:', error);
+      setNewNoteTitle(''); // Clear title on error
+      toast({ variant: 'destructive', title: 'Could not generate title', description: 'Please enter a title manually.' });
+    } finally {
+      setIsSavingNote(false);
+    }
+  };
 
   const handleAddNote = () => {
     if (!newNoteTitle.trim() || !newNoteContent.trim() || !selectedDoc) {
@@ -314,13 +332,13 @@ export function AiConsoleView({
                 <ScrollArea className="h-96" ref={chatScrollRef}>
                   <div className="p-4 space-y-4">
                   {messages.map((msg: any, index) => (
-                    <div key={index} className={cn("flex items-start gap-3 w-full", msg.from === 'user' ? "justify-end" : "justify-start")}>
+                    <div key={index} className={cn("flex items-start gap-3 w-full group", msg.from === 'user' ? "justify-end" : "justify-start")}>
                       {msg.from === 'bot' && (
                         <Avatar className="w-8 h-8 shrink-0 border">
                           <AvatarFallback className="bg-transparent"><Bot className="w-5 h-5 text-primary"/></AvatarFallback>
                         </Avatar>
                       )}
-                      <div className={cn("flex flex-col gap-2", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
+                      <div className={cn("flex flex-col gap-1", msg.from === 'user' ? 'items-end' : 'items-start', msg.from === 'bot' && 'w-full')}>
                         <div dir={msg.isArabic ? 'rtl' : 'ltr'} className={cn(
                           "max-w-prose rounded-lg px-4 py-2 text-sm",
                           msg.from === 'user' ? "bg-primary text-primary-foreground" : "bg-muted",
@@ -328,6 +346,11 @@ export function AiConsoleView({
                         )}>
                           {msg.text}
                         </div>
+                         {msg.from === 'bot' && index > 0 && ( // Don't show for initial welcome message
+                            <Button variant="ghost" size="sm" className="h-auto px-2 py-1 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => openAddNoteDialog(msg.text)}>
+                                <PlusCircle className="mr-1 h-3 w-3" /> Add to Notes
+                            </Button>
+                        )}
                       </div>
                         {msg.from === 'user' && (
                         <Avatar className="w-8 h-8 shrink-0 border">
@@ -450,7 +473,7 @@ export function AiConsoleView({
         
         <Card className="ai-console-card">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><StickyNote className="h-5 w-5" /> Notes &amp; Reports</CardTitle>
+            <CardTitle className="flex items-center gap-2"><StickyNote className="h-5 w-5" /> Notes & Reports</CardTitle>
             <CardDescription>Create notes from documents and generate AI-powered reports from your findings.</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
@@ -525,15 +548,20 @@ export function AiConsoleView({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add New Note</DialogTitle>
-            <DialogDescription>Create a new note based on document: <span className="font-bold text-primary">{selectedDoc?.name}</span></DialogDescription>
+             <DialogDescription>
+              {isSavingNote ? "Generating title..." : "Review the AI-generated title or create your own."}
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <Input placeholder="Note Title" value={newNoteTitle} onChange={e => setNewNoteTitle(e.target.value)} />
-            <Textarea placeholder="Note Content..." value={newNoteContent} onChange={e => setNewNoteContent(e.target.value)} className="min-h-[100px]" />
+            <div className="relative">
+               <Input placeholder="Note Title" value={newNoteTitle} onChange={e => setNewNoteTitle(e.target.value)} disabled={isSavingNote} />
+               {isSavingNote && <Loader2 className="absolute right-2 top-2 h-5 w-5 animate-spin text-muted-foreground" />}
+            </div>
+            <Textarea placeholder="Note Content..." value={newNoteContent} onChange={e => setNewNoteContent(e.target.value)} className="min-h-[150px]" />
           </div>
           <DialogFooter>
             <Button variant="ghost" onClick={() => setShowAddNoteDialog(false)}>Cancel</Button>
-            <Button onClick={handleAddNote}>Save Note</Button>
+            <Button onClick={handleAddNote} disabled={isSavingNote}>Save Note</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
