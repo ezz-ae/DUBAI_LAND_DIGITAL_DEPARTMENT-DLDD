@@ -12,7 +12,8 @@ import { googleAI } from '@genkit-ai/googleai';
 // See https://firebase.google.com/docs/genkit/plugins/google-ai#initialize-the-plugin
 genkit({
   plugins: [googleAI({
-    location: 'us-central1'
+    location: 'us-central1',
+    apiKey: process.env.GEMINI_API_KEY,
   })],
   logLevel: 'debug',
   enableTracingAndMetrics: true,
