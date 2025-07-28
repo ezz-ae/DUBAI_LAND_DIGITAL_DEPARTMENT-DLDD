@@ -154,7 +154,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                   <FormItem>
                                       <FormLabel>Recipient Email</FormLabel>
                                       <FormControl>
-                                          <Input type="email" placeholder="visitor@email.com" {...field} />
+                                          <Input type="email" {...field} />
                                       </FormControl>
                                       <FormMessage />
                                   </FormItem>
@@ -215,7 +215,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                 />
                             </CardHeader>
                             <CardContent className="p-4 pt-0">
-                               <p className="text-sm text-muted-foreground" style={{
+                               <p className="text-sm text-muted-foreground break-words" style={{
                                   display: '-webkit-box',
                                   WebkitBoxOrient: 'vertical',
                                   WebkitLineClamp: 3,
