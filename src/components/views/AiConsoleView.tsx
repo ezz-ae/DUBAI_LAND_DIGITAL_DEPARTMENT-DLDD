@@ -42,7 +42,7 @@ import { generateReportFlow } from '@/ai/flows/report-flow';
 
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 export type ReportType = 'technical' | 'managerial' | 'legal' | 'financial';
-type EmailTopic = 'project-overview' | 'technical-overview' | 'tokenization-overview' | 'ebram-language' | 'custom';
+type EmailTopic = 'project-overview' | 'technical-analysis' | 'tokenization-overview' | 'ebram-language' | 'custom';
 
 const emailFormSchema = z.object({
   recipient: z.string().email({ message: 'Please enter a valid email address.' }),
@@ -275,7 +275,7 @@ export function AiConsoleView({
 
         const topics: Record<EmailTopic, {title: string, contentDocId: number | null }> = {
             'project-overview': { title: "Project Overview", contentDocId: 1 },
-            'technical-overview': { title: "Technical Overview", contentDocId: 19 },
+            'technical-analysis': { title: "Technical Analysis", contentDocId: 2 },
             'tokenization-overview': { title: "Tokenization Overview", contentDocId: 8 },
             'ebram-language': { title: "EBRAM Language Overview", contentDocId: 4 },
             'custom': { title: `Custom Topic: ${values.customTopic}`, contentDocId: null }
@@ -413,7 +413,7 @@ export function AiConsoleView({
                                         </FormControl>
                                         <SelectContent>
                                             <SelectItem value="project-overview">Project Overview</SelectItem>
-                                            <SelectItem value="technical-overview">Technical Overview</SelectItem>
+                                            <SelectItem value="technical-analysis">Technical Analysis</SelectItem>
                                             <SelectItem value="tokenization-overview">Tokenization Overview</SelectItem>
                                             <SelectItem value="ebram-language">EBRAM Language</SelectItem>
                                             <SelectItem value="custom">Custom Topic</SelectItem>

@@ -20,7 +20,7 @@ interface MediaCenterViewProps {
 const downloadItems = [
     { title: "DLDCHAIN Project Overview", description: "A high-level summary of the project's vision, goals, and core components.", file: "/report/overview" },
     { title: "Project Feasibility Study", description: "In-depth analysis of the project's viability, market fit, and economic model.", file: "/report/feasibility" },
-    { title: "Technical Analysis Overview", description: "A summary of the technical architecture, including blockchain choice and security protocols.", file: "/report/technical" },
+    { title: "Technical Analysis", description: "A comprehensive overview of the technical architecture, including blockchain choice and security protocols.", file: "/report/technical" },
     { title: "Generated Reports", description: "Access AI-generated reports created from your notes in the AI Console.", file: "#", disabled: true },
 ]
 
