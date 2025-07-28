@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Building, Home, LandPlot, Briefcase } from 'lucide-react';
 import { Separator } from '../ui/separator';
 import { ScrollArea } from '../ui/scroll-area';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import { scenarios } from '@/lib/simulation-scenarios';
 
@@ -17,17 +17,6 @@ const propertyTypeIcons = {
     land: <LandPlot className="h-5 w-5" />,
     commercial: <Briefcase className="h-5 w-5" />,
 };
-
-const FinancialSummaryRow = ({ label, value, isHighlighted = false, isMuted = false }: { label: string, value: string, isHighlighted?: boolean, isMuted?: boolean }) => (
-    <div className={cn(
-      "flex justify-between items-center py-2 border-b last:border-b-0",
-      isHighlighted && 'font-bold text-primary bg-primary/5 p-2 rounded-md',
-      !isHighlighted && 'text-muted-foreground'
-    )}>
-        <span className={cn(isHighlighted && 'text-primary', isMuted && 'text-xs')}>{label}</span>
-        <span className={cn(isHighlighted ? 'text-primary' : 'text-foreground font-medium', isMuted && 'text-xs')}>{value}</span>
-    </div>
-);
 
 const ReadyScenarios = ({ onScenarioSelect }: { onScenarioSelect: (scenario: any) => void }) => (
     <div className="space-y-8">
@@ -40,7 +29,7 @@ const ReadyScenarios = ({ onScenarioSelect }: { onScenarioSelect: (scenario: any
 
         <Separator />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {scenarios.map(scenario => (
                 <Card key={scenario.id} className="flex flex-col">
                     <CardHeader>
@@ -77,7 +66,7 @@ export function SimulationView() {
       
       {selectedScenario && (
         <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
-            <DialogContent className="sm:max-w-4xl p-0 grid grid-rows-[auto_minmax(0,1fr)] max-h-[90vh]">
+            <DialogContent className="sm:max-w-4xl p-0 grid grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90vh]">
                 <DialogHeader className="p-6 pb-4 border-b">
                     <DialogTitle className="text-2xl font-bold font-headline">{selectedScenario.title}</DialogTitle>
                     <DialogDescription>
@@ -86,28 +75,31 @@ export function SimulationView() {
                 </DialogHeader>
                 
                 <ScrollArea className="h-full">
-                    <div className="prose dark:prose-invert max-w-full p-6">
+                    <div className="prose dark:prose-invert max-w-full p-6 space-y-4">
                         <div>
                             <h4 className="font-semibold text-lg">Context</h4>
                             {selectedScenario.context}
                         </div>
-                        <Separator className="my-4" />
+                        <Separator />
                         <div>
                             <h4 className="font-semibold text-lg">DLDCHAIN™ Features Highlighted</h4>
                             {selectedScenario.features}
                         </div>
-                        <Separator className="my-4" />
+                        <Separator />
                         <div>
                             <h4 className="font-semibold text-lg">Simulation Steps & Technical Flow</h4>
                             {selectedScenario.steps}
                         </div>
-                        <Separator className="my-4" />
+                        <Separator />
                         <div>
                              <h4 className="font-semibold text-lg">Financial Summary</h4>
                             {selectedScenario.summary}
                         </div>
                     </div>
                 </ScrollArea>
+                <DialogFooter className="p-4 border-t">
+                    <Button variant="outline" onClick={() => setSelectedScenario(null)}>Close</Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
       )}
