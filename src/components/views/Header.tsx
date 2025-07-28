@@ -11,6 +11,7 @@ import { BookOpen, Share2, Music, Menu, FlaskConical } from 'lucide-react';
 import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ProjectPilotLogo } from '../logo';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 type ActiveView = 'tech-docs' | 'mindmap' | 'simulation' | 'media-center';
 
@@ -38,6 +39,67 @@ export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
 
+  const DesktopNav = () => (
+    <div className="hidden md:flex items-center gap-1 bg-muted p-1 rounded-lg">
+        {navItems.map((item) => {
+          const isVisible = activeView === item.view || hoveredView === item.view;
+          return (
+            <Button
+                key={item.view}
+                variant={activeView === item.view ? 'default' : 'ghost'}
+                onClick={() => setActiveView(item.view)}
+                onMouseEnter={() => setHoveredView(item.view)}
+                onMouseLeave={() => setHoveredView(null)}
+                className="h-8 transition-all duration-300 ease-in-out"
+                style={{ width: isVisible ? 'auto' : '2.25rem', padding: isVisible ? '0 0.75rem' : '0' }}
+            >
+                <item.icon className="h-4 w-4 shrink-0" />
+                <span className={cn(
+                  "ml-2 transition-all duration-300 ease-in-out overflow-hidden",
+                  isVisible ? "max-w-xs opacity-100" : "max-w-0 opacity-0"
+                )}>
+                  {item.label}
+                </span>
+            </Button>
+          )
+        })}
+    </div>
+  );
+
+  const MobileNav = () => (
+    <div className="md:hidden">
+      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Navigation</SheetTitle>
+          </SheetHeader>
+          <nav className="flex flex-col gap-2 pt-4">
+            {navItems.map((item) => (
+              <Button
+                key={item.view}
+                variant={activeView === item.view ? 'default' : 'ghost'}
+                onClick={() => {
+                  setActiveView(item.view);
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full justify-start"
+              >
+                <item.icon className="h-4 w-4 mr-2" />
+                {item.label}
+              </Button>
+            ))}
+          </nav>
+        </SheetContent>
+      </Sheet>
+    </div>
+  );
+
   return (
     <header className="p-4 border-b flex items-center justify-between h-16 shrink-0 gap-4">
       <div className="flex items-center gap-2 flex-shrink-0">
@@ -50,63 +112,11 @@ export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
         </h1>
       </div>
 
-      {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center gap-1 bg-muted p-1 rounded-lg">
-          {navItems.map((item) => {
-            const isVisible = activeView === item.view || hoveredView === item.view;
-            return (
-              <Button
-                  key={item.view}
-                  variant={activeView === item.view ? 'default' : 'ghost'}
-                  onClick={() => setActiveView(item.view)}
-                  onMouseEnter={() => setHoveredView(item.view)}
-                  onMouseLeave={() => setHoveredView(null)}
-                  className="h-8 transition-all duration-300 ease-in-out"
-                  style={{ width: isVisible ? 'auto' : '2rem', padding: isVisible ? '0 0.75rem' : '0' }}
-              >
-                  <item.icon className="h-4 w-4 shrink-0" />
-                  <span className={cn(
-                    "ml-2 transition-all duration-300 ease-in-out overflow-hidden",
-                    isVisible ? "max-w-xs opacity-100" : "max-w-0 opacity-0"
-                  )}>
-                    {item.label}
-                  </span>
-              </Button>
-            )
-          })}
-      </div>
+      <DesktopNav />
 
-      {/* Mobile Navigation */}
-      <div className="md:hidden">
-        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Navigation</SheetTitle>
-            </SheetHeader>
-            <nav className="flex flex-col gap-2 pt-4">
-              {navItems.map((item) => (
-                <Button
-                  key={item.view}
-                  variant={activeView === item.view ? 'default' : 'ghost'}
-                  onClick={() => {
-                    setActiveView(item.view);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full justify-start"
-                >
-                  <item.icon className="h-4 w-4 mr-2" />
-                  {item.label}
-                </Button>
-              ))}
-            </nav>
-          </SheetContent>
-        </Sheet>
+      <div className="flex items-center gap-2">
+        <ThemeSwitcher />
+        <MobileNav />
       </div>
     </header>
   );
