@@ -48,7 +48,7 @@ const downloadItems = [
 
 export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   const { toast } = useToast();
-  const interviewUrl = "https://drive.google.com/uc?export=download&id=1qGmGpJAr65P9OaApzfI03cZdU7kOxEQ9";
+  const interviewUrl = "https://drive.google.com/uc?export=download&id=13ASKprPbFMRkPSy0147J0UG45B0clspW";
 
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNoteTitle, setNewNoteTitle] = useState('');
