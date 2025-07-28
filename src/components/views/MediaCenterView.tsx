@@ -47,8 +47,7 @@ const downloadItems = [
 
 export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   const { toast } = useToast();
-  // TODO: Replace this with a direct link to an audio file (e.g., from Firebase Storage)
-  const interviewUrl = "https://drive.google.com/file/d/1qGmGpJAr65P9OaApzfI03cZdU7kOxEQ9/view?usp=sharing";
+  const interviewUrl = "https://drive.google.com/uc?export=download&id=1qGmGpJAr65P9OaApzfI03cZdU7kOxEQ9";
 
   const [notes, setNotes] = useState<Note[]>([]);
   const [newNoteTitle, setNewNoteTitle] = useState('');
