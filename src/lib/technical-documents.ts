@@ -384,7 +384,7 @@ export const technicalBook: TechnicalBook = {
                             id: 'article-1-4-6',
                             title: 'Pillar 5: Strategic & Global Impact – DLDD\'s New Horizon',
                             content: [
-                                {type: 'paragraph', text: "The transformation of DLD into DLDD through DLDCHAIN™ establishes Dubai as a definitive global leader, not just in technology adoption, but in shaping the future of digital governance and global commerce."},
+                                {type: 'paragraph', text: "The transformation of DLD into the Dubai Land Digital Department (DLDD) through DLDCHAIN™ establishes Dubai as a definitive global leader, not just in technology adoption, but in shaping the future of digital governance and global commerce."},
                                 {type: 'subheading', text: "Global Standard-Setter: Exporting Sovereign Digital Governance"},
                                 {type: 'list', items: [
                                     "<b>Undisputed Leadership:</b> DLDD will position Dubai as the undisputed global standard-setter for digital governance in real estate, achieving international recognition and inspiring other jurisdictions to follow suit.",
@@ -772,7 +772,7 @@ export const technicalBook: TechnicalBook = {
                                 ]},
                             ]
                         },
-                        {
+                         {
                             id: 'article-2-3-3',
                             title: 'Mashroi™ Digital Events: The Industry\'s Live Connection Hub',
                             content: [
@@ -833,7 +833,7 @@ export const technicalBook: TechnicalBook = {
                                 ]}
                             ]
                         },
-                        {
+                         {
                             id: 'article-2-3-5',
                             title: 'Security, Compliance & Challenges',
                             content: [
@@ -1309,6 +1309,119 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                             ]
                         }
                     ]
+                },
+                {
+                    id: 'chapter-3-3',
+                    title: "The Mixed Technology of AI and Blockchain on the DLDCHAIN™",
+                    introduction: [{type: 'paragraph', text: "Beyond a Registry: Engineering Intelligent Governance and Trust"}],
+                    articles: [
+                       {
+                           id: 'article-3-3-1',
+                           title: 'Introduction: DLDCHAIN™ – Not Just a Blockchain, but a Smart One',
+                           content: [
+                               {type: 'paragraph', text: 'In the landscape of digital transformation, many initiatives leverage blockchain for immutability and transparency. However, DLDCHAIN™ stands apart as a truly "smart blockchain" – a groundbreaking ecosystem where Artificial Intelligence (AI) is not merely an add-on but is deeply interwoven with blockchain technology to create an intelligent, adaptive, and self-governing real estate protocol. This synergy allows DLDCHAIN™ to move beyond simply recording data; it enables real-time intelligence, automated decision-making, predictive insights, and proactive governance, solidifying Dubai\'s position as a global leader in urban innovation.'},
+                               {type: 'paragraph', text: 'This study explores how AI and blockchain are seamlessly integrated within DLDCHAIN™\'s core components (EBRAM™, MAKE™ System, Mashroi™) to create a system that is not only secure and transparent but also exceptionally intelligent, responsive, and trustworthy.'}
+                           ]
+                       },
+                       {
+                           id: 'article-3-3-2',
+                           title: 'Pillar 1: AI as the Legal Brain – EBRAM™\'s Intelligent Governance',
+                           content: [
+                               {type: 'paragraph', text: 'EBRAM™ (Emirates Blockchain Real-estate Agreement Management) is the "smart agreement engine" of DLDCHAIN™, acting as the very consciousness of Dubai\'s real estate. AI capabilities within EBRAM™ elevate it from a static smart contract platform to a dynamic, self-learning legal protocol.'},
+                               {type: 'subheading', text: 'EBRAMGPT™: Natural Language to Code – Democratizing Legal Interaction'},
+                               {type: 'list', items: [
+                                   '<b>Bi-directional Language Conversion:</b> EBRAMGPT™ seamlessly translates natural language (Arabic, English, etc.) into valid EBRAM™ smart clauses and underlying Python code. Conversely, it provides clear, readable explanations of complex legal logic from code to human language. This capability democratizes legal access, allowing non-experts to draft enforceable contracts without coding skills.',
+                                   '<b>Context-Aware Drafting:</b> Leveraging deep learning, EBRAMGPT™ understands user roles and transaction types, incorporating knowledge of Dubai\'s specific legal rules (e.g., Ejari timelines, RDC dispute paths) to ensure generated contracts are compliant and accurate.',
+                                   '<b>AI Clause Suggestions & Risk Warnings:</b> It proactively suggests missing protections and flags potential regulatory violations or future legal vulnerabilities based on predictive logic derived from historical agreements.',
+                                   '<b>AI-Coordinated Group Negotiations:</b> Facilitates multi-party sessions for collaborative contract drafting, linking discussions to property metadata for contextual memory. It supports "Clause Voting Logic" for fractional token co-owners.'
+                               ]},
+                               {type: 'subheading', text: 'EBRAM ML NOTES™: The Collective Intelligence Layer – Adaptive Legal Framework'},
+                               {type: 'list', items: [
+                                   '<b>Shared Memory System:</b> AI continuously learns from expert observations, legal precedents, and pattern-based rules, evolving the contract logic.',
+                                   '<b>Human-in-the-Loop Validation:</b> AI-suggested logic improvements or new clause types are reviewed and approved by a "Review Panel" of legal/admin experts before integration into the core engine, ensuring accuracy and accountability.'
+                               ]},
+                               {type: 'subheading', text: 'EBRAM™ AI-Weighted Node System: The Sentient Economic Layer – Objective Valuation'},
+                               {type: 'list', items: [
+                                   '<b>Dynamic Pricing:</b> AI assigns numerical "weights" to various on-chain and real-world events (e.g., EBRAMINT™ Date, Owner Verified status, Last Trade Date, Tower Activity, Rent ROI on Similar Unit, Last AI Valuation Audit) to dynamically influence property valuations and DXBTOKEN™ prices. This ensures prices are objectively derived and transparent.',
+                                   '<b>Real-Time Adjustment Loop (MME):</b> The Market Making Engine (MME), an integral part of EBRAM™\'s intelligence, continuously scans and scores nodes. If a score difference exceeds a threshold (e.g., 5%), it triggers automated re-valuation, Mashroi™ learning updates, and new suggested pricing.',
+                                   '<b>Market Logic Intelligence:</b> AI acts as an "intelligent referee" preventing "unlogical" transactions (e.g., a property sale with an excessively high commission rate or an illogical price), ensuring market fairness and stability.'
+                               ]}
+                           ]
+                       },
+                       {
+                           id: 'article-3-3-3',
+                           title: 'Pillar 2: AI for Workforce & Market Integrity – Mashroi™\'s Intelligence',
+                           content: [
+                               {type: 'paragraph', text: 'Mashroi™ is DLDCHAIN™\'s AI-powered Real Estate Professional Hub, fundamentally redefining workforce governance and enhancing market integrity. It\'s the "Nation’s Real Estate Intelligence Grid" and the "first ever governmental governless Contribution based empowerment and rewarding system."'},
+                               {type: 'subheading', text: 'AI-Driven Professional Hub'},
+                               {type: 'list', items: [
+                                   '<b>Automated Licensing & Smart Visas:</b> AI streamlines broker licensing processes and facilitates the issuance and renewal of 3-month renewable smart visas for qualified professionals, integrated with GDRFA.',
+                                   '<b>Performance & Career Development:</b> AI tracks professional contributions, learning progress, and market activities. It powers "Learn & Earn" programs and generates personalized feedback on sales calls, ensuring continuous professional development.',
+                                   '<b>Talent Gap Prediction:</b> AI models predict future talent needs in the real estate market and suggest targeted education programs, ensuring a skilled workforce.'
+                               ]},
+                               {type: 'subheading', text: 'AI for Compliance & Ethical Tracking'},
+                               {type: 'list', items: [
+                                   '<b>Proactive Monitoring:</b> "Mashroi™ watchers and secret eyes" leverage AI to continuously monitor various data sources (on-chain activity, social media, cold calls) to identify and flag "unnatural" patterns, potential fraud, or misinformation.',
+                                   '<b>Automated Fines:</b> Implements automated fines via DLD payment rails for non-compliance or ethical breaches detected by AI.',
+                                   '<b>Behavioral Scoring:</b> AI assigns dynamic risk profiles to actors (brokers, developers) based on their historical on-chain behavior and interactions, influencing their visibility and access to opportunities within the ecosystem.'
+                               ]}
+                           ]
+                       },
+                       {
+                           id: 'article-3-3-4',
+                           title: 'Pillar 3: AI in Financial Operations & Liquidity – MAKE™ System & Market Dynamics',
+                           content: [
+                               {type: 'paragraph', text: 'AI\'s role extends into the financial core of DLDCHAIN™, ensuring stability, risk management, and efficient liquidity within the MAKE™ System.'},
+                               {type: 'list', items: [
+                                   '<b>Algorithmic Market Making (MME):</b> EBRAM™\'s AI Market Engine (part of the AI-Weighted Node System) is critical for managing DXBTOKEN™ pricing. It uses real-time data from DLD transactions, market sentiment, seasonality, and project milestones to set and adjust token prices dynamically, ensuring fundamental value alignment and preventing artificial inflation.',
+                                   '<b>Liquidity Risk Management:</b> AI provides stress-level forecasts for token withdrawal volumes to Liquidity Pool Officers (LPOs) via the MAKE Portal™, allowing for proactive liquidity management.',
+                                   '<b>Price Stability Mechanisms:</b> AI in EBRAM™ (via MME) caps token price volatility within predefined bounds (e.g., ±10% based on Dubai\'s historical real estate growth), ensuring predictable growth and deterring speculative swings.',
+                                   '<b>Secure Escrow Operations:</b> AI contributes to the integrity of the MAKE™ System\'s escrow logic, ensuring that collateral is managed and distributed according to smart contract rules, especially in complex scenarios like mortgage payouts.'
+                               ]}
+                           ]
+                       },
+                       {
+                           id: 'article-3-3-5',
+                           title: 'Pillar 4: AI for Data & Insights – The Future of Reporting',
+                           content: [
+                               {type: 'paragraph', text: 'AI transforms DLDCHAIN™\'s data into actionable intelligence, providing unparalleled transparency and empowering data-driven governance.'},
+                               {type: 'list', items: [
+                                   '<b>Smart Reports:</b> AI automatically generates sophisticated "smart reports" with live yields, heatmaps of market activity, and real-time fraud flagging. This moves beyond static historical data to provide predictive and proactive insights.',
+                                   '<b>Traceable & Explainable Output (XAI):</b> Every output generated by EBRAM™ and the AI-Weighted Node System is fully traceable and explainable through an OpenAI-powered visibility layer. Users can request detailed breakdowns of AI\'s decisions (e.g., price score rationale), ensuring accountability and building trust in automated governance.',
+                                   '<b>Open Data Platform:</b> AI-driven analytics can identify valuable, anonymized market data that can be licensed via DLDCHAIN™\'s Public API, fostering innovation in the wider PropTech ecosystem.'
+                               ]}
+                           ]
+                       },
+                       {
+                           id: 'article-3-3-6',
+                           title: 'Pillar 5: Synergy: Blockchain as the Trust Anchor for AI – The Unbreakable Link',
+                           content: [
+                               {type: 'paragraph', text: 'The profound intelligence of DLDCHAIN™ is only possible because its AI components are anchored by the immutable truth and security of blockchain. This unique synergy ensures that DLDCHAIN™ is not just "intelligent" but "intelligently trustworthy."'},
+                               {type: 'list', items: [
+                                   '<b>Immutable Data Foundation:</b> Blockchain provides the tamper-proof, auditable, and immutable data foundation that AI relies on for accuracy and trustworthiness. Every piece of data used by AI (e.g., transaction history, property status, owner verification) is verifiable on-chain, preventing data manipulation or "garbage in, garbage out" issues.',
+                                   '<b>Auditable AI Decisions:</b> AI\'s decisions, particularly those impacting legal or financial outcomes (e.g., price adjustments, dispute resolutions), are executed by smart contracts and recorded on the blockchain. This makes the AI\'s actions transparent and auditable, preventing AI "black box" problems and enabling forensic analysis if required.',
+                                   '<b>Secure AI Models:</b> Blockchain can cryptographically secure the integrity of AI models themselves, ensuring they have not been tampered with or corrupted.',
+                                   '<b>Permissioned Trust:</b> Hyperledger Fabric\'s permissioned nature ensures that AI operates within a trusted network of verified participants. This contrasts with open AI systems that might process unverified data, ensuring the integrity of the AI\'s operational environment.',
+                                   '<b>Legal Enforceability:</b> Blockchain enforces the legal validity of AI-generated contracts and decisions, providing judicial recourse for automated actions.'
+                               ]}
+                           ]
+                       },
+                       {
+                           id: 'article-3-3-7',
+                           title: 'Conclusion: A Smart, Sovereign Operating System for the Digital Era',
+                           content: [
+                               {type: 'paragraph', text: 'DLDCHAIN™ is not merely a blockchain-based property registry; it is a meticulously engineered, smart, and sovereign operating system for real estate governance. Its deep and synergistic integration of cutting-edge AI with immutable blockchain technology creates a system that is:'},
+                               {type: 'list', items: [
+                                   '<b>Intelligent:</b> Capable of real-time learning, adaptive decision-making, and predictive insights.',
+                                   '<b>Trustworthy:</b> Backed by cryptographic security, DLD\'s sovereign guarantee, and auditable AI actions.',
+                                   '<b>Efficient:</b> Automating complex legal, financial, and operational workflows.',
+                                   '<b>Transparent:</b> Providing unprecedented visibility into market dynamics and asset lifecycles.',
+                                   '<b>Governed by Logic:</b> Relying on AI-weighted algorithms for fairness and consistency.'
+                               ]},
+                               {type: 'paragraph', text: 'By establishing this advanced "City as Code" infrastructure, DLDCHAIN™ positions Dubai as the global leader in pioneering truly intelligent, trustworthy, and sovereign digital governance for real estate, setting a new international benchmark for the future.'}
+                           ]
+                       }
+                    ]
                 }
             ]
         },
@@ -1316,7 +1429,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
             id: 'part-4',
             title: "Part IV: Governance, Roadmap & Vision",
             chapters: [
-                {
+                 {
                     id: 'chapter-4-1',
                     title: 'The Governance of DLDCHAIN™: Sovereign Control, Unified Authority, and Global Leadership',
                     introduction: [{type: 'paragraph', text: "A Protocol Built on Trust, Independence, and Collective Foresight"}],
@@ -1446,86 +1559,21 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                 },
                 {
                     id: 'chapter-4-2',
-                    title: 'Implementation Roadmap',
-                    introduction: [{type: 'paragraph', text: "The implementation of DLDCHAIN is envisioned as a deliberate, phased approach to ensure stability, security, and market adoption. The total timeline is projected at 36+ months."}],
-                    articles: [
-                        {
-                            id: 'article-4-2-1',
-                            title: 'Phase 1: Foundation (12-18 months)',
-                            content: [
-                                {type: 'paragraph', text: "<b>Objective:</b> Build the foundational infrastructure and establish the legal and organizational framework."},
-                                {type: 'paragraph', text: "<b>Key Activities:</b> Assemble core team; develop core Hyperledger Fabric network; establish Governing Council; build secure oracle for Ejari data; onboard founding government partners; develop MVPs for DLD-AED, DXBTOKENS, EBRAM, and Mashroi™; draft comprehensive regulatory framework."}
-                            ]
-                        },
-                        {
-                            id: 'article-4-2-2',
-                            title: 'Phase 2: Pilot & Expansion (18-24 months)',
-                            content: [
-                                {type: 'paragraph', text: "<b>Objective:</b> Launch and test the EBRAM suite in a controlled, real-world environment."},
-                                {type: 'paragraph', text: "<b>Key Activities:</b> Audit EBRAM contracts; launch pilot program for new tenancy agreements; integrate with DEWA for utility connection test; gather feedback; launch first DXBTOKEN-based projects; roll out Mashroi™ to a pilot group of brokers."}
-                            ]
-                        },
-                        {
-                            id: 'article-4-2-3',
-                            title: 'Phase 3: Full Rollout & Scaling (24-36 months)',
-                            content: [
-                                {type: 'paragraph', text: "<b>Objective:</b> Expand EBRAM to the entire rental market and pilot DLDCHAIN's role in capital markets."},
-                                {type: 'paragraph', text: "<b>Key Activities:</b> Roll out EBRAM as the standard for all new leases; develop modules for short-term rentals; partner with a VARA-licensed exchange to pilot secondary trading of DXBTOKENS; begin onboarding institutional partners as full consortium nodes."}
-                            ]
-                        },
-                        {
-                            id: 'article-4-2-4',
-                            title: 'Phase 4: Advanced Features (36+ months)',
-                            content: [
-                                {type: 'paragraph', text: "<b>Objective:</b> Implement the most advanced features and expand platform connectivity."},
-                                {type: 'paragraph', text: "<b>Key Activities:</b> Launch on-chain dispute resolution module; implement digital asset inheritance protocol; pilot cross-chain interoperability using frameworks like Hyperledger Cactus to connect DLDCHAIN to other global networks."}
-                            ]
-                        },
-                    ]
-                },
-                 {
-                    id: 'chapter-4-3',
-                    title: 'Global Vision & Strategy',
-                    introduction: [{type: 'paragraph', text: "DLDCHAIN's ambition extends far beyond the borders of Dubai. The project is strategically designed to establish Dubai as the undisputed global leader in digital real estate governance and to export this innovation to the world."}],
-                    articles: [
-                        {
-                            id: 'article-4-3-1',
-                            title: 'Hub for Global Tokenized Assets',
-                            content: [
-                                {type: 'paragraph', text: "The primary vision is to position Dubai as the world's premier <b class='text-primary'>\"Global Tokenized Property Exchange Hub\"</b>. By creating the most trusted, liquid, and efficient market for digital real estate assets, Dubai can attract a massive influx of global capital, talent, and innovation. The sovereign-backed nature of DLDCHAIN provides a level of trust that no private-sector competitor can match, making it the \"gold standard\" for international real estate investment."}
-                            ]
-                        },
-                        {
-                            id: 'article-4-3-2',
-                            title: 'Exporting Sovereignty: A Multi-City Strategy',
-                            content: [
-                                {type: 'paragraph', text: "DLDCHAIN is designed as a \"master model for global adoption.\" The project includes a <span class='highlight'>Multi-City White-Label Strategy</span>, where the core framework, technology, and governance model can be licensed and adapted for use by other cities and nations around the world. This strategy would:"},
-                                 {type: 'list', items: [
-                                    "Create a new, high-value export for Dubai: digital governance itself.",
-                                    "Establish a global network of interconnected, trusted real estate markets based on the Dubai model.",
-                                    "Solidify Dubai's legacy as a pioneer in 21st-century governance and digital transformation."
-                                ]}
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 'chapter-4-4',
-                    title: 'The Market Benefits of DLDCHAIN™',
+                    title: "The Market Benefits of DLDCHAIN™",
                     introduction: [{type: 'paragraph', text: "How Every Participant Gains from Dubai's Sovereign Real Estate Operating System"}],
                     articles: [
                         {
-                            id: 'article-4-4-1',
-                            title: 'Introduction: Unlocking Holistic Value in Real Estate',
-                            content: [
+                           id: 'article-4-2-1',
+                           title: 'Introduction: Unlocking Holistic Value in Real Estate',
+                           content: [
                                 {type: 'paragraph', text: 'Traditional real estate markets, despite their immense value, often struggle with inefficiencies, opacity, and fragmented value capture. Gains are often concentrated, and operational friction can diminish overall market health. DLDCHAIN™ represents a fundamental shift from this paradigm, establishing a truly integrated, transparent, and mutually beneficial ecosystem where every part of the market earns, directly or indirectly, from its operation.'},
-                                {type: 'paragraph', text: 'This study details the comprehensive benefits that DLDCHAIN™ brings to all key market participants, demonstrating how its innovative architecture, driven by EBRAM™, DXBTOKENS™, and the MAKE™ System, creates a shared prosperity model. DLDCHAIN™’s design ensures that value is not merely transferred but amplified and distributed across the entire real estate value chain.'},
-                            ]
+                                {type: 'paragraph', text: 'This study details the comprehensive benefits that DLDCHAIN™ brings to all key market participants, demonstrating how its innovative architecture, driven by EBRAM™, DXBTOKENS™, and the MAKE™ System, creates a shared prosperity model. DLDCHAIN™’s design ensures that value is not merely transferred but amplified and distributed across the entire real estate value chain.'}
+                           ]
                         },
                         {
-                            id: 'article-4-4-2',
-                            title: 'Core Principle: Mutual Value Creation – A Unified Ecosystem of Gain',
-                            content: [
+                           id: 'article-4-2-2',
+                           title: 'Core Principle: Mutual Value Creation – A Unified Ecosystem of Gain',
+                           content: [
                                 {type: 'paragraph', text: 'At the heart of DLDCHAIN™\'s success lies its core principle of mutual value creation. By seamlessly integrating legal, financial, and operational layers onto a sovereign digital infrastructure, DLDCHAIN™ transforms individual processes into a cohesive ecosystem where efficiencies gained in one area translate into benefits across others. This interconnectedness ensures:'},
                                 {type: 'list', items: [
                                     "<b>Transparency Fuels Trust:</b> Real-time, immutable records foster unprecedented trust, attracting more participants and capital.",
@@ -1534,13 +1582,12 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                                     "<b>AI Enhances Fairness:</b> Algorithmic pricing and compliance ensure predictable and just outcomes, minimizing disputes and manipulation."
                                 ]},
                                 {type: 'paragraph', text: 'This holistic approach ensures that DLDCHAIN™ does not disintermediate existing roles but re-invents and empowers them, creating new profit channels and operational efficiencies for every stakeholder.'}
-                            ]
+                           ]
                         },
                         {
-                            id: 'article-4-4-3',
-                            title: 'Benefits for Property Owners (Sellers/Landlords)',
-                            content: [
-                                {type: 'paragraph', text: 'Property owners experience a profound transformation in how they manage, sell, and derive value from their assets.'},
+                           id: 'article-4-2-3',
+                           title: 'Benefits for Property Owners (Sellers/Landlords)',
+                           content: [
                                 {type: 'list', items: [
                                     "<b>Accelerated Liquidity & Faster Sales:</b><br>Benefit: Convert illiquid physical assets into tradable DXBTOKENS™, enabling faster exits and sales. Properties can be tokenized and ready for liquidity in under 48 hours.<br>Mechanism: Direct interaction with the MAKE™ System, which guarantees 100% AED-backed liquidity upon EBRAMINT™.",
                                     "<b>Enhanced Capital Unlock:</b><br>Benefit: Receive a significant portion of property value as instant liquid cash (e.g., 60% of equity) upon tokenization, providing immediate capital access without a traditional sale's delays.<br>Mechanism: The MAKE_IN event facilitates immediate AED transfer to the UNIVESTOR Wallet™.",
@@ -1548,13 +1595,12 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                                     "<b>Increased Trust & Transparency:</b><br>Benefit: Full visibility into property status, transaction history, and associated contracts. Reduced risk of fraud and disputes.<br>Mechanism: All data is immutably recorded on-chain, verifiable via the UNIVESTOR Wallet™ or public explorer.",
                                     "<b>Digital Asset Inheritance Certainty:</b><br>Benefit: Secure and automated transfer of property ownership to legal heirs upon death, eliminating complex probate processes and \"lost key\" issues.<br>Mechanism: EBRAM™'s Digital Asset Inheritance protocol (a \"digital executor\") ensures Sharia-compliant or legally defined succession."
                                 ]}
-                            ]
+                           ]
                         },
-                        {
-                            id: 'article-4-4-4',
-                            title: 'Benefits for Investors (Buyers/Fractional Owners)',
-                            content: [
-                                {type: 'paragraph', text: 'Investors gain unprecedented access, security, and flexibility in real estate investment, transforming property from an illiquid asset into a dynamic portfolio component.'},
+                         {
+                           id: 'article-4-2-4',
+                           title: 'Benefits for Investors (Buyers/Fractional Owners)',
+                           content: [
                                 {type: 'list', items: [
                                     "<b>Access to Fractional Ownership:</b><br>Benefit: Lower entry barrier (e.g., as low as AED 2,000 in pilots) allows participation in high-value Dubai properties.<br>Mechanism: DXBTOKENS™ (1 sqft = 1 token) enable granular ownership.",
                                     "<b>Guaranteed Liquidity & Tradability:</b><br>Benefit: Buy, sell, or trade verified DXBTOKENS™ instantly on DLD-approved secondary markets.<br>Mechanism: The MAKE™ System ensures 100% AED-backed liquidity for every token, providing deep market depth and reliability.",
@@ -1563,26 +1609,24 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                                     "<b>Secure & Inheritable Digital Assets:</b><br>Benefit: Absolute certainty that investments are legally secure and seamlessly inheritable across generations.<br>Mechanism: Strong cryptographic security, DLD's sovereign guarantee, and the Digital Asset Inheritance protocol.",
                                     "<b>Controlled Market Behavior:</b><br>Benefit: Protection from artificial price manipulation and speculative bubbles.<br>Mechanism: EBRAM™'s AI-Weighted Node System and Market Making Engine (MME) ensure prices are driven by verifiable events and fundamental value, not hype."
                                 ]}
-                            ]
+                           ]
                         },
-                         {
-                            id: 'article-4-4-5',
-                            title: 'Benefits for Real Estate Developers',
-                            content: [
-                                {type: 'paragraph', text: 'Developers unlock new avenues for capital formation, accelerate project cycles, and enhance investor trust, fostering innovation in project financing and sales.'},
+                        {
+                           id: 'article-4-2-5',
+                           title: 'Benefits for Real Estate Developers',
+                           content: [
                                 {type: 'list', items: [
                                     "<b>Accelerated Capital Formation:</b><br>Benefit: Access early project funding, especially for off-plan developments, by tokenizing units and receiving instant liquidity.<br>Mechanism: Developer-initiated tokenization via MAKETRADE, with MAKE™ System providing 60% instant liquidity upon MAKE_ID.",
                                     "<b>Enhanced Project Visibility & Trust:</b><br>Benefit: Transparent tracking of construction milestones and fund utilization builds investor confidence.<br>Mechanism: On-chain recording of project progress, verifiable through EBRAM™ smart contracts and DLD integration.",
                                     "<b>Faster Sales Cycles & Reduced Overhead:</b><br>Benefit: Streamlined sales processes and reduced administrative burdens for large-scale unit offerings.<br>Mechanism: Bulk tokenization tools, automated escrow management, and seamless on-chain transfers reduce manual paperwork and delays.",
                                     "<b>New Revenue Streams:</b><br>Benefit: Potential for value appreciation on retained DXBTOKENS™ and efficient management of service pools.<br>Mechanism: Strategic allocation of tokens during minting, allowing developers to manage inventory more dynamically."
                                 ]}
-                            ]
+                           ]
                         },
                         {
-                            id: 'article-4-4-6',
-                            title: 'Benefits for Real Estate Brokers (Agents)',
-                            content: [
-                                {type: 'paragraph', text: 'Brokers are elevated to a higher professional standard, benefiting from streamlined operations, transparent compensation, and enhanced credibility.'},
+                           id: 'article-4-2-6',
+                           title: 'Benefits for Real Estate Brokers (Agents)',
+                           content: [
                                 {type: 'list', items: [
                                     "<b>Streamlined Professional Practice:</b><br>Benefit: Automated licensing and verification processes, including 3-month renewable smart visas.<br>Mechanism: Mashroi™ platform centralizes professional credentials, education, and compliance.",
                                     "<b>Transparent & Automated Commissions:</b><br>Benefit: Clear, instantly paid commissions (e.g., 1% cash commission per tokenization) upon successful transaction finalization.<br>Mechanism: Automated payout triggered by EBRAM™ contracts, recorded on-chain for auditability.",
@@ -1590,39 +1634,36 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                                     "<b>Access to Verified Listings & Market Intelligence:</b><br>Benefit: Promote genuine properties with validated data, reducing time wasted on unverified listings. Access real-time market trends.<br>Mechanism: Integration with Trakheesi for advertising control and DLDCHAIN™'s Open Data Platform for market insights.",
                                     "<b>Reduced Fraud Risk:</b><br>Benefit: Protection from fraudulent clients or listings through automated KYC/AML and platform monitoring.<br>Mechanism: Mashroi™'s AI Compliance Engine proactively flags suspicious activities."
                                 ]}
-                            ]
+                           ]
                         },
                         {
-                            id: 'article-4-4-7',
-                            title: 'Benefits for Tenants',
-                            content: [
-                                {type: 'paragraph', text: 'Tenants experience unprecedented ease, transparency, and fairness in their rental agreements, transforming a traditionally complex process into a seamless digital journey.'},
+                           id: 'article-4-2-7',
+                           title: 'Benefits for Tenants',
+                           content: [
                                 {type: 'list', items: [
                                     "<b>Simplified & Automated Rental Processes:</b><br>Benefit: Easy, automated rent payments, transparent security deposit management, and streamlined lease renewals.<br>Mechanism: EBRAM™ smart contracts automate payment debits (DLD-AED), escrow releases, and renewal notices, linked to Ejari.",
                                     "<b>Transparent & Fair Dispute Resolution:</b><br>Benefit: Faster, cheaper, and more impartial resolution for common rental disputes.<br>Mechanism: On-chain dispute resolution module within EBRAM™ provides evidence submission, AI-driven mediation, and automated decision execution, reducing reliance on traditional courts.",
                                     "<b>Enhanced Trust in Landlords & Brokers:</b><br>Benefit: Verifiable credentials of property owners and brokers, coupled with immutable contract terms, build trust.<br>Mechanism: Mashroi™ ensures professional standards; DLDCHAIN™'s transparency exposes fraudulent actors.",
                                     "<b>Secure Digital Records of Tenancy:</b><br>Benefit: Immutable, accessible records of all lease terms, payments, and maintenance history.<br>Mechanism: All rental contract data is recorded on-chain via EBRAM™, linked to Ejari."
                                 ]}
-                            ]
+                           ]
                         },
-                         {
-                            id: 'article-4-4-8',
-                            title: 'Benefits for Financial Lenders (Banks/Mortgage Providers)',
-                            content: [
-                                {type: 'paragraph', text: 'Lenders gain enhanced security, efficiency, and new opportunities in property finance, transitioning from traditional mortgage models to integrated digital lending.'},
+                        {
+                           id: 'article-4-2-8',
+                           title: 'Benefits for Financial Lenders (Banks/Mortgage Providers)',
+                           content: [
                                 {type: 'list', items: [
                                     "<b>Reduced Fraud & Enhanced Security:</b><br>Benefit: Immutable records, automated verification, and on-chain lien management drastically reduce mortgage fraud and enhance collateral security.<br>Mechanism: Mortgage Chaincode directly manages liens on-chain; multi-signature payouts (DLD, Lender, MAKE™ Officer) prevent unauthorized transfers.",
                                     "<b>Automated Servicing & Real-Time Visibility:</b><br>Benefit: Automation of mortgage origination, servicing (payments), and closure reduces manual overhead. Real-time visibility into mortgaged asset status.<br>Mechanism: Smart contracts automate payments via DLD-AED. Lenders gain instant access to property CDID, owner KYC, and transaction history via Lender API Gateway.",
                                     "<b>New Tokenized Finance Products:</b><br>Benefit: Opportunity to develop innovative, tokenized mortgage-backed securities and other financial instruments on a regulated platform.<br>Mechanism: Integration with DXBTOKENS™ and the MAKE™ System facilitates the creation of new securitized assets.",
                                     "<b>Streamlined Integration with Property Lifecycle:</b><br>Benefit: Seamless participation in tokenization and trading processes for mortgaged properties.<br>Mechanism: EBRAM™ Mortgage Branch manages mortgage clauses; MAKE™ System prioritizes lender payouts during liquidity events."
                                 ]}
-                            ]
+                           ]
                         },
-                         {
-                            id: 'article-4-4-9',
-                            title: 'Benefits for DLD / Government of Dubai',
-                            content: [
-                                {type: 'paragraph', text: 'DLDCHAIN™ solidifies Dubai\'s position as a global leader in digital governance, driving economic growth, enhancing public services, and generating sustainable revenue.'},
+                        {
+                           id: 'article-4-2-9',
+                           title: 'Benefits for DLD / Government of Dubai',
+                           content: [
                                 {type: 'list', items: [
                                     "<b>New Sustainable Revenue Streams:</b><br>Benefit: Diversified and consistent revenue streams for DLD.<br>Mechanism: Transaction fees (property transfers, token trades), token issuance fees (EBRAMINT™), compliance gate revenues (Mashroi™ licensing, fines), broker visa revenue, escrow margin revenues (MAKE™ System), and public API licensing.",
                                     "<b>Enhanced Regulatory Control & Oversight:</b><br>Benefit: Real-time, granular visibility into all real estate activities, ensuring unparalleled regulatory compliance and market integrity.<br>Mechanism: Blockchain's immutability, Smart Verification Oracles (Ejari, Milka, Trakheesi), and AI-driven monitoring.",
@@ -1631,10 +1672,10 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                                     "<b>Economic Growth & Diversification:</b><br>Benefit: Attracts significant Foreign Direct Investment (FDI), creates high-value jobs in the tech and blockchain sectors, and further diversifies Dubai's economy.<br>Mechanism: Enhanced liquidity and transparency for investors, innovation platform for PropTech, and a vibrant digital ecosystem.",
                                     "<b>Reduced Operational Costs:</b><br>Benefit: Streamlines governmental processes, reducing manual administrative overhead and associated operational costs for DLD and other ministries.<br>Mechanism: Automation of workflows (e.g., permits, registrations, dispute initiation) via smart contracts and API integrations."
                                 ]}
-                            ]
+                           ]
                         },
                         {
-                           id: 'article-4-4-10',
+                           id: 'article-4-2-10',
                            title: 'Holistic Market Transformation: A Shared Future of Prosperity',
                            content: [
                                 {type: 'paragraph', text: 'The collective impact of these benefits across all stakeholder groups signifies a holistic market transformation. DLDCHAIN™ moves Dubai\'s real estate from a traditional, often siloed, and reactive industry to a dynamic, proactive, and interconnected digital ecosystem. This transformation leads to:'},
@@ -1647,6 +1688,71 @@ function isRentable(uint256 tokenId) public view returns (bool) {
                                 ]},
                                 {type: 'paragraph', text: 'DLDCHAIN™ is not just changing how real estate operates in Dubai; it is re-engineering the fundamental economics and trust mechanisms of the global property market, setting a new standard for sovereign digital governance.'}
                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'chapter-4-3',
+                    title: 'Implementation Roadmap',
+                    introduction: [{type: 'paragraph', text: "The implementation of DLDCHAIN is envisioned as a deliberate, phased approach to ensure stability, security, and market adoption. The total timeline is projected at 36+ months."}],
+                    articles: [
+                        {
+                            id: 'article-4-3-1',
+                            title: 'Phase 1: Foundation (12-18 months)',
+                            content: [
+                                {type: 'paragraph', text: "<b>Objective:</b> Build the foundational infrastructure and establish the legal and organizational framework."},
+                                {type: 'paragraph', text: "<b>Key Activities:</b> Assemble core team; develop core Hyperledger Fabric network; establish Governing Council; build secure oracle for Ejari data; onboard founding government partners; develop MVPs for DLD-AED, DXBTOKENS, EBRAM, and Mashroi™; draft comprehensive regulatory framework."}
+                            ]
+                        },
+                        {
+                            id: 'article-4-3-2',
+                            title: 'Phase 2: Pilot & Expansion (18-24 months)',
+                            content: [
+                                {type: 'paragraph', text: "<b>Objective:</b> Launch and test the EBRAM suite in a controlled, real-world environment."},
+                                {type: 'paragraph', text: "<b>Key Activities:</b> Audit EBRAM contracts; launch pilot program for new tenancy agreements; integrate with DEWA for utility connection test; gather feedback; launch first DXBTOKEN-based projects; roll out Mashroi™ to a pilot group of brokers."}
+                            ]
+                        },
+                        {
+                            id: 'article-4-3-3',
+                            title: 'Phase 3: Full Rollout & Scaling (24-36 months)',
+                            content: [
+                                {type: 'paragraph', text: "<b>Objective:</b> Expand EBRAM to the entire rental market and pilot DLDCHAIN's role in capital markets."},
+                                {type: 'paragraph', text: "<b>Key Activities:</b> Roll out EBRAM as the standard for all new leases; develop modules for short-term rentals; partner with a VARA-licensed exchange to pilot secondary trading of DXBTOKENS; begin onboarding institutional partners as full consortium nodes."}
+                            ]
+                        },
+                        {
+                            id: 'article-4-3-4',
+                            title: 'Phase 4: Advanced Features (36+ months)',
+                            content: [
+                                {type: 'paragraph', text: "<b>Objective:</b> Implement the most advanced features and expand platform connectivity."},
+                                {type: 'paragraph', text: "<b>Key Activities:</b> Launch on-chain dispute resolution module; implement digital asset inheritance protocol; pilot cross-chain interoperability using frameworks like Hyperledger Cactus to connect DLDCHAIN to other global networks."}
+                            ]
+                        },
+                    ]
+                },
+                 {
+                    id: 'chapter-4-4',
+                    title: 'Global Vision & Strategy',
+                    introduction: [{type: 'paragraph', text: "DLDCHAIN's ambition extends far beyond the borders of Dubai. The project is strategically designed to establish Dubai as the undisputed global leader in digital real estate governance and to export this innovation to the world."}],
+                    articles: [
+                        {
+                            id: 'article-4-4-1',
+                            title: 'Hub for Global Tokenized Assets',
+                            content: [
+                                {type: 'paragraph', text: "The primary vision is to position Dubai as the world's premier <b class='text-primary'>\"Global Tokenized Property Exchange Hub\"</b>. By creating the most trusted, liquid, and efficient market for digital real estate assets, Dubai can attract a massive influx of global capital, talent, and innovation. The sovereign-backed nature of DLDCHAIN provides a level of trust that no private-sector competitor can match, making it the \"gold standard\" for international real estate investment."}
+                            ]
+                        },
+                        {
+                            id: 'article-4-4-2',
+                            title: 'Exporting Sovereignty: A Multi-City Strategy',
+                            content: [
+                                {type: 'paragraph', text: "DLDCHAIN is designed as a \"master model for global adoption.\" The project includes a <span class='highlight'>Multi-City White-Label Strategy</span>, where the core framework, technology, and governance model can be licensed and adapted for use by other cities and nations around the world. This strategy would:"},
+                                 {type: 'list', items: [
+                                    "Create a new, high-value export for Dubai: digital governance itself.",
+                                    "Establish a global network of interconnected, trusted real estate markets based on the Dubai model.",
+                                    "Solidify Dubai's legacy as a pioneer in 21st-century governance and digital transformation."
+                                ]}
+                            ]
                         }
                     ]
                 }
@@ -1828,5 +1934,7 @@ function isRentable(uint256 tokenId) public view returns (bool) {
 
     
 
+
+    
 
     
