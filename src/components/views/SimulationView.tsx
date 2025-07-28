@@ -244,12 +244,16 @@ export function SimulationView() {
       
       {selectedScenario && (
         <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
-            <DialogContent className="sm:max-w-4xl p-0 grid grid-rows-[auto_1fr_auto] max-h-[90vh]">
+            <DialogContent className="sm:max-w-4xl p-0 grid grid-rows-[auto_1fr] max-h-[90vh]">
                 <DialogHeader className="p-6 pb-4 border-b">
                     <DialogTitle className="text-2xl font-bold font-headline">{selectedScenario.title}</DialogTitle>
                     <DialogDescription>
                         A detailed breakdown of the tokenization process for this scenario.
                     </DialogDescription>
+                    <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+                        <X className="h-4 w-4" />
+                        <span className="sr-only">Close</span>
+                    </DialogClose>
                 </DialogHeader>
                 
                 <ScrollArea className="overflow-y-auto">
@@ -271,7 +275,7 @@ export function SimulationView() {
                          <Separator className="my-4" />
                         <div>
                              <h4 className="font-semibold text-lg">Financial Summary</h4>
-                            {selectedSce-nario.summary}
+                            {selectedScenario.summary}
                         </div>
                     </div>
                 </ScrollArea>
