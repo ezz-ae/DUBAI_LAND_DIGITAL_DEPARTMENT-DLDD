@@ -4,7 +4,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Building, Home, LandPlot, Briefcase } from 'lucide-react';
+import { ArrowRight, Building, Home, LandPlot, Briefcase, Banknote, Gavel } from 'lucide-react';
 import { Separator } from '../ui/separator';
 import { ScrollArea } from '../ui/scroll-area';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
@@ -16,6 +16,9 @@ const propertyTypeIcons = {
     villa: <Home className="h-5 w-5" />,
     land: <LandPlot className="h-5 w-5" />,
     commercial: <Briefcase className="h-5 w-5" />,
+    briefcase: <Briefcase className="h-5 w-5" />,
+    banknote: <Banknote className="h-5 w-5" />,
+    gavel: <Gavel className="h-5 w-5" />,
 };
 
 const ReadyScenarios = ({ onScenarioSelect }: { onScenarioSelect: (scenario: any) => void }) => (
@@ -29,7 +32,7 @@ const ReadyScenarios = ({ onScenarioSelect }: { onScenarioSelect: (scenario: any
 
         <Separator />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {scenarios.map(scenario => (
                 <Card key={scenario.id} className="flex flex-col">
                     <CardHeader>
@@ -66,7 +69,7 @@ export function SimulationView() {
       
       {selectedScenario && (
         <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
-            <DialogContent className="sm:max-w-4xl p-0 grid grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90vh]">
+            <DialogContent className="sm:max-w-4xl p-0 grid grid-rows-[auto_1fr_auto] max-h-[90vh]">
                 <DialogHeader className="p-6 pb-4 border-b">
                     <DialogTitle className="text-2xl font-bold font-headline">{selectedScenario.title}</DialogTitle>
                     <DialogDescription>
@@ -74,7 +77,7 @@ export function SimulationView() {
                     </DialogDescription>
                 </DialogHeader>
                 
-                <ScrollArea className="h-full">
+                <ScrollArea>
                     <div className="prose dark:prose-invert max-w-full p-6 space-y-4">
                         <div>
                             <h4 className="font-semibold text-lg">Context</h4>
@@ -97,8 +100,8 @@ export function SimulationView() {
                         </div>
                     </div>
                 </ScrollArea>
-                <DialogFooter className="p-4 border-t">
-                    <Button variant="outline" onClick={() => setSelectedScenario(null)}>Close</Button>
+                <DialogFooter className="p-4 border-t bg-background">
+                    {/* The close button is part of the DialogContent by default */}
                 </DialogFooter>
             </DialogContent>
         </Dialog>

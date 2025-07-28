@@ -167,5 +167,59 @@ export const scenarios = [
             React.createElement(FinancialSummaryRow, { label: "Heir 3 (Child 2, 25%) Receives", value: "AED 300,000" }),
             React.createElement(FinancialSummaryRow, { label: "Time to Settlement", value: "Minutes", isHighlighted: true })
         )
+    },
+    {
+        id: 'scenario-7',
+        title: "Smart Mortgage for Tokenized Property",
+        icon: 'banknote',
+        description: "A buyer uses DXBTOKENS™ as collateral to secure a mortgage directly on-chain from a DLD-partnered bank.",
+        context: React.createElement('p', {}, "A first-time buyer wants to purchase 100% of a tokenized apartment valued at AED 1M. They have a 20% down payment (AED 200,000) and require a mortgage for the remaining 80% (AED 800,000)."),
+        features: React.createElement('ul', {className: 'list-disc pl-5 space-y-1'},
+            React.createElement('li', {}, React.createElement('b', {}, "Mortgage Chaincode:"), " A specialized EBRAM™ smart contract that manages the entire mortgage lifecycle."),
+            React.createElement('li', {}, React.createElement('b', {}, "On-Chain Lien:"), " The bank's lien is recorded as a non-fungible, non-transferable token linked to the property's CDID."),
+            React.createElement('li', {}, React.createElement('b', {}, "Automated Payments:"), " Monthly mortgage payments are automated via DLD-AED from the buyer's UNIVESTOR Wallet™."),
+            React.createElement('li', {}, React.createElement('b', {}, "Multi-Signature Payout:"), " Ensures that in a sale, the bank is automatically repaid before the owner receives any funds.")
+        ),
+        steps: React.createElement('ol', {className: 'list-decimal pl-5 space-y-2'},
+            React.createElement('li', {}, React.createElement('b', {}, "Application:"), " The buyer applies for a mortgage through their UNIVESTOR Wallet™, selecting a DLD-partnered bank."),
+            React.createElement('li', {}, React.createElement('b', {}, "Credit Assessment:"), " The bank, with the buyer's permission, accesses their verified financial data via a secure API to assess creditworthiness."),
+            React.createElement('li', {}, React.createElement('b', {}, "Contract Execution:"), " Upon approval, the Mortgage Chaincode is executed. The bank disburses AED 800,000 in DLD-AED, and the on-chain lien is placed on the property's DXBTOKENS™."),
+            React.createElement('li', {}, React.createElement('b', {}, "Ownership & Repayment:"), " The buyer receives the DXBTOKENS™, and automated monthly repayments to the bank begin. As the loan is paid down, the lien's value automatically decreases on-chain.")
+        ),
+        summary: React.createElement('div', {className: 'space-y-2'},
+            React.createElement(FinancialSummaryRow, { label: "Property Value", value: "AED 1,000,000" }),
+            React.createElement(FinancialSummaryRow, { label: "Buyer's Down Payment", value: "AED 200,000" }),
+            React.createElement(FinancialSummaryRow, { label: "Mortgage Value (On-Chain Lien)", value: "AED 800,000" }),
+            React.createElement(FinancialSummaryRow, { label: "Interest Rate (Example)", value: "4.5% Fixed" }),
+            React.createElement(FinancialSummaryRow, { label: "Time to Approval & Disbursal", value: "< 24 Hours", isHighlighted: true })
+        )
+    },
+    {
+        id: 'scenario-8',
+        title: "On-Chain Rental Dispute Resolution",
+        icon: 'gavel',
+        description: "A landlord and tenant use EBRAM™ to quickly and fairly resolve a dispute over a security deposit.",
+        context: React.createElement('p', {}, "At the end of a lease, a landlord claims AED 1,500 from the tenant's AED 5,000 security deposit for damages. The tenant disputes the claim, arguing the damages are normal wear and tear."),
+        features: React.createElement('ul', {className: 'list-disc pl-5 space-y-1'},
+            React.createElement('li', {}, React.createElement('b', {}, "EBRAM™ Dispute Module:"), " The rental smart contract contains a built-in dispute resolution feature."),
+            React.createElement('li', {}, React.createElement('b', {}, "Escrowed Security Deposit:"), " The AED 5,000 deposit is held in a neutral smart contract escrow, not by the landlord."),
+            React.createElement('li', {}, React.createElement('b', {}, "Evidence Upload:"), " Both parties upload evidence (photos, documents) to a decentralized file storage system linked to the contract."),
+            React.createElement('li', {}, React.createElement('b', {}, "AI-Assisted Mediation:"), " EBRAMGPT™ can act as an initial mediator, comparing the evidence against a database of similar cases to suggest a fair settlement."),
+            React.createElement('li', {}, React.createElement('b', {}, "Automated Payout:"), " The smart contract automatically executes the final decision, splitting the deposit without manual intervention.")
+        ),
+        steps: React.createElement('ol', {className: 'list-decimal pl-5 space-y-2'},
+            React.createElement('li', {}, React.createElement('b', {}, "Dispute Initiated:"), " The tenant initiates the dispute via their UNIVESTOR Wallet™. The AED 5,000 in escrow is temporarily frozen."),
+            React.createElement('li', {}, React.createElement('b', {}, "Evidence Submission:"), " The landlord uploads photos of the damage. The tenant uploads photos from when they moved in."),
+            React.createElement('li', {}, React.createElement('b', {}, "AI Mediation & Arbitration:"), " EBRAMGPT™ analyzes the images and suggests a settlement of AED 500 to the landlord. If they don't agree, the case is passed to a human RERA-approved online arbitrator."),
+            React.createElement('li', {}, React.createElement('b', {}, "Binding Decision & Execution:"), " The arbitrator rules that AED 700 is fair. This decision is logged on-chain, and the smart contract instantly executes the payout: AED 700 to the landlord and AED 4,300 to the tenant.")
+        ),
+        summary: React.createElement('div', {className: 'space-y-2'},
+            React.createElement(FinancialSummaryRow, { label: "Security Deposit in Escrow", value: "AED 5,000" }),
+            React.createElement(FinancialSummaryRow, { label: "Landlord's Claim", value: "AED 1,500" }),
+            React.createElement(FinancialSummaryRow, { label: "Final Arbitrated Amount", value: "AED 700" }),
+            React.createElement(FinancialSummaryRow, { label: "Payout to Landlord", value: "AED 700", isHighlighted: true }),
+            React.createElement(FinancialSummaryRow, { label: "Payout to Tenant", value: "AED 4,300", isHighlighted: true }),
+            React.createElement(FinancialSummaryRow, { label: "Resolution Time", value: "< 48 Hours", isHighlighted: true })
+        )
     }
 ];
