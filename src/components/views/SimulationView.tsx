@@ -18,9 +18,13 @@ const propertyTypeIcons = {
 };
 
 const FinancialSummaryRow = ({ label, value, isHighlighted = false, isMuted = false }: { label: string, value: string, isHighlighted?: boolean, isMuted?: boolean }) => (
-    <div className={`flex justify-between items-center py-2 border-b last:border-b-0 ${isHighlighted ? 'font-bold text-primary bg-primary/5 p-2 rounded-md' : 'text-muted-foreground'}`}>
-        <span className={`${isHighlighted ? 'text-primary' : ''} ${isMuted ? 'text-xs' : ''}`}>{label}</span>
-        <span className={`${isHighlighted ? 'text-primary' : 'text-foreground font-medium'} ${isMuted ? 'text-xs' : ''}`}>{value}</span>
+    <div className={cn(
+      "flex justify-between items-center py-2 border-b last:border-b-0",
+      isHighlighted && 'font-bold text-primary bg-primary/5 p-2 rounded-md',
+      !isHighlighted && 'text-muted-foreground'
+    )}>
+        <span className={cn(isHighlighted && 'text-primary', isMuted && 'text-xs')}>{label}</span>
+        <span className={cn(isHighlighted ? 'text-primary' : 'text-foreground font-medium', isMuted && 'text-xs')}>{value}</span>
     </div>
 );
 
@@ -240,31 +244,31 @@ export function SimulationView() {
       
       {selectedScenario && (
         <Dialog open={!!selectedScenario} onOpenChange={(open) => !open && setSelectedScenario(null)}>
-            <DialogContent className="sm:max-w-4xl max-h-[90vh] flex flex-col">
-                <DialogHeader className="flex-shrink-0">
+            <DialogContent className="sm:max-w-4xl max-h-[90vh] flex flex-col p-0">
+                <DialogHeader className="p-6 pb-4 flex-shrink-0 border-b">
                     <DialogTitle className="text-2xl font-bold font-headline">{selectedScenario.title}</DialogTitle>
                     <DialogDescription>
                         A detailed breakdown of the tokenization process for this scenario.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex-1 min-h-0 my-4">
-                  <ScrollArea className="h-full pr-6">
-                      <div className="prose dark:prose-invert max-w-full">
+                <div className="flex-1 min-h-0">
+                  <ScrollArea className="h-full">
+                      <div className="prose dark:prose-invert max-w-full p-6">
                           <div>
                               <h4 className="font-semibold text-lg">Context</h4>
                               {selectedScenario.context}
                           </div>
-                          <Separator />
+                          <Separator className="my-4" />
                           <div>
                               <h4 className="font-semibold text-lg">DLDCHAIN™ Features Highlighted</h4>
                                {selectedScenario.features}
                           </div>
-                           <Separator />
+                           <Separator className="my-4" />
                           <div>
                               <h4 className="font-semibold text-lg">Simulation Steps & Technical Flow</h4>
                               {selectedScenario.steps}
                           </div>
-                           <Separator />
+                           <Separator className="my-4" />
                           <div>
                                <h4 className="font-semibold text-lg">Financial Summary</h4>
                               {selectedScenario.summary}
@@ -272,7 +276,7 @@ export function SimulationView() {
                       </div>
                   </ScrollArea>
                 </div>
-                 <DialogFooter className="flex-shrink-0">
+                 <DialogFooter className="p-4 flex-shrink-0 border-t bg-background">
                     <DialogClose asChild>
                         <Button type="button" className="w-full sm:w-auto">Close</Button>
                     </DialogClose>
@@ -284,5 +288,3 @@ export function SimulationView() {
     </div>
   );
 }
-
-    

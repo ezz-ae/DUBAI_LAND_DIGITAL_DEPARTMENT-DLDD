@@ -20,12 +20,14 @@ interface TechnicalDocsSidebarProps {
 }
 
 export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalDocsSidebarProps) {
-  const { setOpenMobile } = useSidebar();
+  const { isMobile, setOpenMobile } = useSidebar();
   
   const handleLinkClick = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     onLinkClick(id);
-    setOpenMobile(false); // Close mobile sidebar on link click
+    if (isMobile) {
+      setOpenMobile(false); // Close mobile sidebar on link click
+    }
   };
 
   // Function to determine the default open accordions based on the selected item
@@ -47,10 +49,10 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
 
   const content = (
     <>
-      <SidebarHeader className="p-2 border-b h-14 flex items-center shrink-0">
+      <SidebarHeader>
          <h2 className="px-2 font-semibold text-foreground text-base">Table of Contents</h2>
       </SidebarHeader>
-      <SidebarContent className="p-0">
+      <SidebarContent>
         <ScrollArea className="h-full">
             <div className="list-none p-2">
                 <Accordion type="multiple" className="w-full" key={selectedItemId} defaultValue={getDefaultAccordionValues()}>
