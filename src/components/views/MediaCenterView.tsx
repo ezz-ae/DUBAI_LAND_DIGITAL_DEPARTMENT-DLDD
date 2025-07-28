@@ -32,21 +32,12 @@ interface MediaCenterViewProps {
   selectedDoc: DLDDoc | null;
 }
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
-type EmailTopic = 'project-overview' | 'technical-analysis' | 'tokenization-overview' | 'ebram-language' | 'custom';
+type EmailTopic = 'project-overview' | 'technical-analysis' | 'tokenization-overview' | 'ebram-language';
 
 
 const emailFormSchema = z.object({
   recipient: z.string().email({ message: 'Please enter a valid email address.' }),
   topic: z.custom<EmailTopic>(),
-  customTopic: z.string().optional(),
-}).refine(data => {
-    if (data.topic === 'custom') {
-        return data.customTopic && data.customTopic.trim() !== '';
-    }
-    return true;
-}, {
-    message: "Custom topic cannot be empty.",
-    path: ["customTopic"],
 });
 
 const downloadItems = [
@@ -69,10 +60,8 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
       defaultValues: {
           recipient: 'future@dubai.ae',
           topic: 'project-overview',
-          customTopic: '',
       }
   });
-  const watchedTopic = emailForm.watch('topic');
 
   const handleAddNote = () => {
     if (!newNoteTitle.trim() || !newNoteContent.trim() || !selectedDoc) {
@@ -104,9 +93,8 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
       const topics: Record<EmailTopic, {title: string, contentDocId: number | null }> = {
           'project-overview': { title: "Project Overview", contentDocId: 1 },
           'technical-analysis': { title: "Technical Analysis", contentDocId: 2 },
-          'tokenization-overview': { title: "Tokenization Overview", contentDocId: 8 },
-          'ebram-language': { title: "EBRAM Language Overview", contentDocId: 4 },
-          'custom': { title: `Custom Topic: ${values.customTopic}`, contentDocId: null }
+          'tokenization-overview': { title: "Tokenization Overview", contentDocId: 1 }, // Fallback to overview
+          'ebram-language': { title: "EBRAM Language Overview", contentDocId: 1 }, // Fallback to overview
       };
 
       const selectedTopic = topics[values.topic];
@@ -114,10 +102,9 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
 
       if (selectedTopic.contentDocId) {
           const doc = dldChainDocuments.find(d => d.id === selectedTopic.contentDocId);
-          const plainTextContent = doc?.content.replace(/<[^>]*>/g, '\n').replace(/\n\n+/g, '\n\n');
+          // A simple conversion to plain text. More sophisticated parsing could be added.
+          const plainTextContent = doc?.content.replace(/<[^>]*>/g, '\n').replace(/\n\n+/g, '\n\n').trim();
           body += `${selectedTopic.title}\n\n${plainTextContent}`;
-      } else if (values.topic === 'custom' && values.customTopic) {
-          body += `Please provide information on the following topic:\n\n${values.customTopic}`;
       }
 
       const mailtoLink = `mailto:${values.recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -167,28 +154,12 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                                             <SelectItem value="technical-analysis">Technical Analysis</SelectItem>
                                             <SelectItem value="tokenization-overview">Tokenization Overview</SelectItem>
                                             <SelectItem value="ebram-language">EBRAM Language</SelectItem>
-                                            <SelectItem value="custom">Custom Topic</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        {watchedTopic === 'custom' && (
-                            <FormField
-                                control={emailForm.control}
-                                name="customTopic"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Custom Topic</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="e.g., How does Mashroi work?" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        )}
                         <Button type="submit" className="w-full">
                             <Mail className="mr-2 h-4 w-4" />
                             Send Email
@@ -327,3 +298,5 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
     </div>
   );
 }
+
+    
