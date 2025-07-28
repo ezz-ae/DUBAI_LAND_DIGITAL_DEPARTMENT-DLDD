@@ -47,6 +47,7 @@ const downloadItems = [
 
 export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   const { toast } = useToast();
+  // TODO: Replace this with a direct link to an audio file (e.g., from Firebase Storage)
   const interviewUrl = "https://drive.google.com/file/d/1qGmGpJAr65P9OaApzfI03cZdU7kOxEQ9/view?usp=sharing";
 
   const [notes, setNotes] = useState<Note[]>([]);
@@ -176,12 +177,16 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                 <CardDescription>Listen to the official DLDCHAIN project interview.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center justify-center gap-4 text-center p-6">
-                <Mic2 className="w-16 h-16 text-primary" />
+                <Mic2 className="w-10 h-10 text-primary mb-2" />
                 <p className="text-muted-foreground text-sm">
                     Hear directly from the visionaries behind the project.
                 </p>
-                <Button asChild size="lg">
-                  <a href={interviewUrl} target="_blank" rel="noopener noreferrer">Listen Now</a>
+                <audio controls className="w-full">
+                  <source src={interviewUrl} type="audio/mpeg" />
+                  Your browser does not support the audio element. Please use the download link.
+                </audio>
+                 <Button asChild variant="link" size="sm" className="mt-2">
+                  <a href={interviewUrl} target="_blank" rel="noopener noreferrer">Download Interview</a>
                 </Button>
             </CardContent>
           </Card>
@@ -298,5 +303,3 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
     </div>
   );
 }
-
-    
