@@ -35,6 +35,30 @@ interface MediaCenterViewProps {
 export type Note = { id: number; title: string; content: string; source: string; marked: boolean };
 type EmailTopic = 'project-overview' | 'technical-analysis' | 'tokenization-overview' | 'ebram-language';
 
+const defaultNotes: Note[] = [
+    {
+        id: 1,
+        title: 'AI as an "Intelligent Referee"',
+        content: "The EBRAM™ AI-Weighted Node System acts as a 'sentient economic layer' and an 'intelligent referee.' It uses AI to assign calibrated 'weights' to real-world and on-chain events (e.g., EBRAMINT™ Date, Owner Verified status, Last Valuation Audit) to dynamically and objectively influence property valuations and DXBTOKEN™ prices. The system can even block 'unlogical' transactions before they are finalized.",
+        source: "Technical Docs: EBRAM™",
+        marked: true,
+    },
+    {
+        id: 2,
+        title: 'Guaranteed Liquidity: "No Liquidity = No Token"',
+        content: "The MAKE™ System is DLDCHAIN's sovereign financial layer. Its core principle is 'No liquidity = no token,' meaning every DXBTOKEN™ issued is 100% backed by an equivalent value in AED, confirmed on-chain by a regulated Liquidity Pool Officer (LPO) before the token is ever minted. This eliminates counterparty risk and guarantees market stability.",
+        source: "Technical Docs: MAKE™ System",
+        marked: false,
+    },
+    {
+        id: 3,
+        title: 'Unambiguous Ownership: "Token = True = Owner"',
+        content: "This is a fundamental legal and system truth at all stages of the asset lifecycle. It asserts that legal ownership always resides with the entity (wallet address) holding the DXBTOKEN™. There is no hidden claim or external custody that divorces the token from its underlying asset rights. This is cryptographically enforced by the 'Escrowship Doctrine,' where a trading token cannot simultaneously be used for utility (e.g., renting).",
+        source: "Technical Docs: DXBTOKENS™",
+        marked: false,
+    }
+];
+
 
 const emailFormSchema = z.object({
   recipient: z.string().email({ message: 'Please enter a valid email address.' }),
@@ -50,7 +74,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
   const { toast } = useToast();
   const interviewUrl = "https://firebasestorage.googleapis.com/v0/b/dldchain.firebasestorage.app/o/DLDCHAIN%20AUDIO%20OVERVIEW.wav?alt=media&token=19d7c6c6-7af3-4a97-b69d-b9749bcd4d40";
 
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<Note[]>(defaultNotes);
   const [newNoteTitle, setNewNoteTitle] = useState('');
   const [newNoteContent, setNewNoteContent] = useState('');
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
@@ -306,5 +330,3 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
     </div>
   );
 }
-
-    
