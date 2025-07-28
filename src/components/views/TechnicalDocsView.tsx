@@ -107,7 +107,7 @@ const findItem = (id: string) => {
 
 
 export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
   const [selectedItemId, setSelectedItemId] = useState<string>(initialDocId || technicalBook.introduction.id);
 
   const { current, prev, next } = findItemAndSiblings(selectedItemId);
@@ -123,8 +123,13 @@ export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
   }, [initialDocId]);
 
   useEffect(() => {
-    const container = scrollRef.current?.querySelector('div[data-radix-scroll-area-viewport]');
-    container?.scrollTo({ top: 0, behavior: 'smooth' });
+    const element = contentWrapperRef.current?.querySelector(`#${selectedItemId}`);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        // Fallback for chapter views or if element not found, scroll to top of content
+        contentWrapperRef.current?.parentElement?.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, [selectedItemId]);
 
   const renderContent = () => {
@@ -148,7 +153,7 @@ export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
 
     return (
         <div id={current.id}>
-            <h1 className="font-headline text-4xl font-bold text-primary border-b-2 border-primary pb-2 mb-6">{title}</h1>
+            <h1 className="font-headline text-4xl font-bold text-primary border-b-2 border-primary pb-2 mb-6 scroll-mt-20">{title}</h1>
             {allContent}
         </div>
     );
@@ -173,8 +178,8 @@ export function TechnicalDocsView({ initialDocId }: TechnicalDocsViewProps) {
     <div className="flex flex-1 overflow-hidden">
       <TechnicalDocsSidebar onLinkClick={handleLinkClick} selectedItemId={selectedItemId} />
       <main className="flex-1 overflow-hidden">
-        <ScrollArea className="h-full" ref={scrollRef}>
-          <div className="flex justify-center p-6 md:p-10">
+        <ScrollArea className="h-full">
+          <div className="flex justify-center p-6 md:p-10" ref={contentWrapperRef}>
             <div className="w-full max-w-4xl">
               <Card className="flex-1 flex flex-col overflow-hidden">
                 <CardContent className="p-4 md:p-8">
