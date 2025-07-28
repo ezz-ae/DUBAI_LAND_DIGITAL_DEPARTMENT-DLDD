@@ -23,6 +23,7 @@ import {
   DialogTitle,
   DialogFooter,
   DialogDescription,
+  DialogClose,
 } from "@/components/ui/dialog"
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Checkbox } from '../ui/checkbox';
@@ -184,8 +185,11 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
                   <source src={interviewUrl} type="audio/mpeg" />
                   Your browser does not support the audio element. Please use the download link.
                 </audio>
-                 <Button asChild variant="link" size="sm" className="mt-2">
-                  <a href={interviewUrl} target="_blank" rel="noopener noreferrer">Download Interview</a>
+                 <Button asChild variant="outline" size="sm" className="mt-2">
+                  <a href={interviewUrl} target="_blank" rel="noopener noreferrer">
+                    <Download className="mr-2 h-4 w-4" />
+                    Download Interview
+                  </a>
                 </Button>
             </CardContent>
           </Card>
@@ -293,7 +297,7 @@ export function MediaCenterView({ selectedDoc }: MediaCenterViewProps) {
               <p className="whitespace-pre-wrap">{selectedNote.content}</p>
             </ScrollArea>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setSelectedNote(null)}>Close</Button>
+               <Button variant="outline" onClick={() => setSelectedNote(null)}>Close</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
