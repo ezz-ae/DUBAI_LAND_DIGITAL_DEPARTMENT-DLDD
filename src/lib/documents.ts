@@ -100,28 +100,6 @@ Security is multi-layered, following a zero-trust model, and the system is desig
 The technical architecture of DLDCHAIN is sound, secure, and highly pragmatic. The choice of Hyperledger Fabric provides a strong foundation for a sovereign system, while the innovative EBRAM engine, MAKE liquidity system, and Mashroi professional hub create a uniquely intelligent and trustworthy ecosystem. The API-first integration strategy allows for powerful automation without replacing trusted legacy systems. The security model is comprehensive, addressing identity, data, and transactional integrity. This technical design is fully capable of delivering on the project's ambitious vision.
 `;
 
-
-const allTechnicalContent = technicalBook.parts.flatMap(part => 
-  part.chapters.flatMap(chapter => 
-    [chapter.introduction, ...chapter.articles.flatMap(article => article.content)]
-  )
-).flat();
-
-const stringifyContent = (items: ContentItem[]): string => {
-  return items.map(item => {
-    if (item.type === 'paragraph' || item.type === 'heading' || item.type === 'subheading' || item.type === 'minorheading') {
-      return item.text;
-    }
-    if (item.type === 'list') {
-      return item.items.join(' ');
-    }
-    if (item.type === 'code') {
-      return item.text;
-    }
-    return '';
-  }).join(' ').replace(/<[^>]*>/g, ''); // Also strip HTML for AI context
-};
-
 export const dldChainDocuments: DLDDocument[] = [
   // This can be simplified or removed if not used elsewhere,
   // but kept for now for context in other views.
@@ -142,18 +120,7 @@ export const dldChainDocuments: DLDDocument[] = [
     summary: "A comprehensive overview of the DLDCHAIN technical architecture, core components, and security protocols.",
     keyTopics: ["Hyperledger Fabric", "EBRAM", "MAKE System", "Mashroi"],
     content: technicalAnalysisContent
-  },
-  {
-    id: 19,
-    name: "[AI] Full Technical Book",
-    group: 'ai',
-    lang: 'en',
-    summary: "The complete technical book for AI conversation. This document contains the full, aggregated text from all parts of the technical analysis book.",
-    keyTopics: ["Architecture", "Smart Contracts", "Security", "Simulations", "Hyperledger Fabric"],
-    content: stringifyContent(allTechnicalContent)
   }
 ];
 
 export type DLDDoc = (typeof dldChainDocuments)[0];
-
-    
