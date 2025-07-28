@@ -276,11 +276,6 @@ export function SimulationView() {
                       </div>
                   </ScrollArea>
                 </div>
-                 <DialogFooter className="p-4 flex-shrink-0 border-t bg-background">
-                    <DialogClose asChild>
-                        <Button type="button" className="w-full sm:w-auto">Close</Button>
-                    </DialogClose>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
       )}
@@ -288,3 +283,5 @@ export function SimulationView() {
     </div>
   );
 }
+
+    
