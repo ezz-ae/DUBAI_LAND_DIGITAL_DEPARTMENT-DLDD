@@ -17,9 +17,10 @@ import { ScrollArea } from '../ui/scroll-area';
 interface TechnicalDocsSidebarProps {
   onLinkClick: (id: string) => void;
   selectedItemId: string | null;
+  className?: string;
 }
 
-export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalDocsSidebarProps) {
+export function TechnicalDocsSidebar({ onLinkClick, selectedItemId, className }: TechnicalDocsSidebarProps) {
   const { isMobile, setOpenMobile } = useSidebar();
   
   const handleLinkClick = (e: React.MouseEvent, id: string) => {
@@ -125,7 +126,10 @@ export function TechnicalDocsSidebar({ onLinkClick, selectedItemId }: TechnicalD
   );
 
   return (
-    <Sidebar>
+    <Sidebar className={cn(
+      className,
+      'self-start sticky top-6 max-h-[calc(100vh-4rem)] overflow-hidden'
+    )}>
       {content}
     </Sidebar>
   );

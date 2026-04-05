@@ -38,6 +38,8 @@ export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
   const [hoveredView, setHoveredView] = useState<ActiveView | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  const brandTitle = 'Dubai Land Digital Department - Concept \\ DLDD';
+  const mobileBrandTitle = 'DLDD Concept';
 
   const DesktopNav = () => (
     <div className="hidden md:flex items-center gap-1 bg-muted p-1 rounded-lg">
@@ -106,9 +108,9 @@ export function AppHeader({ activeView, setActiveView }: AppHeaderProps) {
         <div className="md:hidden w-8">
           {isMobile && activeView === 'tech-docs' && <SidebarTrigger />}
         </div>
-        <h1 className="text-md font-headline font-bold whitespace-nowrap">
-          <span className="hidden sm:inline">DLDCHAIN NATIVE REAL ESTATE BLOCKCHAIN</span>
-          <span className="sm:hidden">DLDCHAIN</span>
+        <h1 className="text-md font-headline font-bold whitespace-nowrap text-foreground">
+          <span className="hidden sm:inline">{brandTitle}</span>
+          <span className="sm:hidden">{mobileBrandTitle}</span>
         </h1>
       </div>
 
